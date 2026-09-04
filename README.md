@@ -3,8 +3,8 @@
 © 2026 titi_23 — Tous droits réservés. Voir le fichier [LICENSE](./LICENSE).
 
 Supports pédagogiques créés dans le cadre d'activités de médiation
-numérique (Titre Professionnel Médiateur Numérique, AFPA Guéret /
-Yggdrasil) : ateliers pour le grand public, débutants et seniors.
+numérique (Titre Professionnel Médiateur Numérique, AFPA Guéret
+) : ateliers pour le grand public, débutants et seniors.
 
 ## Contenu
 
