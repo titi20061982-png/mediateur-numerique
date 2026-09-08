@@ -291,27 +291,35 @@
   .hero-art .warm { color: var(--accent-2); }
   .hero-art .blue { color: var(--accent-3); }
 
-  .hero-logo {
+  .page-watermark {
+    position: relative;
+    overflow: hidden;
+    height: 380px;
+    margin-top: -2rem;
+  }
+  .page-watermark img {
     position: absolute;
-    top: 50%;
+    bottom: -10%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(60vw, 620px);
+    transform: translateX(-50%);
+    width: min(70vw, 720px);
     height: auto;
-    z-index: -1;
     opacity: 0.09;
     pointer-events: none;
     user-select: none;
-    -webkit-mask-image: radial-gradient(circle, #000 45%, transparent 78%);
-            mask-image: radial-gradient(circle, #000 45%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 40%, #000 40%, transparent 78%);
+            mask-image: radial-gradient(ellipse 60% 55% at 50% 40%, #000 40%, transparent 78%);
   }
   @media (prefers-color-scheme: dark) {
-    .hero-logo { opacity: 0.4; mix-blend-mode: screen; }
+    .page-watermark img { opacity: 0.4; mix-blend-mode: screen; }
   }
-  :root[data-theme="dark"] .hero-logo,
-  html[data-theme="dark"] .hero-logo {
+  :root[data-theme="dark"] .page-watermark img,
+  html[data-theme="dark"] .page-watermark img {
     opacity: 0.4;
     mix-blend-mode: screen;
+  }
+  @media (max-width: 640px) {
+    .page-watermark { height: 240px; margin-top: -1rem; }
   }
 
   @media (max-width: 760px) {
@@ -374,7 +382,6 @@
       </g>
     </g>
   </svg>
-  <img class="hero-logo" src="logo.png" alt="" aria-hidden="true">
   <div class="hero-inner">
     <span class="eyebrow">Portfolio pédagogique</span>
     <h1>Ateliers Médiation Numérique</h1>
@@ -588,6 +595,10 @@
   </section>
 
 </main>
+
+<div class="page-watermark">
+  <img src="logo.png" alt="" aria-hidden="true">
+</div>
 
 <footer>
   © 2026 titi_23 — Tous droits réservés. Voir la <a href="LICENSE">licence</a>.
