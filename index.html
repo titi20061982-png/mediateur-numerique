@@ -324,7 +324,7 @@
     .hero-art .hide-mobile { display: none; }
   }
 
-  /* ---------- Full-page background mesh: personnes reliees par le numerique ---------- */
+  /* ---------- Full-page background: constellations du zodiaque ---------- */
   .site-mesh {
     position: fixed;
     inset: 0;
@@ -332,55 +332,157 @@
     width: 100vw;
     height: 100vh;
     color: var(--border);
-    opacity: 0.85;
     pointer-events: none;
   }
-  .site-mesh .accent-node { color: var(--accent); }
-  .site-mesh .warm-node { color: var(--accent-2); }
-  .site-mesh .blue-node { color: var(--accent-3); }
+  .site-mesh .accent-star { color: var(--accent); }
+  .site-mesh .warm-star { color: var(--accent-2); }
+  .site-mesh .blue-star { color: var(--accent-3); }
+  .site-mesh .bg-stars { color: var(--border); }
 </style>
 </head>
 <body>
 
-<svg class="site-mesh" aria-hidden="true" focusable="false">
+<svg class="site-mesh" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <defs>
-    <pattern id="mediationMesh" width="280" height="280" patternUnits="userSpaceOnUse" patternTransform="rotate(6)">
-      <g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Duo 1: personne + appareil, haut-gauche -->
-        <g transform="translate(38,46)" opacity="0.9">
-          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
-          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
-          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
-          <rect class="accent-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
-        </g>
-        <!-- Duo 2: personne + appareil, milieu-droite -->
-        <g transform="translate(210,120) rotate(-10)" opacity="0.85">
-          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
-          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
-          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
-          <rect class="warm-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
-        </g>
-        <!-- Duo 3: personne + appareil, bas-gauche -->
-        <g transform="translate(70,230) rotate(8)" opacity="0.85">
-          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
-          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
-          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
-          <rect class="blue-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
-        </g>
-        <!-- petits noeuds de remplissage -->
-        <circle cx="150" cy="30" r="1.6" fill="currentColor" opacity="0.6"/>
-        <circle cx="250" cy="60" r="1.3" fill="currentColor" opacity="0.5"/>
-        <circle cx="20" cy="160" r="1.4" fill="currentColor" opacity="0.5"/>
-        <circle cx="180" cy="220" r="1.6" fill="currentColor" opacity="0.6"/>
-        <circle cx="255" cy="200" r="1.2" fill="currentColor" opacity="0.45"/>
-        <path d="M150,30 L210,120" opacity="0.35"/>
-        <path d="M70,230 L180,220" opacity="0.35"/>
-        <path d="M38,46 L20,160" opacity="0.3"/>
-        <path d="M250,60 L210,120" opacity="0.3"/>
-      </g>
-    </pattern>
+    <g id="z-aries" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-15,5 L-5,-3 L8,-5 L18,2"/>
+      <circle cx="-15" cy="5" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="-5" cy="-3" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="8" cy="-5" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="2" r="1.8" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-taurus" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-25,-25 L-18,-5 L-6,8 L6,10 L18,-3 L28,-22"/>
+      <circle cx="-25" cy="-25" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-18" cy="-5" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="-6" cy="8" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="6" cy="10" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="-3" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="28" cy="-22" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-gemini" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-8,-30 L-8,-15 L-6,0 L-3,15"/>
+      <path d="M8,-28 L9,-13 L7,2 L5,17"/>
+      <path d="M-8,-30 L8,-28"/>
+      <circle cx="-8" cy="-30" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="-8" cy="-15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-6" cy="0" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-3" cy="15" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="8" cy="-28" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="9" cy="-13" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="7" cy="2" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="5" cy="17" r="1.7" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-cancer" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M0,-15 L0,0 M0,0 L-12,12 M0,0 L12,12"/>
+      <circle cx="0" cy="-15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="0" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="-12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-leo" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-25,-8 L-27,3 L-20,12 L-8,14 L0,8 L18,-2 L30,4"/>
+      <circle cx="-25" cy="-8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-27" cy="3" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-20" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-8" cy="14" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="8" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="-2" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="30" cy="4" r="1.8" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-virgo" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M0,-20 L0,-5 M0,-5 L-15,10 M0,-5 L15,8 M0,-5 L3,22"/>
+      <circle cx="0" cy="-20" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="-5" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="-15" cy="10" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="15" cy="8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="3" cy="22" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-libra" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M0,-15 L15,0 L0,15 L-15,0 Z"/>
+      <circle cx="0" cy="-15" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="15" cy="0" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-15" cy="0" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-scorpio" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-30,-10 L-20,-14 L-10,-14 L0,-10 L8,-4 L14,4 L16,14 L12,22 L4,26"/>
+      <circle cx="-30" cy="-10" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-20" cy="-14" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-10" cy="-14" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="-10" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="8" cy="-4" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="14" cy="4" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="14" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="12" cy="22" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="4" cy="26" r="1.9" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-sagittarius" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-18,8 L-14,-6 L-2,-12 L10,-10 L18,-2 L14,10 L-2,14 Z"/>
+      <circle cx="-18" cy="8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-14" cy="-6" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-2" cy="-12" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="10" cy="-10" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="-2" r="1.7" fill="currentColor" stroke="none"/>
+      <circle cx="14" cy="10" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-2" cy="14" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-capricorn" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-25,5 L-10,-10 L10,-8 L25,8 L5,15 Z"/>
+      <circle cx="-25" cy="5" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-10" cy="-10" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="10" cy="-8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="25" cy="8" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="5" cy="15" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-aquarius" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round">
+      <path d="M-20,-15 L-10,-5 L-14,8 L-2,15 L6,5 L18,10"/>
+      <circle cx="-20" cy="-15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-10" cy="-5" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-14" cy="8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-2" cy="15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="6" cy="5" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="10" r="1.7" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="z-pisces" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-30,-15 L-22,-8 L-28,0 Z"/>
+      <path d="M25,15 L18,20 L28,25 Z"/>
+      <path d="M-22,-8 L25,15"/>
+      <circle cx="-30" cy="-15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-22" cy="-8" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="-28" cy="0" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="25" cy="15" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="20" r="1.6" fill="currentColor" stroke="none"/>
+      <circle cx="28" cy="25" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
   </defs>
-  <rect width="100%" height="100%" fill="url(#mediationMesh)"/>
+
+  <!-- ciel etoile: petites etoiles eparpillees -->
+  <g class="bg-stars" fill="currentColor" opacity="0.5">
+    <circle cx="60" cy="250" r="1.1"/><circle cx="260" cy="60" r="1"/><circle cx="470" cy="300" r="1.2"/>
+    <circle cx="600" cy="180" r="1"/><circle cx="800" cy="250" r="1.1"/><circle cx="1020" cy="70" r="1"/>
+    <circle cx="1250" cy="230" r="1.2"/><circle cx="1480" cy="130" r="1"/><circle cx="1560" cy="320" r="1.1"/>
+    <circle cx="100" cy="550" r="1"/><circle cx="330" cy="620" r="1.2"/><circle cx="580" cy="560" r="1"/>
+    <circle cx="870" cy="640" r="1.1"/><circle cx="1150" cy="590" r="1"/><circle cx="1400" cy="620" r="1.2"/>
+    <circle cx="200" cy="850" r="1"/><circle cx="500" cy="900" r="1.1"/><circle cx="900" cy="870" r="1"/>
+    <circle cx="1300" cy="880" r="1.2"/><circle cx="40" cy="420" r="1"/><circle cx="1550" cy="750" r="1.1"/>
+  </g>
+
+  <!-- constellations du zodiaque, dispersees -->
+  <g opacity="0.8">
+    <use href="#z-aries" class="warm-star" transform="translate(110,120) scale(1.3)"/>
+    <use href="#z-taurus" class="bg-stars" transform="translate(380,160) scale(1.2)"/>
+    <use href="#z-gemini" class="blue-star" transform="translate(650,110) scale(1.1)"/>
+    <use href="#z-cancer" class="bg-stars" transform="translate(890,150) scale(1.3)"/>
+    <use href="#z-leo" class="accent-star" transform="translate(1150,130) scale(1.2)"/>
+    <use href="#z-virgo" class="bg-stars" transform="translate(1420,190) scale(1.1)"/>
+    <use href="#z-libra" class="blue-star" transform="translate(160,560) scale(1.3)"/>
+    <use href="#z-scorpio" class="warm-star" transform="translate(470,600) scale(1.15) rotate(8)"/>
+    <use href="#z-sagittarius" class="accent-star" transform="translate(770,570) scale(1.2)"/>
+    <use href="#z-capricorn" class="bg-stars" transform="translate(1070,610) scale(1.1)"/>
+    <use href="#z-aquarius" class="blue-star" transform="translate(1330,560) scale(1.2) rotate(-6)"/>
+    <use href="#z-pisces" class="warm-star" transform="translate(1500,850) scale(1.1)"/>
+  </g>
 </svg>
 
 <div class="hero">
