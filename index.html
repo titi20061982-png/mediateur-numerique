@@ -17,6 +17,7 @@
     --border: #e2ded4;
     --accent: #35604f;
     --accent-2: #b6562f;
+    --accent-3: #2b5d8a;
     --accent-soft: #e7f0ea;
     --badge-docx: #2b579a;
     --badge-pptx: #d24726;
@@ -33,6 +34,7 @@
       --border: #2c3133;
       --accent: #83c1a6;
       --accent-2: #ef9169;
+      --accent-3: #6ea8dc;
       --accent-soft: #22302a;
       --badge-docx: #7bb0ff;
       --badge-pptx: #ff9e78;
@@ -286,6 +288,7 @@
     opacity: 0.5;
   }
   .hero-art .warm { color: var(--accent-2); }
+  .hero-art .blue { color: var(--accent-3); }
   @media (max-width: 760px) {
     .hero-art .hide-mobile { display: none; }
   }
@@ -295,6 +298,12 @@
 
 <div class="hero">
   <svg class="hero-art" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <!-- Three interlocking circles: accompagnement humain / autonomie / securite -->
+    <g fill="none" stroke-width="3" opacity="0.28">
+      <circle cx="660" cy="140" r="120" class="warm" stroke="currentColor"/>
+      <circle cx="590" cy="255" r="120" class="blue" stroke="currentColor"/>
+      <circle cx="730" cy="255" r="120" stroke="currentColor"/>
+    </g>
     <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <!-- Wifi signal, top-left -->
       <g transform="translate(110,70)" opacity="0.7">
