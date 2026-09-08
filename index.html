@@ -61,24 +61,6 @@
             user-select: none;
   }
   /* Les liens de telechargement des ateliers restent normalement cliquables (clic gauche) */
-  @media print {
-    body * { visibility: hidden !important; }
-    body::before {
-      content: "Impression non autorisee. Consultez le site en ligne : " attr(data-site-url);
-      visibility: visible !important;
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      font-family: sans-serif;
-      font-size: 1.1rem;
-      color: #000;
-      background: #fff;
-    }
-  }
   h1, h2, h3 { font-family: "Fraunces", Georgia, serif; }
 
   /* ---------- Hero ---------- */
@@ -370,7 +352,7 @@
   }
 </style>
 </head>
-<body data-site-url="titi20061982-png.github.io/mediateur-numerique">
+<body>
 
 <svg class="site-mesh" viewBox="0 0 2000 1300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <defs>
@@ -829,7 +811,7 @@
   document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   document.addEventListener('keydown', function (e) {
     var k = e.key ? e.key.toLowerCase() : '';
-    if ((e.ctrlKey || e.metaKey) && (k === 's' || k === 'p')) {
+    if ((e.ctrlKey || e.metaKey) && k === 's') {
       e.preventDefault();
     }
   });
