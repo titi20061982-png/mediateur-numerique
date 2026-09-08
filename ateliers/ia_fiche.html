@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,32 +67,41 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>L'Intelligence Artificielle Yggdrasil Médiation Numérique Comprendre les IA du quotidien 1/2</p>
-    <p>Qu'est-ce que l'IA ? Un programme entraîné sur d'énormes quantités de données pour reconnaître des schémas et produire une réponse plausible. Elle prédit le mot le plus probable — elle ne « comprend » pas comme un humain.</p>
-    <p>■Elle peut se tromper avec assurance : c'est l'« hallucination ». D'où l'importance de garder son esprit critique.</p>
-    <p>L'IA en France</p>
-    <p>48 % 10 % 26 % 5M des Français ont utilisé l'IA des entreprises françaises utilisent des PME françaises l'utilisent déjà d'emplois potentiellement exposés générative en 2026 l'IA (2024) au quotidien d'ici 2030</p>
-    <p>Les bienfaits au quotidien Gain de temps : rédiger, résumer, planifierAccessibilité : synthèse vocale, sous-titres</p>
-    <p>Santé : aide au diagnostic, suivi de traitementÉducation : tuteur personnalisé, aide aux devoirs</p>
-    <p>Créativité : génération d'images, de musique, d'idéesMédiation multilingue : traduction quasi instantanée</p>
-    <p>Les risques à surveiller Désinformation : hallucinations, fausses images crédiblesBiais : reproduit les stéréotypes de ses données</p>
-    <p>Dépendance cognitive : affaiblit mémoire et esprit critiqueVie privée : données saisies parfois conservées</p>
-    <p>Emploi : automatisation de certaines tâches répétitivesImpact environnemental : ~415 TWh consommés en 2024</p>
-    <p>L'IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.</p>
-    <p>L'Intelligence Artificielle Yggdrasil Médiation Numérique Panorama des outils, cadre légal, bon usage 2/2</p>
-    <p>Panorama des IA par usage</p>
-    <p>Texte Image Vidéo Musique / Voix ChatGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT</p>
-    <p>Légende : Gratuit / Freemium / Payant — vérifiez toujours avant de recommander un outil. Liste non exhaustive.</p>
-    <p>Cadre légal — à connaître</p>
-    <p>Droit d'auteur RGPD Dark IA Un contenu 100% généré par IA n'est pas Jamais de données de santé ou sensibles WormGPT, FraudGPT : usage illégal — même protégeable en l'état actuel du droit. dans un chatbot sans consentement explicite. la recherche expose à des arnaques.</p>
-    <p>Pour un bon usage : 4 réflexes</p>
-    <p>Toujours vérifier Protéger ses données Garder l'esprit critique Lire les CGU Recoupez les informations Jamais de mot de passe, n° sécu, ou Un assistant, pas une vérité absolue. Savoir si vos données servent à importantes avec une autre source. données bancaires. entraîner le modèle.</p>
-    <p>Pour aller plus loin — flashez</p>
-    <p>ClaudeLe Chat (Mistral)CNIL Assistant IA — écriture etL'IA française, hébergée enVos droits sur vos données</p>
-    <p>raisonnementFrance/UEpersonnelles</p>
-    <p>L'IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.</p>
+  <div class="slides">
+    <div class="slide"><img src="img/ia_fiche/p-1.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/ia_fiche/p-2.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/ia_fiche/p-3.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>L'Intelligence Artificielle Yggdrasil Médiation Numérique Comprendre les IA du quotidien 1/2</p>
+      <p>Qu'est-ce que l'IA ? Un programme entraîné sur d'énormes quantités de données pour reconnaître des schémas et produire une réponse plausible. Elle prédit le mot le plus probable — elle ne « comprend » pas comme un humain.</p>
+      <p>■Elle peut se tromper avec assurance : c'est l'« hallucination ». D'où l'importance de garder son esprit critique.</p>
+      <p>L'IA en France</p>
+      <p>48 % 10 % 26 % 5M des Français ont utilisé l'IA des entreprises françaises utilisent des PME françaises l'utilisent déjà d'emplois potentiellement exposés générative en 2026 l'IA (2024) au quotidien d'ici 2030</p>
+      <p>Les bienfaits au quotidien Gain de temps : rédiger, résumer, planifierAccessibilité : synthèse vocale, sous-titres</p>
+      <p>Santé : aide au diagnostic, suivi de traitementÉducation : tuteur personnalisé, aide aux devoirs</p>
+      <p>Créativité : génération d'images, de musique, d'idéesMédiation multilingue : traduction quasi instantanée</p>
+      <p>Les risques à surveiller Désinformation : hallucinations, fausses images crédiblesBiais : reproduit les stéréotypes de ses données</p>
+      <p>Dépendance cognitive : affaiblit mémoire et esprit critiqueVie privée : données saisies parfois conservées</p>
+      <p>Emploi : automatisation de certaines tâches répétitivesImpact environnemental : ~415 TWh consommés en 2024</p>
+      <p>L'IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.</p>
+      <p>L'Intelligence Artificielle Yggdrasil Médiation Numérique Panorama des outils, cadre légal, bon usage 2/2</p>
+      <p>Panorama des IA par usage</p>
+      <p>Texte Image Vidéo Musique / Voix ChatGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT</p>
+      <p>Légende : Gratuit / Freemium / Payant — vérifiez toujours avant de recommander un outil. Liste non exhaustive.</p>
+      <p>Cadre légal — à connaître</p>
+      <p>Droit d'auteur RGPD Dark IA Un contenu 100% généré par IA n'est pas Jamais de données de santé ou sensibles WormGPT, FraudGPT : usage illégal — même protégeable en l'état actuel du droit. dans un chatbot sans consentement explicite. la recherche expose à des arnaques.</p>
+      <p>Pour un bon usage : 4 réflexes</p>
+      <p>Toujours vérifier Protéger ses données Garder l'esprit critique Lire les CGU Recoupez les informations Jamais de mot de passe, n° sécu, ou Un assistant, pas une vérité absolue. Savoir si vos données servent à importantes avec une autre source. données bancaires. entraîner le modèle.</p>
+      <p>Pour aller plus loin — flashez</p>
+      <p>ClaudeLe Chat (Mistral)CNIL Assistant IA — écriture etL'IA française, hébergée enVos droits sur vos données</p>
+      <p>raisonnementFrance/UEpersonnelles</p>
+      <p>L'IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>

@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,173 +67,197 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>12 démarches expliquées pas à pas</p>
-    <p>Mon compte</p>
-    <p>ATELIER NUMÉRIQUE · PAS À PAS</p>
-    <p>Mon compte CAF de A à Z ✓ Pour bien débuter : chaque démarche est expliquée clic par Connecté en 2 minutes clic, avec le nom exact des boutons. Se connecter, suivre ses paiements, télécharger une attestation, déclarer, envoyer un document…</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>SOMMAIRE DE L'ATELIER</p>
-    <p>Cliquez sur un thème pour y accéder À quoi ça sert ? Y accéder : site appli</p>
-    <p>1 2</p>
-    <p>1 À quoi ça sert ? 2 Y accéder : site &amp; appli Se connecter Créer son compte</p>
-    <p>3 4</p>
-    <p>3 Se connecter 4 Créer son compte Se repérer sur l'accueil Suivre mes paiements</p>
-    <p>5 6</p>
-    <p>5 Se repérer sur l'accueil 6 Suivre mes paiements Télécharger une attestation Déclarer un changement</p>
-    <p>7 8</p>
-    <p>7 Télécharger une attestation 8 Déclarer un changement La déclaration trimestrielle Envoyer un document</p>
-    <p>9 10</p>
-    <p>9 La déclaration trimestrielle 10 Envoyer un document Écrire à la CAF Sécurité dépannage</p>
-    <p>11 12</p>
-    <p>11 Écrire à la CAF 12 Sécurité &amp; dépannage</p>
-    <p>Astuce : en bas à droite de chaque diapo, les boutons ⊞ ◄ ► permettent de revenir au sommaire ou de naviguer.</p>
-    <p>LE COMPTE CAF · 1</p>
-    <p>À quoi sert mon compte CAF ?</p>
-    <p>« Mon Compte » est votre espace personnel et sécurisé, sur le site caf.fr et dans l'application mobile. Tout votre dossier se gère là, sans déplacement ni courrier.</p>
-    <p>Voir mes droits et paiements Télécharger mes documents</p>
-    <p>Ce que la CAF me verse : dates et montants. Attestations, relevés… en PDF.</p>
-    <p>Déclarer ma situation Échanger avec ma CAF</p>
-    <p>Déménagement, naissance, RIB, ressources… Messagerie, suivi et envoi de documents.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>LE COMPTE CAF · 1</p>
-    <p>Les principales aides gérées par la CAF</p>
-    <p>Selon votre situation, la CAF peut verser plusieurs aides. Toutes se suivent depuis le même compte.</p>
-    <p>Aides au logement RSA Prime d'activité APL, ALF, ALS : aider à payer un loyer ou Pour les personnes sans ou avec peu de Complément pour ceux qui travaillent un prêt. ressources. avec un petit salaire.</p>
-    <p>Allocations familiales AAH Petite enfance (Paje) Pour les familles avec au moins deux Naissance, allocation de base, garde Allocation aux Adultes Handicapés. enfants. d'enfant.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>ACCÈS · 2</p>
-    <p>Deux façons d'accéder à Mon Compte</p>
-    <p>Sur ordinateur Sur smartphone / tablette Site officiel : www.caf.fr Application gratuite : « Caf - Mon Compte »</p>
-    <p>• Ouvrir le navigateur (Chrome, Edge…) • Installer depuis Play Store / App Store • Aller sur www.caf.fr • Les mêmes services que le site • Cliquer « Mon Compte » en haut à droite • Alertes en cas de message ou décision • Écran plus grand : pratique pour imprimer • Connexion par empreinte ou visage</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 3</p>
-    <p>Se connecter à Mon Compte</p>
-    <p>Sur ordinateur, depuis le site www.caf.fr : 1 Ouvrir le navigateur et taper www.caf.fr dans la barre d'adresse.</p>
-    <p>2 En haut à droite, cliquer sur le bouton « Mon Compte ».</p>
-    <p>3 Saisir son numéro de Sécurité sociale (13 chiffres, carte Vitale) ou son numéro d'allocataire.</p>
-    <p>4 Saisir son mot de passe (il s'affiche en points).</p>
-    <p>5 Cliquer sur « Me connecter ».</p>
-    <p>Plus simple : cliquer sur le bouton bleu « FranceConnect » et se connecter avec ses identifiants des Impôts ou d'Ameli. Sur l'appli, on peut ensuite utiliser l'empreinte ou le visage.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 4</p>
-    <p>Créer son compte (nouvel allocataire)</p>
-    <p>Pas encore de compte ? La création se fait sur www.caf.fr en moins de 10 minutes. 1 Préparer : numéro de Sécurité sociale, une adresse e-mail et un numéro de portable.</p>
-    <p>2 Sur www.caf.fr, suivre le parcours de création de compte.</p>
-    <p>3 Recevoir un code de vérification par SMS ou e-mail, puis le recopier.</p>
-    <p>4 Choisir un mot de passe fort : majuscules, minuscules, chiffres et caractère spécial.</p>
-    <p>5 Noter son numéro d'allocataire et garder son mot de passe en lieu sûr.</p>
-    <p>Bon réflexe : ne jamais écrire son mot de passe sur un papier visible, ni le donner à quelqu'un par téléphone ou par mail.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>NAVIGATION · 5</p>
-    <p>Se repérer sur la page d'accueil</p>
-    <p>Une fois connecté, voici les boutons à connaître sur la page d'accueil :</p>
-    <p>« Ma situation / Mon profil » « Mes paiements » Vérifier mes infos : adresse, RIB, foyer. Les versements reçus, dates et montants.</p>
-    <p>« Mes démarches » « Mes courriers, courriels » L'avancement de mes demandes et les pièces à Écrire à la CAF et lire ses réponses. fournir.</p>
-    <p>« Mes attestations » Mes alertes / agenda Télécharger mes documents en PDF. Rappels et démarches à faire.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 6</p>
-    <p>Suivre mes paiements</p>
-    <p>Pour vérifier ce que la CAF vous a versé :</p>
-    <p>1 Se connecter à Mon Compte.</p>
-    <p>2 Sur la page d'accueil, cliquer sur « Mes paiements ».</p>
-    <p>3 La liste affiche les 10 derniers versements : date, montant et prestation.</p>
-    <p>4 Pour les plus anciens, faire défiler (jusqu'à 24 mois).</p>
-    <p>5 Pour un justificatif : « Mon relevé de compte » puis « Télécharger ».</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 7</p>
-    <p>Télécharger une attestation</p>
-    <p>Pour obtenir une attestation de paiement ou de quotient familial :</p>
-    <p>1 Se connecter à Mon Compte.</p>
-    <p>2 Sur la page d'accueil, cliquer sur « Mes attestations ».</p>
-    <p>3 Choisir « Attestation de paiement » ou « Attestation de quotient familial ».</p>
-    <p>4 Choisir la période (mois précédent ou autre).</p>
-    <p>5 Cliquer sur « Télécharger » : le PDF s'enregistre (ou « Recevoir par courrier »).</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 8</p>
-    <p>Déclarer un changement de situation</p>
-    <p>Dès qu'un changement arrive, on le signale (évite les erreurs de paiement) :</p>
-    <p>1 Se connecter à Mon Compte.</p>
-    <p>2 Cliquer sur « Mon profil » (ou « Ma situation »).</p>
-    <p>3 Choisir ce qui change : adresse, situation familiale, emploi, RIB…</p>
-    <p>4 Saisir les nouvelles informations.</p>
-    <p>5 Cliquer sur « Valider ». Le plus souvent, aucun justificatif à envoyer.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 9</p>
-    <p>La déclaration trimestrielle (RSA / prime d'activité)</p>
-    <p>Tous les 3 mois. Depuis mars 2025, elle est pré-remplie : on vérifie et on valide.</p>
-    <p>1 Vous recevez un mail ou un SMS : se connecter à Mon Compte.</p>
-    <p>2 Aller dans « Mes ressources » puis « Déclarer mes ressources trimestrielles ».</p>
-    <p>3 Accepter (« J'ai compris »), puis confirmer ou corriger sa situation.</p>
-    <p>4 Vérifier les montants déjà inscrits (salaires, chômage…), en montant net social.</p>
-    <p>Compléter ce qui manque (pension alim., indépendant, conjoint, enfants +15 ans) ou cocher « Absence de 5 ressources ».</p>
-    <p>6 Cliquer sur « Valider » (et télécharger le récapitulatif si besoin).</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>ZOOM · 9</p>
-    <p>Le montant net social (MNS)</p>
-    <p>C'est LE montant à utiliser pour le RSA et la prime d'activité. Il est calculé pour vous.</p>
-    <p>C'est quoi ? Le revenu pris en compte par la CAF pour calculer le RSA et la prime d'activité.</p>
-    <p>Où le trouver ? Sur le bulletin de salaire et les relevés, ligne « Montant net social ».</p>
-    <p>Et en ligne ? Aussi sur mesdroitssociaux.gouv.fr (Mes services › Mes ressources).</p>
-    <p>Bon à savoir : si le net social d'un mois est négatif ou nul, on déclare 0 €. preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>PAS À PAS · 10</p>
-    <p>Envoyer un document à la CAF</p>
-    <p>Quand la CAF demande un justificatif, on l'envoie directement depuis le compte :</p>
-    <p>1 Se connecter à Mon Compte.</p>
-    <p>2 Aller dans « Mes démarches ».</p>
-    <p>3 Cliquer sur l'onglet « À transmettre » (ou « La Caf me demande »).</p>
-    <p>4 Cliquer sur l'icône pour choisir un fichier (PDF ou photo, max 5 Mo) ou le prendre en photo.</p>
-    <p>5 Vérifier avec le petit œil ; supprimer (poubelle) si c'est flou.</p>
-    <p>6 Cliquer sur « Continuer ». Suivi dans « Mes courriers, courriels ».</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>ÊTRE AIDÉ · 11</p>
-    <p>Écrire à la CAF et obtenir de l'aide</p>
-    <p>Le plus simple : la messagerie de votre compte.</p>
-    <p>1 Se connecter à Mon Compte.</p>
-    <p>2 Ouvrir « Mes courriers, courriels » (la messagerie).</p>
-    <p>3 Écrire son message et l'envoyer. La réponse arrive au même endroit.</p>
-    <p>Autres contacts utiles :</p>
-    <p>Le 3230 Un accueil près de chez soi L'aide en ligne Numéro de la CAF (au téléphone). CAF ou point France Services. Pages d'aide de caf.fr.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>SÉCURITÉ · 12</p>
-    <p>Protéger mon compte &amp; repérer les arnaques</p>
-    <p>Mes bons réflexes Les signaux d'arnaque</p>
-    <p>Un mot de passe long, gardé secret Un SMS / mail « remboursement » avec un lien</p>
-    <p>Je passe par caf.fr ou l'appli officielle On demande mes identifiants ou mon RIB</p>
-    <p>Je vérifie l'adresse du site (caf.fr) Un ton pressant : « urgent », « dernier délai »</p>
-    <p>La CAF ne demande jamais ma carte bancaire Une adresse bizarre qui imite caf.fr</p>
-    <p>En cas de doute : ne cliquez pas. Connectez-vous vous-même à caf.fr ou à l'appli pour vérifier.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>DÉPANNAGE · 12</p>
-    <p>En cas de problème de connexion</p>
-    <p>Les blocages les plus courants se règlent en quelques clics :</p>
-    <p>Mot de passe oublié Numéro d'allocataire perdu Sur l'écran de connexion : cliquer « Mot de Il est sur tous les courriers CAF. Sinon, se passe oublié » → on reçoit un lien pour en connecter via FranceConnect ou contacter la créer un nouveau. CAF.</p>
-    <p>L'appli ne s'ouvre plus Toujours bloqué ? Mettre l'appli à jour, vérifier sa connexion La messagerie, le 3230 ou un point d'accueil Internet, puis se reconnecter avec ses peuvent débloquer la situation. identifiants.</p>
-    <p>preencoded.png preencoded.png preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique</p>
-    <p>L'ESSENTIEL À RETENIR</p>
-    <p>Mon compte CAF, mode d'emploi</p>
-    <p>Un seul espace Je sais me connecter</p>
-    <p>Le site caf.fr et l'appli « Caf - Mon Compte » : le N° d'allocataire + mot de passe, FranceConnect, même dossier. ou empreinte / visage.</p>
-    <p>Je vérifie et je valide Je reste prudent</p>
-    <p>La déclaration trimestrielle est pré-remplie : je Je passe toujours par caf.fr / l'appli ; je me méfie contrôle puis je valide. des liens reçus.</p>
-    <p>preencoded.png</p>
-    <p>Yggdrasil · Médiation numérique — atelier « Mon compte CAF de A à Z »</p>
+  <div class="slides">
+    <div class="slide"><img src="img/caf_presentation/p-01.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-02.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-03.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-04.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-05.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-06.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-07.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-08.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-09.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-10.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-11.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-12.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-13.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-14.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-15.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-16.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-17.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/caf_presentation/p-18.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>12 démarches expliquées pas à pas</p>
+      <p>Mon compte</p>
+      <p>ATELIER NUMÉRIQUE · PAS À PAS</p>
+      <p>Mon compte CAF de A à Z ✓ Pour bien débuter : chaque démarche est expliquée clic par Connecté en 2 minutes clic, avec le nom exact des boutons. Se connecter, suivre ses paiements, télécharger une attestation, déclarer, envoyer un document…</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>SOMMAIRE DE L'ATELIER</p>
+      <p>Cliquez sur un thème pour y accéder À quoi ça sert ? Y accéder : site appli</p>
+      <p>1 2</p>
+      <p>1 À quoi ça sert ? 2 Y accéder : site &amp; appli Se connecter Créer son compte</p>
+      <p>3 4</p>
+      <p>3 Se connecter 4 Créer son compte Se repérer sur l'accueil Suivre mes paiements</p>
+      <p>5 6</p>
+      <p>5 Se repérer sur l'accueil 6 Suivre mes paiements Télécharger une attestation Déclarer un changement</p>
+      <p>7 8</p>
+      <p>7 Télécharger une attestation 8 Déclarer un changement La déclaration trimestrielle Envoyer un document</p>
+      <p>9 10</p>
+      <p>9 La déclaration trimestrielle 10 Envoyer un document Écrire à la CAF Sécurité dépannage</p>
+      <p>11 12</p>
+      <p>11 Écrire à la CAF 12 Sécurité &amp; dépannage</p>
+      <p>Astuce : en bas à droite de chaque diapo, les boutons ⊞ ◄ ► permettent de revenir au sommaire ou de naviguer.</p>
+      <p>LE COMPTE CAF · 1</p>
+      <p>À quoi sert mon compte CAF ?</p>
+      <p>« Mon Compte » est votre espace personnel et sécurisé, sur le site caf.fr et dans l'application mobile. Tout votre dossier se gère là, sans déplacement ni courrier.</p>
+      <p>Voir mes droits et paiements Télécharger mes documents</p>
+      <p>Ce que la CAF me verse : dates et montants. Attestations, relevés… en PDF.</p>
+      <p>Déclarer ma situation Échanger avec ma CAF</p>
+      <p>Déménagement, naissance, RIB, ressources… Messagerie, suivi et envoi de documents.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>LE COMPTE CAF · 1</p>
+      <p>Les principales aides gérées par la CAF</p>
+      <p>Selon votre situation, la CAF peut verser plusieurs aides. Toutes se suivent depuis le même compte.</p>
+      <p>Aides au logement RSA Prime d'activité APL, ALF, ALS : aider à payer un loyer ou Pour les personnes sans ou avec peu de Complément pour ceux qui travaillent un prêt. ressources. avec un petit salaire.</p>
+      <p>Allocations familiales AAH Petite enfance (Paje) Pour les familles avec au moins deux Naissance, allocation de base, garde Allocation aux Adultes Handicapés. enfants. d'enfant.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>ACCÈS · 2</p>
+      <p>Deux façons d'accéder à Mon Compte</p>
+      <p>Sur ordinateur Sur smartphone / tablette Site officiel : www.caf.fr Application gratuite : « Caf - Mon Compte »</p>
+      <p>• Ouvrir le navigateur (Chrome, Edge…) • Installer depuis Play Store / App Store • Aller sur www.caf.fr • Les mêmes services que le site • Cliquer « Mon Compte » en haut à droite • Alertes en cas de message ou décision • Écran plus grand : pratique pour imprimer • Connexion par empreinte ou visage</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 3</p>
+      <p>Se connecter à Mon Compte</p>
+      <p>Sur ordinateur, depuis le site www.caf.fr : 1 Ouvrir le navigateur et taper www.caf.fr dans la barre d'adresse.</p>
+      <p>2 En haut à droite, cliquer sur le bouton « Mon Compte ».</p>
+      <p>3 Saisir son numéro de Sécurité sociale (13 chiffres, carte Vitale) ou son numéro d'allocataire.</p>
+      <p>4 Saisir son mot de passe (il s'affiche en points).</p>
+      <p>5 Cliquer sur « Me connecter ».</p>
+      <p>Plus simple : cliquer sur le bouton bleu « FranceConnect » et se connecter avec ses identifiants des Impôts ou d'Ameli. Sur l'appli, on peut ensuite utiliser l'empreinte ou le visage.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 4</p>
+      <p>Créer son compte (nouvel allocataire)</p>
+      <p>Pas encore de compte ? La création se fait sur www.caf.fr en moins de 10 minutes. 1 Préparer : numéro de Sécurité sociale, une adresse e-mail et un numéro de portable.</p>
+      <p>2 Sur www.caf.fr, suivre le parcours de création de compte.</p>
+      <p>3 Recevoir un code de vérification par SMS ou e-mail, puis le recopier.</p>
+      <p>4 Choisir un mot de passe fort : majuscules, minuscules, chiffres et caractère spécial.</p>
+      <p>5 Noter son numéro d'allocataire et garder son mot de passe en lieu sûr.</p>
+      <p>Bon réflexe : ne jamais écrire son mot de passe sur un papier visible, ni le donner à quelqu'un par téléphone ou par mail.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>NAVIGATION · 5</p>
+      <p>Se repérer sur la page d'accueil</p>
+      <p>Une fois connecté, voici les boutons à connaître sur la page d'accueil :</p>
+      <p>« Ma situation / Mon profil » « Mes paiements » Vérifier mes infos : adresse, RIB, foyer. Les versements reçus, dates et montants.</p>
+      <p>« Mes démarches » « Mes courriers, courriels » L'avancement de mes demandes et les pièces à Écrire à la CAF et lire ses réponses. fournir.</p>
+      <p>« Mes attestations » Mes alertes / agenda Télécharger mes documents en PDF. Rappels et démarches à faire.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 6</p>
+      <p>Suivre mes paiements</p>
+      <p>Pour vérifier ce que la CAF vous a versé :</p>
+      <p>1 Se connecter à Mon Compte.</p>
+      <p>2 Sur la page d'accueil, cliquer sur « Mes paiements ».</p>
+      <p>3 La liste affiche les 10 derniers versements : date, montant et prestation.</p>
+      <p>4 Pour les plus anciens, faire défiler (jusqu'à 24 mois).</p>
+      <p>5 Pour un justificatif : « Mon relevé de compte » puis « Télécharger ».</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 7</p>
+      <p>Télécharger une attestation</p>
+      <p>Pour obtenir une attestation de paiement ou de quotient familial :</p>
+      <p>1 Se connecter à Mon Compte.</p>
+      <p>2 Sur la page d'accueil, cliquer sur « Mes attestations ».</p>
+      <p>3 Choisir « Attestation de paiement » ou « Attestation de quotient familial ».</p>
+      <p>4 Choisir la période (mois précédent ou autre).</p>
+      <p>5 Cliquer sur « Télécharger » : le PDF s'enregistre (ou « Recevoir par courrier »).</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 8</p>
+      <p>Déclarer un changement de situation</p>
+      <p>Dès qu'un changement arrive, on le signale (évite les erreurs de paiement) :</p>
+      <p>1 Se connecter à Mon Compte.</p>
+      <p>2 Cliquer sur « Mon profil » (ou « Ma situation »).</p>
+      <p>3 Choisir ce qui change : adresse, situation familiale, emploi, RIB…</p>
+      <p>4 Saisir les nouvelles informations.</p>
+      <p>5 Cliquer sur « Valider ». Le plus souvent, aucun justificatif à envoyer.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 9</p>
+      <p>La déclaration trimestrielle (RSA / prime d'activité)</p>
+      <p>Tous les 3 mois. Depuis mars 2025, elle est pré-remplie : on vérifie et on valide.</p>
+      <p>1 Vous recevez un mail ou un SMS : se connecter à Mon Compte.</p>
+      <p>2 Aller dans « Mes ressources » puis « Déclarer mes ressources trimestrielles ».</p>
+      <p>3 Accepter (« J'ai compris »), puis confirmer ou corriger sa situation.</p>
+      <p>4 Vérifier les montants déjà inscrits (salaires, chômage…), en montant net social.</p>
+      <p>Compléter ce qui manque (pension alim., indépendant, conjoint, enfants +15 ans) ou cocher « Absence de 5 ressources ».</p>
+      <p>6 Cliquer sur « Valider » (et télécharger le récapitulatif si besoin).</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>ZOOM · 9</p>
+      <p>Le montant net social (MNS)</p>
+      <p>C'est LE montant à utiliser pour le RSA et la prime d'activité. Il est calculé pour vous.</p>
+      <p>C'est quoi ? Le revenu pris en compte par la CAF pour calculer le RSA et la prime d'activité.</p>
+      <p>Où le trouver ? Sur le bulletin de salaire et les relevés, ligne « Montant net social ».</p>
+      <p>Et en ligne ? Aussi sur mesdroitssociaux.gouv.fr (Mes services › Mes ressources).</p>
+      <p>Bon à savoir : si le net social d'un mois est négatif ou nul, on déclare 0 €. preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>PAS À PAS · 10</p>
+      <p>Envoyer un document à la CAF</p>
+      <p>Quand la CAF demande un justificatif, on l'envoie directement depuis le compte :</p>
+      <p>1 Se connecter à Mon Compte.</p>
+      <p>2 Aller dans « Mes démarches ».</p>
+      <p>3 Cliquer sur l'onglet « À transmettre » (ou « La Caf me demande »).</p>
+      <p>4 Cliquer sur l'icône pour choisir un fichier (PDF ou photo, max 5 Mo) ou le prendre en photo.</p>
+      <p>5 Vérifier avec le petit œil ; supprimer (poubelle) si c'est flou.</p>
+      <p>6 Cliquer sur « Continuer ». Suivi dans « Mes courriers, courriels ».</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>ÊTRE AIDÉ · 11</p>
+      <p>Écrire à la CAF et obtenir de l'aide</p>
+      <p>Le plus simple : la messagerie de votre compte.</p>
+      <p>1 Se connecter à Mon Compte.</p>
+      <p>2 Ouvrir « Mes courriers, courriels » (la messagerie).</p>
+      <p>3 Écrire son message et l'envoyer. La réponse arrive au même endroit.</p>
+      <p>Autres contacts utiles :</p>
+      <p>Le 3230 Un accueil près de chez soi L'aide en ligne Numéro de la CAF (au téléphone). CAF ou point France Services. Pages d'aide de caf.fr.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>SÉCURITÉ · 12</p>
+      <p>Protéger mon compte &amp; repérer les arnaques</p>
+      <p>Mes bons réflexes Les signaux d'arnaque</p>
+      <p>Un mot de passe long, gardé secret Un SMS / mail « remboursement » avec un lien</p>
+      <p>Je passe par caf.fr ou l'appli officielle On demande mes identifiants ou mon RIB</p>
+      <p>Je vérifie l'adresse du site (caf.fr) Un ton pressant : « urgent », « dernier délai »</p>
+      <p>La CAF ne demande jamais ma carte bancaire Une adresse bizarre qui imite caf.fr</p>
+      <p>En cas de doute : ne cliquez pas. Connectez-vous vous-même à caf.fr ou à l'appli pour vérifier.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>DÉPANNAGE · 12</p>
+      <p>En cas de problème de connexion</p>
+      <p>Les blocages les plus courants se règlent en quelques clics :</p>
+      <p>Mot de passe oublié Numéro d'allocataire perdu Sur l'écran de connexion : cliquer « Mot de Il est sur tous les courriers CAF. Sinon, se passe oublié » → on reçoit un lien pour en connecter via FranceConnect ou contacter la créer un nouveau. CAF.</p>
+      <p>L'appli ne s'ouvre plus Toujours bloqué ? Mettre l'appli à jour, vérifier sa connexion La messagerie, le 3230 ou un point d'accueil Internet, puis se reconnecter avec ses peuvent débloquer la situation. identifiants.</p>
+      <p>preencoded.png preencoded.png preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique</p>
+      <p>L'ESSENTIEL À RETENIR</p>
+      <p>Mon compte CAF, mode d'emploi</p>
+      <p>Un seul espace Je sais me connecter</p>
+      <p>Le site caf.fr et l'appli « Caf - Mon Compte » : le N° d'allocataire + mot de passe, FranceConnect, même dossier. ou empreinte / visage.</p>
+      <p>Je vérifie et je valide Je reste prudent</p>
+      <p>La déclaration trimestrielle est pré-remplie : je Je passe toujours par caf.fr / l'appli ; je me méfie contrôle puis je valide. des liens reçus.</p>
+      <p>preencoded.png</p>
+      <p>Yggdrasil · Médiation numérique — atelier « Mon compte CAF de A à Z »</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>

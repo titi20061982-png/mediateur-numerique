@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,90 +67,108 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>Comprendre sa facture téléphonique &amp; son forfait Guide pratique pour tout comprendre en un coup d'œil ▶ Commencer</p>
-    <p>Commencer</p>
-    <p>Orange · SFR · Bouygues · Free · Sosh</p>
-    <p>Sommaire 📄 Structure d'une facture 📝 Facture annotée 📦 Comprendre son forfait</p>
-    <p>Structure d'une facture Facture annotée Comprendre son forfait</p>
-    <p>💶 Postes de dépenses 🔎 HT, TTC, TVA 💡 Conseils pratiques</p>
-    <p>Postes de dépenses HT, TTC, TVA Conseils pratiques</p>
-    <p>🔁 Changer / résilier ️Arnaques surtaxés ⚠ ✅ Checklist en 5 min</p>
-    <p>Changer / résilier Arnaques &amp; surtaxés Checklist en 5 min</p>
-    <p>Cliquez sur une section pour y accéder directement Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026</p>
-    <p>▶ Vidéo : comprendre sa facture</p>
-    <p>Vidéo : comprendre sa facture</p>
-    <p>Structure d'une facture</p>
-    <p>1. Informations client 4. Consommations</p>
-    <p>Nom, adresse, numéro de contrat, IBAN si prélèvement Appels, SMS, data utilisés, dépassements éventuels. automatique.</p>
-    <p>2. Résumé de facturation 5. Frais supplémentaires</p>
-    <p>Période facturée, montant total TTC, date d'échéance du Options payantes, achats hors forfait, itinérance (roaming). paiement.</p>
-    <p>3. Détail du forfait</p>
-    <p>Nom de l'offre souscrite, engagements, options actives.</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Lire une facture : où regarder ?</p>
-    <p>Facture mobile — Mars 2026 Les 5 zones à repérer</p>
-    <p>① Informations : M. Dupont · Contrat n° 0412 ① Informations client — qui paie, n° de contrat, IBAN.</p>
-    <p>② Total à payer : 45,78 € TTC · le 15/03 ② Résumé de facturation — total TTC et date de prélèvement. ③ Forfait Mobile 100 Go · engagt 12 mois ③ Détail du forfait — offre, engagement, options.</p>
-    <p>④ Conso : 3 h appels · 250 SMS · 82 Go ④ Consommations — ce que vous avez réellement utilisé.</p>
-    <p>⑤ Hors forfait 8,50 € · Roaming 12,30 € ⑤ Frais en plus — hors forfait, options, roaming : à surveiller.</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Comprendre son forfait</p>
-    <p>Appels &amp; SMS Data (internet mobile) Roaming (hors France)</p>
-    <p>› Illimités vers mobiles/fixes France › Volume inclus (ex : 100 Go) › UE : souvent inclus dans le forfait</p>
-    <p>› Hors UE : tarifs élevés, activer › Vérifier si illimité vers l'étranger › Vitesse réduite après épuisement manuellement</p>
-    <p>› Désactiver les données en itinérance si › Numéros spéciaux souvent hors forfait › Partage de connexion (hotspot) possible besoin</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Les postes de dépenses sur la facture</p>
-    <p>Poste Description À surveiller</p>
-    <p>Abonnement mensuel Prix de base du forfait (hors options) Comparer régulièrement les offres</p>
-    <p>Location box / téléphone Si téléphone en location ou crédit Vérifier durée d'engagement</p>
-    <p>Hors forfait SMS, data ou appels dépassant le plafond Peut doubler la facture !</p>
-    <p>Options souscrites Netflix, antivirus, assistance… Désabonner ce qui n'est pas utilisé</p>
-    <p>Itinérance (roaming) Usage à l'étranger hors UE Désactiver les données avant le voyage</p>
-    <p>Frais de résiliation Pénalités si départ avant fin engagement Calculer avant de changer d'opérateur ☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>HT, TTC, TVA : ce que signifient ces sigles</p>
-    <p>Prix HT + TVA 20% = Prix TTC</p>
-    <p>12,50 € + 2,50 € = 15,00 €</p>
-    <p>HT (Hors Taxes) TTC (Toutes Taxes Comprises) Le montant réel que vous payez. C'est le prix affiché dans les offres Le prix net avant application de la TVA. C'est ce que perçoit l'opérateur. commerciales.</p>
-    <p>TVA (Taxe sur la Valeur Ajoutée) URSSAF / Contribution En France, la TVA sur les forfaits téléphoniques est de 20 %. Elle est Certaines factures incluent aussi des contributions (ex. audiovisuel reversée à l'État. public).</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Conseils pour maîtriser sa facture</p>
-    <p>Activer les alertes de consommation dans Désactiver les données mobiles en itinérance hors l'application de votre opérateur. Union Européenne.</p>
-    <p>Mettre un plafond de hors-forfait (souvent gratuit, Vérifier chaque mois les options actives et supprimer demandez à votre opérateur). celles non utilisées.</p>
-    <p>Se connecter au Wi-Fi dès que possible pour Comparer les offres tous les ans : les tarifs baissent économiser la data mobile. régulièrement.</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Changer d'opérateur ou résilier</p>
-    <p>Vérifier la durée d'engagement (12 ou 24 mois) C'est le nouvel opérateur qui résilie l'ancien : aucune avant tout changement. coupure de ligne.</p>
-    <p>Loi Chatel : après 12 mois d'un engagement de 24 Sans engagement : résiliable à tout moment, préavis mois, résiliation à frais réduits. de 10 jours.</p>
-    <p>Garder son numéro : demander le RIO en composant Comparer avant de partir : un forfait équivalent le 3179 (gratuit). coûte souvent moins cher.</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Factures qui gonflent : arnaques &amp; surtaxés</p>
-    <p>Abonnements cachés « SMS+ » : achats facturés via Signaler un SMS ou appel indésirable : le transférer le mobile, parfois sans accord clair. au 33700 (gratuit).</p>
-    <p>Numéros surtaxés (0890, 118…) : facturés en plus, Bloquer les achats surtaxés : demander le blocage au vérifier le tarif avant d'appeler. service client (gratuit).</p>
-    <p>Faux SMS de l'opérateur : ne jamais cliquer, il ne Vérifier chaque ligne : une somme inconnue se demande jamais vos codes. conteste sous 1 mois.</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
-    <p>Checklist : relire sa facture en 5 min</p>
-    <p>1 Vérifier que le montant correspond au forfait annoncé</p>
-    <p>2 Contrôler les options actives (payantes ou offertes)</p>
-    <p>3 Repérer les frais hors forfait (appels, data dépassés)</p>
-    <p>4 Vérifier la période de facturation et la date de prélèvement</p>
-    <p>5 Contrôler si un engagement est toujours en cours</p>
-    <p>6 Signaler toute anomalie sous 1 mois au service client ☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numériquevotre · 2026opérateur, puis le médiateur des communications électroniques (www.mediation-telecom.org) ☰ Menu En cas de litige : contactez</p>
-    <p>MERCI Vous savez maintenant lire et maîtriser votre facture.</p>
-    <p>Un doute ? Contactez votre opérateur, puis le médiateur des communications électroniques : www.mediation-telecom.org</p>
-    <p>☰ Menu</p>
-    <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+  <div class="slides">
+    <div class="slide"><img src="img/facture-telephone_presentation/p-01.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-02.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-03.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-04.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-05.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-06.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-07.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-08.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-09.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-10.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-11.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/facture-telephone_presentation/p-12.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>Comprendre sa facture téléphonique &amp; son forfait Guide pratique pour tout comprendre en un coup d'œil ▶ Commencer</p>
+      <p>Commencer</p>
+      <p>Orange · SFR · Bouygues · Free · Sosh</p>
+      <p>Sommaire 📄 Structure d'une facture 📝 Facture annotée 📦 Comprendre son forfait</p>
+      <p>Structure d'une facture Facture annotée Comprendre son forfait</p>
+      <p>💶 Postes de dépenses 🔎 HT, TTC, TVA 💡 Conseils pratiques</p>
+      <p>Postes de dépenses HT, TTC, TVA Conseils pratiques</p>
+      <p>🔁 Changer / résilier ️Arnaques surtaxés ⚠ ✅ Checklist en 5 min</p>
+      <p>Changer / résilier Arnaques &amp; surtaxés Checklist en 5 min</p>
+      <p>Cliquez sur une section pour y accéder directement Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026</p>
+      <p>▶ Vidéo : comprendre sa facture</p>
+      <p>Vidéo : comprendre sa facture</p>
+      <p>Structure d'une facture</p>
+      <p>1. Informations client 4. Consommations</p>
+      <p>Nom, adresse, numéro de contrat, IBAN si prélèvement Appels, SMS, data utilisés, dépassements éventuels. automatique.</p>
+      <p>2. Résumé de facturation 5. Frais supplémentaires</p>
+      <p>Période facturée, montant total TTC, date d'échéance du Options payantes, achats hors forfait, itinérance (roaming). paiement.</p>
+      <p>3. Détail du forfait</p>
+      <p>Nom de l'offre souscrite, engagements, options actives.</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Lire une facture : où regarder ?</p>
+      <p>Facture mobile — Mars 2026 Les 5 zones à repérer</p>
+      <p>① Informations : M. Dupont · Contrat n° 0412 ① Informations client — qui paie, n° de contrat, IBAN.</p>
+      <p>② Total à payer : 45,78 € TTC · le 15/03 ② Résumé de facturation — total TTC et date de prélèvement. ③ Forfait Mobile 100 Go · engagt 12 mois ③ Détail du forfait — offre, engagement, options.</p>
+      <p>④ Conso : 3 h appels · 250 SMS · 82 Go ④ Consommations — ce que vous avez réellement utilisé.</p>
+      <p>⑤ Hors forfait 8,50 € · Roaming 12,30 € ⑤ Frais en plus — hors forfait, options, roaming : à surveiller.</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Comprendre son forfait</p>
+      <p>Appels &amp; SMS Data (internet mobile) Roaming (hors France)</p>
+      <p>› Illimités vers mobiles/fixes France › Volume inclus (ex : 100 Go) › UE : souvent inclus dans le forfait</p>
+      <p>› Hors UE : tarifs élevés, activer › Vérifier si illimité vers l'étranger › Vitesse réduite après épuisement manuellement</p>
+      <p>› Désactiver les données en itinérance si › Numéros spéciaux souvent hors forfait › Partage de connexion (hotspot) possible besoin</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Les postes de dépenses sur la facture</p>
+      <p>Poste Description À surveiller</p>
+      <p>Abonnement mensuel Prix de base du forfait (hors options) Comparer régulièrement les offres</p>
+      <p>Location box / téléphone Si téléphone en location ou crédit Vérifier durée d'engagement</p>
+      <p>Hors forfait SMS, data ou appels dépassant le plafond Peut doubler la facture !</p>
+      <p>Options souscrites Netflix, antivirus, assistance… Désabonner ce qui n'est pas utilisé</p>
+      <p>Itinérance (roaming) Usage à l'étranger hors UE Désactiver les données avant le voyage</p>
+      <p>Frais de résiliation Pénalités si départ avant fin engagement Calculer avant de changer d'opérateur ☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>HT, TTC, TVA : ce que signifient ces sigles</p>
+      <p>Prix HT + TVA 20% = Prix TTC</p>
+      <p>12,50 € + 2,50 € = 15,00 €</p>
+      <p>HT (Hors Taxes) TTC (Toutes Taxes Comprises) Le montant réel que vous payez. C'est le prix affiché dans les offres Le prix net avant application de la TVA. C'est ce que perçoit l'opérateur. commerciales.</p>
+      <p>TVA (Taxe sur la Valeur Ajoutée) URSSAF / Contribution En France, la TVA sur les forfaits téléphoniques est de 20 %. Elle est Certaines factures incluent aussi des contributions (ex. audiovisuel reversée à l'État. public).</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Conseils pour maîtriser sa facture</p>
+      <p>Activer les alertes de consommation dans Désactiver les données mobiles en itinérance hors l'application de votre opérateur. Union Européenne.</p>
+      <p>Mettre un plafond de hors-forfait (souvent gratuit, Vérifier chaque mois les options actives et supprimer demandez à votre opérateur). celles non utilisées.</p>
+      <p>Se connecter au Wi-Fi dès que possible pour Comparer les offres tous les ans : les tarifs baissent économiser la data mobile. régulièrement.</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Changer d'opérateur ou résilier</p>
+      <p>Vérifier la durée d'engagement (12 ou 24 mois) C'est le nouvel opérateur qui résilie l'ancien : aucune avant tout changement. coupure de ligne.</p>
+      <p>Loi Chatel : après 12 mois d'un engagement de 24 Sans engagement : résiliable à tout moment, préavis mois, résiliation à frais réduits. de 10 jours.</p>
+      <p>Garder son numéro : demander le RIO en composant Comparer avant de partir : un forfait équivalent le 3179 (gratuit). coûte souvent moins cher.</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Factures qui gonflent : arnaques &amp; surtaxés</p>
+      <p>Abonnements cachés « SMS+ » : achats facturés via Signaler un SMS ou appel indésirable : le transférer le mobile, parfois sans accord clair. au 33700 (gratuit).</p>
+      <p>Numéros surtaxés (0890, 118…) : facturés en plus, Bloquer les achats surtaxés : demander le blocage au vérifier le tarif avant d'appeler. service client (gratuit).</p>
+      <p>Faux SMS de l'opérateur : ne jamais cliquer, il ne Vérifier chaque ligne : une somme inconnue se demande jamais vos codes. conteste sous 1 mois.</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+      <p>Checklist : relire sa facture en 5 min</p>
+      <p>1 Vérifier que le montant correspond au forfait annoncé</p>
+      <p>2 Contrôler les options actives (payantes ou offertes)</p>
+      <p>3 Repérer les frais hors forfait (appels, data dépassés)</p>
+      <p>4 Vérifier la période de facturation et la date de prélèvement</p>
+      <p>5 Contrôler si un engagement est toujours en cours</p>
+      <p>6 Signaler toute anomalie sous 1 mois au service client ☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numériquevotre · 2026opérateur, puis le médiateur des communications électroniques (www.mediation-telecom.org) ☰ Menu En cas de litige : contactez</p>
+      <p>MERCI Vous savez maintenant lire et maîtriser votre facture.</p>
+      <p>Un doute ? Contactez votre opérateur, puis le médiateur des communications électroniques : www.mediation-telecom.org</p>
+      <p>☰ Menu</p>
+      <p>Yggdrasil · Cédric WALTENER · Médiateur Numérique · 2026 ☰ Menu</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>

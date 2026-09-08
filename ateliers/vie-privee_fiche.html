@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,15 +67,22 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>Protéger sa vie privée en ligne Fiche à emporter — reprenez le contrôle de vos données YGGDRASIL • ATELIER MÉDIATION NUMÉRIQUE</p>
-    <p>01 Les bons outils 02 Mots de passe &amp; 2FA 16 caractères minimum, aléatoires Besoin Outils conseillés Un mot de passe UNIQUE par site Navigateur Firefox + uBlock Origin, ou Brave Généré et stocké dans un gestionnaire</p>
-    <p>DuckDuckGo, Brave Search, Méthode 2FA À retenir Recherche Startpage Appli TOTP Aegis / Raivo — recommandé Mots de passe Bitwarden ou KeePassXC Clé physique YubiKey — le plus sûr Mullvad, ProtonVPN (jamais VPN gratuit) SMS vulnérable au SIM swap SimpleLogin, AnonAddy, Hide My Alias e-mail Email</p>
-    <p>E-mail chiffré Proton Mail (Suisse)</p>
-    <p>03 Sécuriser ses appareils 04 Repérer le phishing Smartphone : coupez localisation/Bluetooth ! Domaine douteux (amaz0n, rn au lieu de m) inutiles ! Urgence : « compte suspendu sous 24h » Révoquez les permissions d'apps superflues ! Lien différent du texte affiché Ordinateur : chiffrez le disque (BitLocker / ! Pièce jointe non sollicitée (.exe, .zip) FileVault) ! Demande d'identifiants, CB ou code SMS Mises à jour automatiques activées DNS chiffré : NextDNS ou Cloudflare 1.1.1.1 Réflexe : en cas de doute, tapez l'adresse du site Wi-Fi public : toujours un VPN — WPA3 chez vous-même. vous</p>
-    <p>05 Votre plan d'action en 3 niveaux DÉBUTANT INTERMÉDIAIRE AVANCÉ ■ Bitwarden + mots de passe uniques ■ Passer à Firefox ou Brave ■ DNS chiffré (NextDNS) ■ 2FA (TOTP) sur les comptes clés ■ DuckDuckGo ou Brave Search ■ Chiffrement complet du disque ■ uBlock Origin sur le navigateur ■ VPN de confiance (Proton, Mullvad) ■ Tor pour la navigation sensible ■ Vérifier confidentialité réseaux ■ Alias e-mail pour s'inscrire ■ Minimiser son empreinte numérique sociaux</p>
-    <p>Pour aller plus loin : privacyguides.org eff.org ssd.eff.org La vie privée est un droit, pas un luxe.</p>
+  <div class="slides">
+    <div class="slide"><img src="img/vie-privee_fiche/p-1.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>Protéger sa vie privée en ligne Fiche à emporter — reprenez le contrôle de vos données YGGDRASIL • ATELIER MÉDIATION NUMÉRIQUE</p>
+      <p>01 Les bons outils 02 Mots de passe &amp; 2FA 16 caractères minimum, aléatoires Besoin Outils conseillés Un mot de passe UNIQUE par site Navigateur Firefox + uBlock Origin, ou Brave Généré et stocké dans un gestionnaire</p>
+      <p>DuckDuckGo, Brave Search, Méthode 2FA À retenir Recherche Startpage Appli TOTP Aegis / Raivo — recommandé Mots de passe Bitwarden ou KeePassXC Clé physique YubiKey — le plus sûr Mullvad, ProtonVPN (jamais VPN gratuit) SMS vulnérable au SIM swap SimpleLogin, AnonAddy, Hide My Alias e-mail Email</p>
+      <p>E-mail chiffré Proton Mail (Suisse)</p>
+      <p>03 Sécuriser ses appareils 04 Repérer le phishing Smartphone : coupez localisation/Bluetooth ! Domaine douteux (amaz0n, rn au lieu de m) inutiles ! Urgence : « compte suspendu sous 24h » Révoquez les permissions d'apps superflues ! Lien différent du texte affiché Ordinateur : chiffrez le disque (BitLocker / ! Pièce jointe non sollicitée (.exe, .zip) FileVault) ! Demande d'identifiants, CB ou code SMS Mises à jour automatiques activées DNS chiffré : NextDNS ou Cloudflare 1.1.1.1 Réflexe : en cas de doute, tapez l'adresse du site Wi-Fi public : toujours un VPN — WPA3 chez vous-même. vous</p>
+      <p>05 Votre plan d'action en 3 niveaux DÉBUTANT INTERMÉDIAIRE AVANCÉ ■ Bitwarden + mots de passe uniques ■ Passer à Firefox ou Brave ■ DNS chiffré (NextDNS) ■ 2FA (TOTP) sur les comptes clés ■ DuckDuckGo ou Brave Search ■ Chiffrement complet du disque ■ uBlock Origin sur le navigateur ■ VPN de confiance (Proton, Mullvad) ■ Tor pour la navigation sensible ■ Vérifier confidentialité réseaux ■ Alias e-mail pour s'inscrire ■ Minimiser son empreinte numérique sociaux</p>
+      <p>Pour aller plus loin : privacyguides.org eff.org ssd.eff.org La vie privée est un droit, pas un luxe.</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>

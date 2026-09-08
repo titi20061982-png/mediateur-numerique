@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,31 +67,40 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>Trouver sa Formation 2026 Yggdrasil Médiation Numérique Choisir, financer avec le CPF, viser l'emploi 1/2</p>
-    <p>4 questions à se poser avant de chercher</p>
-    <p>1 2 3 4 Quel est mon but ? Certifiante ou non ? Distance ou en salle ? Quel budget ? Emploi, reconversion, diplôme, ou Pour l'emploi, visez du RNCP / RS. En ligne, en présentiel, ou un Beaucoup de formations sont juste se perfectionner ? mélange des deux. finançables par le CPF.</p>
-    <p>Le CPF, c'est quoi ?</p>
-    <p>Compte Personnel de Formation : une cagnotte en euros que l'État crédite quand vous travaillez, pour payer des formations.</p>
-    <p>500€/an 5 000 € 800€/an crédités si vous travaillez plafond maximum niveau &lt; CAP ou handicap (plafond 8 000 €)</p>
-    <p>Consulter son CPF : comment faire ?</p>
-    <p>1 2 3 4 Site officiel Identité Numérique La Poste FranceConnect+ Regardez votre solde moncompteformation.gouv.fr ou Gratuite, obligatoire pour le CPF Confirmez votre identité depuis Cagnotte, droits et formations l'appli « Mon Compte Formation » depuis 2022 l'appli sur smartphone possibles</p>
-    <p>Se former aujourd'hui, décrocher l'emploi de demain.</p>
-    <p>Trouver sa Formation 2026 Yggdrasil Médiation Numérique Financement, aides disponibles, arnaques à éviter 2/2</p>
-    <p>Ce que le CPF peut financer</p>
-    <p>Formations diplômantes : RNCP/RS (informatique, secrétariat, petite enfance...)Langues : anglais, espagnol avec certification (plafond 1 500 €)</p>
-    <p>Permis de conduire : permis B jusqu'à 900 €Bilan de compétences : jusqu'à 1 600 €</p>
-    <p>VAE : faire reconnaître son expérience pour un diplômeCréation d'entreprise : utile pour la micro-entreprise</p>
-    <p>Le CPF ne paie pas le matériel, les loisirs, ni les formations non certifiantes.</p>
-    <p>150 € de participation — qui en est exonéré ? Les demandeurs d'emploi inscrits à France TravailLes personnes dont l'employeur complète le financement</p>
-    <p>Les bénéficiaires du Compte Professionnel de Prévention (C2P)Les personnes en accident du travail / maladie professionnelle</p>
-    <p>Qui peut financer votre formation ? CPF France Travail (AIF) PRF Région N.-A. Chèque Formation Plan de compétences Transitions Pro (PTP) Tous dès 16 ans Demandeurs d'emploi Demandeurs d'emploi Demandeurs d'emploi &amp; Salariés Salariés en reconversion précaires</p>
-    <p>Attention aux arnaques au CPF</p>
-    <p>Méfiez-vous si... Les bons réflexes On vous appelle pour vos droits « avant expiration » Le CPF ne démarche JAMAIS par tél. ou SMS On demande votre n° sécu ou vos codes Un seul site officiel : moncompteformation.gouv.fr On promet argent ou cadeau en échange Ne donnez jamais vos codes FranceConnect On met la pression pour signer vite Dans le doute, raccrochez et demandez conseil</p>
-    <p>Pour aller plus loin — flashez</p>
-    <p>Mon CompteFrance TravailMon CEP FormationInscription, AIF, conseiller —Conseil gratuit en évolution Consulter ses droits et39 49professionnelle s'inscrire</p>
-    <p>Se former aujourd'hui, décrocher l'emploi de demain.</p>
+  <div class="slides">
+    <div class="slide"><img src="img/formation_fiche/p-1.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/formation_fiche/p-2.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/formation_fiche/p-3.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>Trouver sa Formation 2026 Yggdrasil Médiation Numérique Choisir, financer avec le CPF, viser l'emploi 1/2</p>
+      <p>4 questions à se poser avant de chercher</p>
+      <p>1 2 3 4 Quel est mon but ? Certifiante ou non ? Distance ou en salle ? Quel budget ? Emploi, reconversion, diplôme, ou Pour l'emploi, visez du RNCP / RS. En ligne, en présentiel, ou un Beaucoup de formations sont juste se perfectionner ? mélange des deux. finançables par le CPF.</p>
+      <p>Le CPF, c'est quoi ?</p>
+      <p>Compte Personnel de Formation : une cagnotte en euros que l'État crédite quand vous travaillez, pour payer des formations.</p>
+      <p>500€/an 5 000 € 800€/an crédités si vous travaillez plafond maximum niveau &lt; CAP ou handicap (plafond 8 000 €)</p>
+      <p>Consulter son CPF : comment faire ?</p>
+      <p>1 2 3 4 Site officiel Identité Numérique La Poste FranceConnect+ Regardez votre solde moncompteformation.gouv.fr ou Gratuite, obligatoire pour le CPF Confirmez votre identité depuis Cagnotte, droits et formations l'appli « Mon Compte Formation » depuis 2022 l'appli sur smartphone possibles</p>
+      <p>Se former aujourd'hui, décrocher l'emploi de demain.</p>
+      <p>Trouver sa Formation 2026 Yggdrasil Médiation Numérique Financement, aides disponibles, arnaques à éviter 2/2</p>
+      <p>Ce que le CPF peut financer</p>
+      <p>Formations diplômantes : RNCP/RS (informatique, secrétariat, petite enfance...)Langues : anglais, espagnol avec certification (plafond 1 500 €)</p>
+      <p>Permis de conduire : permis B jusqu'à 900 €Bilan de compétences : jusqu'à 1 600 €</p>
+      <p>VAE : faire reconnaître son expérience pour un diplômeCréation d'entreprise : utile pour la micro-entreprise</p>
+      <p>Le CPF ne paie pas le matériel, les loisirs, ni les formations non certifiantes.</p>
+      <p>150 € de participation — qui en est exonéré ? Les demandeurs d'emploi inscrits à France TravailLes personnes dont l'employeur complète le financement</p>
+      <p>Les bénéficiaires du Compte Professionnel de Prévention (C2P)Les personnes en accident du travail / maladie professionnelle</p>
+      <p>Qui peut financer votre formation ? CPF France Travail (AIF) PRF Région N.-A. Chèque Formation Plan de compétences Transitions Pro (PTP) Tous dès 16 ans Demandeurs d'emploi Demandeurs d'emploi Demandeurs d'emploi &amp; Salariés Salariés en reconversion précaires</p>
+      <p>Attention aux arnaques au CPF</p>
+      <p>Méfiez-vous si... Les bons réflexes On vous appelle pour vos droits « avant expiration » Le CPF ne démarche JAMAIS par tél. ou SMS On demande votre n° sécu ou vos codes Un seul site officiel : moncompteformation.gouv.fr On promet argent ou cadeau en échange Ne donnez jamais vos codes FranceConnect On met la pression pour signer vite Dans le doute, raccrochez et demandez conseil</p>
+      <p>Pour aller plus loin — flashez</p>
+      <p>Mon CompteFrance TravailMon CEP FormationInscription, AIF, conseiller —Conseil gratuit en évolution Consulter ses droits et39 49professionnelle s'inscrire</p>
+      <p>Se former aujourd'hui, décrocher l'emploi de demain.</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>

@@ -10,29 +10,47 @@
   :root {
     --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
     --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
-      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
   h1, h2 { font-family: "Fraunces", Georgia, serif; }
   header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap { max-width: 820px; margin: 0 auto; }
   .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
   .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
-  main p { margin: 0 0 1rem; white-space: pre-wrap; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
-  footer a { color: var(--accent); }
   #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
   .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+  .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+  .slide img { display: block; width: 100%; height: auto; }
+
+  .text-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+    margin-bottom: 1rem; list-style: none;
+  }
+  .text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .text-toggle::-webkit-details-marker { display: none; }
+  .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
+  .text-card p { margin: 0 0 1rem; }
+  .text-card p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -49,162 +67,190 @@
   </div>
 </header>
 <main>
-  <div class="card">
-    <p>SÉCURITÉ INTERNET DES ENFANTS ACCOMPAGNER &amp; PROTÉGER ▶ DÉMARRER L'ATELIER Démarrer</p>
-    <p>✦ Par Cédric WALTENER DÉMARRER L'ATELIER</p>
-    <p>Parents 1 heure Guéret Ensemble Tous niveaux Atelier médiation numérique Formation MN — 2026 Sans jugement</p>
-    <p>Bienvenue — cet atelier est fait pour vous ! Quel que soit votre lien avec le numérique, vous êtes au bon endroit. Ici, on apprend ensemble, sans jugement.</p>
-    <p>Posez vos questions Vous n'êtes pas seul(e) Pas de jugement</p>
-    <p>Il n'y a pas de question bête. Si vous vous Accompagner un enfant en ligne, ça Surveiller n'est pas espionner. L'objectif : la posez, d'autres aussi. s'apprend. Personne ne maîtrise tout. protéger sans casser la confiance.</p>
-    <p>En France, 1 enfant sur 5 déjà connecté a été contacté par un inconnu en ligne. Le meilleur filtre reste le dialogue.</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Au programme Le déroulé de l'atelier, étape par étape.</p>
-    <p>Intro chiffres clés 🎬 Intro chiffres clés Les dangers d'Internet ⚠️ Les dangers d'Internet Où ils sont exposés🎮 Où ils sont exposés</p>
-    <p>Intro &amp; chiffres clés Les dangers d'Internet Où ils sont exposés</p>
-    <p>À risque ou sans danger 🔍 ? À risque ou sans danger ? Inconnu dans un jeu 👤 Inconnu dans un jeu Le cyberharcèlement 😢 Le cyberharcèlement</p>
-    <p>À risque ou sans danger ? Inconnu dans un jeu Le cyberharcèlement</p>
-    <p>Faux cadeaux arnaques 🎁 Faux cadeaux arnaques Le contrôle parental🛡️ Le contrôle parental Les signaux d'alerte🚩 Les signaux d'alerte</p>
-    <p>Faux cadeaux &amp; arnaques Le contrôle parental Les signaux d'alerte</p>
-    <p>Quiz interactif 🎯 Quiz interactif Signaler se faire aider 📞 Signaler se faire aider La charte familiale 📜 La charte familiale</p>
-    <p>Quiz interactif Signaler &amp; se faire aider La charte familiale</p>
-    <p>Parler avec son enfant 💬 Parler avec son enfant Mémo récapitulatif📋 Mémo récapitulatif Conclusion 🤝 Conclusion</p>
-    <p>Parler avec son enfant Mémo récapitulatif Conclusion</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Le saviez-vous ? Quelques chiffres clés sur les enfants et Internet en France.</p>
-    <p>73% 1 sur 5 40% 3h+ des enfants de 10 ans ont déjà enfants en ligne a été contacté des jeunes ont vécu du par jour en moyenne passées un smartphone par un inconnu cyberharcèlement sur écrans</p>
-    <p>Sources : ARCOM · e-Enfance · CNIL · enquêtes 2024-2025</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Les dangers d'Internet Internet n'est pas l'ennemi — mais ces risques existent et se reconnaissent.</p>
-    <p>Cyberprédateurs Cyberharcèlement Contenus inappropriés</p>
-    <p>Des adultes mal intentionnés cherchent le Insultes, moqueries et menaces répétées en Violence, pornographie, haine ou dérives contact via les jeux, réseaux et messageries. ligne, aux lourdes conséquences accessibles facilement, même sans les psychologiques. chercher.</p>
-    <p>Arnaques &amp; phishing Addiction aux écrans Usurpation d'identité</p>
-    <p>Faux concours, liens piégés, demandes de Usage excessif des réseaux, jeux et vidéos Photos et infos personnelles publiées puis données ciblant des enfants peu méfiants. perturbant le sommeil et la vie sociale. exploitées à des fins malveillantes.</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Où les enfants sont-ils exposés ? Les risques n'arrivent pas que « sur Internet » en général — voici les principaux canaux.</p>
-    <p>Réseaux Vidéos &amp; Jeux en ligne Messageries sociaux streaming Chats intégrés (Roblox, Fortnite, TikTok, Snapchat, Instagram : WhatsApp, Discord, DM privés : YouTube, lives : suggestions Minecraft) où des inconnus contacts, comparaison, là où la conversation quitte imprévisibles et contenus engagent la conversation. harcèlement, contenus non l'espace visible. inadaptés à l'âge. filtrés.</p>
-    <p>Le point commun : le risque grandit quand l'échange devient privé et invisible. Gardez les écrans dans les espaces communs.</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>À risque vs sans danger — savoir faire la différence</p>
-    <p>✓ SANS DANGER À RISQUE À RISQUE</p>
-    <p>Vidéos dans le salon Inconnu dans un jeu Faux cadeau / concours ✓ Appli/profil enfant activé « On continue en privé ? » « Tu as gagné un téléphone ! » ✓ Écran dans un espace commun Demande une photo / l'adresse Demande la carte bancaire ✓ Temps d'écran défini « N'en parle pas à tes parents » « Clique vite, offre limitée » ✓ Aucun inconnu ne le contacte Promet des cadeaux dans le jeu Urgence pour empêcher de réfléchir</p>
-    <p>Règle d'or : une situation saine reste visible et partagée. Dès qu'on demande le secret, une photo ou de l'argent → on en parle. Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Situation 01 — Un inconnu dans un jeu en ligne</p>
-    <p>Tchat du jeu — joueur inconnu Indices à repérer</p>
-    <p>De : Inconnu (rencontré dans la partie) Veut basculer en privé, hors du jeu (Discord)</p>
-    <p>« Salut ! Tu joues trop bien. On continue en privé sur Discord ? Envoie-moi une photo de toi et ton adresse, je t'enverrai des cadeaux dans le jeu. Surtout n'en parle pas à tes parents, c'est notre secret. » Demande une photo et l'adresse de l'enfant</p>
-    <p>« N'en parle pas à tes parents » = secret</p>
-    <p>GROOMING — DANGER, ne jamais répondre Promet des cadeaux pour gagner la confiance</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Situation 02 — Le cyberharcèlement</p>
-    <p>Réseau social — messages reçus Indices à repérer</p>
-    <p>De : un camarade de classe (chaque soir) Messages répétés, blessants ou menaçants</p>
-    <p>« T'es nul, personne ne t'aime, retourne te cacher. »</p>
-    <p>Insultes et moqueries répétées chaque soir. L'enfant devient triste, dort mal et ne Changement d'humeur, repli, refus de l'école veut plus aller à l'école.</p>
-    <p>Conserver les preuves (captures d'écran)</p>
-    <p>CYBERHARCÈLEMENT — conserver les preuves En parler : 3018, et l'établissement scolaire</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Situation 03 — Faux cadeau / concours</p>
-    <p>Fenêtre surgissante pendant le jeu Indices à repérer</p>
-    <p>De : pop-up « Félicitations ! » Promet un gain énorme pour attirer le clic</p>
-    <p>« BRAVO ! Tu es le 1000e visiteur, tu as gagné un téléphone et 1000 V-Bucks ! Clique ici et entre vite l'adresse et la carte bancaire de tes parents pour recevoir ton cadeau. » Réclame des données bancaires / personnelles</p>
-    <p>Urgence : « clique vite » pour court-circuiter</p>
-    <p>ARNAQUE — ne jamais cliquer ni saisir Un vrai cadeau n'exige jamais la carte bancaire</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Le contrôle parental Un outil, pas un mur : il accompagne, il ne remplace pas le dialogue.</p>
-    <p>Outils recommandés ✓ Bonnes pratiques</p>
-    <p>• Google Family Link — Apps, temps d'écran et localisation (Android) ✓ Installez-le dès le 1er appareil Expliquez à l'enfant POURQUOI ces règles Temps d'écran (Apple) — Limiter apps et sites sur iPhone / iPad / Placez les écrans dans les espaces communs • Mac Ne bloquez pas sans discussion — dialoguez</p>
-    <p>• Microsoft Family Safety — Contrôle complet sur Windows et Xbox Révisez les paramètres régulièrement Vérifiez la confidentialité des réseaux</p>
-    <p>• Qustodio / Net Nanny — Solutions multi-plateformes avec rapports</p>
-    <p>• Filtres de la box — Bloquer des catégories de sites sur le routeur Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Les signaux d'alerte à surveiller Aucun signe isolé ne prouve un problème — c'est l'accumulation qui doit alerter.</p>
-    <p>Cache son écran S'isole Humeur qui change</p>
-    <p>Bascule ou masque l'écran dès qu'un adulte Se replie, s'éloigne de sa famille et de ses amis Nerveux, triste ou agité après avoir été en ligne. s'approche. habituels.</p>
-    <p>Messages d'inconnus Se lève la nuit « Ami » en ligne</p>
-    <p>Reçoit des messages, photos ou cadeaux de Utilise les appareils en cachette, son humeur Parle d'un(e) ami(e) rencontré(e) uniquement personnes inconnues. dépend de l'accès. sur Internet.</p>
-    <p>En cas de doute : parlez-en sans attendre à votre enfant — sans colère, avec bienveillance.</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Question 1 / 5 À risque ou sans danger ?</p>
-    <p>Téléphone de l'enfant — SMS reçu</p>
-    <p>Contexte : votre enfant reçoit ce SMS sur son téléphone. « TikTok : ton compte va être supprimé dans 24h ! Confirme vite ton mot de passe ici : tiktok-verif-compte.net »</p>
-    <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
-    <p>Réponse : À RISQUE — phishing imitant un réseau social. Domaine inventé (.net) — ce n'est pas le vrai site Urgence artificielle (24h) pour empêcher de réfléchir Aucun réseau ne demande le mot de passe par SMS Réflexe : ne pas cliquer, en parler à un adulte</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Question 2 / 5 À risque ou sans danger ?</p>
-    <p>Tablette — appli vidéos</p>
-    <p>Contexte : votre enfant (8 ans) regarde des vidéos dans le salon. Profil enfant activé, contrôle parental en place, 30 minutes définies à l'avance — et il vous montre ce qu'il regarde.</p>
-    <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
-    <p>Réponse : SANS DANGER — usage sain et encadré. Application adaptée à son âge (profil enfant) Écran dans un espace commun, à votre vue Temps d'écran défini à l'avance Aucun inconnu n'entre en contact</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Question 3 / 5 À risque ou sans danger ?</p>
-    <p>Jeu en ligne — message privé</p>
-    <p>Contexte : un « ami » rencontré dans un jeu écrit à votre enfant. « On se parle en privé ? Envoie une photo de toi, je t'enverrai des skins gratuits. Surtout n'en parle pas à tes parents. »</p>
-    <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
-    <p>Réponse : À RISQUE — tentative de grooming par un inconnu. Veut un échange privé, hors du jeu Demande une photo de l'enfant Exige le secret vis-à-vis des parents Promet des cadeaux pour gagner la confiance</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Question 4 / 5 À risque ou sans danger ?</p>
-    <p>Ordinateur — recherche scolaire</p>
-    <p>Contexte : votre enfant prépare un exposé sur les volcans. Il fait sa recherche sur un moteur pour enfants (Qwant Junior), le contrôle parental est activé, et il vient vous montrer ce qu'il a trouvé.</p>
-    <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
-    <p>Réponse : SANS DANGER — activité adaptée et partagée. Outil de recherche conçu pour les enfants Contrôle parental activé Partage librement son activité avec vous Aucune donnée personnelle demandée</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Question 5 / 5 À risque ou sans danger ?</p>
-    <p>Snapchat — message d'un inconnu</p>
-    <p>Contexte : un inconnu envoie un message privé à votre enfant. « Tu es trop mignon(ne) Envoie-moi une photo et je t'ajoute dans mon groupe VIP. C'est notre secret, hein ? »</p>
-    <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
-    <p>Réponse : À RISQUE — approche typique d'un prédateur. Flatterie d'un inconnu pour mettre en confiance Demande une photo personnelle Promesse d'un « groupe VIP » comme appât Exige le secret — signal d'alerte majeur</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Signaler &amp; se faire aider Gratuit, rapide et confidentiel. Conservez toujours les preuves.</p>
-    <p>cybermalveillance.gou 3018 internet-signalement e-enfance.org v.fr</p>
-    <p>Aide, signalement, Cyberharcèlement : Contenu illégal Protection de l'enfance prestataires. Gratuit. écoute &amp; aide. 7j/7. (PHAROS). en ligne.</p>
-    <p>Mon enfant a un problème — que faire ? Porter plainte &amp; protéger</p>
-    <p>1. Rester calme • 2. Conserver les preuves En ligne : masecurite.interieur.gouv.fr</p>
-    <p>3. Bloquer &amp; signaler • 4. Appeler le 3018 Gendarmerie + captures • ne rien supprimer</p>
-    <p>Scannez les QR codes avec votre téléphone pour ouvrir les sites officiels. Enfance en danger : 119</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>La charte familiale numérique Établir des règles claires AVEC votre enfant — pas contre lui.</p>
-    <p>Temps d'écran défini Zones sans écran Profils &amp; mots de passe</p>
-    <p>Ex : 1h en semaine, 2h le week-end. Rien avant Chambre et table du repas. L'écran reste dans Les parents connaissent les identifiants. Aucun l'école ni avant le coucher. les espaces communs. compte sans accord.</p>
-    <p>Transparence Respect en ligne Alerte immédiate</p>
-    <p>L'enfant accepte une vérification des échanges On ne publie rien de blessant, d'intime ou de Si quelque chose gêne ou fait peur, on en parle en cas de doute. vexant pour autrui. — SANS punition.</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Parler avec votre enfant Des questions ouvertes pour installer le dialogue, sans interroger.</p>
-    <p>❝ Qu'est-ce que tu fais en ligne quand je ne suis pas là ? ❝ As-tu des amis que tu connais uniquement sur Internet ?</p>
-    <p>❝ Quelqu'un t'a-t-il déjà mis mal à l'aise en ligne ? ❝ Que ferais-tu si on te demandait une photo de toi ?</p>
-    <p>❝ Y a-t-il des choses en ligne qui t'inquiètent ? ❝ À qui pourrais-tu parler si quelque chose de bizarre arrivait ?</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>Ce que je retiens de cet atelier</p>
-    <p>SIGNAUX D'ALERTE BONS RÉFLEXES EN CAS DE DOUTE</p>
-    <p>Cache son écran dès qu'on approche Écrans dans le salon espaces communs Cyberharcèlement → 3018</p>
-    <p>S'isole / change d'humeur après les écrans Contrôle parental dès le 1er appareil Contenu illégal → PHAROS</p>
-    <p>Inconnu insistant messages, cadeaux, secret Charte familiale temps d'écran défini Aide &amp; conseils → cybermalveillance</p>
-    <p>Usage nocturne caché se lève la nuit Dialogue ouvert plutôt qu'interdire Enfance en danger → 119</p>
-    <p>Demande de photo ou d'argent Conserver les preuves captures d'écran Toujours → en parler, sans punir</p>
-    <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
-    <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
-    <p>La clé, c'est</p>
-    <p>la confiance. Internet n'est pas l'ennemi — l'ignorance, si. Accompagnez plutôt que surveiller, éduquez plutôt qu'interdire.</p>
-    <p>✓ Je connais les principaux dangers et les signaux d'alerte Je garde les écrans visibles et je mets un contrôle parental J'ai posé une charte familiale claire, AVEC mon enfant Je dialogue sans punir — mon enfant peut tout me dire Je sais signaler : 3018, PHAROS, cybermalveillance, 119</p>
-    <p>Restez la personne de confiance de votre enfant. Cedric WALTENER — Atelier Securite Internet des enfants — 2026</p>
+  <div class="slides">
+    <div class="slide"><img src="img/enfant-internet_presentation/p-01.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-02.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-03.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-04.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-05.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-06.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-07.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-08.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-09.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-10.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-11.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-12.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-13.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-14.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-15.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-16.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-17.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-18.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-19.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-20.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-21.jpg" alt="" loading="lazy"></div>
+    <div class="slide"><img src="img/enfant-internet_presentation/p-22.jpg" alt="" loading="lazy"></div>
   </div>
+
+  <details>
+    <summary class="text-toggle">📄 Afficher le texte (pour traduire)</summary>
+    <div class="text-card">
+      <p>SÉCURITÉ INTERNET DES ENFANTS ACCOMPAGNER &amp; PROTÉGER ▶ DÉMARRER L'ATELIER Démarrer</p>
+      <p>✦ Par Cédric WALTENER DÉMARRER L'ATELIER</p>
+      <p>Parents 1 heure Guéret Ensemble Tous niveaux Atelier médiation numérique Formation MN — 2026 Sans jugement</p>
+      <p>Bienvenue — cet atelier est fait pour vous ! Quel que soit votre lien avec le numérique, vous êtes au bon endroit. Ici, on apprend ensemble, sans jugement.</p>
+      <p>Posez vos questions Vous n'êtes pas seul(e) Pas de jugement</p>
+      <p>Il n'y a pas de question bête. Si vous vous Accompagner un enfant en ligne, ça Surveiller n'est pas espionner. L'objectif : la posez, d'autres aussi. s'apprend. Personne ne maîtrise tout. protéger sans casser la confiance.</p>
+      <p>En France, 1 enfant sur 5 déjà connecté a été contacté par un inconnu en ligne. Le meilleur filtre reste le dialogue.</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Au programme Le déroulé de l'atelier, étape par étape.</p>
+      <p>Intro chiffres clés 🎬 Intro chiffres clés Les dangers d'Internet ⚠️ Les dangers d'Internet Où ils sont exposés🎮 Où ils sont exposés</p>
+      <p>Intro &amp; chiffres clés Les dangers d'Internet Où ils sont exposés</p>
+      <p>À risque ou sans danger 🔍 ? À risque ou sans danger ? Inconnu dans un jeu 👤 Inconnu dans un jeu Le cyberharcèlement 😢 Le cyberharcèlement</p>
+      <p>À risque ou sans danger ? Inconnu dans un jeu Le cyberharcèlement</p>
+      <p>Faux cadeaux arnaques 🎁 Faux cadeaux arnaques Le contrôle parental🛡️ Le contrôle parental Les signaux d'alerte🚩 Les signaux d'alerte</p>
+      <p>Faux cadeaux &amp; arnaques Le contrôle parental Les signaux d'alerte</p>
+      <p>Quiz interactif 🎯 Quiz interactif Signaler se faire aider 📞 Signaler se faire aider La charte familiale 📜 La charte familiale</p>
+      <p>Quiz interactif Signaler &amp; se faire aider La charte familiale</p>
+      <p>Parler avec son enfant 💬 Parler avec son enfant Mémo récapitulatif📋 Mémo récapitulatif Conclusion 🤝 Conclusion</p>
+      <p>Parler avec son enfant Mémo récapitulatif Conclusion</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Le saviez-vous ? Quelques chiffres clés sur les enfants et Internet en France.</p>
+      <p>73% 1 sur 5 40% 3h+ des enfants de 10 ans ont déjà enfants en ligne a été contacté des jeunes ont vécu du par jour en moyenne passées un smartphone par un inconnu cyberharcèlement sur écrans</p>
+      <p>Sources : ARCOM · e-Enfance · CNIL · enquêtes 2024-2025</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Les dangers d'Internet Internet n'est pas l'ennemi — mais ces risques existent et se reconnaissent.</p>
+      <p>Cyberprédateurs Cyberharcèlement Contenus inappropriés</p>
+      <p>Des adultes mal intentionnés cherchent le Insultes, moqueries et menaces répétées en Violence, pornographie, haine ou dérives contact via les jeux, réseaux et messageries. ligne, aux lourdes conséquences accessibles facilement, même sans les psychologiques. chercher.</p>
+      <p>Arnaques &amp; phishing Addiction aux écrans Usurpation d'identité</p>
+      <p>Faux concours, liens piégés, demandes de Usage excessif des réseaux, jeux et vidéos Photos et infos personnelles publiées puis données ciblant des enfants peu méfiants. perturbant le sommeil et la vie sociale. exploitées à des fins malveillantes.</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Où les enfants sont-ils exposés ? Les risques n'arrivent pas que « sur Internet » en général — voici les principaux canaux.</p>
+      <p>Réseaux Vidéos &amp; Jeux en ligne Messageries sociaux streaming Chats intégrés (Roblox, Fortnite, TikTok, Snapchat, Instagram : WhatsApp, Discord, DM privés : YouTube, lives : suggestions Minecraft) où des inconnus contacts, comparaison, là où la conversation quitte imprévisibles et contenus engagent la conversation. harcèlement, contenus non l'espace visible. inadaptés à l'âge. filtrés.</p>
+      <p>Le point commun : le risque grandit quand l'échange devient privé et invisible. Gardez les écrans dans les espaces communs.</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>À risque vs sans danger — savoir faire la différence</p>
+      <p>✓ SANS DANGER À RISQUE À RISQUE</p>
+      <p>Vidéos dans le salon Inconnu dans un jeu Faux cadeau / concours ✓ Appli/profil enfant activé « On continue en privé ? » « Tu as gagné un téléphone ! » ✓ Écran dans un espace commun Demande une photo / l'adresse Demande la carte bancaire ✓ Temps d'écran défini « N'en parle pas à tes parents » « Clique vite, offre limitée » ✓ Aucun inconnu ne le contacte Promet des cadeaux dans le jeu Urgence pour empêcher de réfléchir</p>
+      <p>Règle d'or : une situation saine reste visible et partagée. Dès qu'on demande le secret, une photo ou de l'argent → on en parle. Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Situation 01 — Un inconnu dans un jeu en ligne</p>
+      <p>Tchat du jeu — joueur inconnu Indices à repérer</p>
+      <p>De : Inconnu (rencontré dans la partie) Veut basculer en privé, hors du jeu (Discord)</p>
+      <p>« Salut ! Tu joues trop bien. On continue en privé sur Discord ? Envoie-moi une photo de toi et ton adresse, je t'enverrai des cadeaux dans le jeu. Surtout n'en parle pas à tes parents, c'est notre secret. » Demande une photo et l'adresse de l'enfant</p>
+      <p>« N'en parle pas à tes parents » = secret</p>
+      <p>GROOMING — DANGER, ne jamais répondre Promet des cadeaux pour gagner la confiance</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Situation 02 — Le cyberharcèlement</p>
+      <p>Réseau social — messages reçus Indices à repérer</p>
+      <p>De : un camarade de classe (chaque soir) Messages répétés, blessants ou menaçants</p>
+      <p>« T'es nul, personne ne t'aime, retourne te cacher. »</p>
+      <p>Insultes et moqueries répétées chaque soir. L'enfant devient triste, dort mal et ne Changement d'humeur, repli, refus de l'école veut plus aller à l'école.</p>
+      <p>Conserver les preuves (captures d'écran)</p>
+      <p>CYBERHARCÈLEMENT — conserver les preuves En parler : 3018, et l'établissement scolaire</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Situation 03 — Faux cadeau / concours</p>
+      <p>Fenêtre surgissante pendant le jeu Indices à repérer</p>
+      <p>De : pop-up « Félicitations ! » Promet un gain énorme pour attirer le clic</p>
+      <p>« BRAVO ! Tu es le 1000e visiteur, tu as gagné un téléphone et 1000 V-Bucks ! Clique ici et entre vite l'adresse et la carte bancaire de tes parents pour recevoir ton cadeau. » Réclame des données bancaires / personnelles</p>
+      <p>Urgence : « clique vite » pour court-circuiter</p>
+      <p>ARNAQUE — ne jamais cliquer ni saisir Un vrai cadeau n'exige jamais la carte bancaire</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Le contrôle parental Un outil, pas un mur : il accompagne, il ne remplace pas le dialogue.</p>
+      <p>Outils recommandés ✓ Bonnes pratiques</p>
+      <p>• Google Family Link — Apps, temps d'écran et localisation (Android) ✓ Installez-le dès le 1er appareil Expliquez à l'enfant POURQUOI ces règles Temps d'écran (Apple) — Limiter apps et sites sur iPhone / iPad / Placez les écrans dans les espaces communs • Mac Ne bloquez pas sans discussion — dialoguez</p>
+      <p>• Microsoft Family Safety — Contrôle complet sur Windows et Xbox Révisez les paramètres régulièrement Vérifiez la confidentialité des réseaux</p>
+      <p>• Qustodio / Net Nanny — Solutions multi-plateformes avec rapports</p>
+      <p>• Filtres de la box — Bloquer des catégories de sites sur le routeur Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Les signaux d'alerte à surveiller Aucun signe isolé ne prouve un problème — c'est l'accumulation qui doit alerter.</p>
+      <p>Cache son écran S'isole Humeur qui change</p>
+      <p>Bascule ou masque l'écran dès qu'un adulte Se replie, s'éloigne de sa famille et de ses amis Nerveux, triste ou agité après avoir été en ligne. s'approche. habituels.</p>
+      <p>Messages d'inconnus Se lève la nuit « Ami » en ligne</p>
+      <p>Reçoit des messages, photos ou cadeaux de Utilise les appareils en cachette, son humeur Parle d'un(e) ami(e) rencontré(e) uniquement personnes inconnues. dépend de l'accès. sur Internet.</p>
+      <p>En cas de doute : parlez-en sans attendre à votre enfant — sans colère, avec bienveillance.</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Question 1 / 5 À risque ou sans danger ?</p>
+      <p>Téléphone de l'enfant — SMS reçu</p>
+      <p>Contexte : votre enfant reçoit ce SMS sur son téléphone. « TikTok : ton compte va être supprimé dans 24h ! Confirme vite ton mot de passe ici : tiktok-verif-compte.net »</p>
+      <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
+      <p>Réponse : À RISQUE — phishing imitant un réseau social. Domaine inventé (.net) — ce n'est pas le vrai site Urgence artificielle (24h) pour empêcher de réfléchir Aucun réseau ne demande le mot de passe par SMS Réflexe : ne pas cliquer, en parler à un adulte</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Question 2 / 5 À risque ou sans danger ?</p>
+      <p>Tablette — appli vidéos</p>
+      <p>Contexte : votre enfant (8 ans) regarde des vidéos dans le salon. Profil enfant activé, contrôle parental en place, 30 minutes définies à l'avance — et il vous montre ce qu'il regarde.</p>
+      <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
+      <p>Réponse : SANS DANGER — usage sain et encadré. Application adaptée à son âge (profil enfant) Écran dans un espace commun, à votre vue Temps d'écran défini à l'avance Aucun inconnu n'entre en contact</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Question 3 / 5 À risque ou sans danger ?</p>
+      <p>Jeu en ligne — message privé</p>
+      <p>Contexte : un « ami » rencontré dans un jeu écrit à votre enfant. « On se parle en privé ? Envoie une photo de toi, je t'enverrai des skins gratuits. Surtout n'en parle pas à tes parents. »</p>
+      <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
+      <p>Réponse : À RISQUE — tentative de grooming par un inconnu. Veut un échange privé, hors du jeu Demande une photo de l'enfant Exige le secret vis-à-vis des parents Promet des cadeaux pour gagner la confiance</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Question 4 / 5 À risque ou sans danger ?</p>
+      <p>Ordinateur — recherche scolaire</p>
+      <p>Contexte : votre enfant prépare un exposé sur les volcans. Il fait sa recherche sur un moteur pour enfants (Qwant Junior), le contrôle parental est activé, et il vient vous montrer ce qu'il a trouvé.</p>
+      <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
+      <p>Réponse : SANS DANGER — activité adaptée et partagée. Outil de recherche conçu pour les enfants Contrôle parental activé Partage librement son activité avec vous Aucune donnée personnelle demandée</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Question 5 / 5 À risque ou sans danger ?</p>
+      <p>Snapchat — message d'un inconnu</p>
+      <p>Contexte : un inconnu envoie un message privé à votre enfant. « Tu es trop mignon(ne) Envoie-moi une photo et je t'ajoute dans mon groupe VIP. C'est notre secret, hein ? »</p>
+      <p>À RISQUE — C'est dangereux ! Indice ✓ SANS DANGER — C'est OK !</p>
+      <p>Réponse : À RISQUE — approche typique d'un prédateur. Flatterie d'un inconnu pour mettre en confiance Demande une photo personnelle Promesse d'un « groupe VIP » comme appât Exige le secret — signal d'alerte majeur</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Signaler &amp; se faire aider Gratuit, rapide et confidentiel. Conservez toujours les preuves.</p>
+      <p>cybermalveillance.gou 3018 internet-signalement e-enfance.org v.fr</p>
+      <p>Aide, signalement, Cyberharcèlement : Contenu illégal Protection de l'enfance prestataires. Gratuit. écoute &amp; aide. 7j/7. (PHAROS). en ligne.</p>
+      <p>Mon enfant a un problème — que faire ? Porter plainte &amp; protéger</p>
+      <p>1. Rester calme • 2. Conserver les preuves En ligne : masecurite.interieur.gouv.fr</p>
+      <p>3. Bloquer &amp; signaler • 4. Appeler le 3018 Gendarmerie + captures • ne rien supprimer</p>
+      <p>Scannez les QR codes avec votre téléphone pour ouvrir les sites officiels. Enfance en danger : 119</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>La charte familiale numérique Établir des règles claires AVEC votre enfant — pas contre lui.</p>
+      <p>Temps d'écran défini Zones sans écran Profils &amp; mots de passe</p>
+      <p>Ex : 1h en semaine, 2h le week-end. Rien avant Chambre et table du repas. L'écran reste dans Les parents connaissent les identifiants. Aucun l'école ni avant le coucher. les espaces communs. compte sans accord.</p>
+      <p>Transparence Respect en ligne Alerte immédiate</p>
+      <p>L'enfant accepte une vérification des échanges On ne publie rien de blessant, d'intime ou de Si quelque chose gêne ou fait peur, on en parle en cas de doute. vexant pour autrui. — SANS punition.</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Parler avec votre enfant Des questions ouvertes pour installer le dialogue, sans interroger.</p>
+      <p>❝ Qu'est-ce que tu fais en ligne quand je ne suis pas là ? ❝ As-tu des amis que tu connais uniquement sur Internet ?</p>
+      <p>❝ Quelqu'un t'a-t-il déjà mis mal à l'aise en ligne ? ❝ Que ferais-tu si on te demandait une photo de toi ?</p>
+      <p>❝ Y a-t-il des choses en ligne qui t'inquiètent ? ❝ À qui pourrais-tu parler si quelque chose de bizarre arrivait ?</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>Ce que je retiens de cet atelier</p>
+      <p>SIGNAUX D'ALERTE BONS RÉFLEXES EN CAS DE DOUTE</p>
+      <p>Cache son écran dès qu'on approche Écrans dans le salon espaces communs Cyberharcèlement → 3018</p>
+      <p>S'isole / change d'humeur après les écrans Contrôle parental dès le 1er appareil Contenu illégal → PHAROS</p>
+      <p>Inconnu insistant messages, cadeaux, secret Charte familiale temps d'écran défini Aide &amp; conseils → cybermalveillance</p>
+      <p>Usage nocturne caché se lève la nuit Dialogue ouvert plutôt qu'interdire Enfance en danger → 119</p>
+      <p>Demande de photo ou d'argent Conserver les preuves captures d'écran Toujours → en parler, sans punir</p>
+      <p>Précédent ◀ Préc Suivant Suiv ▶ Au ☰ programme Menu</p>
+      <p>Préc Cedric WALTENER — Atelier Securite Internet des enfants — 2026 Suiv ☰ Menu</p>
+      <p>La clé, c'est</p>
+      <p>la confiance. Internet n'est pas l'ennemi — l'ignorance, si. Accompagnez plutôt que surveiller, éduquez plutôt qu'interdire.</p>
+      <p>✓ Je connais les principaux dangers et les signaux d'alerte Je garde les écrans visibles et je mets un contrôle parental J'ai posé une charte familiale claire, AVEC mon enfant Je dialogue sans punir — mon enfant peut tout me dire Je sais signaler : 3018, PHAROS, cybermalveillance, 119</p>
+      <p>Restez la personne de confiance de votre enfant. Cedric WALTENER — Atelier Securite Internet des enfants — 2026</p>
+    </div>
+  </details>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
