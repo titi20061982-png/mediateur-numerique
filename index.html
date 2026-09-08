@@ -292,34 +292,32 @@
   .hero-art .blue { color: var(--accent-3); }
 
   .page-watermark {
-    position: relative;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
-    height: 380px;
-    margin-top: -2rem;
+    margin-top: -3rem;
+    padding-bottom: 1rem;
   }
   .page-watermark img {
-    position: absolute;
-    bottom: -10%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(70vw, 720px);
+    width: min(55vw, 480px);
     height: auto;
-    opacity: 0.09;
+    margin-bottom: -18%;
+    opacity: 0.1;
     pointer-events: none;
     user-select: none;
-    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 40%, #000 40%, transparent 78%);
-            mask-image: radial-gradient(ellipse 60% 55% at 50% 40%, #000 40%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 75%);
+            mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 75%);
   }
   @media (prefers-color-scheme: dark) {
-    .page-watermark img { opacity: 0.4; mix-blend-mode: screen; }
+    .page-watermark img { opacity: 0.45; mix-blend-mode: screen; }
   }
   :root[data-theme="dark"] .page-watermark img,
   html[data-theme="dark"] .page-watermark img {
-    opacity: 0.4;
+    opacity: 0.45;
     mix-blend-mode: screen;
   }
   @media (max-width: 640px) {
-    .page-watermark { height: 240px; margin-top: -1rem; }
+    .page-watermark img { width: min(70vw, 320px); }
   }
 
   @media (max-width: 760px) {
