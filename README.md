@@ -9,10 +9,8 @@ numérique (Titre Professionnel Médiateur Numérique, AFPA Guéret
 ## Contenu
 
 - **`Atelier_Montage_PC_2h_3PC/`** — Support d'atelier "Montage PC" (2h, groupe de 3 PC).
-  L'historique des versions (v0 à v4) est conservé dans `versions/`.
-  La version la plus aboutie est `v4_finale.docx`.
-- **`Fiche_Monter_PC_Debutants.docx`** — Fiche d'accompagnement pour débutants.
-- **`Projet MN/`** — Ensemble des ateliers thématiques de médiation numérique :
+- Ensemble des ateliers thématiques de médiation numérique, chacun dans son
+  propre dossier à la racine du dépôt :
   - Smartphone et tablette
   - CV et lettre de motivation
   - Intelligence artificielle (panorama)
@@ -30,9 +28,8 @@ numérique (Titre Professionnel Médiateur Numérique, AFPA Guéret
   - Mon espace santé Ameli
   - France Titres (carte d'identité, passeport, permis, carte grise)
   - Mon compte CAF
-  - Flyers et fiche d'inscription (ateliers)
 
-  Chaque sous-dossier contient les supports de présentation (PowerPoint),
+  Chaque dossier contient les supports de présentation (PowerPoint),
   fiches d'exercice et fiches "à emporter" correspondants.
 
 ## Utilisation
