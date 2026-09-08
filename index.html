@@ -48,8 +48,11 @@
   body {
     margin: 0;
     background:
-      radial-gradient(circle, var(--border) 1px, transparent 1.3px) 0 0 / 26px 26px,
+      radial-gradient(1100px 750px at 6% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      radial-gradient(900px 650px at 100% 26%, color-mix(in srgb, var(--accent-2) 9%, transparent), transparent 55%),
+      radial-gradient(950px 800px at 10% 92%, color-mix(in srgb, var(--accent-3) 8%, transparent), transparent 58%),
       var(--bg);
+    background-attachment: fixed, fixed, fixed, fixed;
     color: var(--text);
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     line-height: 1.55;
@@ -320,9 +323,65 @@
   @media (max-width: 760px) {
     .hero-art .hide-mobile { display: none; }
   }
+
+  /* ---------- Full-page background mesh: personnes reliees par le numerique ---------- */
+  .site-mesh {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    color: var(--border);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .site-mesh .accent-node { color: var(--accent); }
+  .site-mesh .warm-node { color: var(--accent-2); }
+  .site-mesh .blue-node { color: var(--accent-3); }
 </style>
 </head>
 <body>
+
+<svg class="site-mesh" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="mediationMesh" width="280" height="280" patternUnits="userSpaceOnUse" patternTransform="rotate(6)">
+      <g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Duo 1: personne + appareil, haut-gauche -->
+        <g transform="translate(38,46)" opacity="0.9">
+          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
+          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
+          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
+          <rect class="accent-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
+        </g>
+        <!-- Duo 2: personne + appareil, milieu-droite -->
+        <g transform="translate(210,120) rotate(-10)" opacity="0.85">
+          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
+          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
+          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
+          <rect class="warm-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
+        </g>
+        <!-- Duo 3: personne + appareil, bas-gauche -->
+        <g transform="translate(70,230) rotate(8)" opacity="0.85">
+          <circle cx="0" cy="-8" r="2.1" fill="currentColor" stroke="none"/>
+          <path d="M -3.4,-1 A 3.6,3.6 0 0 1 3.4,-1"/>
+          <path d="M -1,-1.5 C 4,3 9,3 13,0.5" opacity="0.8"/>
+          <rect class="blue-node" x="12" y="-4" width="11" height="8" rx="1.6"/>
+        </g>
+        <!-- petits noeuds de remplissage -->
+        <circle cx="150" cy="30" r="1.6" fill="currentColor" opacity="0.6"/>
+        <circle cx="250" cy="60" r="1.3" fill="currentColor" opacity="0.5"/>
+        <circle cx="20" cy="160" r="1.4" fill="currentColor" opacity="0.5"/>
+        <circle cx="180" cy="220" r="1.6" fill="currentColor" opacity="0.6"/>
+        <circle cx="255" cy="200" r="1.2" fill="currentColor" opacity="0.45"/>
+        <path d="M150,30 L210,120" opacity="0.35"/>
+        <path d="M70,230 L180,220" opacity="0.35"/>
+        <path d="M38,46 L20,160" opacity="0.3"/>
+        <path d="M250,60 L210,120" opacity="0.3"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#mediationMesh)"/>
+</svg>
 
 <div class="hero">
   <svg class="hero-art" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
