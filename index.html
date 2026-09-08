@@ -294,30 +294,27 @@
   .page-watermark {
     display: flex;
     justify-content: center;
-    overflow: hidden;
-    margin-top: -3rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0 0.5rem;
   }
   .page-watermark img {
-    width: min(55vw, 480px);
+    width: min(45vw, 340px);
     height: auto;
-    margin-bottom: -18%;
-    opacity: 0.1;
+    opacity: 0.12;
     pointer-events: none;
     user-select: none;
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 75%);
-            mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 55%, transparent 90%);
+            mask-image: radial-gradient(circle at 50% 50%, #000 55%, transparent 90%);
   }
   @media (prefers-color-scheme: dark) {
-    .page-watermark img { opacity: 0.45; mix-blend-mode: screen; }
+    .page-watermark img { opacity: 0.5; mix-blend-mode: screen; }
   }
   :root[data-theme="dark"] .page-watermark img,
   html[data-theme="dark"] .page-watermark img {
-    opacity: 0.45;
+    opacity: 0.5;
     mix-blend-mode: screen;
   }
   @media (max-width: 640px) {
-    .page-watermark img { width: min(70vw, 320px); }
+    .page-watermark img { width: min(60vw, 220px); }
   }
 
   @media (max-width: 760px) {
