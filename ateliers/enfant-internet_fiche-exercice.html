@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -75,61 +80,69 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>SECURITE INTERNET DES ENFANTS - Fiche Exercice Parents Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026</p>
+      <p class="lead">SECURITE INTERNET DES ENFANTS - Fiche Exercice Parents Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026</p>
       <p>Nom : ______________________________________________</p>
       <p>Comment faire ? 1 - Lisez la situation 2 - Entourez au stylo ce qui vous semble a risque 3 - Cochez OUI ou NON 4 - Donnez votre verdict : A RISQUE ou OK ?</p>
       <p>Situation A - Jeu video en ligne</p>
       <p>Contexte : votre enfant (10 ans) joue en ligne. Un autre joueur lui ecrit dans le chat.</p>
       <p>« Salut ! Tu joues trop bien. On continue en prive sur Discord ? Envoie-moi une photo de toi et ton adresse, je t'enverrai des cadeaux dans le jeu. Surtout n'en parle pas a tes parents, c'est notre secret. »</p>
+      <hr class="divider">
       <p>-&gt; Entourez ce qui vous semble a risque dans cette situation :</p>
       <p>N Question OUI NON</p>
       <p>1 Un inconnu cherche-t-il a parler en prive, en dehors du jeu ? [] []</p>
       <p>2 La personne demande-t-elle une photo ou des informations personnelles ? [] []</p>
       <p>3 La personne demande-t-elle de garder le secret vis-a-vis des parents ? [] []</p>
       <p>4 Un vrai ami demanderait-il de cacher la conversation aux parents ? [] []</p>
+      <hr class="divider">
       <p>Mon verdict : [ ] A RISQUE (danger) [ ] OK (sans danger) =&gt; A RISQUE</p>
       <p>Situation B - Videos dans le salon</p>
       <p>Contexte : votre enfant (8 ans) regarde des videos sur l'appli enfant que vous avez configuree.</p>
       <p>L'enfant utilise le profil enfant active, dans le salon, sous votre regard. Le temps d'ecran est limite a 30 minutes et aucun inconnu ne le contacte.</p>
       <p>-&gt; Entourez ce qui vous semble a risque dans cette situation :</p>
       <p>N Question OUI NON</p>
+      <hr class="divider">
       <p>1 L'application est-elle adaptee a son age (profil enfant active) ? [] []</p>
       <p>2 L'ecran est-il utilise dans un espace commun, a votre vue ? [] []</p>
       <p>3 Le temps d'ecran est-il defini a l'avance ? [] []</p>
       <p>4 Un inconnu cherche-t-il a entrer en contact avec votre enfant ? [] []</p>
       <p>Mon verdict : [ ] A RISQUE (danger) [ ] OK (sans danger) =&gt; OK</p>
       <p>Situation C - Messages d'un camarade</p>
+      <hr class="divider">
       <p>Contexte : depuis une semaine, votre enfant recoit chaque soir des messages sur les reseaux.</p>
       <p>« T'es nul, personne ne t'aime, retourne te cacher »... Insultes et moqueries repetees par un camarade de classe. Votre enfant devient triste et ne veut plus aller a l'ecole.</p>
       <p>-&gt; Entourez ce qui vous semble a risque dans cette situation :</p>
       <p>N Question OUI NON</p>
       <p>1 Les messages sont-ils repetes, blessants ou menacants ? [] []</p>
       <p>2 Le comportement de votre enfant a-t-il change (tristesse, refus de l'ecole) ? [] []</p>
+      <hr class="divider">
       <p>3 S'agit-il d'une simple blague isolee et sans consequence ? [] []</p>
       <p>4 Faut-il conserver les messages comme preuves et en parler ? [] []</p>
       <p>Mon verdict : [ ] A RISQUE (danger) [ ] OK (sans danger) =&gt; A RISQUE</p>
       <p>Situation D - Faux concours / cadeau</p>
       <p>Contexte : une fenetre s'ouvre pendant que votre enfant joue.</p>
       <p>« BRAVO ! Tu es le 1000e visiteur, tu as gagne un telephone et 1000 V-Bucks ! Clique ici et entre vite l'adresse et la carte bancaire de tes parents pour recevoir ton cadeau. »</p>
+      <hr class="divider">
       <p>-&gt; Entourez ce qui vous semble a risque dans cette situation :</p>
       <p>N Question OUI NON</p>
       <p>1 Le message promet-il un cadeau ou un gain pour attirer l'attention ? [] []</p>
       <p>2 Demande-t-on des informations personnelles ou bancaires ? [] []</p>
       <p>3 Faut-il cliquer en urgence sans reflechir ? [] []</p>
       <p>4 Un vrai cadeau exige-t-il la carte bancaire de vos parents ? [] []</p>
+      <hr class="divider">
       <p>Mon verdict : [ ] A RISQUE (danger) [ ] OK (sans danger) =&gt; A RISQUE</p>
       <p>Situation E - Recherche pour un expose</p>
       <p>Contexte : votre enfant prepare un expose sur les volcans.</p>
       <p>Il fait sa recherche sur un moteur de recherche pour enfants (Qwant Junior), le controle parental est active, et il vient vous montrer ce qu'il a trouve.</p>
       <p>-&gt; Entourez ce qui vous semble a risque dans cette situation :</p>
       <p>N Question OUI NON</p>
+      <hr class="divider">
       <p>1 L'outil utilise est-il adapte aux enfants ? [] []</p>
       <p>2 Le controle parental est-il active ? [] []</p>
       <p>3 Votre enfant partage-t-il librement son activite avec vous ? [] []</p>
       <p>4 Une information personnelle ou bancaire est-elle demandee ? [] []</p>
       <p>Mon verdict : [ ] A RISQUE (danger) [ ] OK (sans danger) =&gt; OK</p>
       <p>Rappel : en cas de doute -&gt; parlez-en avec votre enfant, sans colere ni punition -&gt; conservez les preuves (captures d'ecran). Cyberharcelement : 3018 - Signaler un contenu : internet-signalement.gouv.fr - Aide : cybermalveillance.gouv.fr - Enfance en danger : 119</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>

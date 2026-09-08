@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -75,34 +80,38 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>Comprendre sa facture téléphonique Fiche à emporter — l'essentiel en un coup d'œil</p>
+      <p class="lead">Comprendre sa facture téléphonique Fiche à emporter — l'essentiel en un coup d'œil</p>
       <p>1 La structure d'une facture, en 5 parties</p>
       <p>1 Informations client 2 Résumé de facturation Nom, adresse, n° de contrat, IBAN si prélèvement. Période, montant total TTC, date de prélèvement.</p>
       <p>3 Détail du forfait 4 Consommations Offre souscrite, engagement, options actives. Appels, SMS, data utilisés et dépassements.</p>
       <p>5 Frais supplémentaires Options payantes, hors forfait, itinérance.</p>
       <p>2 Ton forfait en 3 blocs</p>
+      <hr class="divider">
       <p>Appels &amp; SMS Data (internet mobile) Roaming (hors France)</p>
       <p>Illimités vers mobiles / fixes en Volume inclus (ex. 100 Go). UE : souvent inclus. France. Débit réduit une fois épuisé. Hors UE : tarifs élevés. Vérifier si l'étranger est inclus. Partage de connexion possible. Couper la data en itinérance. Numéros spéciaux souvent hors forfait.</p>
       <p>3 HT, TTC, TVA : décoder les sigles</p>
       <p>HT (Hors Taxes) : prix avant TVA, perçu par 12,50 € + 2,50 € = 15,00 € l'opérateur. Prix HT TVA 20 % Prix TTC TVA : 20 % en France, reversée à l'État. TTC (Toutes Taxes Comprises) : le montant réellement payé.</p>
       <p>⚠ Les deux postes qui font exploser la facture Le hors forfait (appels, SMS ou data au-delà du plafond) et le roaming hors Union Européenne. Réflexe : demander un plafond hors-forfait à l'opérateur et couper la data en itinérance avant de voyager hors UE.</p>
       <p>Litige : d'abord votre opérateur, puis le médiateur des communications électroniques · mediation-telecom.org Fiche à emporter · 1 / 2</p>
+      <hr class="divider">
       <p>Comprendre sa facture téléphonique Fiche à emporter — surveiller, économiser, vérifier</p>
       <p>4 Les postes de dépenses à surveiller</p>
       <p>Poste Description À surveiller Abonnement mensuel Prix de base du forfait Comparer les offres chaque année</p>
       <p>Location box / téléphone Téléphone en location ou à crédit Vérifier la durée d'engagement</p>
       <p>Hors forfait Appels, SMS ou data au-delà du plafond Peut doubler la facture !</p>
       <p>Options souscrites Netflix, antivirus, assistance… Résilier ce qui ne sert pas</p>
+      <hr class="divider">
       <p>Itinérance (roaming) Usage à l'étranger hors UE Couper la data avant le voyage</p>
       <p>Frais de résiliation Pénalités si départ anticipé Calculer avant de changer</p>
       <p>5 6 réflexes pour maîtriser sa facture</p>
       <p>✓ Activer les alertes de conso dans l'appli de l'opérateur. ✓ Demander un plafond hors-forfait (souvent gratuit).</p>
       <p>✓ Se connecter au Wi-Fi pour économiser la data mobile. ✓ Couper la data en itinérance hors Union Européenne.</p>
       <p>✓ Vérifier chaque mois les options actives. ✓ Comparer les offres tous les ans : les prix baissent.</p>
+      <hr class="divider">
       <p>6 Checklist : relire sa facture en 5 min</p>
       <p>Le montant correspond au forfait annoncé. Les options actives sont contrôlées (payantes ou offertes). Les frais hors forfait sont repérés. La période et la date de prélèvement sont vérifiées. Un engagement en cours est identifié. Toute anomalie est signalée sous 1 mois au service client.</p>
       <p>Litige : d'abord votre opérateur, puis le médiateur des communications électroniques · mediation-telecom.org Fiche à emporter · 2 / 2</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>

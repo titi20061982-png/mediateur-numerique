@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -74,14 +79,15 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>Protéger sa vie privée en ligne Fiche à emporter — reprenez le contrôle de vos données YGGDRASIL • ATELIER MÉDIATION NUMÉRIQUE</p>
+      <p class="lead">Protéger sa vie privée en ligne Fiche à emporter — reprenez le contrôle de vos données YGGDRASIL • ATELIER MÉDIATION NUMÉRIQUE</p>
       <p>01 Les bons outils 02 Mots de passe &amp; 2FA 16 caractères minimum, aléatoires Besoin Outils conseillés Un mot de passe UNIQUE par site Navigateur Firefox + uBlock Origin, ou Brave Généré et stocké dans un gestionnaire</p>
       <p>DuckDuckGo, Brave Search, Méthode 2FA À retenir Recherche Startpage Appli TOTP Aegis / Raivo — recommandé Mots de passe Bitwarden ou KeePassXC Clé physique YubiKey — le plus sûr Mullvad, ProtonVPN (jamais VPN gratuit) SMS vulnérable au SIM swap SimpleLogin, AnonAddy, Hide My Alias e-mail Email</p>
       <p>E-mail chiffré Proton Mail (Suisse)</p>
       <p>03 Sécuriser ses appareils 04 Repérer le phishing Smartphone : coupez localisation/Bluetooth ! Domaine douteux (amaz0n, rn au lieu de m) inutiles ! Urgence : « compte suspendu sous 24h » Révoquez les permissions d'apps superflues ! Lien différent du texte affiché Ordinateur : chiffrez le disque (BitLocker / ! Pièce jointe non sollicitée (.exe, .zip) FileVault) ! Demande d'identifiants, CB ou code SMS Mises à jour automatiques activées DNS chiffré : NextDNS ou Cloudflare 1.1.1.1 Réflexe : en cas de doute, tapez l'adresse du site Wi-Fi public : toujours un VPN — WPA3 chez vous-même. vous</p>
       <p>05 Votre plan d'action en 3 niveaux DÉBUTANT INTERMÉDIAIRE AVANCÉ ■ Bitwarden + mots de passe uniques ■ Passer à Firefox ou Brave ■ DNS chiffré (NextDNS) ■ 2FA (TOTP) sur les comptes clés ■ DuckDuckGo ou Brave Search ■ Chiffrement complet du disque ■ uBlock Origin sur le navigateur ■ VPN de confiance (Proton, Mullvad) ■ Tor pour la navigation sensible ■ Vérifier confidentialité réseaux ■ Alias e-mail pour s'inscrire ■ Minimiser son empreinte numérique sociaux</p>
+      <hr class="divider">
       <p>Pour aller plus loin : privacyguides.org eff.org ssd.eff.org La vie privée est un droit, pas un luxe.</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>

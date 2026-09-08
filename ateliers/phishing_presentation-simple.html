@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -88,34 +93,38 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>ATTENTION AUX PIÈGES au téléphone et par message</p>
+      <p class="lead">ATTENTION AUX PIÈGES au téléphone et par message</p>
       <p>On apprend ensemble — à votre rythme</p>
       <p>Ça arrive à tout le monde Ici, pas de jugement. On apprend ensemble.</p>
       <p>Des voleurs veulent votre argent Ils mentent pour vous tromper.</p>
       <p>Ils arrivent par…</p>
       <p>Un appel Un message L'ordinateur</p>
+      <hr class="divider">
       <p>RÈGLE 1</p>
       <p>JAMAIS votre code Votre code est secret. À personne.</p>
       <p>RÈGLE 2</p>
       <p>JAMAIS payer On ne paie pas des frais par message.</p>
       <p>RÈGLE 3</p>
       <p>« Vite ! Vite ! » = piège Si on vous presse, arrêtez-vous.</p>
+      <hr class="divider">
       <p>RÈGLE 4</p>
       <p>Dans le doute : STOP Demandez à une personne de confiance.</p>
       <p>ATTENTION</p>
       <p>« Maman, donne-moi de l'argent » → Piège. Appelez votre enfant pour vérifier.</p>
       <p>ATTENTION</p>
       <p>« Je suis la banque. Donnez le code » → NON. Raccrochez et rappelez votre banque.</p>
+      <hr class="divider">
       <p>La carte Vitale ne s'arrête jamais On vous dit de la refaire ? → Piège.</p>
       <p>Le mot secret de famille Un mot connu de vous seuls. Pas le mot = piège.</p>
       <p>En cas de doute, on demande de l'aide Une personne de confiance peut vérifier avec vous.</p>
       <p>Je retiens</p>
       <p>JAMAIS mon code</p>
       <p>JAMAIS payer par message</p>
+      <hr class="divider">
       <p>« Vite ! » = piège</p>
       <p>Dans le doute, je demande</p>
       <p>BRAVO ! Maintenant, vous savez vous protéger.</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>

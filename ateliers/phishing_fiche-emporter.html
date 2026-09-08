@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -74,20 +79,22 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>Phishing : signaler, se faire aider &amp; porter plainte Fiche a garder chez vous | Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026</p>
+      <p class="lead">Phishing : signaler, se faire aider &amp; porter plainte Fiche a garder chez vous | Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026</p>
       <p>Ou signaler et obtenir de l'aide</p>
       <p>Signaler un phishing, obtenir de l'aide et trouver un prestataire cybermalveillance.gouv.fr pres de chez vous. Gratuit.</p>
       <p>Scannez-moi</p>
       <p>33700 (par SMS) Transferez le SMS suspect au 33700. Immediat et gratuit.</p>
       <p>SMS au 33700</p>
+      <hr class="divider">
       <p>signal-spam.fr Transferez le mail frauduleux pour alimenter les filtres anti-spam.</p>
       <p>Scannez-moi</p>
       <p>Coordonnees bancaires saisies ? Appelez immediatement le Numero au dos Votre banque de la carte numero indique au dos de votre carte.</p>
       <p>Astuce : scannez les QR codes avec l'appareil photo de votre telephone pour ouvrir directement les sites officiels.</p>
       <p>J'ai clique — que faire ? Porter plainte 1. Fermez la page sans rien saisir • En ligne : masecurite.interieur.gouv.fr (THESEE) 2. Changez vos mots de passe • En gendarmerie avec vos captures d'ecran 3. Appelez l'organisme avec son vrai numero • Gardez les messages : ce sont des preuves 4. Alertez votre banque si vous avez saisi des • Delai d'opposition bancaire : 13 mois donnees bancaires</p>
       <p>Porter plainte en ligne (THESEE)</p>
+      <hr class="divider">
       <p>En cas de doute : ne cliquez jamais — tapez l'adresse vous-meme — verifiez avec un proche ou un conseiller.</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>

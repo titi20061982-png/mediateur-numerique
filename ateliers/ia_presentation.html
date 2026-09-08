@@ -48,6 +48,11 @@
   .text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.9rem; }
   .text-card p { margin: 0 0 1rem; }
   .text-card p:last-child { margin-bottom: 0; }
+  .text-card { padding: 2rem 2.1rem; }
+  .text-card p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+  .text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+  .text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+  .text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
   footer a { color: var(--accent); }
@@ -96,163 +101,188 @@
   <details open>
     <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
     <div class="text-card">
-      <p>MÉDIATION NUMÉRIQUE</p>
+      <p class="lead">MÉDIATION NUMÉRIQUE</p>
       <p>L'intelligence artificielle Comprendre les IA du quotidien : bienfaits, risques et panorama des outils</p>
       <p>Support de formation</p>
       <p>SOMMAIRE Q u'est-ce que l'IA ? Petite histoire de l'IA 01 02 Définition simple et repères Les grandes étapes récentes</p>
       <p>L'IA en France C om m ent estcrééel'IA ? 03 04 Adoption, chiffres du territoire Les 4 étapes de fabrication</p>
       <p>Le « cerveau » d'une IA Les bienfaits 05 06 Réseau de neurones, en image Ce que l'IA apporte au quotidien</p>
+      <hr class="divider">
       <p>Lesrisques Panorama desIA 07 08 Ce à quoi il faut faire attention Texte, image, vidéo, musique, voix</p>
       <p>A gents&amp; objetsconnectés Droit d'auteur, RGPD &amp; Dark IA 09 10 Quand l'IA agit seule, déjà partout Ce que dit la loi et les dérives</p>
       <p>Bon usage 11 Conseils pour une utilisation sereine</p>
       <p>L'IA EN FR A N CE : O Ù EN ES T-O N ? Quelques chiffres pour situer le territoire français</p>
       <p>48 % desFrançais 10 % des entreprises 26 % des PME</p>
       <p>ont utilisé l'IA générative en 2026 — la françaises (10 salariés ou plus) utilisent l'IA en françaises utilisent déjà l'IA au quotidien dans technologie adoptée le plus vite en 25 ans de 2024, contre 6 % en 2023 — l'adoption a presque leur activité (Bpifrance, 2026). mesure (CREDOC/Arcep). doublé en un an (INSEE).</p>
+      <hr class="divider">
       <p>5 millionsd'em plois 2 millionsde Français Le Chat (Mistral AI)</p>
       <p>en France seraient potentiellement exposés à c'est l'objectif de sensibilisation à l'IA fixé par l'assistant IA français est déjà utilisé par 6 % des l'automatisation par l'IA d'ici 2030 (étude l'État d'ici 2027. Français, en forte croissance. Coface).</p>
       <p>Sources : CREDOC/Arcep (Baromètre du numérique 2026), INSEE (enquête TIC entreprises 2024), Bpifrance Le Lab (2026), Coface.</p>
       <p>Médiation Numérique 3</p>
       <p>Q U'ES T-CE Q U E L'IA ? Une définition simple, sans jargon</p>
       <p>EN UNE PHRASE L'intelligence artificielle, c'est un programme informatique entraîné sur d'énormes quantités de données pour reconnaître des schémas et produire une réponse plausible. « L'IA générative devine — de façon très très sophistiquée — ce qui vient probablement après, à partir de tout ce qu'elle a lu, vu ou entendu. » – Elle ne « comprend » pas comme un humain : elle prédit le mot ou le pixel le plus probable.</p>
+      <hr class="divider">
       <p>– Elle n'a pas de conscience, pas d'intention, pas de vérité absolue — elle imite des schémas appris.</p>
       <p>– Elle peut se tromper avec assurance : on parle d'« hallucination ».</p>
       <p>– Il existe plusieurs familles : texte (chatbots), image, vidéo, voix, chacune avec ses outils. D'où l'importance de garder son esprit critique.</p>
       <p>Définition officielle : selon le Parlement européen et l'AI Act, l'IA est un outil capable de reproduire des comportements liés à l'intelligence humaine — raisonnement, planification, créativité.</p>
       <p>Médiation Numérique 4</p>
       <p>QUELQUES REPÈRES L'accélération de ces dernières années</p>
+      <hr class="divider">
       <p>2012-2020 Nov. 2022 2023-2024 2025-2026</p>
       <p>L'IA progresse en coulisses Grand public: C hatGP T Course aux modèles IA m ultim odale etagents</p>
       <p>Reconnaissance d'image, traduction Premier chatbot IA accessible à Gemini, Claude, Mistral, Copilot… Texte, image, vidéo et voix automatique, recommandations tous. Le grand public découvre l'IA l'IA s'intègre partout (téléphones, combinés. Les IA commencent à (Netflix, YouTube). générative. logiciels bureautiques). agir seules sur des tâches.</p>
       <p>Repère français : le supercalculateur Jean Zay (CNRS/IDRIS) sert la recherche IA publique en France — sa chaleur dégagée chauffe l'équivalent de 1 500 foyers.</p>
       <p>Médiation Numérique 5</p>
       <p>COMMENT EST CRÉÉE L'IA ? Le pipeline de fabrication d'un modèle d'IA, du début jusqu'au déploiement</p>
+      <hr class="divider">
       <p>Collecte de données Entraînement Alignement (R L HF) Déploiement</p>
       <p>Les données traversent des milliers de Des milliards de textes, images et sons Des humains notent et corrigent les Le modèle est publié comme produit ou fois un réseau de neurones, qui ajuste des aspirés sur le web, dans des livres et des réponses pour rendre le modèle utile, service, puis continue d'être surveillé et milliards de paramètres sur des clusters articles. honnête et sûr, puis on teste sa sécurité. amélioré au fil des usages. de GPU pendant des mois.</p>
       <p>Repère chiffré : l'entraînement d'un grand modèle comme GPT-4 coûterait plus de 100 millions de dollars, pour plusieurs milliers de MWh consommés.</p>
       <p>Médiation Numérique 6</p>
       <p>LE « CER VEA U » D'U N E IA Une image pour comprendre le réseau de neurones — pas une vraie anatomie</p>
       <p>Découpe le texte en petits morceaux Texte T exte GARDE-FOUS T okenisation Mots, phrases, code Code, fichiers, actions</p>
+      <hr class="divider">
       <p>Neurones O utils Vidéo C ouches Mémoire Paramètres</p>
       <p>Contexte gardé en tête Vidéo R éflexion IA Image</p>
       <p>Attention Séquences animées Photos et dessins</p>
       <p>Sécurité Image Génération Recherche Refuse le dangereux T em pérature Source Analyse Requête Réglage : réponse rigide ou créative Son S on Paraphrase Résultats</p>
       <p>Règles Vérifié Voix et musique Citation limitée</p>
       <p>Décision</p>
+      <hr class="divider">
       <p>Médiation Numérique 7</p>
       <p>LES BIEN FAIT S DE L'IA Ce que l'IA apporte concrètement au quotidien</p>
       <p>Gain de tem ps Accessibilité Santé Éducation</p>
       <p>Synthèse vocale, sous-titres Rédiger, résumer, planifier : des Aide au diagnostic, suivi de Tuteur personnalisé, explications automatiques, aide à la lecture pour tâches longues accélérées en traitement, détection précoce de adaptées au niveau de chacun, aide les personnes en situation de quelques secondes. certaines maladies. aux devoirs. handicap.</p>
       <p>Créativité Traduction Médiation multilingue</p>
       <p>Génération d'images, de musique, Traduction et interprétation quasi Un appui concret pour accompagner d'idées : un outil de brainstorming instantanées, utile pour l'accueil des usagers non-francophones lors puissant. multilingue. des ateliers.</p>
+      <hr class="divider">
       <p>Médiation Numérique 8</p>
       <p>LES RIS Q U ES ET C O N S ÉQ U EN CES Ce à quoi il faut faire attention</p>
       <p>Désinformation Biais Em ploi</p>
       <p>Les IA peuvent inventer des faits avec assurance Une IA reproduit les biais présents dans ses Certaines tâches répétitives sont automatisées ; (« hallucinations ») ou générer de fausses données d'entraînement (genre, origine, de nouveaux métiers émergent aussi. images/vidéos crédibles. stéréotypes).</p>
       <p>Dépendance cognitive Vie privée Impact environnemental</p>
       <p>Ces modèles consomment énormément de Utiliser l'IA pour tout peut affaiblir la mémoire, Les données saisies peuvent être conservées ou ressources : ~415 TWh d'électricité (2024) et 560 l'écriture et l'esprit critique si on ne varie pas les réutilisées : attention aux informations sensibles. milliards de litres d'eau (2023) pour les data usages. centers mondiaux (source : AIE).</p>
+      <hr class="divider">
       <p>Repère chiffré : 415 TWh, c'est presque la consommation électrique annuelle de toute la France (449 TWh en 2024). Le vrai enjeu n'est pas la requête individuelle mais le volume — des milliards de requêtes par jour dans le monde.</p>
       <p>Médiation Numérique 9</p>
       <p>PANORAMA IA · ÉDITION 2026</p>
       <p>5 CATÉGORIES D'USAGE</p>
       <p>Panorama desIA existantes Un tour d'horizon des principaux outils par usage — texte, image, vidéo, musique et voix — avec leur fonction principale et leur modèle d'accès.</p>
       <p>01 02 03 04 05</p>
+      <hr class="divider">
       <p>Texte Image Vidéo M usique Voix</p>
       <p>Chatbots &amp; rédaction Création visuelle Génération de séquences Composition sonore Synthèse &amp; clonage vocal</p>
       <p>Gratuit Freemium Payant LISTE NON EXHAUSTIVE</p>
       <p>PANORAMA IA · ÉDITION 2026 01 / 05</p>
       <p>01</p>
       <p>C hatGP T Assistant polyvalent : écriture, code, analyse FREEMIUM</p>
+      <hr class="divider">
       <p>Texte</p>
       <p>Claude Écriture longue et raisonnement soigné FREEMIUM</p>
       <p>Rédaction, code, analyse et recherche.</p>
       <p>Gemini Recherche et multimodal chez Google FREEMIUM</p>
       <p>Mistral Modèles ouverts, alternative européenne FREEMIUM</p>
       <p>P erplexity Réponses sourcées depuis le web FREEMIUM</p>
+      <hr class="divider">
       <p>Médiation Numérique 11</p>
       <p>PANORAMA IA · ÉDITION 2026 02 / 05</p>
       <p>02</p>
       <p>Midjourney Images artistiques très abouties PAYANT</p>
       <p>Image</p>
       <p>DALL·E 3 Génération intégrée à ChatGPT FREEMIUM</p>
+      <hr class="divider">
       <p>Création et retouche visuelle.</p>
       <p>S table Diffusion Modèle open-source exécutable en local GRATUIT</p>
       <p>Adobe Firefly Génératif intégré à Photoshop FREEMIUM</p>
       <p>Ideogram Texte net et lisible dans l'image FREEMIUM</p>
       <p>Médiation Numérique 12</p>
       <p>PANORAMA IA · ÉDITION 2026 03 / 05</p>
+      <hr class="divider">
       <p>03</p>
       <p>S ora Vidéo réaliste à partir de texte (OpenAI) PAYANT</p>
       <p>Vidéo</p>
       <p>Runway Montage et effets assistés par IA FREEMIUM</p>
       <p>Génération et montage de séquences.</p>
       <p>Kling Clips réalistes, mouvements fluides FREEMIUM</p>
+      <hr class="divider">
       <p>Veo Vidéo haute qualité chez Google PAYANT</p>
       <p>Pika Animations courtes et rapides FREEMIUM</p>
       <p>Médiation Numérique 13</p>
       <p>PANORAMA IA · ÉDITION 2026 04 / 05</p>
       <p>04</p>
       <p>M usique S uno Chansons complètes avec paroles FREEMIUM</p>
+      <hr class="divider">
       <p>Composition et bandes sonores.</p>
       <p>U dio Morceaux de qualité studio FREEMIUM</p>
       <p>ElevenLabsM usic Bandes sonores et habillage PAYANT</p>
       <p>Médiation Numérique 14</p>
       <p>PANORAMA IA · ÉDITION 2026 05 / 05</p>
       <p>05</p>
+      <hr class="divider">
       <p>Voix ElevenLabs Synthèse et clonage vocal réalistes FREEMIUM</p>
       <p>Synthèse et clonage vocal.</p>
       <p>M urf Voix-off professionnelles PAYANT</p>
       <p>PlayHT Voix naturelles multilingues FREEMIUM</p>
       <p>Médiation Numérique 15</p>
       <p>PANORAMA IA · ÉDITION 2026 SYNTHÈSE</p>
+      <hr class="divider">
       <p>Gratuit Freemium Payant À éviter Récapitulatif : toutes les IA citées Un coup d'œil sur l'ensemble du panorama</p>
       <p>01 02 03</p>
       <p>Texte Image Vidéo</p>
       <p>ChatGPT Claude Gemini Midjourney DALL·E 3 Sora Runway Kling Veo</p>
       <p>Mistral Perplexity Stable Diff. Firefly Pika</p>
       <p>Ideogram</p>
+      <hr class="divider">
       <p>04 05 06</p>
       <p>M usique Voix DarkIA — usage illégal, à fuir Suno Udio ElevenLabs Murf PlayHT WormGPT FraudGPT DarkBERT ElevenLabs Music</p>
       <p>Médiation Numérique 16</p>
       <p>LesagentsIA La nouveauté 2025-2026 : quand l'IA ne répond plus, mais agit</p>
       <p>Définition Exem plesconcrets</p>
       <p>Un agent IA planifie et exécute seul une suite d'actions pour atteindre un Claude Code écrit et exécute du code, ChatGPT Agent navigue sur le web et objectif, sans validation à chaque étape. remplit des formulaires, Copilot Studio automatise des tâches bureautiques.</p>
+      <hr class="divider">
       <p>Avantage Vigilance</p>
       <p>Un gain de temps réel sur des tâches longues et répétitives, avec plusieurs Un agent qui agit seul peut aussi se tromper seul : toujours superviser les étapes enchaînées automatiquement. actions sensibles (achats, envois, suppressions).</p>
       <p>Repère chiffré : l'IA agentique fait partie des tendances technologiques stratégiques 2025 identifiées par Gartner, qui prévoit que 33% des applications d'entreprise en intégreront d'ici 2028 (contre moins de 1% en 2024).</p>
       <p>Yggdrasil — Médiation Numérique 17</p>
       <p>L'IA déjà partout, sans le savoir Bien au-delà des chatbots, dans les objets du quotidien</p>
       <p>S martphone Voiture Maison connectée</p>
+      <hr class="divider">
       <p>Retouche photo automatique, reconnaissance Aide à la conduite, régulateur adaptatif, détection Thermostats intelligents, caméras de surveillance, faciale, clavier prédictif. d'obstacles. enceintes.</p>
       <p>Oreillettes traductrices Banque R éseaux sociaux</p>
       <p>Traduction et interprétation en temps réel dans Détection de fraude en temps réel, chatbots du Fils d'actualité personnalisés, modération et une conversation. service client. filtrage de contenu.</p>
       <p>Médiation Numérique 18</p>
       <p>DROIT D'AUTEUR ET IA Qui possède un contenu généré par IA ?</p>
       <p>BONNE PRATIQUE En France, une œuvre n'est protégée par le droit d'auteur que si elle porte l'empreinte de la personnalité d'un auteur humain. Vérifiez les conditions d'utilisation de l'outil l'outil avant tout usage commercial, et évitez de évitez de publier tel quel un contenu généré sans généré sans relecture ni adaptation humaine. humaine. – Un contenu 100% généré par IA, sans intervention humaine créative, n'est donc pas protégeable en l'état actuel du droit.</p>
+      <hr class="divider">
       <p>– Risque inverse : une IA peut reproduire un style ou des éléments d'œuvres protégées présentes dans ses données d'entraînement, exposant à un risque de contrefaçon.</p>
       <p>– Plusieurs procès sont en cours dans le monde (auteurs, artistes, presse) contre des éditeurs d'IA pour usage de contenus protégés sans autorisation. Surtout pour un usage professionnel ou de médiation.</p>
       <p>Médiation Numérique 19</p>
       <p>R G P D : usage professionneldel'IA Ce qu'il faut savoir avant de déployer l'IA dans une structure recevant du public</p>
       <p>Baselégale Données sensibles</p>
       <p>On n'a pas le droit d'utiliser l'IA avec des données personnelles « juste parce que Ne jamais saisir de données de santé, d'origine ou d'opinions dans un chatbot sans c'est pratique » : il faut une raison légale valable, le plus souvent l'accord explicite consentement explicite et sans nécessité claire. de la personne concernée.</p>
+      <hr class="divider">
       <p>Hébergement desdonnées Durée de conservation &amp; DP O</p>
       <p>Mistral (Le Chat) héberge en France/UE. ChatGPT, Claude, Gemini hébergent Vérifier les conditions d'utilisation (CGU) sur la conservation des échanges, et majoritairement aux États-Unis — avec des garanties légales pour ce transfert de consulter le responsable de la protection des données (DPO) avant tout données à l'étranger. déploiement.</p>
       <p>Médiation Numérique 20</p>
       <p>La « Dark IA » Quand l'IA est détournée à des fins malveillantes sur le dark web</p>
       <p>Q u'est-ce que c'est ? W orm G P T &amp; FraudG P T</p>
       <p>Des IA gratuites et publiques, bricolées pour supprimer leurs limites de sécurité, Génèrent du code malveillant, de fausses pages bancaires et des emails de phishing puis vendues sur le dark web comme un abonnement, dès 200 $/mois. indétectables, sans compétence technique requise.</p>
+      <hr class="divider">
       <p>Deepfakes&amp; clonage vocal Le bon réflexe</p>
       <p>Une voix clonée à partir de 3 secondes d'audio ; une entreprise a perdu 25 millions Ce n'est pas un outil à tester par curiosité : usage illégal, et la simple recherche de dollars sur une visioconférence entièrement simulée en 2024. expose à des arnaques (fausses applications à installer, faux sites).</p>
       <p>Repère chiffré : un email de phishing généré par IA obtient un taux de clic 37% supérieur à un phishing artisanal (IBM X-Force, 2025).</p>
       <p>Médiation Numérique 21</p>
       <p>P O U R U N B O N U S A GE DE L'IA Quelques réflexes simples à adopter et à transmettre</p>
       <p>T oujoursvérifier Protéger ses données</p>
+      <hr class="divider">
       <p>Une IA peut se tromper avec assurance. Recoupez les informations Ne saisissez jamais de mot de passe, numéro de sécu, ou données importantes avec une autre source. médicales/bancaires dans un chatbot.</p>
       <p>Garder l'esprit critique LirelesC G U</p>
       <p>Utilisez l'IA comme un assistant, pas comme une vérité absolue. Gardez vos Savoir si vos données servent à entraîner le modèle, et pouvoir vous y opposer propres compétences actives. (opt-out) si possible.</p>
       <p>Médiation Numérique 22</p>
       <p>L'IA est un outil — pas une vérité À utiliser avec curiosité, avec méthode, et toujours avec un regard critique.</p>
       <p>Médiation Numérique</p>
-    </div>
+        </div>
   </details>
 </main>
 <footer>
