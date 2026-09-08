@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 01-02 – Base ADRN (montage / diagnostic PC) — Ateliers Médiation Numérique</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
+    --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
+  h1, h2 { font-family: "Fraunces", Georgia, serif; }
+  header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .back:hover { text-decoration: underline; }
+  .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
+  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+  main p { margin: 0 0 1rem; white-space: pre-wrap; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem 2rem; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
+  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
+  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html#premiers-pas">← Retour aux ateliers</a>
+    <div class="eyebrow">🖥️ Base ADRN (montage / diagnostic PC)</div>
+    <h1>Module 01-02</h1>
+    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="translate-box">
+      <span>🌐</span>
+      <div id="google_translate_element"></div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="card">
+    <p>Mediation Numerique &amp; Reconditionnement</p>
+    <p>FORMATION AGENT DE RECONDITIONNEMENT NUMERIQUE</p>
+    <p>Materiel &amp; logiciel Les bases indispensables pour diagnostiquer, entretenir et remettre en service un ordinateur : du materiel qui le compose au systeme qui le fait fonctionner.</p>
+    <p>Module 01 — Hardware PC Module 02 — Logiciel Les composants qui constituent une unite centrale, leur role et leur Le systeme d'exploitation, les pilotes materiels et les reflexes de securite reconnaissance visuelle. logicielle.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 1</p>
+    <p>SOMMAIRE</p>
+    <p>Deux modules pour maitriser les fondamentaux du PC Du materiel qui compose la machine au systeme logiciel qui la fait fonctionner.</p>
+    <p>01 Hardware PC 02 Logiciel</p>
+    <p>Carte mere Qu'est-ce qu'un systeme d'exploitation</p>
+    <p>Processeur (CPU) Les grandes familles d'OS Memoire vive (RAM) Installer un systeme d'exploitation Stockage (HDD / SSD / NVMe) Les pilotes (drivers) Alimentation &amp; refroidissement Trouver et installer les bons pilotes Carte graphique</p>
+    <p>Connectique Antivirus et pare-feu</p>
+    <p>Carte Wi-Fi Bonnes pratiques de securite</p>
+    <p>Entretien materiel</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 2</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Les composants d'un ordinateur Panorama des elements qui composent une unite centrale : role de chaque piece, interactions et vocabulaire technique indispensable au diagnostic.</p>
+    <p>Carte mere Processeur Memoire vive Stockage Alimentation Carte graphique Carte Wi-Fi</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 3</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>La carte mere : le chef d'orchestre La carte mere relie et fait communiquer tous les composants entre eux. Elle determine la compatibilite de l'ensemble de la machine.</p>
+    <p>Chipset Circuit qui pilote les echanges entre CPU, RAM, stockage et peripheriques. Determine les fonctionnalites disponibles (overclocking, nombre de ports...).</p>
+    <p>Format (form factor) ATX (standard), Micro-ATX (compact), Mini-ITX (tres compact). Le format conditionne la taille du boitier et le nombre de slots.</p>
+    <p>Socket processeur Emplacement physique du CPU. Chaque socket (ex. LGA1700, AM5) n'accepte qu'une famille de processeurs precise.</p>
+    <p>Connectique embarquee Slots RAM (DIMM), emplacements PCIe pour carte graphique, ports SATA/M.2 pour le stockage, ports arriere USB/reseau/audio.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 4</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Le processeur (CPU) : le cerveau de la machine Le CPU execute les instructions et effectue les calculs. Ses caracteristiques principales determinent la puissance de traitement disponible.</p>
+    <p>Coeurs et threads Un CPU multicoeur execute plusieurs taches en parallele. L'hyperthreading (SMT) simule des coeurs supplementaires pour le multitache.</p>
+    <p>Frequence (GHz) Nombre de cycles d'horloge par seconde. Plus elle est elevee, plus le CPU traite d'instructions rapidement, a architecture egale.</p>
+    <p>Cache L1 / L2 / L3 Memoire ultra-rapide integree au processeur qui stocke les donnees frequemment utilisees pour eviter les allers-retours vers la RAM.</p>
+    <p>Socket et compatibilite Un CPU Intel ou AMD n'est compatible qu'avec les cartes meres dotees du bon socket et du chipset correspondant.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 5</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>La memoire vive (RAM) : la memoire de travail Memoire volatile qui stocke temporairement les donnees en cours d'utilisation. Plusieurs generations coexistent, non interchangeables.</p>
+    <p>Role : memoire de travail temporaire ou le processeur lit et ecrit les donnees des programmes en cours d'execution. Volatile : son contenu est efface a chaque extinction, contrairement au stockage.</p>
+    <p>Reconnaitre la generation d'une barrette Le plus simple : lire l'etiquette du fabricant, qui indique presque toujours la generation (ex. "DDR3-1600", "PC3-12800"). Si elle est absente, effacee ou illisible, on se repere visuellement a la position de l'encoche et a la forme du connecteur.</p>
+    <p>Generation Marquage typique Repere visuel si pas d'etiquette DDR PC-xxxx (ex. PC3200) 184 broches, encoche proche du bord gauche</p>
+    <p>DDR2 PC2-xxxx (ex. PC2-6400) 240 broches, encoche legerement a droite du centre</p>
+    <p>DDR3 PC3-xxxx (ex. PC3-12800) 240 broches aussi, mais encoche decalee vs DDR2 : non interchangeables</p>
+    <p>DDR4 PC4-xxxx (ex. PC4-19200) 288 broches, bord de connecteur legerement incurve (bombe)</p>
+    <p>DDR5 PC5-xxxx (ex. PC5-38400) 288 broches, puce PMIC visible sur le module Yggdrasil — Agent de Reconditionnement Numerique 6</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Le stockage : HDD, SSD et NVMe Memoire non volatile qui conserve durablement le systeme et les fichiers, meme hors tension. Trois technologies, trois niveaux de performance.</p>
+    <p>Caracteristique HDD SSD (SATA) NVMe (M.2)</p>
+    <p>Technologie Plateaux magnetiques rotatifs Memoire flash Memoire flash sur bus PCIe</p>
+    <p>Vitesse Lente (~150 Mo/s) Rapide (~550 Mo/s) Tres rapide (2000 a 7000 Mo/s)</p>
+    <p>Connectique SATA SATA PCIe via slot M.2</p>
+    <p>Prix au Go Bas Moyen Eleve</p>
+    <p>Usage typique Stockage de masse, sauvegarde Usage courant, OS Applications exigeantes, montage, jeu</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 7</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Alimentation et refroidissement Deux elements essentiels et souvent negliges : fournir une energie stable et evacuer la chaleur produite par les composants.</p>
+    <p>Alimentation (PSU) Refroidissement Puissance (Watts) : doit couvrir la consommation cumulee, avec marge de Air : ventirad (dissipateur + ventilateur), solution la plus courante et fiable. securite. Liquide (watercooling) : circuit ferme (AIO) plus performant et silencieux pour Certification 80+ : Bronze a Platinum, indique le rendement energetique. charges elevees. Connecteurs cles : 24 broches carte mere, 4/8 broches CPU, PCIe, SATA. Pate thermique : assure le contact thermique entre CPU et dissipateur.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 8</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Carte graphique La carte graphique traite les calculs d'affichage et transmet l'image a l'ecran.</p>
+    <p>GPU integre vs GPU dedie Le GPU integre au CPU suffit pour la bureautique. Une carte dediee, avec sa propre memoire (VRAM), est necessaire pour le jeu, la 3D et la video.</p>
+    <p>VRAM et refroidissement La VRAM stocke les textures et images en cours de calcul. Un bon refroidissement (ventirad) evite la surchauffe et le throttling.</p>
+    <p>Format &amp; alimentation Une carte dediee necessite souvent un connecteur d'alimentation PCIe (6/8 broches) et existe en format standard ou low-profile.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 9</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Connectique Les ports permettent de connecter ecrans, peripheriques et reseau a l'ordinateur.</p>
+    <p>Ports USB-A / USB-C Connexion des peripheriques et du stockage externe. L'USB-C permet aussi la charge et l'affichage video.</p>
+    <p>HDMI / DisplayPort Sortie image vers l'ecran, portee par la carte graphique (dediee ou integree).</p>
+    <p>Ethernet Connexion reseau filaire stable, generalement portee par la carte mere.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 10</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>La carte Wi-Fi : la connexion sans fil Une petite carte enfichable sur la carte mere assure la connexion au reseau Wi-Fi et souvent au Bluetooth.</p>
+    <p>Format Mini PCIe / M.2 Petite carte d'extension enfichee directement sur un connecteur dedie de la carte mere, tres courante en portable et mini-PC.</p>
+    <p>Antennes Connecteurs coaxiaux miniatures (u.FL) reliant la carte aux antennes Wi-Fi integrees au boitier ou a l'ecran du portable.</p>
+    <p>Normes Wi-Fi Wi-Fi 4/5/6 (802.11n/ac/ax) : debit, portee et bande de frequence utilisee (2,4 GHz et/ou 5 GHz).</p>
+    <p>Bluetooth combine De nombreuses cartes integrent aussi une puce Bluetooth, partageant parfois la meme antenne.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 11</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>L'entretien materiel d'un ordinateur Quelques verifications physiques regulieres suffisent a prolonger la duree de vie d'un poste et a prevenir la majorite des pannes materielles.</p>
+    <p>Depoussierage interne Verification des connexions Etat du ventirad et pate thermique Nettoyer grilles d'aeration, ventilateurs et dissipateurs : S'assurer que RAM, cables d'alimentation et cartes Un ventirad encrasse ou une pate thermique sechee la poussiere est la premiere cause de surchauffe. d'extension sont bien enclenches, sans jeu ni faux degradent fortement le refroidissement du processeur. contact.</p>
+    <p>Surveillance thermique et sonore Nettoyage des ports et connecteurs Controle visuel general Une chauffe excessive ou un bruit inhabituel signale un Poussiere et oxydation sur USB, HDMI ou alimentation Verifier l'absence de vis desserrees, de composants probleme mecanique a traiter rapidement. peuvent provoquer de mauvais contacts. gonfles (condensateurs) ou de traces d'humidite.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 12</p>
+    <p>MODULE 01 — HARDWARE PC</p>
+    <p>Synthese : le role de chaque composant Sept pieces, sept fonctions complementaires. Retenir le role de chacune est la base du diagnostic materiel.</p>
+    <p>Carte mere Processeur (CPU) Memoire vive (RAM) Stockage Relie et fait communiquer tous les Execute les calculs et instructions Stocke temporairement les donnees en Conserve durablement systeme et fichiers composants cours d'usage</p>
+    <p>Alimentation Carte graphique Carte Wi-Fi Fournit l'energie a l'ensemble des Traite et affiche les images a l'ecran Assure la connexion reseau sans fil et le composants Bluetooth</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 13</p>
+    <p>Y G G D R AS I L Mediation Numerique &amp; Reconditionnement</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Systeme, pilotes et securite Atelier de formation — comprendre le systeme d'exploitation, le role des pilotes materiels et les bons reflexes de securite logicielle.</p>
+    <p>Systeme d'exploitation Pilotes (drivers) Securite logicielle</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 14</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Trois piliers du bon fonctionnement d'un PC Un ordinateur fonctionne grace a la synergie entre son systeme d'exploitation, les pilotes qui pilotent son materiel, et les protections qui le securisent.</p>
+    <p>Systeme d'exploitation Pilotes (drivers) Securite logicielle</p>
+    <p>Le logiciel de base qui gere le materiel, les Les programmes qui traduisent le dialogue entre Antivirus, pare-feu et bonnes pratiques qui fichiers et permet d'executer tous les autres l'OS et chaque composant materiel : sans eux, le protegent la machine et les donnees contre les programmes (Windows, Linux, macOS). materiel n'est pas exploite correctement. menaces numeriques.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 15</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Le systeme d'exploitation (OS) : le chef d'orchestre Logiciel de base qui demarre au lancement de la machine et gere l'ensemble des ressources materielles et logicielles.</p>
+    <p>Gestion des ressources Interface utilisateur Repartit la memoire, le temps processeur et l'acces au stockage entre les programmes en Fournit l'environnement graphique (bureau, fenetres, menus) qui permet d'utiliser la cours d'execution. machine sans commandes complexes.</p>
+    <p>Gestion des peripheriques Execution des programmes Detecte et communique avec les composants et peripheriques via les pilotes appropries. Charge, execute et isole les applications les unes des autres pour eviter qu'une erreur ne bloque tout le systeme.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 16</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Les grandes familles de systemes d'exploitation Trois familles dominent le marche des ordinateurs personnels, avec des logiques et des usages differents.</p>
+    <p>Windows (Microsoft) Linux (Ubuntu, Debian...) macOS (Apple)</p>
+    <p>Le plus repandu sur les PC grand public et Systeme libre et gratuit, tres utilise en Reserve aux machines Apple (Mac), integre professionnels. Large compatibilite materielle et reconditionnement pour redonner vie a du etroitement au materiel du constructeur. logicielle. materiel ancien ou limite.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 17</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Installer un systeme d'exploitation : les etapes cles Une installation reussie suit toujours la meme logique, quel que soit l'OS installe.</p>
+    <p>1 2 3 4 5 Configurer le Partitionner le Mises a jour et Preparer le support Suivre l'assistant BIOS/UEFI disque pilotes Creer une cle USB bootable Placer la cle USB en premier Choisir ou creer la partition Renseigner langue, compte Une fois l'OS installe, lancer avec l'outil officiel (Media choix de demarrage (boot d'installation, en effacant si utilisateur et parametres de les mises a jour puis installer Creation Tool, Rufus...). order). besoin l'ancien systeme. base demandes par les pilotes manquants. l'installateur.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 18</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Les pilotes : le lien entre l'OS et le materiel Un pilote (driver) est le programme qui traduit le dialogue entre le systeme d'exploitation et un composant materiel precis.</p>
+    <p>A quoi sert un pilote ? Sans le bon pilote Il permet a l'OS de comprendre et d'exploiter pleinement les capacites d'un composant Le composant peut ne pas etre reconnu, fonctionner en mode degrade (ex. resolution (carte graphique, carte reseau, imprimante...). d'ecran minimale) ou generer des erreurs.</p>
+    <p>Pilote generique vs constructeur Compatibilite et versions Windows installe souvent un pilote generique basique. Le pilote du fabricant est optimise Un pilote est specifique a un composant, une version d'OS et une architecture (32/64 bits) et debloque toutes les fonctionnalites. : il faut installer la bonne version.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 19</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Trouver et installer les bons pilotes Plusieurs sources permettent de recuperer un pilote, avec des niveaux de fiabilite et de simplicite differents.</p>
+    <p>Source Avantage Limite</p>
+    <p>Windows Update Automatique, simple, aucun risque de mauvaise version Pilotes parfois generiques ou en retard sur les dernieres versions</p>
+    <p>Permet de diagnostiquer precisement un composant non reconnu Gestionnaire de peripheriques Ne telecharge pas toujours le pilote automatiquement (point d'exclamation)</p>
+    <p>Site du fabricant Pilote officiel, complet et optimise pour le composant exact Necessite de connaitre le modele precis du materiel</p>
+    <p>Pratique pour identifier du materiel inconnu (carte mere sans Outils tiers/generiques A utiliser avec prudence : privilegier des outils reconnus reference)</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 20</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Les logiciels de securite : antivirus et pare-feu Deux lignes de defense complementaires protegent la machine contre les menaces venues de fichiers ou du reseau.</p>
+    <p>Antivirus Pare-feu (firewall)</p>
+    <p>Role : Role : detecte, bloque et supprime les logiciels malveillants (virus, ransomware, filtre les connexions reseau entrantes et sortantes selon des regles de spyware, chevaux de Troie). securite.</p>
+    <p>Fonctionnement : Fonctionnement : analyse en temps reel des fichiers ouverts, plus des analyses planifiees de bloque les tentatives d'acces non autorisees depuis internet ou un reseau l'ensemble du disque. local.</p>
+    <p>Exemples : Bon reflexe : Windows Defender (integre et gratuit), solutions tierces (payantes ou laisser le pare-feu de l'OS active en permanence, meme avec un antivirus gratuites) selon les besoins. tiers installe.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 21</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Bonnes pratiques de securite logicielle La meilleure protection reste une combinaison d'outils a jour et de reflexes de prudence au quotidien.</p>
+    <p>Mises a jour regulieres Analyses planifiees Prudence face au phishing OS, antivirus et logiciels a jour pour corriger les failles Programmer des analyses antivirus completes Se mefier des emails, liens et pieces jointes inattendus, de securite connues. reguliere, pas seulement a la demande. meme d'un expediteur connu.</p>
+    <p>Mots de passe robustes Compte utilisateur standard Sauvegardes regulieres Utiliser des mots de passe longs et uniques, et activer la Reserver le compte administrateur aux taches qui le Une sauvegarde a jour est la meilleure protection double authentification si possible. necessitent, au quotidien utiliser un compte standard. contre un ransomware ou une panne materielle.</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 22</p>
+    <p>MODULE 02 — LOGICIEL</p>
+    <p>Synthese : systeme, pilotes et securite Trois piliers logiciels qui, ensemble, conditionnent la stabilite et la longevite d'un poste informatique.</p>
+    <p>Systeme d'exploitation Familles d'OS Pilotes (drivers) Gere le materiel et permet l'execution des programmes Windows, Linux, macOS : usages et compatibilites Traduisent le dialogue entre l'OS et le materiel differents</p>
+    <p>Sources de pilotes Antivirus &amp; pare-feu Bonnes pratiques Windows Update, gestionnaire de peripheriques, site Detectent les menaces et filtrent les connexions reseau Mises a jour, sauvegardes et vigilance au quotidien fabricant</p>
+    <p>Yggdrasil — Agent de Reconditionnement Numerique 23</p>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+</footer>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
