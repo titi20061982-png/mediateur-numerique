@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ateliers Médiation Numérique</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --card: #ffffff;
+    --text: #1f2328;
+    --muted: #57606a;
+    --border: #e2e2df;
+    --accent: #2f5d50;
+    --accent-soft: #e7f0ed;
+    --badge-docx: #2b579a;
+    --badge-pptx: #d24726;
+    --badge-pdf: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14181b;
+      --card: #1c2226;
+      --text: #e6e8ea;
+      --muted: #9aa4ab;
+      --border: #2c3338;
+      --accent: #7fbfa8;
+      --accent-soft: #1f2e29;
+      --badge-docx: #6ea8fe;
+      --badge-pptx: #ff8a65;
+      --badge-pdf: #ff6b6b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  header {
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  header h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+  }
+  header p {
+    color: var(--muted);
+    margin: 0.4rem 0;
+  }
+  .meta-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .meta-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+  }
+  .meta-links a:hover { background: var(--accent-soft); }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.1rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.3rem;
+  }
+  .card h2 {
+    margin: 0 0 0.85rem;
+    font-size: 1.05rem;
+  }
+  .card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .card a {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+  }
+  .card a:hover { color: var(--accent); }
+  .badge {
+    flex: none;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #fff;
+    padding: 0.12rem 0.42rem;
+    border-radius: 5px;
+  }
+  .badge.docx { background: var(--badge-docx); }
+  .badge.pptx { background: var(--badge-pptx); }
+  .badge.pdf  { background: var(--badge-pdf); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 2rem 1.5rem 3rem;
+  }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ateliers Médiation Numérique</h1>
+  <p>Supports pédagogiques créés dans le cadre d'activités de médiation numérique
+  (Titre Professionnel Médiateur Numérique, AFPA Guéret) : ateliers pour le grand
+  public, débutants et seniors.</p>
+  <div class="meta-links">
+    <a href="https://github.com/titi20061982-png/mediateur-numerique">Dépôt GitHub</a>
+    <a href="LICENSE">Licence</a>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+
+    <div class="card">
+      <h2>Smartphone et tablette</h2>
+      <ul>
+        <li><a href="Smartphone et tablette/Maitriser_Smartphone_1.pptx"><span class="badge pptx">PPTX</span>Maîtriser son smartphone</a></li>
+        <li><a href="Smartphone et tablette/Fiche_Exercice_Smartphone.pdf"><span class="badge pdf">PDF</span>Fiche exercice</a></li>
+        <li><a href="Smartphone et tablette/Fiche_Memo_Smartphone.pdf"><span class="badge pdf">PDF</span>Fiche mémo</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>CV et lettre de motivation</h2>
+      <ul>
+        <li><a href="CV et lettre de motivation/CV et lettre de motivation.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="CV et lettre de motivation/Fiche_CV_Lettre_Motivation.docx"><span class="badge docx">DOCX</span>Fiche</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Intelligence artificielle : panorama</h2>
+      <ul>
+        <li><a href="IA/IA_Panorama.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="IA/Fiche_IA_Panorama.docx"><span class="badge docx">DOCX</span>Fiche</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Battle OS (Windows / Linux / macOS)</h2>
+      <ul>
+        <li><a href="Battle os/Battle_OS_Waltener_FINAL  -  Réparation.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Battle os/Exercices_Battle_OS.pdf"><span class="badge pdf">PDF</span>Exercices</a></li>
+        <li><a href="Battle os/Fiche_a_emporter_Battle_OS.pdf"><span class="badge pdf">PDF</span>Fiche à emporter</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Phishing (hameçonnage)</h2>
+      <ul>
+        <li><a href="Phishing atelier/Phishing_couleurs_apaisees_13.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Phishing atelier/Pieges_version_tres_simple.pptx"><span class="badge pptx">PPTX</span>Version simplifiée</a></li>
+        <li><a href="Phishing atelier/Plan_Animation_Phishing_Waltener.docx"><span class="badge docx">DOCX</span>Plan d'animation</a></li>
+        <li><a href="Phishing atelier/Boite_a_outils_anti-arnaque_5.docx"><span class="badge docx">DOCX</span>Boîte à outils anti-arnaque</a></li>
+        <li><a href="Phishing atelier/Phishing_Fiche_Exercice_Simple.docx"><span class="badge docx">DOCX</span>Fiche exercice</a></li>
+        <li><a href="Phishing atelier/Phishing_Fiche_A_Emporter_2.pdf"><span class="badge pdf">PDF</span>Fiche à emporter</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Cyberharcèlement</h2>
+      <ul>
+        <li><a href="Cyberharcelement/Cyberharcelement_INTERACTIF_1  -  Réparation.pptx"><span class="badge pptx">PPTX</span>Présentation interactive</a></li>
+        <li><a href="Cyberharcelement/Fiche_Cyberharcelement_1.docx"><span class="badge docx">DOCX</span>Fiche</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Ma retraite en ligne</h2>
+      <ul>
+        <li><a href="Ma retraite en ligne/Ma_retraite_en_ligne.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Identité numérique et e-réputation</h2>
+      <ul>
+        <li><a href="Identiter numerique et e-reputation/identite_numerique_ereputation.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Identiter numerique et e-reputation/Fiche_Identite_Numerique.docx"><span class="badge docx">DOCX</span>Fiche</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Protéger sa vie privée en ligne</h2>
+      <ul>
+        <li><a href="Proteger sa vie priver  en ligne/vie_privee_en_ligne  -  Réparation.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Proteger sa vie priver  en ligne/Fiche_vie_privee_1page.docx"><span class="badge docx">DOCX</span>Fiche 1 page</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Comprendre sa facture téléphonique</h2>
+      <ul>
+        <li><a href="Comprendre sa facture telephonique son forfait/Facture_telephone_INTERACTIF.pptx"><span class="badge pptx">PPTX</span>Présentation interactive</a></li>
+        <li><a href="Comprendre sa facture telephonique son forfait/Fiche_exercice_facture_telephone_1.pdf"><span class="badge pdf">PDF</span>Fiche exercice</a></li>
+        <li><a href="Comprendre sa facture telephonique son forfait/Fiche_a_emporter_facture_telephone_1.pdf"><span class="badge pdf">PDF</span>Fiche à emporter</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Trouver une formation en ligne</h2>
+      <ul>
+        <li><a href="Trouver une formation en ligne/Trouver_sa_Formation_2026.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Trouver une formation en ligne/Fiche_Trouver_sa_Formation.docx"><span class="badge docx">DOCX</span>Fiche</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Accompagner un enfant sur Internet</h2>
+      <ul>
+        <li><a href="Accompagnement de sont enfant sur internet en toute securité/Securite_Internet_Enfants_Presentation_2  -  Réparation  -  Réparation.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="Accompagnement de sont enfant sur internet en toute securité/Boite_outils_proteger_enfant.docx"><span class="badge docx">DOCX</span>Boîte à outils</a></li>
+        <li><a href="Accompagnement de sont enfant sur internet en toute securité/Securite_Internet_Enfants_Fiche_Exercice.pdf"><span class="badge pdf">PDF</span>Fiche exercice</a></li>
+        <li><a href="Accompagnement de sont enfant sur internet en toute securité/Securite_Internet_Enfants_Fiche_A_Emporter.pdf"><span class="badge pdf">PDF</span>Fiche à emporter</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Base ADRN (montage / diagnostic PC)</h2>
+      <ul>
+        <li><a href="Base ADRN/ADRN_Module_01_02_Complet_1_v3.pptx"><span class="badge pptx">PPTX</span>Module 01-02</a></li>
+        <li><a href="Base ADRN/Guide_Animation_Montage_PC_ADRN.docx"><span class="badge docx">DOCX</span>Guide d'animation</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Mes impôts en ligne</h2>
+      <ul>
+        <li><a href="Mes impots en ligne/Mes_impots_en_ligne_Yggdrasil.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Mon espace santé Ameli</h2>
+      <ul>
+        <li><a href="Mon espasse sante AMELI/Tuto_Compte_Ameli.pptx"><span class="badge pptx">PPTX</span>Tuto compte Ameli</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>France Titres (CNI, passeport, permis, carte grise)</h2>
+      <ul>
+        <li><a href="France titre fonctionnement de A à Z/Yggdrasil_France_Titres_3.pptx"><span class="badge pptx">PPTX</span>Présentation</a></li>
+        <li><a href="France titre fonctionnement de A à Z/Yggdrasil_France_Titres_memo.docx"><span class="badge docx">DOCX</span>Mémo</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Mon compte CAF</h2>
+      <ul>
+        <li><a href="Fonctionnement de mon compte CAF de A à Z/Mon_compte_CAF_pas_a_pas_1.pptx"><span class="badge pptx">PPTX</span>Pas à pas</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  © 2026 titi_23 — Tous droits réservés. Voir la <a href="LICENSE">licence</a>.
+  Toute réutilisation nécessite une autorisation préalable de l'auteur.
+</footer>
+
+</body>
+</html>

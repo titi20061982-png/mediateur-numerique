@@ -8,7 +8,6 @@ numérique (Titre Professionnel Médiateur Numérique, AFPA Guéret
 
 ## Contenu
 
-- **`Atelier_Montage_PC_2h_3PC/`** — Support d'atelier "Montage PC" (2h, groupe de 3 PC).
 - Ensemble des ateliers thématiques de médiation numérique, chacun dans son
   propre dossier à la racine du dépôt :
   - Smartphone et tablette
