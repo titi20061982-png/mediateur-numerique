@@ -1,0 +1,20 @@
+{
+  "name": "Ateliers Médiation Numérique",
+  "short_name": "Médiation Num.",
+  "description": "17 ateliers de médiation numérique en libre accès : fiches, exercices et quiz — Cédric Waltener, AFPA Guéret.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f4f0",
+  "theme_color": "#35604f",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
