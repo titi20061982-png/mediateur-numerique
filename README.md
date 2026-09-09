@@ -54,7 +54,10 @@ Les pages `ateliers/<slug>_quiz.html` sont générées par le script
 `build_quiz4.ps1` (dans le dossier de travail, pas commité dans ce dépôt) à
 partir de `quiz_data_v2.json`. Modifier les questions dans ce fichier JSON
 puis relancer le script régénère les 17 pages sans perdre le design (thème,
-confettis, retour en haut, etc. — tout est dans le template du script).
+confettis, retour en haut, etc.) ni la migration vers `style.css` : le
+template du script charge désormais `../style.css` lui aussi, exactement
+comme les 17 pages déjà en ligne (vérifié : une régénération de test ne
+produit aucune différence de contenu).
 
 ## Modifier "À propos" et "Prestations"
 
@@ -78,65 +81,24 @@ variante sombre automatique (`prefers-color-scheme`), et un bouton 🌙/☀️ p
 forcer le thème manuellement (mémorisé dans le navigateur via
 `localStorage['theme']`, valable sur tout le site).
 
-**Depuis le dernier chantier, ces jetons de couleur et les composants
-réutilisables (cartes, boutons, en-tête/pied de page, barre de recherche,
-etc.) vivent dans `style.css`, à la racine du dépôt.** Quatre pages
-l'utilisent déjà (plus de `<style>` intégré dans leur `<head>`) :
+**Ces jetons de couleur et tous les composants réutilisables (cartes,
+boutons, en-tête/pied de page, barre de recherche, écran de quiz,
+sélecteur de langue des fiches, feuille d'impression, etc.) vivent dans
+`style.css`, à la racine du dépôt.** Toutes les pages du site l'utilisent
+— plus aucune page n'a de `<style>` intégré dans son `<head>` :
 
-- `index.html`
-- `a-propos.html`
-- `prestations.html`
-- `stats.html`
+- `index.html`, `a-propos.html`, `prestations.html`, `stats.html`
+- les 17 quiz et les 25 fiches de `ateliers/`
 
-Pour ajouter ou changer une couleur, une carte, un bouton commun à ces 4
-pages, tout se passe désormais dans `style.css` — inutile de répéter la
-modification 4 fois.
+Pour ajouter ou changer une couleur, une carte, un bouton commun à
+plusieurs pages, tout se passe désormais dans `style.css` — inutile de
+répéter la modification page par page.
 
-### Ce qui n'est PAS encore migré, et pourquoi
-
-Les 25 fiches et 17 quiz du dossier `ateliers/` gardent encore leur propre
-`<style>` intégré : ce sont des pages générées automatiquement par des
-scripts PowerShell (`build_quiz4.ps1`, `translate_inject.ps1`, etc.), pas
-commités dans ce dépôt, et il y en a beaucoup plus (42 pages, dont certaines
-existent aussi en variantes de langue). Les migrer en même temps que le
-reste aurait été le chantier le plus risqué de tous pour le gain le plus
-faible — voir le plan de migration ci-dessous.
-
-## Plan de migration progressif (ateliers/ : 25 fiches + 17 quiz)
-
-Pour intégrer `style.css` aux pages restantes sans rien casser :
-
-1. **Choisir une seule page de fiche "pilote"** (ex. `smartphone_fiche-exercice.html`)
-   et la migrer à la main en suivant exactement la méthode utilisée pour
-   `stats.html` dans ce commit : remplacer le bloc `<style>` par
-   `<link rel="stylesheet" href="../style.css">` (attention au `../`, ces
-   pages sont dans `ateliers/`), vérifier qu'aucune classe ne porte un nom
-   déjà utilisé ailleurs avec un sens différent (comme `.icon-btn` ou
-   `.card` l'étaient avant ce chantier), et confirmer visuellement (clair +
-   sombre) que rien n'a bougé.
-2. **Ajouter à `style.css` les quelques classes propres aux fiches** qui n'y
-   sont pas encore : boutons A-/A+ de taille de police, bouton d'impression,
-   feuille `@media print`, sélecteur de langue FR/EN/ES/AR/PT.
-3. **Écrire un script de migration** (`migrate_style_fiches.ps1`, sur le
-   même modèle que `add_design_pages.ps1`) qui répète l'étape 1 sur les 24
-   fiches restantes, avec un mode `$env:DESIGN_TEST_ONE` pour tester un
-   fichier à la fois avant de lancer sur tous.
-4. **Faire la même chose pour le template de quiz** (`build_quiz4.ps1`) :
-   modifier le template une fois pour qu'il génère un lien vers
-   `../style.css` au lieu d'un `<style>` intégré, ajouter à `style.css` les
-   classes propres aux quiz (écran de choix du niveau, confettis, sélecteur
-   parmi 249 langues), puis régénérer les 17 pages de quiz via le script
-   existant (aucune perte de contenu : les questions restent dans
-   `quiz_data_v2.json`).
-5. **Vérifier les liens** après chaque vague (script `check_links.ps1` déjà
-   utilisé plus tôt dans le projet) et pousser par petits lots plutôt qu'en
-   un seul gros commit, pour pouvoir revenir en arrière facilement si une
-   page pose problème.
-
-Cette prudence n'est pas nécessaire pour de futures modifications de
-`index.html`, `a-propos.html`, `prestations.html` ou `stats.html` : ces
-4 pages sont déjà unifiées et se modifient normalement, directement dans
-`style.css`.
+Chaque page (hors `ateliers/`) charge `style.css` depuis la racine ; les
+pages de `ateliers/` le chargent via `../style.css` (elles sont un
+dossier plus bas). Le script `build_quiz4.ps1` a été mis à jour pour
+générer ce lien lui aussi : régénérer les quiz via ce script ne fait pas
+revenir en arrière sur cette migration.
 
 ## Ce qui a été fait dans cette passe "portfolio professionnel"
 
@@ -149,17 +111,19 @@ Cette prudence n'est pas nécessaire pour de futures modifications de
   déjà écrit sur l'accueil plutôt qu'un texte générique à réécrire.
 - **Nouvelle page `prestations.html`** : 4 types de prestations et un encart
   "tarifs sur devis".
-- **`style.css` global** : extraction des styles communs à `index.html`,
-  `a-propos.html`, `prestations.html` et `stats.html` dans une feuille de
-  style partagée, avec harmonisation de quelques détails qui différaient
-  légèrement d'une page à l'autre (ombres, tailles de police des titres de
-  carte). Les 42 pages de `ateliers/` ne sont pas touchées — voir le plan de
-  migration ci-dessus.
+- **`style.css` global** : extraction de tous les styles du site (page
+  d'accueil, À propos, Prestations, Statistiques, les 17 quiz et les 25
+  fiches) dans une feuille de style partagée, migrée en plusieurs commits
+  vérifiés un par un (pilote sur une page, puis lots) plutôt qu'en un seul
+  gros commit. Quelques détails qui différaient légèrement d'une page à
+  l'autre ont été harmonisés au passage (ombres, tailles de police des
+  titres de carte, largeur de colonne des pages secondaires). Plus aucune
+  page du site n'a de `<style>` intégré.
 - **Thème** : le vert nature déjà en place a été conservé (et non remplacé
   par un bleu néon) pour rester cohérent avec le texte "Yggdrasil" déjà
   publié.
-- **Pied de page** harmonisé sur les 4 pages migrées (liens GitHub, À propos,
-  Prestations, Statistiques/Accueil).
+- **Pied de page** harmonisé sur l'accueil et `stats.html` (liens GitHub,
+  À propos, Prestations, Statistiques/Accueil).
 
 ## Licence
 
