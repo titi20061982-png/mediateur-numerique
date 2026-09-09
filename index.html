@@ -310,6 +310,21 @@
   .badge.quiz { background: var(--badge-quiz); }
   .quiz-count { flex: none; font-size: 0.68rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
 
+  .stats-total { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .stats-total div strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.6rem; color: var(--accent); }
+  .stats-total div span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .stats-list { padding: 0.3rem 1.4rem; }
+  .stats-loading { text-align: center; color: var(--muted); padding: 1.5rem; font-size: 0.9rem; }
+  .stats-row { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .stats-row:last-child { border-bottom: none; }
+  .stats-row .stats-icon { font-size: 1.1rem; flex: none; width: 1.5rem; text-align: center; }
+  .stats-row .stats-info { flex: 1; min-width: 0; }
+  .stats-row .stats-info a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+  .stats-row .stats-info a:hover { color: var(--accent); }
+  .stats-row .stats-barwrap { background: var(--bg-soft); border-radius: 999px; height: 7px; margin-top: 0.35rem; overflow: hidden; }
+  .stats-row .stats-bar { background: var(--accent); height: 100%; border-radius: 999px; transition: width .4s ease; }
+  .stats-row .stats-count { flex: none; font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--accent); min-width: 2.2rem; text-align: right; }
+
   footer {
     text-align: center;
     color: var(--muted);
@@ -844,6 +859,23 @@
     </div>
   </section>
 
+  <section class="category" id="stats-section">
+    <div class="category-head">
+      <span class="icon">📊</span>
+      <div>
+        <h2>Statistiques des quiz</h2>
+        <p>Nombre de visites par test de connaissances, mis à jour en direct.</p>
+      </div>
+    </div>
+    <div class="stats-total" id="statsTotal">
+      <div><strong id="statsTotalVisits">—</strong><span>Visites totales</span></div>
+      <div><strong id="statsTopQuiz">—</strong><span>Le plus visité</span></div>
+    </div>
+    <div class="stats-list card" id="statsList">
+      <div class="stats-loading">Chargement…</div>
+    </div>
+  </section>
+
 </main>
 
 <div class="page-watermark">
@@ -884,6 +916,46 @@
       .then(function (d) { el.textContent = '👥 ' + (typeof d.value === 'number' ? d.value : 0); })
       .catch(function () { el.remove(); });
   });
+
+  // Section statistiques : classement complet des quiz par visites
+  (function () {
+    var quizItems = Array.from(document.querySelectorAll('.quiz-count')).map(function (el) {
+      var card = el.closest('.card');
+      var link = el.previousElementSibling;
+      var icon = card.parentElement.previousElementSibling
+        ? card.parentElement.previousElementSibling.querySelector('.icon').textContent
+        : '📄';
+      return {
+        key: el.dataset.key,
+        href: link.getAttribute('href'),
+        title: card.querySelector('h3').textContent,
+        icon: icon
+      };
+    });
+
+    Promise.all(quizItems.map(function (q) {
+      return fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + q.key)
+        .then(function (r) { return r.json(); })
+        .then(function (d) { return { q: q, count: (typeof d.value === 'number' ? d.value : 0) }; })
+        .catch(function () { return { q: q, count: 0 }; });
+    })).then(function (results) {
+      results.sort(function (a, b) { return b.count - a.count; });
+      var max = Math.max.apply(null, results.map(function (r) { return r.count; })) || 1;
+      var total = results.reduce(function (sum, r) { return sum + r.count; }, 0);
+
+      document.getElementById('statsTotalVisits').textContent = total;
+      document.getElementById('statsTopQuiz').textContent = total > 0 ? results[0].q.title.split(' (')[0] : '—';
+
+      document.getElementById('statsList').innerHTML = results.map(function (r) {
+        var pct = Math.round((r.count / max) * 100);
+        return '<div class="stats-row">' +
+          '<div class="stats-icon">' + r.q.icon + '</div>' +
+          '<div class="stats-info"><a href="' + r.q.href + '">' + r.q.title + '</a>' +
+          '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div></div>' +
+          '<div class="stats-count">' + r.count + '</div></div>';
+      }).join('');
+    });
+  })();
 </script>
 
 </body>
