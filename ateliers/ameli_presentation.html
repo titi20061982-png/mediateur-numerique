@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#demarches">← Retour aux ateliers</a>
-    <div class="eyebrow">🏛️ Mon espace santé Ameli</div>
-    <h1>Tuto compte Ameli</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#demarches">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🏛️ Mon espace santé Ameli</div>
+    <h1 id="h1El">Tuto compte Ameli</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -94,8 +99,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">YGGDRASIL · MÉDIATION NUMÉRIQUE</p>
       <p>Le compte Ameli Votre santé et vos remboursements en ligne — le guide pas à pas</p>
       <p>Atelier débutants • Aucune connaissance préalable nécessaire</p>
@@ -215,13 +220,1002 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🏛️ Meu espaço de saúde Ameli",
+                    "en":  "🏛️ My Ameli health space",
+                    "fr":  "🏛️ Mon espace santé Ameli",
+                    "ar":  "🏛️ مساحتي الصحية أملي",
+                    "es":  "🏛️ Mi espacio de salud Ameli"
+                },
+    "h1":  {
+               "pt":  "Tutorial da conta Ameli",
+               "en":  "Ameli account tutorial",
+               "fr":  "Tuto compte Ameli",
+               "ar":  "البرنامج التعليمي لحساب أميلي",
+               "es":  "Tutorial de la cuenta Ameli"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "YGGDRASIL · MÉDIATION NUMÉRIQUE",
+                      "en":  "YGGDRASIL · DIGITAL MEDIATION",
+                      "es":  "YGGDRASIL · MEDIACIÓN DIGITAL",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "YGGDRASIL · MEDIAÇÃO DIGITAL"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le compte Ameli Votre santé et vos remboursements en ligne — le guide pas à pas",
+                      "en":  "The Ameli Your health account and your online reimbursements — the step-by-step guide",
+                      "es":  "Ameli Su cuenta de salud y sus reembolsos en línea: la guía paso a paso",
+                      "ar":  "The Ameli حسابك الصحي وتسديد تكاليفك عبر الإنترنت - دليل خطوة بخطوة",
+                      "pt":  "A Ameli Sua conta de saúde e seus reembolsos online — o guia passo a passo"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Atelier débutants • Aucune connaissance préalable nécessaire",
+                      "en":  "Beginners workshop • No prior knowledge necessary",
+                      "es":  "Taller para principiantes • No se necesitan conocimientos previos",
+                      "ar":  "ورشة عمل للمبتدئين • لا حاجة إلى معرفة مسبقة",
+                      "pt":  "Workshop para iniciantes • Não é necessário conhecimento prévio"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "CE QU\u0027ON VA VOIR ENSEMBLE",
+                      "en":  "WHAT WE WILL SEE TOGETHER",
+                      "es":  "LO QUE VEREMOS JUNTOS",
+                      "ar":  "ماذا سنرى معًا",
+                      "pt":  "O QUE VEREMOS JUNTOS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le parcours de l\u0027atelier",
+                      "en":  "The workshop route",
+                      "es":  "La ruta del taller",
+                      "ar":  "طريق الورشة",
+                      "pt":  "O percurso da oficina"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 À quoi sert le compte Ameli 2 Ce qu\u0027il faut préparer 3 Créer et activer son compte",
+                      "en":  "1 What is the Ameli account for 2 What to prepare 3 Create and activate your account",
+                      "es":  "1 Para qué sirve la cuenta Ameli 2 Qué preparar 3 Crea y activa tu cuenta",
+                      "ar":  "1 ما هو حساب عاملي 2 ما الذي يجب تحضيره 3 إنشاء حسابك وتفعيله",
+                      "pt":  "1 Para que serve a conta Ameli 2 O que preparar 3 Crie e ative sua conta"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ce qu\u0027on trouve une fois 4 Les 3 façons de se connecter 5 connecté 6 Se protéger des arnaques",
+                      "en":  "What you find once 4 The 3 ways to connect 5 connected 6 Protect yourself from scams",
+                      "es":  "Lo que encuentras una vez 4 Las 3 formas de conectarte 5 conectado 6 Protégete de las estafas",
+                      "ar":  "ما تجده مرة واحدة 4 الطرق الثلاثة للاتصال 5 متصل 6 احمِ نفسك من عمليات الاحتيال",
+                      "pt":  "O que você encontra uma vez 4 As 3 maneiras de se conectar 5 conectado 6 Proteja-se de golpes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 2 / 18",
+                      "en":  "Yggdrasil · Digital mediation 2 / 18",
+                      "es":  "Yggdrasil · Mediación digital 2 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 2 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 2/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "POURQUOI UN COMPTE",
+                      "en":  "WHY AN ACCOUNT",
+                      "es":  "POR QUÉ UNA CUENTA",
+                      "ar":  "لماذا الحساب؟",
+                      "pt":  "POR QUE UMA CONTA"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À quoi sert le compte Ameli ? Le compte Ameli, c\u0027est votre espace personnel de l\u0027Assurance Maladie. Tout est au même endroit, accessible 24h/24, sans vous déplacer :",
+                      "en":  "What is the Ameli account used for? The Ameli account is your personal Health Insurance space. Everything is in the same place, accessible 24 hours a day, without having to travel:",
+                      "es":  "¿Para qué se utiliza la cuenta Ameli? La cuenta Ameli es tu espacio personal de Seguro Médico. Todo está en el mismo lugar, accesible las 24 horas del día, sin necesidad de desplazarse:",
+                      "ar":  "ما هو حساب عاملي المستخدم ل؟ حساب Ameli هو مساحة التأمين الصحي الشخصية الخاصة بك. كل شيء في نفس المكان، ويمكن الوصول إليه على مدار 24 ساعة يوميًا، دون الحاجة إلى السفر:",
+                      "pt":  "Para que é usada a conta Ameli? A conta Ameli é o seu espaço pessoal de Seguro Saúde. Tudo no mesmo lugar, acessível 24 horas por dia, sem necessidade de deslocamento:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vos remboursements Vos attestations Votre carte Vitale Vos démarches santé Voir ce que la Sécu vous a Télécharger votre attestation de Commander une nouvelle carte, Déclarer un médecin traitant, remboursé et quand. droits en 2 clics. mettre à jour vos infos. suivre vos arrêts, etc.",
+                      "en":  "Your reimbursements Your certificates Your Vitale card Your health procedures See what Social Security has provided for you Download your certificate of Order a new card, Declare a treating doctor, reimbursed and when. rights in 2 clicks. update your information. track your stops, etc.",
+                      "es":  "Tus reembolsos Tus certificados Tu tarjeta Vitale Tus trámites de salud Consulta lo que la Seguridad Social te ha proporcionado Descarga tu certificado de Solicitar una nueva tarjeta, Declarar médico tratante, reembolsado y cuándo. derechos en 2 clics. actualiza tu información. realizar un seguimiento de sus paradas, etc.",
+                      "ar":  "المبالغ المستردة الخاصة بك شهاداتك بطاقة Vitale الخاصة بك إجراءاتك الصحية تعرف على ما قدمه لك الضمان الاجتماعي قم بتنزيل شهادة طلب بطاقة جديدة، أعلن عن طبيب معالج، تم سداد التكاليف ومتى. الحقوق في نقرتين. تحديث المعلومات الخاصة بك. تتبع نقاط التوقف الخاصة بك، وما إلى ذلك.",
+                      "pt":  "Seus reembolsos Seus certificados Seu cartão Vitale Seus procedimentos de saúde Veja o que a Segurança Social oferece para você Baixe seu certificado de Solicite um novo cartão, Declare um médico assistente, reembolsado e quando. direitos em 2 cliques. atualize suas informações. rastreie suas paradas, etc."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 3 / 18",
+                      "en":  "Yggdrasil · Digital mediation 3 / 18",
+                      "es":  "Yggdrasil · Mediación digital 3 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 3 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/03"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "NE PAS CONFONDRE",
+                      "en":  "DO NOT CONFUSE",
+                      "es":  "NO CONFUNDIR",
+                      "ar":  "لا تخلط",
+                      "pt":  "NÃO CONFUNDA"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ameli n\u0027est pas « Mon espace santé » Ce sont deux sites différents, souvent confondus. Voici comment les distinguer :",
+                      "en":  "Ameli is not “My health space” They are two different sites, often confused. Here\u0027s how to tell them apart:",
+                      "es":  "Ameli no es “Mi espacio de salud” Son dos sitios diferentes, muchas veces confundidos. Aquí se explica cómo diferenciarlos:",
+                      "ar":  "Ameli ليس \"مساحتي الصحية\" فهما موقعان مختلفان، وغالبًا ما يتم الخلط بينهما. وإليك كيفية التمييز بينهما:",
+                      "pt":  "Ameli não é “Meu espaço de saúde”. São dois sites diferentes, muitas vezes confundidos. Veja como diferenciá-los:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Compte Ameli Mon espace santé assure.ameli.fr monespacesante.fr",
+                      "en":  "Ameli account My health space assure.ameli.fr monespacesante.fr",
+                      "es":  "Cuenta Ameli Mi espacio de salud asegurar.ameli.fr monespacesante.fr",
+                      "ar":  "حساب أملي مساحة صحتي أؤكد.ameli.fr monespacesante.fr",
+                      "pt":  "Conta Ameli Meu espaço de saúde assegura.ameli.fr monespacesante.fr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "• Le côté administratif et argent • Le côté médical et dossier de santé • Remboursements et paiements • Ordonnances et résultats d\u0027analyses • Attestation de droits • Carnet de vaccination • Carte Vitale, médecin traitant • Messagerie avec vos soignants",
+                      "en":  "• The administrative and financial side • The medical and health record side • Reimbursements and payments • Prescriptions and analysis results • Certificate of rights • Vaccination record • Carte Vitale, attending physician • Messaging with your caregivers",
+                      "es":  "• La parte administrativa y financiera • La parte del historial médico y de salud • Reembolsos y pagos • Recetas y resultados de análisis • Certificado de derechos • Cartilla de vacunación • Carte Vitale, médico tratante • Mensajería con sus cuidadores",
+                      "ar":  "• الجانب الإداري والمالي • جانب السجل الطبي والصحي • المبالغ المستردة والمدفوعات • الوصفات الطبية ونتائج التحليل • شهادة الحقوق • سجل التطعيم • Carte Vitale، الطبيب المعالج • المراسلة مع مقدمي الرعاية الخاص بك",
+                      "pt":  "• O lado administrativo e financeiro • O lado do registro médico e de saúde • Reembolsos e pagamentos • Prescrições e resultados de análises • Certificado de direitos • Registro de vacinação • Carte Vitale, médico assistente • Mensagens com seus cuidadores"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 4 / 18",
+                      "en":  "Yggdrasil · Digital mediation 4 / 18",
+                      "es":  "Yggdrasil · Mediación digital 4 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 4 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/04"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "AVANT DE COMMENCER",
+                      "en":  "BEFORE YOU START",
+                      "es":  "ANTES DE COMENZAR",
+                      "ar":  "قبل أن تبدأ",
+                      "pt":  "ANTES DE COMEÇAR"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ce qu\u0027il faut avoir sous la main",
+                      "en":  "What to have on hand",
+                      "es":  "Que tener a mano",
+                      "ar":  "ما يجب أن يكون في متناول اليد",
+                      "pt":  "O que ter em mãos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Votre numéro de Sécurité sociale Une adresse e-mail Les 15 chiffres au dos de votre carte Vitale (commence par 1 ou Une adresse que vous savez consulter — c\u0027est là qu\u0027arrivera le 2). lien d\u0027activation.",
+                      "en":  "Your Social Security number An email address The 15 digits on the back of your Vitale card (starts with 1 or An address that you know how to consult — that\u0027s where the 2 will arrive). activation link.",
+                      "es":  "Tu número de Seguro Social Una dirección de correo electrónico Los 15 dígitos en el reverso de tu tarjeta Vitale (comienza con 1 o Una dirección que sabes consultar, ahí es donde llegarán los 2). enlace de activación.",
+                      "ar":  "رقم الضمان الاجتماعي الخاص بك، عنوان البريد الإلكتروني، الأرقام الخمسة عشر الموجودة على ظهر بطاقة Vitale الخاصة بك (تبدأ بالرقم 1 أو العنوان الذي تعرف كيفية الرجوع إليه — حيث سيصل الرقم 2). رابط التنشيط.",
+                      "pt":  "O seu CPF Um endereço de e-mail Os 15 dígitos do verso do seu cartão Vitale (começa com 1 ou Um endereço que você saiba consultar - é onde chegarão os 2). link de ativação."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un téléphone à portée Votre RIB (parfois) Pour recevoir un code de confirmation par SMS si besoin. Souvent déjà connu de votre caisse ; utile pour vérifier votre identité.",
+                      "en":  "A telephone within range Your RIB (sometimes) To receive a confirmation code by SMS if necessary. Often already known to your fund; useful for verifying your identity.",
+                      "es":  "Un teléfono al alcance Su RIB (a veces) Para recibir un código de confirmación por SMS si es necesario. A menudo, su fondo ya lo conoce; útil para verificar su identidad.",
+                      "ar":  "هاتف ضمن نطاق RIB الخاص بك (أحيانًا) لتلقي رمز التأكيد عبر الرسائل القصيرة إذا لزم الأمر. غالبًا ما يكون معروفًا لصندوقك بالفعل؛ مفيدة للتحقق من هويتك.",
+                      "pt":  "Um telefone ao alcance Seu RIB (às vezes) Para receber um código de confirmação por SMS, se necessário. Muitas vezes já conhecido pelo seu fundo; útil para verificar sua identidade."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 5 / 18",
+                      "en":  "Yggdrasil · Digital mediation 5 / 18",
+                      "es":  "Yggdrasil · Mediación digital 5 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 5 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/05"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LA VUE D\u0027ENSEMBLE",
+                      "en":  "THE OVERVIEW",
+                      "es":  "LA RESUMEN",
+                      "ar":  "نظرة عامة",
+                      "pt":  "A VISÃO GERAL"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 façons d\u0027accéder à votre compte",
+                      "en":  "3 ways to access your account",
+                      "es":  "3 formas de acceder a tu cuenta",
+                      "ar":  "3 طرق للوصول إلى حسابك",
+                      "pt":  "3 maneiras de acessar sua conta"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 2 3 Vos identifiants Ameli FranceConnect L\u0027application mobile",
+                      "en":  "1 2 3 Your Ameli FranceConnect identifiers The mobile application",
+                      "es":  "1 2 3 Sus identificadores Ameli FranceConnect La aplicación móvil",
+                      "ar":  "1 2 3 معرفات Ameli FranceConnect الخاصة بك تطبيق الهاتف المحمول",
+                      "pt":  "1 2 3 Seus identificadores Ameli FranceConnect O aplicativo móvel"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Numéro de Sécu + mot de passe. La Vous réutilisez un autre compte (Impôts, L\u0027appli « Compte ameli » sur le méthode de base, une fois le compte La Poste…). Pas de nouveau mot de téléphone, avec un code à 4 chiffres. créé. passe.",
+                      "en":  "Social security number + password. You reuse another account (Taxes, The “Ameli Account” app on the basic method, once the La Poste account, etc.). No new phone number, with a 4-digit code. created. pass.",
+                      "es":  "Número de seguro social + contraseña. Reutilizas otra cuenta (Impuestos, la aplicación “Cuenta Ameli” en el método básico, una vez la cuenta La Poste, etc.). Sin número de teléfono nuevo, con un código de 4 dígitos. creado. aprobar.",
+                      "ar":  "رقم الضمان الاجتماعي + كلمة المرور. يمكنك إعادة استخدام حساب آخر (الضرائب، تطبيق \"حساب أميلي\" بالطريقة الأساسية، ومرة ​​حساب La Poste، وما إلى ذلك). لا يوجد رقم هاتف جديد، مع رمز مكون من 4 أرقام. مخلوق. يمر.",
+                      "pt":  "Número de segurança social + senha. Você reutiliza outra conta (Impostos, o aplicativo “Conta Ameli” no método básico, uma vez a conta La Poste, etc.). Nenhum novo número de telefone, com um código de 4 dígitos. criado. passar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 6 / 18",
+                      "en":  "Yggdrasil · Digital mediation 6 / 18",
+                      "es":  "Yggdrasil · Mediación digital 6 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 6 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/06"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 1 · ÉTAPE A",
+                      "en":  "METHOD 1 STEP A",
+                      "es":  "MÉTODO 1 PASO A",
+                      "ar":  "الطريقة الأولى: الخطوة أ",
+                      "pt":  "MÉTODO 1 PASSO A"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Créer son compte Ameli assure.ameli.fr Allez sur assure.ameli.fr 1 Tapez l\u0027adresse dans la barre du navigateur, puis cliquez sur « Créer un Création de mon compte compte ».",
+                      "en":  "Create your Ameli account assure.ameli.fr Go to assure.ameli.fr 1 Type the address in the browser bar, then click on “Create a Create my account account”.",
+                      "es":  "Cree su cuenta Ameli asegurar.ameli.fr Vaya a asegurar.ameli.fr 1 Escriba la dirección en la barra del navegador y luego haga clic en “Crear una cuenta Crear mi cuenta”.",
+                      "ar":  "قم بإنشاء حساب Ameli الخاص بك Assur.ameli.fr انتقل إلى Assur.ameli.fr 1 اكتب العنوان في شريط المتصفح، ثم انقر فوق \"إنشاء حساب إنشاء حسابي\".",
+                      "pt":  "Crie sua conta Ameli Asse.ameli.fr Vá para Asse.ameli.fr 1 Digite o endereço na barra do navegador e clique em “Criar uma conta Criar minha conta”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Numéro de sécurité sociale",
+                      "en":  "Social Security Number",
+                      "es":  "Número de seguro social",
+                      "ar":  "رقم الضمان الاجتماعي",
+                      "pt":  "Número da Segurança Social"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 55 08 23 ... Renseignez vos informations Date de naissance 2 Numéro de Sécu, date de naissance et votre adresse e-mail. JJ / MM / AAAA",
+                      "en":  "2 55 08 23 ... Fill in your information Date of birth 2 Social security number, date of birth and your email address. DD / MM / YYYY",
+                      "es":  "2 55 08 23... Llena tus datos Fecha de nacimiento 2 Número de seguro social, fecha de nacimiento y tu dirección de correo electrónico. DD / MM / AAAA",
+                      "ar":  "2 55 08 23 ... املأ معلوماتك تاريخ الميلاد 2 رقم الضمان الاجتماعي وتاريخ الميلاد وعنوان بريدك الإلكتروني. يوم / ش ش / سنة",
+                      "pt":  "2 55 08 23 ... Preencha os seus dados Data de nascimento 2 Número de segurança social, data de nascimento e o seu endereço de email. DD/MM/AAAA"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Adresse e-mail",
+                      "en":  "E-mail address",
+                      "es":  "Dirección de correo electrónico",
+                      "ar":  "عنوان البريد الإلكتروني",
+                      "pt":  "Endereço de e-mail"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "prenom.nom@mail.fr Validez 3 Cliquez sur « Créer mon compte ». Un e-mail va vous être envoyé. Créer mon compte",
+                      "en":  "firstname.lastname@mail.fr Validate 3 Click on “Create my account”. An email will be sent to you. Create my account",
+                      "es":  "nombre.apellido@mail.fr Validar 3 Haga clic en “Crear mi cuenta”. Se le enviará un correo electrónico. crear mi cuenta",
+                      "ar":  "Lastname@mail.fr التحقق من صحة 3 انقر على \"إنشاء حسابي\". سيتم إرسال بريد إلكتروني إليك. إنشاء حسابي",
+                      "pt":  "nome.sobrenome@mail.fr Validar 3 Clique em “Criar minha conta”. Um e-mail será enviado para você. Criar minha conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 7 / 18",
+                      "en":  "Yggdrasil · Digital mediation 7 / 18",
+                      "es":  "Yggdrasil · Mediación digital 7 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 7 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/07"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 1 · ÉTAPE B",
+                      "en":  "METHOD 1 STEP B",
+                      "es":  "MÉTODO 1 PASO B",
+                      "ar":  "الطريقة الأولى: الخطوة ب",
+                      "pt":  "MÉTODO 1 PASSO B"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Activer son compte depuis l\u0027e-mail boîte mail Ouvrez votre boîte mail 1 Cherchez le message de l\u0027Assurance Maladie (vérifiez aussi les Assurance Maladie courriers indésirables / spam). Activez votre compte ameli",
+                      "en":  "Activate your account from your mailbox email Open your mailbox 1 Look for the Health Insurance message (also check Health Insurance junk mail/spam). Activate your ameli account",
+                      "es":  "Activa tu cuenta desde tu buzón de correo electrónico Abre tu buzón 1 Busca el mensaje de Seguro Médico (también revisa el correo basura/spam del Seguro Médico). Activa tu cuenta ameli",
+                      "ar":  "قم بتنشيط حسابك من البريد الإلكتروني لصندوق البريد الخاص بك افتح صندوق البريد الخاص بك 1 ابحث عن رسالة التأمين الصحي (تحقق أيضًا من البريد غير المرغوب فيه/البريد العشوائي الخاص بالتأمين الصحي). قم بتفعيل حساب أملي الخاص بك",
+                      "pt":  "Ative sua conta na caixa de correio de e-mail Abra sua caixa de correio 1 Procure a mensagem do Seguro de Saúde (verifique também o lixo eletrônico/spam do Seguro de Saúde). Ative sua conta ameli"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bonjour, pour terminer la création de votre compte, cliquez sur le bouton Cliquez sur le lien d\u0027activation 2 ci-dessous : Le bouton « Activer mon compte » dans l\u0027e-mail.",
+                      "en":  "Hello, to complete the creation of your account, click on the button Click on the activation link 2 below: The “Activate my account” button in the email.",
+                      "es":  "Hola, para completar la creación de tu cuenta, haz clic en el botón Haz clic en el enlace de activación 2 a continuación: El botón “Activar mi cuenta” en el correo electrónico.",
+                      "ar":  "مرحبًا، لإكمال إنشاء حسابك، انقر فوق الزر انقر فوق رابط التنشيط 2 أدناه: زر \"تنشيط حسابي\" الموجود في البريد الإلكتروني.",
+                      "pt":  "Olá, para finalizar a criação da sua conta, clique no botão Clique no link de ativação 2 abaixo: O botão “Ativar minha conta” no email."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Activer mon compte",
+                      "en":  "Activate my account",
+                      "es":  "activar mi cuenta",
+                      "ar":  "تفعيل حسابي",
+                      "pt":  "Ativar minha conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Choisissez votre mot de passe Ce lien est valable 7 jours. 3 Une combinaison que vous êtes seul à connaître. Notez-la dans un endroit sûr.",
+                      "en":  "Choose your password This link is valid for 7 days. 3 A combination that only you know. Write it down in a safe place.",
+                      "es":  "Elige tu contraseña Este enlace tiene una validez de 7 días. 3 Una combinación que sólo tú conoces. Escríbalo en un lugar seguro.",
+                      "ar":  "اختر كلمة المرور الخاصة بك هذا الرابط صالح لمدة 7 أيام. 3 مزيج لا يعرفه إلا أنت. اكتبها في مكان آمن.",
+                      "pt":  "Escolha sua senha Este link é válido por 7 dias. 3 Uma combinação que só você conhece. Anote em um lugar seguro."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 8 / 18",
+                      "en":  "Yggdrasil · Digital mediation 8 / 18",
+                      "es":  "Yggdrasil · Mediación digital 8 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 8 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/08"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 1 · SE CONNECTER",
+                      "en":  "METHOD 1 · LOG IN",
+                      "es":  "MÉTODO 1 · INICIAR SESIÓN",
+                      "ar":  "الطريقة الأولى · تسجيل الدخول",
+                      "pt":  "MÉTODO 1 · ENTRAR"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Avec votre numéro de Sécu et mot de passe assure.ameli.fr À savoir",
+                      "en":  "With your Social Security number and password assure.ameli.fr Things to know",
+                      "es":  "Con su número de Seguridad Social y su contraseña asegurar.ameli.fr Cosas que debe saber",
+                      "ar":  "مع رقم الضمان الاجتماعي وكلمة المرور الخاصين بك، assur.ameli.fr الأشياء التي يجب معرفتها",
+                      "pt":  "Com seu número de Seguro Social e senha Assegurar.ameli.fr Coisas para saber"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "• C\u0027est la méthode la plus simple une Connexion à mon compte fois le compte créé.",
+                      "en":  "• This is the simplest method: Login to my account once the account is created.",
+                      "es":  "• Este es el método más simple: inicie sesión en mi cuenta una vez creada.",
+                      "ar":  "• هذه هي أبسط طريقة: قم بتسجيل الدخول إلى حسابي بمجرد إنشاء الحساب.",
+                      "pt":  "• Este é o método mais simples: Faça login na minha conta assim que a conta for criada."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "• Le mot de passe est celui que vous Numéro de sécurité sociale avez choisi à l\u0027activation. 2 55 08 23 145 678 • Après plusieurs erreurs, le compte se Mot de passe bloque par sécurité.",
+                      "en":  "• The password is the one you chose upon activation. 2 55 08 23 145 678 • After several errors, the account is blocked Password for security.",
+                      "es":  "• La contraseña es la que usted eligió al momento de la activación. 2 55 08 23 145 678 • Después de varios errores, la cuenta queda bloqueada Contraseña por seguridad.",
+                      "ar":  "• كلمة المرور هي التي اخترتها عند التنشيط. 2 55 08 23 145 678 • بعد عدة أخطاء، تم حظر الحساب بكلمة مرور للأمان.",
+                      "pt":  "• A senha é a que você escolheu na ativação. 2 55 08 23 145 678 • Após vários erros, a conta é bloqueada Senha por segurança."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "••••••••••",
+                      "en":  "••••••••••",
+                      "es":  "••••••••••",
+                      "ar":  "••••••••••",
+                      "pt":  "••••••••••"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Me connecter",
+                      "en":  "Log in",
+                      "es":  "Iniciar sesión",
+                      "ar":  "تسجيل الدخول",
+                      "pt":  "Faça login"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 9 / 18",
+                      "en":  "Yggdrasil · Digital mediation 9 / 18",
+                      "es":  "Yggdrasil · Mediación digital 9 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 9 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 18/09"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 2 · COMPRENDRE",
+                      "en":  "METHOD 2 · UNDERSTAND",
+                      "es":  "MÉTODO 2 · ENTENDER",
+                      "ar":  "الطريقة الثانية · الفهم",
+                      "pt":  "MÉTODO 2 · ENTENDER"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "FranceConnect : une clé pour tout FranceConnect vous évite de retenir un mot de passe par site. Vous réutilisez un compte que vous avez déjà (par ex. les Impôts) pour entrer dans Ameli. Vos données de santé restent privées",
+                      "en":  "FranceConnect: one key for everything FranceConnect saves you from having to remember one password per site. You reuse an account you already have (e.g. Taxes) to enter Ameli. Your health data remains private",
+                      "es":  "FranceConnect: una clave para todo FranceConnect le evita tener que recordar una contraseña por sitio. Reutiliza una cuenta que ya tiene (por ejemplo, Impuestos) para ingresar a Ameli. Tus datos de salud permanecen privados",
+                      "ar":  "FranceConnect: مفتاح واحد لكل شيء، يوفر عليك FranceConnect من الاضطرار إلى تذكر كلمة مرور واحدة لكل موقع. يمكنك إعادة استخدام حساب لديك بالفعل (مثل الضرائب) للدخول إلى عاملي. تظل بياناتك الصحية خاصة",
+                      "pt":  "FranceConnect: uma chave para tudo FranceConnect evita que você precise lembrar uma senha por site. Você reutiliza uma conta que já possui (por exemplo, Impostos) para entrar no Ameli. Seus dados de saúde permanecem privados"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "FranceConnect sert uniquement à prouver que c\u0027est bien vous. Il ne voit ni vos Votre compte remboursements, ni votre dossier médical : FranceConnect Compte Ameli c\u0027est juste un portier qui vérifie votre (ex. Impôts) identité.",
+                      "en":  "FranceConnect is only used to prove that it is really you. It does not see your reimbursements, nor your medical file: FranceConnect Ameli Account is just a gatekeeper who verifies your (e.g. Taxes) identity.",
+                      "es":  "FranceConnect sólo se utiliza para demostrar que realmente eres tú. No ve sus reembolsos ni su expediente médico: la cuenta FranceConnect Ameli es solo un guardián que verifica su identidad (por ejemplo, impuestos).",
+                      "ar":  "يتم استخدام FranceConnect فقط لإثبات هويتك حقًا. لا يرى المبالغ المستردة الخاصة بك ولا ملفك الطبي: حساب FranceConnect Ameli هو مجرد حارس بوابة يتحقق من هويتك (مثل الضرائب).",
+                      "pt":  "FranceConnect é usado apenas para provar que é realmente você. Ele não vê seus reembolsos, nem seu prontuário médico: a conta FranceConnect Ameli é apenas um porteiro que verifica sua identidade (por exemplo, impostos)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vous vous identifiez une seule fois, puis vous arrivez dans Ameli déjà connecté.",
+                      "en":  "You identify yourself once, then you arrive in Ameli already connected.",
+                      "es":  "Te identificas una vez, luego llegas a Ameli ya conectado.",
+                      "ar":  "يمكنك تعريف نفسك مرة واحدة، ثم تصل إلى Ameli متصلاً بالفعل.",
+                      "pt":  "Você se identifica uma vez e chega em Ameli já conectado."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 10 / 18",
+                      "en":  "Yggdrasil · Digital mediation 10/18",
+                      "es":  "Yggdrasil · Mediación digital 10/18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 10/18",
+                      "pt":  "Yggdrasil · Mediação digital 18/10"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 2 · PAS À PAS",
+                      "en":  "METHOD 2 · STEP BY STEP",
+                      "es":  "MÉTODO 2 · PASO A PASO",
+                      "ar":  "الطريقة الثانية · خطوة بخطوة",
+                      "pt":  "MÉTODO 2 · PASSO A PASSO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se connecter avec FranceConnect",
+                      "en":  "Connect with FranceConnect",
+                      "es":  "Conéctese con FranceConnect",
+                      "ar":  "تواصل مع فرانس كونيكت",
+                      "pt":  "Conecte-se com FranceConnect"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Cliquez sur le bouton bleu « FranceConnect » 2 Choisissez votre fournisseur d\u0027identité",
+                      "en":  "1 Click on the blue “FranceConnect” button 2 Choose your identity provider",
+                      "es":  "1 Haga clic en el botón azul “FranceConnect” 2 Elija su proveedor de identidad",
+                      "ar":  "1 انقر على زر \"FranceConnect\" الأزرق 2 اختر مزود الهوية الخاص بك",
+                      "pt":  "1 Clique no botão azul “FranceConnect” 2 Escolha seu provedor de identidade"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sur la page de connexion d\u0027Ameli, sous le formulaire habituel. Par exemple Impôts ou Identité Numérique La Poste (voir diapo suivante).",
+                      "en":  "On Ameli\u0027s login page, under the usual form. For example Taxes or Digital Identity La Poste (see next slide).",
+                      "es":  "En la página de inicio de sesión de Ameli, bajo el formulario habitual. Por ejemplo Impuestos o Identidad Digital La Poste (ver siguiente diapositiva).",
+                      "ar":  "في صفحة تسجيل الدخول الخاصة بـ Ameli، ضمن النموذج المعتاد. على سبيل المثال الضرائب أو الهوية الرقمية La Poste (انظر الشريحة التالية).",
+                      "pt":  "Na página de login da Ameli, no formulário habitual. Por exemplo Impostos ou Identidade Digital La Poste (ver próximo slide)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Identifiez-vous chez ce fournisseur 4 Vous arrivez dans Ameli, déjà connecté",
+                      "en":  "3 Identify yourself with this provider 4 You arrive in Ameli, already connected",
+                      "es":  "3 Identifícate con este proveedor 4 Llegas a Ameli, ya conectado",
+                      "ar":  "3 تعرّف على نفسك مع هذا المزود 4 تصل إلى أميلي، وأنت متصل بالفعل",
+                      "pt":  "3 Identifique-se com este provedor 4 Você chega em Ameli, já conectado"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Avec les identifiants de CE compte (pas ceux d\u0027Ameli). C\u0027est terminé : vous êtes sur votre compte.",
+                      "en":  "With THIS account\u0027s credentials (not Ameli\u0027s). It\u0027s finished: you are on your account.",
+                      "es":  "Con las credenciales de ESTA cuenta (no las de Ameli). Se acabó: estás en tu cuenta.",
+                      "ar":  "باستخدام بيانات اعتماد هذا الحساب (وليس بيانات اعتماد Ameli). لقد انتهى: أنت على حسابك.",
+                      "pt":  "Com as credenciais DESTA conta (não as de Ameli). Acabou: você está por sua conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 11 / 18",
+                      "en":  "Yggdrasil · Digital mediation 11 / 18",
+                      "es":  "Yggdrasil · Mediación digital 11 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 11 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 11/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 2 · LES FOURNISSEURS",
+                      "en":  "METHOD 2 · SUPPLIERS",
+                      "es":  "MÉTODO 2 · PROVEEDORES",
+                      "ar":  "الطريقة الثانية · الموردين",
+                      "pt":  "MÉTODO 2 · FORNECEDORES"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Quels comptes peut-on utiliser ?",
+                      "en":  "What accounts can we use?",
+                      "es":  "¿Qué cuentas podemos usar?",
+                      "ar":  "ما هي الحسابات التي يمكننا استخدامها؟",
+                      "pt":  "Quais contas podemos usar?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Impôts (impots.gouv.fr) L\u0027Identité Numérique La Poste Le plus répandu si vous déclarez vos revenus en ligne. Une appli gratuite de La Poste, validée en bureau de poste.",
+                      "en":  "Taxes (impots.gouv.fr) Digital Identity La Poste Most common if you declare your income online. A free La Poste app, validated in post offices.",
+                      "es":  "Impuestos (impots.gouv.fr) Identidad digital La Poste Más común si declaras tus ingresos online. Una aplicación gratuita de La Poste, validada en las oficinas de correos.",
+                      "ar":  "الضرائب (impots.gouv.fr) الهوية الرقمية La Poste الأكثر شيوعًا إذا أعلنت عن دخلك عبر الإنترنت. تطبيق La Poste مجاني، تم التحقق من صحته في مكاتب البريد.",
+                      "pt":  "Impostos (impots.gouv.fr) Identidade Digital La Poste Mais comum se você declarar seus rendimentos online. Um aplicativo La Poste gratuito, validado nos correios."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "France Identité MSA L\u0027appli officielle de l\u0027État, avec votre carte d\u0027identité. Pour les personnes affiliées au régime agricole.",
+                      "en":  "France Identity MSA The official State app, with your identity card. For people affiliated to the agricultural regime.",
+                      "es":  "Francia Identidad MSA La aplicación oficial del Estado, con su documento de identidad. Para personas afiliadas al régimen agrario.",
+                      "ar":  "France Identity MSA التطبيق الرسمي للدولة، مع بطاقة الهوية الخاصة بك. للأشخاص المنتمين للنظام الزراعي.",
+                      "pt":  "França Identidade MSA O aplicativo oficial do Estado, com sua carteira de identidade. Para pessoas filiadas ao regime agrícola."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bon à savoir : le fournisseur « YRIS » s\u0027arrête le 1er juillet 2026. Si vous l\u0027utilisiez, basculez dès maintenant vers un autre compte (Impôts, La Poste…).",
+                      "en":  "Good to know: the “YRIS” provider ends on July 1, 2026. If you were using it, switch now to another account (Taxes, La Poste, etc.).",
+                      "es":  "Es bueno saberlo: el proveedor “YRIS” finaliza el 1 de julio de 2026. Si lo estaba utilizando, cambie ahora a otra cuenta (Impuestos, La Poste, etc.).",
+                      "ar":  "من المفيد أن تعلم: ينتهي موفر \"YRIS\" في 1 يوليو 2026. إذا كنت تستخدمه، فانتقل الآن إلى حساب آخر (الضرائب، البريد، وما إلى ذلك).",
+                      "pt":  "É bom saber: o provedor “YRIS” termina em 1º de julho de 2026. Se você o usava, mude agora para outra conta (Impostos, La Poste, etc.)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 12 / 18",
+                      "en":  "Yggdrasil · Digital mediation 12 / 18",
+                      "es":  "Yggdrasil · Mediación digital 12 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 12 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 12/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MÉTHODE 3 · SUR LE TÉLÉPHONE",
+                      "en":  "METHOD 3 · ON THE PHONE",
+                      "es":  "MÉTODO 3 · POR TELÉFONO",
+                      "ar":  "الطريقة الثالثة · على الهاتف",
+                      "pt":  "MÉTODO 3 · NO TELEFONE"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027application « Compte ameli »",
+                      "en":  "The “Ameli Account” application",
+                      "es":  "La aplicación “Cuenta Ameli”",
+                      "ar":  "تطبيق \"حساب عاملي\".",
+                      "pt":  "O aplicativo “Conta Ameli”"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Téléchargez l\u0027application 1 « Compte ameli », gratuite, sur l\u0027App Store (iPhone) ou Google Play (Android).",
+                      "en":  "Download the free “Ameli Account” application 1 from the App Store (iPhone) or Google Play (Android).",
+                      "es":  "Descargue la aplicación gratuita “Cuenta Ameli” 1 desde App Store (iPhone) o Google Play (Android).",
+                      "ar":  "قم بتنزيل تطبيق \"حساب عاملي\" 1 المجاني من App Store (iPhone) أو Google Play (Android).",
+                      "pt":  "Baixe o aplicativo gratuito “Ameli Account” 1 na App Store (iPhone) ou Google Play (Android)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Connectez-vous une première fois Compte ameli 2 Avec vos identifiants Ameli ou FranceConnect.",
+                      "en":  "Log in for the first time Ameli 2 account With your Ameli or FranceConnect identifiers.",
+                      "es":  "Inicie sesión por primera vez en la cuenta Ameli 2 con sus identificadores Ameli o FranceConnect.",
+                      "ar":  "قم بتسجيل الدخول لأول مرة إلى حساب Ameli 2 باستخدام معرفات Ameli أو FranceConnect الخاصة بك.",
+                      "pt":  "Faça login pela primeira vez na conta Ameli 2 com seus identificadores Ameli ou FranceConnect."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Code à 4 chiffres",
+                      "en":  "4-digit code",
+                      "es":  "código de 4 dígitos",
+                      "ar":  "رمز مكون من 4 أرقام",
+                      "pt":  "Código de 4 dígitos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Créez un code à 4 chiffres 3 Pour les fois suivantes : juste le code (ou l\u0027empreinte / le visage). Se connecter",
+                      "en":  "Create a 4-digit code 3 For the following times: just the code (or fingerprint/face). Log in",
+                      "es":  "Crea un código de 4 dígitos 3 Para los siguientes momentos: solo el código (o huella digital/rostro). Iniciar sesión",
+                      "ar":  "قم بإنشاء رمز مكون من 4 أرقام 3 للأوقات التالية: الرمز فقط (أو بصمة الإصبع/الوجه). تسجيل الدخول",
+                      "pt":  "Crie um código de 4 dígitos 3 Para os seguintes horários: apenas o código (ou impressão digital/rosto). Faça login"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 13 / 18",
+                      "en":  "Yggdrasil · Digital mediation 13 / 18",
+                      "es":  "Yggdrasil · Mediación digital 13 / 18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 13 / 18",
+                      "pt":  "Yggdrasil · Mediação digital 13/18"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "EN CAS DE BLOCAGE",
+                      "en":  "IN CASE OF BLOCKAGE",
+                      "es":  "EN CASO DE BLOQUEO",
+                      "ar":  "في حالة الانسداد",
+                      "pt":  "EM CASO DE BLOQUEIO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mot de passe oublié ? On débloque",
+                      "en":  "Forgotten password? We unlock",
+                      "es":  "¿Olvidaste tu contraseña? desbloqueamos",
+                      "ar":  "هل نسيت كلمة المرور؟ نحن نفتح",
+                      "pt":  "Esqueceu a senha? Nós desbloqueamos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Cliquez sur « Mot de passe oublié » 2 Renseignez votre numéro de Sécu",
+                      "en":  "1 Click on “Forgotten password” 2 Enter your Social Security number",
+                      "es":  "1 Haga clic en “Contraseña olvidada” 2 Ingrese su número de Seguro Social",
+                      "ar":  "1 انقر على \"نسيت كلمة المرور\" 2 أدخل رقم الضمان الاجتماعي الخاص بك",
+                      "pt":  "1 Clique em “Esqueci minha senha” 2 Digite seu número de CPF"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le petit lien sous le formulaire de connexion. Le site vérifie que le compte existe bien.",
+                      "en":  "The little link under the login form. The site verifies that the account exists.",
+                      "es":  "El pequeño enlace debajo del formulario de inicio de sesión. El sitio verifica que la cuenta existe.",
+                      "ar":  "الرابط الصغير الموجود أسفل نموذج تسجيل الدخول. يتحقق الموقع من وجود الحساب.",
+                      "pt":  "O pequeno link abaixo do formulário de login. O site verifica se a conta existe."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Recevez un lien par e-mail 4 Choisissez un nouveau mot de passe",
+                      "en":  "3 Receive a link by email 4 Choose a new password",
+                      "es":  "3 Recibir un enlace por correo electrónico 4 Elegir una nueva contraseña",
+                      "ar":  "3 احصل على رابط عبر البريد الإلكتروني 4 اختر كلمة مرور جديدة",
+                      "pt":  "3 Receba um link por e-mail 4 Escolha uma nova senha"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À l\u0027adresse enregistrée sur votre compte. Et notez-le aussitôt dans un endroit sûr.",
+                      "en":  "To the address registered on your account. And write it down immediately in a safe place.",
+                      "es":  "A la dirección registrada en su cuenta. Y anótelo inmediatamente en un lugar seguro.",
+                      "ar":  "إلى العنوان المسجل في حسابك. واكتبها على الفور في مكان آمن.",
+                      "pt":  "Para o endereço cadastrado em sua conta. E anote imediatamente em um local seguro."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Toujours bloqué ? Le 3646 (Assurance Maladie) peut vous aider — appel non surtaxé.",
+                      "en":  "Still stuck? 3646 (Health Insurance) can help you — non-premium rate call.",
+                      "es":  "¿Sigues estancado? 3646 (Seguro de salud) puede ayudarle: llamada con tarifa no premium.",
+                      "ar":  "لا تزال عالقة؟ 3646 (التأمين الصحي) يمكن أن يساعدك — مكالمة بسعر غير مميز.",
+                      "pt":  "Ainda preso? 3646 (Seguro Saúde) pode ajudá-lo – ligação sem tarifa premium."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 14 / 18",
+                      "en":  "Yggdrasil · Digital mediation 14/18",
+                      "es":  "Yggdrasil · Mediación digital 14/18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 14/18",
+                      "pt":  "Yggdrasil · Mediação digital 14/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "VOUS ÊTES CONNECTÉ",
+                      "en":  "YOU ARE CONNECTED",
+                      "es":  "ESTAS CONECTADO",
+                      "ar":  "أنت متصل",
+                      "pt":  "VOCÊ ESTÁ CONECTADO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Que trouve-t-on sur votre compte ?",
+                      "en":  "What can we find on your account?",
+                      "es":  "¿Qué podemos encontrar en tu cuenta?",
+                      "ar":  "ماذا يمكننا أن نجد على حسابك؟",
+                      "pt":  "O que podemos encontrar na sua conta?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mes paiements Mes attestations Ma messagerie Le détail des remboursements reçus. Droits, indemnités journalières… Échanger avec votre caisse.",
+                      "en":  "My payments My certificates My messaging Details of reimbursements received. Rights, daily allowances, etc. Exchange with your fund.",
+                      "es":  "Mis pagos Mis certificados Mis mensajes Detalles de los reembolsos recibidos. Derechos, dietas, etc. Intercambia con tu fondo.",
+                      "ar":  "مدفوعاتي شهاداتي رسائلي تفاصيل المبالغ المستردة المستلمة. الحقوق والبدلات اليومية وغيرها. تبادل مع صندوقك.",
+                      "pt":  "Meus pagamentos Meus certificados Minhas mensagens Detalhes dos reembolsos recebidos. Direitos, diárias, etc. Troque com seu fundo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mes démarches Mes documents Mes notifications Médecin traitant, changement Décomptes et courriers à télécharger. Les nouveautés sur votre dossier. d\u0027adresse…",
+                      "en":  "My procedures My documents My notifications Attending doctor, change Statements and letters to download. What\u0027s new on your file. address…",
+                      "es":  "Mis trámites Mis documentos Mis notificaciones Médico tratante, cambio Declaraciones y cartas para descargar. Novedades de su expediente. dirección…",
+                      "ar":  "إجراءاتي مستنداتي إشعاراتي الطبيب المعالج وتغيير الكشوفات والخطابات للتحميل. ما الجديد في ملفك. العنوان…",
+                      "pt":  "Meus procedimentos Meus documentos Minhas notificações Médico assistente, alteração Declarações e cartas para download. O que há de novo em seu arquivo. endereço…"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 15 / 18",
+                      "en":  "Yggdrasil · Digital mediation 15/18",
+                      "es":  "Yggdrasil · Mediación digital 15/18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 15/18",
+                      "pt":  "Yggdrasil · Mediação digital 15/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SE PROTÉGER",
+                      "en":  "PROTECT YOURSELF",
+                      "es":  "PROTEGETE",
+                      "ar":  "احمِ نفسك",
+                      "pt":  "PROTEJA-SE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Reconnaître les arnaques « Ameli »",
+                      "en":  "Recognizing “Ameli” scams",
+                      "es":  "Reconociendo las estafas de “Ameli”",
+                      "ar":  "التعرف على عمليات الاحتيال \"عاملي\".",
+                      "pt":  "Reconhecendo golpes “Ameli”"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ameli ne fera JAMAIS Les bons réflexes",
+                      "en":  "Ameli will NEVER do the right reflexes",
+                      "es":  "Ameli NUNCA hará los reflejos correctos",
+                      "ar":  "أميلي لن تقوم أبدًا بردود الفعل الصحيحة",
+                      "pt":  "Ameli NUNCA fará os reflexos certos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "• Tapez vous-même assure.ameli.fr — ne cliquez pas sur un lien • Vous demander votre mot de passe par mail ou téléphone. reçu. • Réclamer un « remboursement » contre vos coordonnées • Dans le doute, fermez le message et connectez-vous bancaires. normalement. • Vous presser avec un lien « urgent » à cliquer tout de suite. • Signalez les SMS suspects au 33 700. • Vous écrire depuis une adresse bizarre (vérifiez après le @). • Demandez de l\u0027aide : mieux vaut une question de trop.",
+                      "en":  "• Type assure.ameli.fr yourself — do not click on a link • Ask you for your password by email or telephone. received. • Claim a “refund” against your details • If in doubt, close the message and log in to your banking account. Normally. • Urge you with an “urgent” link to click right away. • Report suspicious SMS messages to 33 700. • Write to you from a strange address (check after the @). • Ask for help: one question too many.",
+                      "es":  "• Escriba usted mismo sure.ameli.fr; no haga clic en ningún enlace. • Solicite su contraseña por correo electrónico o por teléfono. recibió. • Reclame un “reembolso” contra sus datos • En caso de duda, cierre el mensaje e inicie sesión en su cuenta bancaria. Normalmente. • Instarle con un enlace “urgente” para que haga clic de inmediato. • Informar de mensajes SMS sospechosos al 33 700. • Escribirle desde una dirección extraña (marque después de la @). • Pide ayuda: una pregunta demasiada.",
+                      "ar":  "• اكتب Assur.ameli.fr بنفسك — لا تنقر فوق أي رابط. • اطلب منك كلمة المرور الخاصة بك عن طريق البريد الإلكتروني أو الهاتف. تلقى. • المطالبة \"باسترداد\" مقابل التفاصيل الخاصة بك. • إذا كنت في شك، أغلق الرسالة وقم بتسجيل الدخول إلى حسابك المصرفي. عادة. • أحثك ​​باستخدام رابط \"عاجل\" للنقر عليه على الفور. • قم بالإبلاغ عن الرسائل النصية القصيرة المشبوهة إلى الرقم 33700. • أكتب إليك من عنوان غريب (ضع علامة تحت @). • طلب المساعدة: سؤال واحد أكثر من اللازم.",
+                      "pt":  "• Digite secure.ameli.fr você mesmo — não clique em nenhum link. • Peça sua senha por e-mail ou telefone. recebido. • Solicite um “reembolso” dos seus dados. • Em caso de dúvida, feche a mensagem e faça login na sua conta bancária. Normalmente. • Incentive você com um link “urgente” para clicar imediatamente. • Relate mensagens SMS suspeitas para 33 700. • Escreva para você de um endereço estranho (marque após o @). • Peça ajuda: uma pergunta é demais."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 16 / 18",
+                      "en":  "Yggdrasil · Digital mediation 16/18",
+                      "es":  "Yggdrasil · Mediación digital 16/18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 16/18",
+                      "pt":  "Yggdrasil · Mediação digital 16/18"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027ESSENTIEL",
+                      "en":  "THE ESSENTIAL",
+                      "es":  "LO ESENCIAL",
+                      "ar":  "الأساسي",
+                      "pt":  "O ESSENCIAL"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À retenir",
+                      "en":  "To remember",
+                      "es":  "para recordar",
+                      "ar":  "لنتذكر",
+                      "pt":  "Para lembrar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ameli = papiers et remboursements ; Mon espace santé = dossier médical. Deux sites différents.",
+                      "en":  "Ameli = papers and reimbursements; My health space = medical file. Two different sites.",
+                      "es":  "Ameli = papeles y reembolsos; Mi espacio de salud = expediente médico. Dos sitios diferentes.",
+                      "ar":  "عاملي = الأوراق والمبالغ المستردة؛ مساحتي الصحية = ملف طبي. موقعين مختلفين.",
+                      "pt":  "Ameli = papéis e reembolsos; Meu espaço de saúde = ficha médica. Dois sites diferentes."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Une seule méthode de connexion suffit : identifiants, FranceConnect, ou l\u0027appli mobile.",
+                      "en":  "Only one connection method is enough: identifiers, FranceConnect, or the mobile app.",
+                      "es":  "Sólo basta con un método de conexión: identificadores, FranceConnect o la aplicación móvil.",
+                      "ar":  "تكفي طريقة اتصال واحدة فقط: المعرفات أو FranceConnect أو تطبيق الهاتف المحمول.",
+                      "pt":  "Apenas um método de conexão é suficiente: identificadores, FranceConnect ou aplicativo móvel."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le mot de passe ne se donne jamais. On le note dans un endroit sûr.",
+                      "en":  "The password is never given. We write it down in a safe place.",
+                      "es":  "La contraseña nunca se da. Lo anotamos en un lugar seguro.",
+                      "ar":  "لا يتم إعطاء كلمة المرور أبدا. نكتبها في مكان آمن.",
+                      "pt":  "A senha nunca é fornecida. Nós anotamos em um lugar seguro."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour aller sur Ameli, on tape l\u0027adresse soi-même — jamais via un lien reçu.",
+                      "en":  "To go to Ameli, you type the address yourself — never via a link received.",
+                      "es":  "Para ir a Ameli, usted mismo escribe la dirección, nunca a través de un enlace recibido.",
+                      "ar":  "للذهاب إلى Ameli، اكتب العنوان بنفسك، ولا يتم ذلك مطلقًا عبر الرابط المستلم.",
+                      "pt":  "Para ir até Ameli, você mesmo digita o endereço – nunca por meio de um link recebido."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique 17 / 18",
+                      "en":  "Yggdrasil · Digital mediation 17/18",
+                      "es":  "Yggdrasil · Mediación digital 17/18",
+                      "ar":  "يغدراسيل · الوساطة الرقمية 17/18",
+                      "pt":  "Yggdrasil · Mediação digital 17/18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Des questions ? On prend le temps d\u0027essayer ensemble — il n\u0027y a pas de question bête.",
+                      "en":  "Questions? We take the time to try together — there are no stupid questions.",
+                      "es":  "¿Preguntas? Nos tomamos el tiempo para intentarlo juntos: no hay preguntas estúpidas.",
+                      "ar":  "أسئلة؟ نحن نأخذ الوقت الكافي للمحاولة معًا - لا توجد أسئلة غبية.",
+                      "pt":  "Questões? Reservamos um tempo para tentarmos juntos – não há perguntas estúpidas."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique Atelier littératie numérique · CCAS de La Souterraine",
+                      "en":  "Yggdrasil · Digital mediation Digital literacy workshop · CCAS de La Souterraine",
+                      "es":  "Yggdrasil · Mediación digital Taller de alfabetización digital · CCAS de La Souterraine",
+                      "ar":  "Yggdrasil · الوساطة الرقمية ورشة عمل لمحو الأمية الرقمية · CCAS de La Souterraine",
+                      "pt":  "Yggdrasil · Mediação digital Oficina de alfabetização digital · CCAS de La Souterraine"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

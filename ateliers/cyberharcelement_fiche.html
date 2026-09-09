@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#securite">← Retour aux ateliers</a>
-    <div class="eyebrow">🔒 Cyberharcèlement</div>
-    <h1>Fiche</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#securite">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🔒 Cyberharcèlement</div>
+    <h1 id="h1El">Fiche</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -79,8 +84,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">Cyberharcèlement Yggdrasil Médiation Numérique Le reconnaître, s'en protéger, agir 1/2</p>
       <p>C'est quoi ? Des actes agressifs, RÉPÉTÉS et INTENTIONNELS, commis via des outils numériques (téléphone, internet, réseaux sociaux) contre une personne qui ne peut pas facilement se défendre.</p>
       <p>Répété Intentionnel Déséquilibre Pas un dérapage isolé Une volonté de blesser La victime ne peut se défendre</p>
@@ -121,13 +126,357 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🔒 Assédio cibernético",
+                    "en":  "🔒 Cyberharassment",
+                    "fr":  "🔒 Cyberharcèlement",
+                    "ar":  "🔒 التحرش الإلكتروني",
+                    "es":  "🔒 Ciberacoso"
+                },
+    "h1":  {
+               "pt":  "Folha",
+               "en":  "Sheet",
+               "fr":  "Fiche",
+               "ar":  "ورقة",
+               "es":  "Hoja"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "Cyberharcèlement Yggdrasil Médiation Numérique Le reconnaître, s\u0027en protéger, agir 1/2",
+                      "en":  "Cyberharassment Yggdrasil Digital Mediation Recognize it, protect yourself from it, act 1/2",
+                      "es":  "Ciberacoso Yggdrasil Mediación Digital Reconócelo, protégete de ello, actúa 1/2",
+                      "ar":  "التحرش الإلكتروني Yggdrasil الوساطة الرقمية تعرف عليه، احمي نفسك منه، تصرف 1/2",
+                      "pt":  "Assédio cibernético Yggdrasil Mediação Digital Reconheça-o, proteja-se dele, aja 1/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "C\u0027est quoi ? Des actes agressifs, RÉPÉTÉS et INTENTIONNELS, commis via des outils numériques (téléphone, internet, réseaux sociaux) contre une personne qui ne peut pas facilement se défendre.",
+                      "en":  "What is it? Aggressive, REPEATED and INTENTIONAL acts committed via digital tools (telephone, internet, social networks) against a person who cannot easily defend themselves.",
+                      "es":  "¿Qué es? Actos agresivos, REPETIDOS e INTENCIONALES cometidos a través de herramientas digitales (teléfono, internet, redes sociales) contra una persona que no puede defenderse fácilmente.",
+                      "ar":  "ما هذا؟ الأفعال العدوانية والمتكررة والمتعمدة التي يتم ارتكابها عبر الأدوات الرقمية (الهاتف والإنترنت والشبكات الاجتماعية) ضد شخص لا يستطيع الدفاع عن نفسه بسهولة.",
+                      "pt":  "O que é isso? Atos agressivos, REPETIDOS e INTENCIONAIS cometidos através de ferramentas digitais (telefone, internet, redes sociais) contra uma pessoa que não consegue se defender facilmente."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Répété Intentionnel Déséquilibre Pas un dérapage isolé Une volonté de blesser La victime ne peut se défendre",
+                      "en":  "Repeated Intentional Imbalance Not an isolated slip A desire to hurt The victim cannot defend himself",
+                      "es":  "Desequilibrio intencional repetido No es un desliz aislado Un deseo de hacer daño La víctima no puede defenderse",
+                      "ar":  "خلل متعمد متكرر ليس زلة معزولة رغبة في إيذاء الضحية لا يستطيع الدفاع عن نفسه",
+                      "pt":  "Desequilíbrio intencional repetido Não é um deslize isolado Desejo de ferir A vítima não consegue se defender"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les chiffres en France",
+                      "en":  "The figures in France",
+                      "es":  "Las cifras en Francia",
+                      "ar":  "الأرقام في فرنسا",
+                      "pt":  "Os números na França"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 sur 4 80 % 40 % 10 ans adolescents déclarent avoir déjà des cas ont lieu sur les réseaux des victimes n\u0027en parlent à âge moyen du 1er appareil été victimes sociaux personne numérique",
+                      "en":  "1 in 4 80% 40% 10 year old adolescents declare that they already have cases taking place on the networks of victims do not talk about it at middle age of the 1st device been social victims digital person",
+                      "es":  "1 de cada 4 80% 40% Adolescentes de 10 años declaran que ya tienen casos ocurridos en las redes de víctimas no hablan de ello en la mediana edad del 1er dispositivo sido víctimas sociales persona digital",
+                      "ar":  "1 من كل 4 80% 40% من المراهقين بعمر 10 سنوات يعلنون أن لديهم بالفعل حالات تحدث على شبكات الضحايا ولا يتحدثون عنها في منتصف العمر من أول جهاز كان ضحايا اجتماعيين شخصًا رقميًا",
+                      "pt":  "1 em cada 4 80% 40% adolescentes de 10 anos declaram que já têm casos ocorridos nas redes de vítimas não falam sobre isso na meia idade do 1º dispositivo foram vítimas sociais pessoa digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ça ne touche pas que les jeunes",
+                      "en":  "It doesn\u0027t just affect young people",
+                      "es":  "No afecta sólo a los jóvenes",
+                      "ar":  "ولا يؤثر فقط على الشباب",
+                      "pt":  "Não afeta apenas os jovens"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les jeunes Le couple / l\u0027ex Le travail Réseaux sociaux, jeux en ligne. Souvent Surveillance, messages incessants, Messages humiliants, mise à l\u0027écart. invisible des adultes ; peut continuer 24h/24. diffusion de photos intimes après une Reconnu comme harcèlement moral par la rupture. loi.",
+                      "en":  "Young people The couple / the ex Work Social networks, online games. Often Surveillance, incessant messages, humiliating messages, sidelined. invisible to adults; can continue 24 hours a day. distribution of intimate photos after Recognized as moral harassment by the breakup. law.",
+                      "es":  "Jóvenes La pareja/el ex Trabajo Redes sociales, juegos online. Muchas veces Vigilancia, mensajes incesantes, mensajes humillantes, marginados. invisible para los adultos; puede continuar las 24 horas del día. Distribución de fotografías íntimas tras ser reconocida como acoso moral por la ruptura. ley.",
+                      "ar":  "الشباب الزوجان/الحبيب السابق العمل على الشبكات الاجتماعية، والألعاب عبر الإنترنت. في كثير من الأحيان المراقبة، الرسائل المتواصلة، الرسائل المهينة، التهميش. غير مرئية للبالغين. يمكن أن يستمر 24 ساعة في اليوم. توزيع صور حميمية بعد أن تم التعرف على التحرش الأخلاقي من قبل الانفصال. قانون.",
+                      "pt":  "Jovens O casal/ex Trabalho Redes sociais, jogos online. Muitas vezes Vigilância, mensagens incessantes, mensagens humilhantes, marginalizadas. invisível para os adultos; pode continuar 24 horas por dia. distribuição de fotos íntimas após reconhecimento como assédio moral pelo rompimento. lei."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les formes que ça peut prendre Messages blessants (insultes, moqueries répétées)Exclusion de groupes, rumeurs propagées en ligne",
+                      "en":  "The forms it can take Hurtful messages (insults, repeated mockery) Exclusion from groups, rumors spread online",
+                      "es":  "Las formas que puede adoptar Mensajes hirientes (insultos, burlas repetidas) Exclusión de grupos, rumores difundidos en línea",
+                      "ar":  "الأشكال التي يمكن أن تتخذها: الرسائل الجارحة (الإهانات، الاستهزاء المتكرر). الاستبعاد من المجموعات، انتشار الشائعات عبر الإنترنت",
+                      "pt":  "As formas que pode assumir Mensagens ofensivas (insultos, zombarias repetidas) Exclusão de grupos, rumores espalhados online"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Diffusion de photos/vidéos privées sans consentementUsurpation d\u0027identité (faux comptes)",
+                      "en":  "Dissemination of private photos/videos without consentIdentity theft (fake accounts)",
+                      "es":  "Difusión de fotos/vídeos privados sin consentimientoRobo de identidad (cuentas falsas)",
+                      "ar":  "نشر الصور/مقاطع الفيديو الخاصة دون موافقة، سرقة الهوية (حسابات مزيفة)",
+                      "pt":  "Divulgação de fotos/vídeos privados sem consentimento Roubo de identidade (contas falsas)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Raids de commentaires haineux coordonnésChantage / sextorsion",
+                      "en":  "Coordinated hate comment raidsBlackmail/sextortion",
+                      "es":  "Redadas coordinadas de comentarios de odioChantaje/sextorsión",
+                      "ar":  "غارات منسقة على التعليقات التي تحض على الكراهية، الابتزاز/الابتزاز الجنسي",
+                      "pt":  "Ataques coordenados de comentários de ódioChantagem/sextorsão"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Signes d\u0027alerte à repérer Anxiété/tristesse après usage du téléphoneÉvite l\u0027école, le travail, ses amis",
+                      "en":  "Warning signs to look out for Anxiety/sadness after using the phoneAvoid school, work, friends",
+                      "es":  "Señales de advertencia a las que debe prestar atención Ansiedad/tristeza después de usar el teléfono Evite la escuela, el trabajo y los amigos",
+                      "ar":  "علامات تحذيرية للبحث عن القلق/الحزن بعد استخدام الهاتف تجنب المدرسة والعمل والأصدقاء",
+                      "pt":  "Sinais de alerta para ficar atento a Ansiedade/tristeza após usar o telefoneEvite escola, trabalho, amigos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Troubles du sommeil, isolementBaisse des résultats scolaires/pro",
+                      "en":  "Sleep problems, isolationDecrease in academic/professional results",
+                      "es":  "Problemas de sueño, aislamientoDisminución de resultados académicos/profesionales",
+                      "ar":  "مشاكل في النوم، العزلة، انخفاض النتائج الأكاديمية والمهنية",
+                      "pt":  "Problemas de sono, isolamento Diminuição dos resultados acadêmicos/profissionais"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cache ou coupe son téléphoneRéactions émotionnelles intenses",
+                      "en":  "Hide or turn off your phone Intense emotional reactions",
+                      "es":  "Oculta o apaga tu teléfono Reacciones emocionales intensas",
+                      "ar":  "إخفاء أو إيقاف تشغيل هاتفك ردود فعل عاطفية شديدة",
+                      "pt":  "Oculte ou desligue seu telefone Reações emocionais intensas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cyberharcèlement Yggdrasil Médiation Numérique Que faire, qui contacter, ce que dit la loi 2/2",
+                      "en":  "Cyberharassment Yggdrasil Digital Mediation What to do, who to contact, what the law says 2/2",
+                      "es":  "Ciberacoso Yggdrasil Mediación Digital Qué hacer, a quién contactar, qué dice la ley 2/2",
+                      "ar":  "التحرش عبر الإنترنت يغدراسيل الوساطة الرقمية ما يجب القيام به، بمن يجب الاتصال، ما يقوله القانون 2/2",
+                      "pt":  "Assédio Cibernético Yggdrasil Mediação Digital O que fazer, quem contactar, o que diz a lei 2/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Si je suis victime : 5 réflexes",
+                      "en":  "If I am a victim: 5 reflexes",
+                      "es":  "Si soy víctima: 5 reflejos",
+                      "ar":  "إذا كنت ضحية: 5 ردود أفعال",
+                      "pt":  "Se eu for uma vítima: 5 reflexos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le silence entretient le harcèlement. Un seul geste — soutenir, signaler, en parler — peut suffire à l\u0027arrêter. Ne pas répondre 1 Répondre peut aggraver la situation. Gardez votre calme.",
+                      "en":  "Silence fuels harassment. A single action — supporting, reporting, talking about it — can be enough to stop it. Do not answer 1 Responding may make the situation worse. Keep calm.",
+                      "es":  "El silencio alimenta el acoso. Una sola acción (apoyar, informar, hablar sobre ello) puede ser suficiente para detenerlo. No responda 1 Responder puede empeorar la situación. Mantenga la calma.",
+                      "ar":  "الصمت يغذي التحرش. إن إجراءً واحدًا - الدعم والإبلاغ والحديث عنه - يمكن أن يكون كافيًا لإيقافه. لا تجيب 1 الرد قد يزيد الوضع سوءا. حافظ على  الهدوء.",
+                      "pt":  "O silêncio alimenta o assédio. Uma única acção – apoiar, reportar, falar sobre o assunto – pode ser suficiente para o impedir. Não responda 1 Responder pode piorar a situação. Fique calmo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Conserver les preuves 2 Captures d\u0027écran datées : messages, photos, pseudos.",
+                      "en":  "Keep the evidence 2 Dated screenshots: messages, photos, nicknames.",
+                      "es":  "Mantenga la evidencia 2 capturas de pantalla fechadas: mensajes, fotos, apodos.",
+                      "ar":  "احتفظ بالأدلة 2 لقطات شاشة مؤرخة: الرسائل والصور والألقاب.",
+                      "pt":  "Mantenha as evidências 2 capturas de tela datadas: mensagens, fotos, apelidos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bloquer \u0026amp; signaler 3 Bloquer l\u0027auteur et signaler le compte sur la plateforme.",
+                      "en":  "Block \u0026 report 3 Block the author and report the account on the platform.",
+                      "es":  "Bloquear e informar 3 Bloquear al autor y denunciar la cuenta en la plataforma.",
+                      "ar":  "الحظر والإبلاغ 3 قم بحظر المؤلف والإبلاغ عن الحساب على المنصة.",
+                      "pt":  "Bloquear e denunciar 3 Bloqueie o autor e denuncie a conta na plataforma."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En parler 4 À un proche, un adulte ou un professionnel de confiance.",
+                      "en":  "Talk about it 4 To a loved one, an adult or a trusted professional.",
+                      "es":  "Háblalo 4 Con un ser querido, un adulto o un profesional de confianza.",
+                      "ar":  "تحدث عن ذلك 4 إلى شخص عزيز عليك أو شخص بالغ أو محترف موثوق به.",
+                      "pt":  "Fale sobre isso 4 Com um ente querido, um adulto ou um profissional de confiança."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Saisir les autorités 5 Le 3018, Pharos, ou porter plainte : c\u0027est un délit.",
+                      "en":  "Contact the authorities 5 Le 3018, Pharos, or file a complaint: this is a crime.",
+                      "es":  "Póngase en contacto con las autoridades, 5 Le 3018, Pharos, o presente una denuncia: esto es un delito.",
+                      "ar":  "اتصل بالسلطات 5 لو 3018 فاروس أو قدم شكوى: هذه جريمة.",
+                      "pt":  "Entre em contato com as autoridades 5 Le 3018, Pharos, ou faça uma denúncia: isso é crime."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "C\u0027est un délit puni par la loi (art. 222-33-2-2) Jusqu\u0027à 2 ans + 30 000 € Jusqu\u0027à 3 ans + 45 000 € Jusqu\u0027à 10 ans + 150 000 € victime de plus de 15 ans victime de moins de 15 ans / aggravé si la victime tente de se suicider",
+                      "en":  "It is an offense punishable by law (art. 222-33-2-2) Up to 2 years + €30,000 Up to 3 years + €45,000 Up to 10 years + €150,000 victim over 15 years old victim under 15 years old / aggravated if the victim attempts suicide",
+                      "es":  "Es un delito penado por la ley (art. 222-33-2-2) Hasta 2 años + 30.000 € Hasta 3 años + 45.000 € Hasta 10 años + 150.000 € víctima mayor de 15 años víctima menor de 15 años / agravado si la víctima intenta suicidarse",
+                      "ar":  "إنها جريمة يعاقب عليها القانون (المادة 222-33-2-2) ما يصل إلى عامين + 30000 يورو حتى 3 سنوات + 45000 يورو حتى 10 سنوات + 150000 يورو ضحية أكبر من 15 عامًا ضحية أقل من 15 عامًا / تتفاقم إذا حاولت الضحية الانتحار",
+                      "pt":  "É crime punível por lei (art. 222-33-2-2) Até 2 anos + 30.000€ Até 3 anos + 45.000€ Até 10 anos + 150.000€ vítima maior de 15 anos vítima menor de 15 anos / agravada se a vítima tentar suicídio"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Si je suis témoin Ne pas relayer (ne pas liker/partager) Soutenir la victime en message privé Signaler à la plateforme, au 3018 En parler à une personne de confiance",
+                      "en":  "If I am a witness Do not relay (do not like/share) Support the victim in a private message Report to the platform, at 3018 Talk to a trusted person",
+                      "es":  "Si soy testigo No transmitir (no dar me gusta/compartir) Apoyar a la víctima en un mensaje privado Denunciar a la plataforma, al 3018 Hablar con una persona de confianza",
+                      "ar":  "إذا كنت شاهداً فلا تنقل (لا إعجاب/مشاركة) ادعم الضحية في رسالة خاصة أبلغ عن المنصة على الرقم 3018 تحدث إلى شخص موثوق به",
+                      "pt":  "Se eu for testemunha Não retransmitir (não curtir/compartilhar) Apoiar a vítima em mensagem privada Reportar-se à plataforma, em 3018 Falar com pessoa de confiança"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Numéros utiles 3018 Violences numériques • gratuit, anonyme, 7j/7 9h-23h",
+                      "en":  "Useful numbers 3018 Digital violence • free, anonymous, 7 days a week 9 a.m. to 11 p.m.",
+                      "es":  "Números útiles 3018 Violencia digital • gratuita, anónima, los 7 días de la semana de 9 a 23 horas.",
+                      "ar":  "أرقام مفيدة 3018 العنف الرقمي • مجاني، مجهول الهوية، 7 أيام في الأسبوع من 9 صباحًا إلى 11 مساءً.",
+                      "pt":  "Números úteis 3018 Violência digital • gratuito, anônimo, 7 dias por semana, das 9h às 23h."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pharos Signalement officiel • internet- signalement.gouv.fr",
+                      "en":  "Pharos Official reporting • internet- signalement.gouv.fr",
+                      "es":  "Pharos Informe oficial • internet- signalement.gouv.fr",
+                      "ar":  "فاروس التقارير الرسمية • internet- signalement.gouv.fr",
+                      "pt":  "Pharos Relatório oficial • internet- signalement.gouv.fr"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3114 Prévention du suicide • 24h/24, 7j/7",
+                      "en":  "3114 Suicide Prevention • 24/7",
+                      "es":  "3114 Prevención del suicidio • 24 horas al día, 7 días a la semana",
+                      "ar":  "3114 منع الانتحار • 24/7",
+                      "pt":  "3114 Prevenção ao Suicídio • 24 horas por dia, 7 dias por semana"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "119 Enfance en danger • gratuit et anonyme",
+                      "en":  "119 Childhood in danger • free and anonymous",
+                      "es":  "119 Infancia en peligro • gratis y anónimo",
+                      "ar":  "119 الطفولة في خطر • حر ومجهول",
+                      "pt":  "119 Infância em perigo • livre e anônima"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour aller plus loin — flashez",
+                      "en":  "To go further — flash",
+                      "es":  "Para ir más lejos: flashear",
+                      "ar":  "للمضي قدمًا — فلاش",
+                      "pt":  "Para ir mais longe - flash"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3018.fr Signaler, être écouté, obtenir de l\u0027aide",
+                      "en":  "3018.fr Report, be listened to, get help",
+                      "es":  "3018.fr Informar, ser escuchado, obtener ayuda",
+                      "ar":  "3018.fr أبلغ، استمع، احصل على المساعدة",
+                      "pt":  "3018.fr Denuncie, seja ouvido, peça ajuda"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se protéger au quotidien Comptes en privé, réfléchir avant de publier Garder ses mots de passe pour soi Trier ses contacts, signaler tôt En parler, ne pas rester seul face au doute",
+                      "en":  "Protect yourself on a daily basis Accounts in private, think before publishing Keep your passwords to yourself Sort your contacts, report early Talk about it, don\u0027t be left alone when faced with doubt",
+                      "es":  "Protégete a diario Cuentas en privado, piensa antes de publicar Guarda tus contraseñas para ti Ordena tus contactos, informa con antelación Habla de ello, no te quedes solo ante las dudas",
+                      "ar":  "قم بحماية نفسك بشكل يومي حسابات خاصة، فكر قبل النشر احتفظ بكلمات المرور الخاصة بك لنفسك قم بفرز جهات الاتصال الخاصة بك، أبلغ مبكرًا تحدث عن ذلك، لا تترك وحدك عندما تواجه الشك",
+                      "pt":  "Proteja-se diariamente Contas privadas, pense antes de publicar Guarde suas senhas para você Classifique seus contatos, informe com antecedência Fale sobre isso, não fique sozinho diante de dúvidas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pharosjeprotegemonenfant.gouv.fr Signaler un contenu illégalRessources officielles pour en ligneles parents",
+                      "en":  "Pharosjeprotegemonenfant.gouv.fr Report illegal contentOfficial resources for parents online",
+                      "es":  "Pharosjeprotegemonenfant.gouv.fr Denunciar contenidos ilegalesRecursos oficiales para padres en línea",
+                      "ar":  "Pharosjeprotegemonenfant.gouv.fr الإبلاغ عن المحتوى غير القانوني الموارد الرسمية للآباء والأمهات عبر الإنترنت",
+                      "pt":  "Pharosjeprotegemonenfant.gouv.fr Denunciar conteúdo ilegalRecursos oficiais para pais online"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le silence entretient le harcèlement. Un seul geste — soutenir, signaler, en parler — peut suffire à l\u0027arrêter.",
+                      "en":  "Silence fuels harassment. A single action — supporting, reporting, talking about it — can be enough to stop it.",
+                      "es":  "El silencio alimenta el acoso. Una sola acción (apoyar, informar, hablar sobre ello) puede ser suficiente para detenerlo.",
+                      "ar":  "الصمت يغذي التحرش. إن إجراءً واحدًا - الدعم والإبلاغ والحديث عنه - يمكن أن يكون كافيًا لإيقافه.",
+                      "pt":  "O silêncio alimenta o assédio. Uma única acção – apoiar, reportar, falar sobre o assunto – pode ser suficiente para o impedir."
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

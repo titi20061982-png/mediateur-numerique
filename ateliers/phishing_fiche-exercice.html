@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#securite">← Retour aux ateliers</a>
-    <div class="eyebrow">🔒 Phishing (hameçonnage)</div>
-    <h1>Fiche exercice</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#securite">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🔒 Phishing (hameçonnage)</div>
+    <h1 id="h1El">Fiche exercice</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -79,8 +84,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">PHISHING — Reconnaître un message piégé Atelier médiation numérique · Cédric WALTENER · AFPA Guéret 2026</p>
       <p>Nom : _______________________________________________</p>
       <p>Comment faire ? 1) Lisez le message → 2) Cochez OUI ou NON pour chaque question → 3) Donnez votre verdict</p>
@@ -121,13 +126,357 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🔒 Phishing",
+                    "en":  "🔒 Phishing",
+                    "fr":  "🔒 Phishing (hameçonnage)",
+                    "ar":  "🔒 التصيد",
+                    "es":  "🔒 Phishing"
+                },
+    "h1":  {
+               "pt":  "Folha de exercícios",
+               "en":  "Exercise sheet",
+               "fr":  "Fiche exercice",
+               "ar":  "ورقة التمرين",
+               "es":  "Hoja de ejercicios"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "PHISHING — Reconnaître un message piégé Atelier médiation numérique · Cédric WALTENER · AFPA Guéret 2026",
+                      "en":  "PHISHING — Recognizing a trapped message Digital mediation workshop · Cédric WALTENER · AFPA Guéret 2026",
+                      "es":  "PHISHING — Reconocer un mensaje atrapado Taller de mediación digital · Cédric WALTENER · AFPA Guéret 2026",
+                      "ar":  "التصيد الاحتيالي - التعرف على الرسالة المحاصرة ورشة عمل الوساطة الرقمية · Cédric WALTENER · AFPA Guéret 2026",
+                      "pt":  "PHISHING — Reconhecendo uma mensagem presa Workshop de mediação digital · Cédric WALTENER · AFPA Guéret 2026"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Nom : _______________________________________________",
+                      "en":  "Name: ________________________________________________",
+                      "es":  "Nombre: ________________________________________________",
+                      "ar":  "الاسم: ________________________________________________",
+                      "pt":  "Nome: ________________________________________________"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Comment faire ? 1) Lisez le message → 2) Cochez OUI ou NON pour chaque question → 3) Donnez votre verdict",
+                      "en":  "How to do it? 1) Read the message → 2) Check YES or NO for each question → 3) Give your verdict",
+                      "es":  "¿Cómo hacerlo? 1) Lee el mensaje → 2) Marca SÍ o NO en cada pregunta → 3) Da tu veredicto",
+                      "ar":  "كيف تفعل ذلك؟ 1) اقرأ الرسالة → 2) حدد نعم أو لا لكل سؤال → 3) أعط حكمك",
+                      "pt":  "Como fazer isso? 1) Leia a mensagem → 2) Marque SIM ou NÃO para cada pergunta → 3) Dê seu veredicto"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Message A — Mail reçu",
+                      "en":  "Message A — Email received",
+                      "es":  "Mensaje A: correo electrónico recibido",
+                      "ar":  "الرسالة أ - تم استلام البريد الإلكتروني",
+                      "pt":  "Mensagem A – E-mail recebido"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "De : remboursement@dgfip-service-client.com Objet : URGENT — Votre remboursement d\u0027impôts de 284,00 € est disponible Suite au traitement de votre dossier fiscal 2025, un remboursement de 284,00 € a été validé. Veuillez confirmer votre RIB sous 48h pour recevoir le virement. Direction Générale des Finances Publiques",
+                      "en":  "From: reimbursement@dgfip-service-client.com Subject: URGENT — Your tax refund of €284.00 is available Following the processing of your 2025 tax file, a refund of €284.00 has been validated. Please confirm your RIB within 48 hours to receive the transfer. General Directorate of Public Finances",
+                      "es":  "De: reimbursement@dgfip-service-client.com Asunto: URGENTE — Su reembolso de impuestos de 284,00 € está disponible Tras el procesamiento de su declaración de impuestos de 2025, se ha validado un reembolso de 284,00 €. Confirme su RIB dentro de las 48 horas para recibir la transferencia. Dirección General de Finanzas Públicas",
+                      "ar":  "من: reimbursement@dgfip-service-client.com الموضوع: عاجل - استرداد الضريبة بقيمة 284.00 يورو متاح بعد معالجة ملفك الضريبي لعام 2025، تم التحقق من صحة استرداد مبلغ 284.00 يورو. يرجى تأكيد RIB الخاص بك في غضون 48 ساعة لاستلام التحويل. المديرية العامة للمالية العامة",
+                      "pt":  "De: refundment@dgfip-service-client.com Assunto: URGENTE — O seu reembolso de imposto de 284,00€ está disponível Após o processamento do seu ficheiro fiscal de 2025, foi validado um reembolso de 284,00€. Por favor, confirme seu RIB dentro de 48 horas para receber a transferência. Direção Geral de Finanças Públicas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "➜ Entourez ce qui vous semble bizarre, puis répondez : N Question OUI NON",
+                      "en":  "➜ Circle what seems strange to you, then answer: N Question YES NO",
+                      "es":  "➜ Encierra en un círculo lo que te parece extraño y luego responde: N Pregunta SÍ NO",
+                      "ar":  "➜ ضع دائرة حول ما يبدو غريبًا بالنسبة لك، ثم أجب: سؤال نعم، لا",
+                      "pt":  "➜ Circule o que parece estranho para você e responda: N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 L\u0027adresse de l\u0027expéditeur se termine par .gouv.fr ? ☐ ☐ 2 Le message demande vos coordonnées bancaires (RIB) ? ☐ ☐ 3 Un vrai organisme officiel demande-t-il ça par mail ? ☐ ☐",
+                      "en":  "1 Does the sender\u0027s address end in .gouv.fr? ☐ ☐ 2 The message asks for your bank details (RIB)? ☐ ☐ 3 Does a real official body ask this by email? ☐ ☐",
+                      "es":  "1 ¿La dirección del remitente termina en .gouv.fr? ☐ ☐ 2 ¿El mensaje le solicita sus datos bancarios (RIB)? ☐ ☐ 3 ¿Un verdadero organismo oficial pregunta esto por correo electrónico? ☐ ☐",
+                      "ar":  "1 هل ينتهي عنوان المرسل بـ .gouv.fr؟ ☐ ☐ 2 الرسالة تطلب تفاصيل حسابك البنكي (RIB)؟ ☐ ☐ 3 هل تقوم جهة رسمية حقيقية بطلب ذلك عبر البريد الإلكتروني؟ ☐ ☐",
+                      "pt":  "1 O endereço do remetente termina em .gouv.fr? ☐ ☐ 2 A mensagem pede seus dados bancários (RIB)? ☐ ☐ 3 Algum órgão oficial real pergunta isso por e-mail? ☐ ☐"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "☐ PHISHING (arnaque) ☐ LÉGITIME (vrai message)",
+                      "en":  "☐ PHISHING (scam) ☐ LEGITIMATE (real message)",
+                      "es":  "☐ PHISHING (estafa) ☐ LEGÍTIMO (mensaje real)",
+                      "ar":  "☐ التصيد الاحتيالي (احتيال) ☐ مشروعة (رسالة حقيقية)",
+                      "pt":  "☐ PHISHING (fraude) ☐ LEGÍTIMA (mensagem real)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Message B — Mail reçu",
+                      "en":  "Message B — Mail received",
+                      "es":  "Mensaje B: correo recibido",
+                      "ar":  "الرسالة ب - تم استلام البريد",
+                      "pt":  "Mensagem B – Correio recebido"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "De : no-reply@caf.fr Objet : Votre paiement CAF d\u0027avril a été effectué Madame, Monsieur, nous vous informons que votre paiement du mois d\u0027avril 2026 a été versé sur votre compte. Retrouvez le détail sur caf.fr dans votre espace Mon Compte. Caisse d\u0027Allocations Familiales",
+                      "en":  "From: no-reply@caf.fr Subject: Your CAF payment for April has been made Madam, Sir, we inform you that your payment for the month of April 2026 has been paid into your account. Find the details on caf.fr in your My Account area. Family Allowance Fund",
+                      "es":  "De: no-reply@caf.fr Asunto: Su pago CAF de abril ha sido realizado Señora, Señor, le informamos que su pago del mes de abril de 2026 ha sido ingresado en su cuenta. Encuentre los detalles en caf.fr, en su área Mi cuenta. Fondo de Asignación Familiar",
+                      "ar":  "من: no-reply@caf.fr الموضوع: تم سداد دفعة CAF الخاصة بك لشهر أبريل سيدتي، سيدي، نعلمك أنه تم دفع دفعتك لشهر أبريل 2026 في حسابك. ابحث عن التفاصيل على caf.fr في منطقة حسابي الخاصة بك. صندوق بدل الأسرة",
+                      "pt":  "De: no-reply@caf.fr Assunto: Seu pagamento CAF do mês de abril foi efetuado Senhora, senhor, informamos que o pagamento do mês de abril de 2026 foi depositado em sua conta. Encontre os detalhes em caf.fr na área Minha conta. Fundo de Bolsa Família"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "➜ Entourez ce qui vous semble bizarre, puis répondez : N Question OUI NON",
+                      "en":  "➜ Circle what seems strange to you, then answer: N Question YES NO",
+                      "es":  "➜ Encierra en un círculo lo que te parece extraño y luego responde: N Pregunta SÍ NO",
+                      "ar":  "➜ ضع دائرة حول ما يبدو غريبًا بالنسبة لك، ثم أجب: سؤال نعم، لا",
+                      "pt":  "➜ Circule o que parece estranho para você e responda: N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 L\u0027adresse de l\u0027expéditeur se termine par @caf.fr ? ☐ ☐ 2 Le message demande un mot de passe ou un RIB ? ☐ ☐",
+                      "en":  "1 Does the sender\u0027s address end with @caf.fr? ☐ ☐ 2 The message asks for a password or a RIB? ☐ ☐",
+                      "es":  "1 ¿La dirección del remitente termina en @caf.fr? ☐ ☐ 2 ¿El mensaje solicita una contraseña o una RIB? ☐ ☐",
+                      "ar":  "1 هل ينتهي عنوان المرسل بـ @caf.fr؟ ☐ ☐ 2 الرسالة تطلب كلمة مرور أو RIB؟ ☐ ☐",
+                      "pt":  "1 O endereço do remetente termina em @caf.fr? ☐ ☐ 2 A mensagem pede uma senha ou um RIB? ☐ ☐"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "N Question OUI NON",
+                      "en":  "N Question YES NO",
+                      "es":  "N Pregunta SÍ NO",
+                      "ar":  "سؤال نعم لا",
+                      "pt":  "N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Y a-t-il une menace ou une urgence dans le message ? ☐ ☐",
+                      "en":  "3 Is there a threat or urgency in the message? ☐ ☐",
+                      "es":  "3 ¿Hay alguna amenaza o urgencia en el mensaje? ☐ ☐",
+                      "ar":  "3 هل هناك تهديد أو إلحاح في الرسالة؟ ☐ ☐",
+                      "pt":  "3 Existe uma ameaça ou urgência na mensagem? ☐ ☐"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "☐ PHISHING (arnaque) ☐ LÉGITIME (vrai message)",
+                      "en":  "☐ PHISHING (scam) ☐ LEGITIMATE (real message)",
+                      "es":  "☐ PHISHING (estafa) ☐ LEGÍTIMO (mensaje real)",
+                      "ar":  "☐ التصيد الاحتيالي (احتيال) ☐ مشروعة (رسالة حقيقية)",
+                      "pt":  "☐ PHISHING (fraude) ☐ LEGÍTIMA (mensagem real)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Message C — SMS reçu",
+                      "en":  "Message C — SMS received",
+                      "es":  "Mensaje C: SMS recibido",
+                      "ar":  "الرسالة ج - تم استلام رسالة نصية قصيرة",
+                      "pt":  "Mensagem C – SMS recebido"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "De : Numéro inconnu | service@chronopost-livraison.com Votre colis n°FR8823 ne peut pas être livré à l\u0027adresse indiquée. Veuillez régler des frais de port de 1,99 € dans les 24h pour éviter le retour.",
+                      "en":  "From: Unknown number | service@chronopost-livraison.com Your package number FR8823 cannot be delivered to the address indicated. Please pay shipping costs of €1.99 within 24 hours to avoid returns.",
+                      "es":  "De: Número desconocido | service@chronopost-livraison.com Su paquete número FR8823 no se puede entregar en la dirección indicada. Por favor, paga los gastos de envío de 1,99 € en un plazo de 24 horas para evitar devoluciones.",
+                      "ar":  "من: رقم غير معروف | Service@chronopost-livraison.com لا يمكن تسليم رقم الحزمة FR8823 إلى العنوان المشار إليه. يرجى دفع تكاليف الشحن بقيمة 1.99 يورو خلال 24 ساعة لتجنب الإرجاع.",
+                      "pt":  "De: Número desconhecido | service@chronopost-livraison.com Seu pacote número FR8823 não pode ser entregue no endereço indicado. Por favor pague os custos de envio de 1,99€ no prazo de 24 horas para evitar devoluções."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "➜ Entourez ce qui vous semble bizarre, puis répondez : N Question OUI NON",
+                      "en":  "➜ Circle what seems strange to you, then answer: N Question YES NO",
+                      "es":  "➜ Encierra en un círculo lo que te parece extraño y luego responde: N Pregunta SÍ NO",
+                      "ar":  "➜ ضع دائرة حول ما يبدو غريبًا بالنسبة لك، ثم أجب: سؤال نعم، لا",
+                      "pt":  "➜ Circule o que parece estranho para você e responda: N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 L\u0027expéditeur est un numéro inconnu ou une adresse bizarre ? ☐ ☐ 2 Le message demande de payer pour recevoir un colis ? ☐ ☐ 3 Il y a un délai très court qui pousse à agir vite ? ☐ ☐",
+                      "en":  "1 The sender is an unknown number or a weird address? ☐ ☐ 2 The message asks to pay to receive a package? ☐ ☐ 3 Is there a very short deadline that requires you to act quickly? ☐ ☐",
+                      "es":  "1 ¿El remitente es un número desconocido o una dirección extraña? ☐ ☐ 2 ¿El mensaje pide pagar para recibir un paquete? ☐ ☐ 3 ¿Existe un plazo muy corto que le obligue a actuar con rapidez? ☐ ☐",
+                      "ar":  "1 المرسل رقم مجهول أم عنوان غريب؟ ☐ ☐ 2 الرسالة تطلب الدفع لاستلام الطرد؟ ☐ ☐ 3 هل هناك موعد نهائي قصير جدًا يتطلب منك التصرف بسرعة؟ ☐ ☐",
+                      "pt":  "1 O remetente é um número desconhecido ou um endereço estranho? ☐ ☐ 2 A mensagem pede para pagar para receber um pacote? ☐ ☐ 3 Existe um prazo muito curto que exige que você aja rapidamente? ☐ ☐"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "☐ PHISHING (arnaque) ☐ LÉGITIME (vrai message)",
+                      "en":  "☐ PHISHING (scam) ☐ LEGITIMATE (real message)",
+                      "es":  "☐ PHISHING (estafa) ☐ LEGÍTIMO (mensaje real)",
+                      "ar":  "☐ التصيد الاحتيالي (احتيال) ☐ مشروعة (رسالة حقيقية)",
+                      "pt":  "☐ PHISHING (fraude) ☐ LEGÍTIMA (mensagem real)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Message D — Appel téléphonique (vishing)",
+                      "en":  "Message D — Phone call (vishing)",
+                      "es":  "Mensaje D: llamada telefónica (vishing)",
+                      "ar":  "الرسالة د - مكالمة هاتفية (التصيد الاحتيالي)",
+                      "pt":  "Mensagem D - Telefonema (vishing)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "De : Numéro affiché : +44 7XXX XXX XXX Message vocal automatisé : « Bonjour, ceci est un appel de la sécurité de votre banque. Une transaction suspecte de 850 € a été détectée sur votre carte. Pour la bloquer, tapez 1 puis composez votre numéro de carte à 16 chiffres suivi de la date d\u0027expiration. »",
+                      "en":  "From: Displayed number: +44 7XXX XXX XXX Automated voice message: “Hello, this is a call from your bank security. A suspicious transaction of €850 has been detected on your card. To block it, type 1 then dial your 16-digit card number followed by the expiration date. »",
+                      "es":  "De: Número mostrado: +44 7XXX XXX XXX Mensaje de voz automático: \"Hola, esta es una llamada de seguridad de su banco. Se ha detectado una transacción sospechosa de 850 € en su tarjeta. Para bloquearla, escriba 1 y luego marque el número de 16 dígitos de su tarjeta seguido de la fecha de vencimiento. »",
+                      "ar":  "من: الرقم المعروض: +44 7XXX XXX XXX رسالة صوتية آلية: \"مرحبًا، هذه مكالمة من أمن البنك الذي تتعامل معه. تم اكتشاف معاملة مشبوهة بقيمة 850 يورو على بطاقتك. لحظرها، اكتب 1 ثم اطلب رقم بطاقتك المكون من 16 رقمًا متبوعًا بتاريخ انتهاء الصلاحية. \"",
+                      "pt":  "De: Número exibido: +44 7XXX XXX XXX Mensagem de voz automática: “Olá, esta é uma chamada da segurança do seu banco. Uma transação suspeita de € 850 foi detectada no seu cartão. Para bloqueá-la, digite 1 e disque o número do seu cartão de 16 dígitos seguido da data de validade. »"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "➜ Entourez ce qui vous semble bizarre, puis répondez : N Question OUI NON",
+                      "en":  "➜ Circle what seems strange to you, then answer: N Question YES NO",
+                      "es":  "➜ Encierra en un círculo lo que te parece extraño y luego responde: N Pregunta SÍ NO",
+                      "ar":  "➜ ضع دائرة حول ما يبدو غريبًا بالنسبة لك، ثم أجب: سؤال نعم، لا",
+                      "pt":  "➜ Circule o que parece estranho para você e responda: N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Le numéro qui appelle est étranger ou inconnu ? ☐ ☐ 2 On vous demande de taper votre numéro de carte au téléphone ? ☐ ☐ 3 Une vraie banque demande-t-elle ça par un robot automatique ? ☐ ☐",
+                      "en":  "1 The number calling is foreign or unknown? ☐ ☐ 2 Are you asked to enter your card number on the phone? ☐ ☐ 3 Does a real bank ask this through an automatic robot? ☐ ☐",
+                      "es":  "1 ¿El número que llama es extranjero o desconocido? ☐ ☐ 2 ¿Se le solicita que ingrese su número de tarjeta en el teléfono? ☐ ☐ 3 ¿Un banco real pregunta esto a través de un robot automático? ☐ ☐",
+                      "ar":  "1 رقم المتصل أجنبي أم غير معروف؟ ☐ ☐ 2 هل يطلب منك إدخال رقم بطاقتك على الهاتف؟ ☐ ☐ 3 هل يطلب بنك حقيقي ذلك من خلال روبوت آلي؟ ☐ ☐",
+                      "pt":  "1 O número chamador é estrangeiro ou desconhecido? ☐ ☐ 2 Você foi solicitado a inserir o número do seu cartão no telefone? ☐ ☐ 3 Um banco real pergunta isso através de um robô automático? ☐ ☐"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "☐ PHISHING (arnaque) ☐ LÉGITIME (vrai message)",
+                      "en":  "☐ PHISHING (scam) ☐ LEGITIMATE (real message)",
+                      "es":  "☐ PHISHING (estafa) ☐ LEGÍTIMO (mensaje real)",
+                      "ar":  "☐ التصيد الاحتيالي (احتيال) ☐ مشروعة (رسالة حقيقية)",
+                      "pt":  "☐ PHISHING (fraude) ☐ LEGÍTIMA (mensagem real)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Message E — Affichette avec QR code (quishing)",
+                      "en":  "Message E — Poster with QR code (quishing)",
+                      "es":  "Mensaje E: Póster con código QR (quishing)",
+                      "ar":  "الرسالة E - ملصق به رمز الاستجابة السريعة (quishing)",
+                      "pt":  "Mensagem E — Cartaz com código QR (quishing)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un autocollant avec un QR code est collé sur l\u0027horodateur du parking, par-dessus l\u0027étiquette d\u0027origine : « Stationnement gratuit 1h - Scannez ce code pour valider votre ticket ! ». En scannant, vous arrivez sur un site qui demande votre numéro de carte bancaire pour « confirmer » le stationnement gratuit.",
+                      "en":  "A sticker with a QR code is stuck on the parking meter, over the original label: “Free parking 1 hour - Scan this code to validate your ticket! \". By scanning, you arrive on a site that asks for your credit card number to “confirm” free parking.",
+                      "es":  "En el parquímetro hay pegada una pegatina con un código QR, encima de la etiqueta original: “Aparcamiento gratuito 1 hora - ¡Escanea este código para validar tu ticket!”. Al escanear, llega a un sitio que le solicita su número de tarjeta de crédito para “confirmar” el estacionamiento gratuito.",
+                      "ar":  "يوجد ملصق به رمز الاستجابة السريعة عالق على عداد مواقف السيارات، فوق الملصق الأصلي: \"موقف مجاني للسيارات لمدة ساعة واحدة - امسح هذا الرمز ضوئيًا للتحقق من صحة تذكرتك! \". عن طريق المسح، تصل إلى موقع يطلب رقم بطاقة الائتمان الخاصة بك \"لتأكيد\" مواقف السيارات المجانية.",
+                      "pt":  "No parquímetro está colado um autocolante com um código QR, por cima da etiqueta original: “Estacionamento gratuito 1 hora - Digitalize este código para validar o seu bilhete!”. Ao digitalizar, você chega a um site que pede o número do seu cartão de crédito para “confirmar” o estacionamento gratuito."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "➜ Entourez ce qui vous semble bizarre, puis répondez : N Question OUI NON",
+                      "en":  "➜ Circle what seems strange to you, then answer: N Question YES NO",
+                      "es":  "➜ Encierra en un círculo lo que te parece extraño y luego responde: N Pregunta SÍ NO",
+                      "ar":  "➜ ضع دائرة حول ما يبدو غريبًا بالنسبة لك، ثم أجب: سؤال نعم، لا",
+                      "pt":  "➜ Circule o que parece estranho para você e responda: N Pergunta SIM NÃO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Le QR code est collé par-dessus l\u0027étiquette d\u0027origine ? ☐ ☐ 2 Le site demande votre carte bancaire pour un stationnement « gratuit » ? ☐ ☐ 3 Un vrai horodateur demande-t-il de scanner un autocollant pour payer ? ☐ ☐",
+                      "en":  "1 Is the QR code stuck on top of the original label? ☐ ☐ 2 The site asks for your bank card for “free” parking? ☐ ☐ 3 Does a real parking meter require you to scan a sticker to pay? ☐ ☐",
+                      "es":  "1 ¿El código QR está pegado encima de la etiqueta original? ☐ ☐ 2 ¿El sitio le pide su tarjeta bancaria para aparcar “gratis”? ☐ ☐ 3 ¿Un parquímetro real requiere que escanees una pegatina para pagar? ☐ ☐",
+                      "ar":  "1 هل رمز الاستجابة السريعة عالق أعلى الملصق الأصلي؟ ☐ ☐ 2 الموقع يطلب منك بطاقتك البنكية لمواقف السيارات \"المجانية\"؟ ☐ ☐ 3 هل يتطلب عداد مواقف السيارات الحقيقي مسح الملصق ضوئيًا للدفع؟ ☐ ☐",
+                      "pt":  "1 O código QR está colado na etiqueta original? ☐ ☐ 2 O site pede seu cartão bancário para estacionamento “gratuito”? ☐ ☐ 3 Um parquímetro real exige que você escaneie um adesivo para pagar? ☐ ☐"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "☐ PHISHING (arnaque) ☐ LÉGITIME (vrai message)",
+                      "en":  "☐ PHISHING (scam) ☐ LEGITIMATE (real message)",
+                      "es":  "☐ PHISHING (estafa) ☐ LEGÍTIMO (mensaje real)",
+                      "ar":  "☐ التصيد الاحتيالي (احتيال) ☐ مشروعة (رسالة حقيقية)",
+                      "pt":  "☐ PHISHING (fraude) ☐ LEGÍTIMA (mensagem real)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Rappel : En cas de doute → ne cliquez jamais → tapez l\u0027adresse vous-même. cybermalveillance.gouv.fr · SMS arnaque : 33700 · Mail arnaque : signal-spam.fr",
+                      "en":  "Reminder: If in doubt → never click → type the address yourself. cybermalveillance.gouv.fr · SMS scam: 33700 · Email scam: signal-spam.fr",
+                      "es":  "Recordatorio: en caso de duda → nunca haga clic → escriba la dirección usted mismo. cybermalveillance.gouv.fr · Estafa por SMS: 33700 · Estafa por correo electrónico: signal-spam.fr",
+                      "ar":  "تذكير: إذا كنت في شك ← لا تنقر أبدًا على ← اكتب العنوان بنفسك. Cybermalveillance.gouv.fr · عملية احتيال عبر الرسائل النصية القصيرة: 33700 · عملية احتيال عبر البريد الإلكتروني: signal-spam.fr",
+                      "pt":  "Lembrete: Em caso de dúvida → nunca clique → digite você mesmo o endereço. cybermalveillance.gouv.fr · Golpe de SMS: 33700 · Golpe de e-mail: signal-spam.fr"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

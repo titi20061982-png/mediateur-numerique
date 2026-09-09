@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#demarches">← Retour aux ateliers</a>
-    <div class="eyebrow">🏛️ Ma retraite en ligne</div>
-    <h1>Présentation</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#demarches">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🏛️ Ma retraite en ligne</div>
+    <h1 id="h1El">Présentation</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -101,8 +106,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">ATELIER NUMÉRIQUE · DÉBUTANTS</p>
       <p>Ma retraite en ligne Demander sa retraite sur Internet, pas à pas — et les papiers à fournir</p>
       <p>Un seul site · une seule demande · pour tous vos régimes</p>
@@ -299,13 +304,1629 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🏛️ Minha aposentadoria online",
+                    "en":  "🏛️ My online retirement",
+                    "fr":  "🏛️ Ma retraite en ligne",
+                    "ar":  "🏛️ تقاعدي عبر الإنترنت",
+                    "es":  "🏛️ Mi retiro en línea"
+                },
+    "h1":  {
+               "pt":  "Apresentação",
+               "en":  "Presentation",
+               "fr":  "Présentation",
+               "ar":  "العرض التقديمي",
+               "es":  "Presentación"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "ATELIER NUMÉRIQUE · DÉBUTANTS",
+                      "en":  "DIGITAL WORKSHOP · BEGINNERS",
+                      "es":  "TALLER DIGITAL · PRINCIPIANTES",
+                      "ar":  "ورشة عمل رقمية · للمبتدئين",
+                      "pt":  "WORKSHOP DIGITAL · INICIANTES"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ma retraite en ligne Demander sa retraite sur Internet, pas à pas — et les papiers à fournir",
+                      "en":  "My online retirement Apply for your retirement on the Internet, step by step — and the papers to provide",
+                      "es":  "Mi retiro en línea Solicita tu retiro en Internet, paso a paso y los papeles a presentar",
+                      "ar":  "تقاعدي عبر الإنترنت تقدم بطلب تقاعدك عبر الإنترنت، خطوة بخطوة - والأوراق التي يجب تقديمها",
+                      "pt":  "Minha aposentadoria online Solicite sua aposentadoria pela Internet, passo a passo — e os papéis a fornecer"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un seul site · une seule demande · pour tous vos régimes",
+                      "en":  "One site · one application · for all your plans",
+                      "es":  "Un sitio · una aplicación · para todos tus planes",
+                      "ar":  "موقع واحد · تطبيق واحد · لجميع خططك",
+                      "pt":  "Um site · um aplicativo · para todos os seus planos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Médiation numérique",
+                      "en":  "Yggdrasil — Digital mediation",
+                      "es":  "Yggdrasil — Mediación digital",
+                      "ar":  "يغدراسيل - الوساطة الرقمية",
+                      "pt":  "Yggdrasil — Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "AU PROGRAMME",
+                      "en":  "ON THE PROGRAM",
+                      "es":  "EN EL PROGRAMA",
+                      "ar":  "على البرنامج",
+                      "pt":  "NO PROGRAMA"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ce que vous saurez faire ce soir",
+                      "en":  "What you can do this evening",
+                      "es":  "¿Qué puedes hacer esta noche?",
+                      "ar":  "ما يمكنك القيام به هذا المساء",
+                      "pt":  "O que você pode fazer esta noite"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Me connecter en Trouver le bon site Vérifier et estimer sécurité",
+                      "en":  "Log in Find the right site Check and assess security",
+                      "es":  "Iniciar sesión Encuentre el sitio adecuado Compruebe y evalúe la seguridad",
+                      "ar":  "تسجيل الدخول ابحث عن الموقع الصحيح تحقق من الأمان وقم بتقييمه",
+                      "pt":  "Faça login Encontre o site certo Verifique e avalie a segurança"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le site officiel, un seul pour toutes vos Avec FranceConnect, sans créer un Ma carrière, mon âge de départ, le caisses nouveau mot de passe montant",
+                      "en":  "The official site, only one for all your With FranceConnect, without creating a My career, my starting age, the new password amount",
+                      "es":  "El sitio oficial, único para todos sus Con FranceConnect, sin crear Mi carrera, mi edad de inicio, el importe de la nueva contraseña",
+                      "ar":  "الموقع الرسمي، واحد فقط لكل ما تبذلونه من مع FranceConnect، دون إنشاء مسيرتي المهنية، وعمر البداية، ومبلغ كلمة المرور الجديدة",
+                      "pt":  "O site oficial, apenas um para todos os seus Com FranceConnect, sem criar um Minha carreira, minha idade inicial, o novo valor da senha"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Préparer mes Connaître l\u0027option Faire ma demande papiers papier",
+                      "en":  "Prepare my Know the option Make my request paper documents",
+                      "es":  "Preparar mi Conozca la opción Realizar mi solicitud documentos en papel",
+                      "ar":  "قم بإعداد أعرف خيار تقديم طلبي إلى مستندات ورقية",
+                      "pt":  "Prepare o meu Conheça a opção Faça o meu pedido documentos em papel"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cliquer au bon endroit, étape par étape La liste des justificatifs à fournir Si je n\u0027ai pas Internet ou si je préfère",
+                      "en":  "Click in the right place, step by step The list of supporting documents to provide If I do not have Internet or if I prefer",
+                      "es":  "Haga clic en el lugar correcto, paso a paso La lista de documentos de respaldo a proporcionar Si no tengo Internet o si lo prefiero",
+                      "ar":  "انقر في المكان الصحيح، خطوة بخطوة قائمة المستندات الداعمة التي يجب تقديمها إذا لم يكن لدي إنترنت أو إذا كنت أفضّل ذلك",
+                      "pt":  "Clique no lugar certo, passo a passo A lista de documentos comprovativos a fornecer Se não tiver Internet ou se preferir"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "02",
+                      "en":  "02",
+                      "es":  "02",
+                      "ar":  "02",
+                      "pt":  "02"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LE POINT DE DÉPART",
+                      "en":  "THE STARTING POINT",
+                      "es":  "EL PUNTO DE PARTIDA",
+                      "ar":  "نقطة البداية",
+                      "pt":  "O PONTO DE PARTIDA"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La retraite, il faut la demander",
+                      "en":  "Retirement, you have to ask for it",
+                      "es":  "Jubilación, hay que pedirla",
+                      "ar":  "التقاعد، عليك أن تسأل عنه",
+                      "pt":  "Aposentadoria, você tem que pedir"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Quand vous arrivez à l\u0027âge de la retraite, l\u0027argent n\u0027arrive pas 4 mois avant automatiquement sur votre compte. C\u0027est le bon moment pour déposer votre demande",
+                      "en":  "When you reach retirement age, the money does not automatically arrive in your account 4 months before. Now is the right time to submit your application",
+                      "es":  "Cuando llegas a la edad de jubilación, el dinero no llega automáticamente a tu cuenta 4 meses antes. Ahora es el momento adecuado para enviar su solicitud",
+                      "ar":  "عندما تصل إلى سن التقاعد، لا تصل الأموال تلقائيًا إلى حسابك قبل 4 أشهر. الآن هو الوقت المناسب لتقديم طلبك",
+                      "pt":  "Quando você atinge a idade de aposentadoria, o dinheiro não chega automaticamente à sua conta 4 meses antes. Agora é o momento certo para enviar sua inscrição"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vous devez faire une démarche pour la déclencher. Bonne nouvelle : aujourd\u0027hui, tout peut se faire depuis chez vous, sur Internet. Depuis chez vous Ordinateur, tablette ou smartphone suffisent",
+                      "en":  "You must take action to trigger it. Good news: today, everything can be done from home, on the Internet. From home Computer, tablet or smartphone are enough",
+                      "es":  "Debes tomar medidas para activarlo. Buenas noticias: hoy todo se puede hacer desde casa, a través de Internet. Desde casa Basta con ordenador, tablet o smartphone",
+                      "ar":  "يجب عليك اتخاذ الإجراءات اللازمة لتشغيله. الخبر السار: اليوم، يمكن القيام بكل شيء من المنزل، عبر الإنترنت. يكفي استخدام الكمبيوتر المنزلي أو الجهاز اللوحي أو الهاتف الذكي",
+                      "pt":  "Você deve agir para ativá-lo. Boas notícias: hoje tudo pode ser feito de casa, pela internet. De casa Computador, tablet ou smartphone são suficientes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil 03",
+                      "en":  "Yggdrasil 03",
+                      "es":  "Yggdrasil 03",
+                      "ar":  "يغدراسيل 03",
+                      "pt":  "Yggdrasil 03"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 0",
+                      "en":  "STEP 0",
+                      "es":  "PASO 0",
+                      "ar":  "الخطوة 0",
+                      "pt":  "PASSO 0"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le bon site : un seul pour tout",
+                      "en":  "The right site: one for everything",
+                      "es":  "El sitio adecuado: uno para todo",
+                      "ar":  "الموقع الصحيح: موقع لكل شيء",
+                      "pt":  "O site certo: um para tudo"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pourquoi celui-là ? info-retraite.fr Il regroupe TOUS vos régimes",
+                      "en":  "Why this one? info-retraite.fr It brings together ALL your plans",
+                      "es":  "¿Por qué éste? info-retraite.fr Reúne TODOS tus planes",
+                      "ar":  "لماذا هذا واحد؟ info-retraite.fr فهو يجمع كل خططك",
+                      "pt":  "Por que este? info-retraite.fr Reúne TODOS os seus planos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Mon compte retraite » Salarié, agricole, indépendant, fonction publique…",
+                      "en":  "“My retirement account” Employee, agricultural, self-employed, civil service…",
+                      "es":  "“Mi cuenta de jubilación” Empleado, agrícola, autónomo, funcionario…",
+                      "ar":  "\"حساب التقاعد الخاص بي\" موظف، زراعي، صاحب عمل حر، خدمة مدنية..",
+                      "pt":  "“Minha conta de aposentadoria” Empregado, agrícola, autônomo, funcionário público…"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le site officiel et gratuit du service public Une seule demande pour tous",
+                      "en":  "The official and free website of the public service One request for all",
+                      "es":  "La web oficial y gratuita del servicio público Un pedido para todos",
+                      "ar":  "الموقع الرسمي والمجاني للخدمة العامة طلب واحد للجميع",
+                      "pt":  "O site oficial e gratuito do serviço público Um pedido para todos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Plus besoin d\u0027écrire à chaque caisse séparément",
+                      "en":  "No more writing to each checkout separately",
+                      "es":  "No más escribir en cada pago por separado",
+                      "ar":  "لا مزيد من الكتابة إلى كل الخروج على حدة",
+                      "pt":  "Chega de escrever para cada checkout separadamente"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Attention aux faux sites. Tapez vous-même info-retraite.fr. Sécurisé et gratuit Méfiez-vous des sites qui demandent de l\u0027argent ou qui promettent de « tout faire à votre place ». Jamais de paiement demandé pour faire sa retraite",
+                      "en":  "Beware of fake sites. Type in info-retraite.fr yourself. Secure and free Be wary of sites that ask for money or promise to “do everything for you”. Never requested payment for retirement",
+                      "es":  "Cuidado con los sitios falsos. Escriba usted mismo info-retraite.fr. Seguro y gratuito Tenga cuidado con los sitios que le piden dinero o prometen “hacer todo por usted”. Nunca solicitó pago por jubilación",
+                      "ar":  "احذر من المواقع الوهمية. اكتب info-retraite.fr بنفسك. آمن ومجاني كن حذرًا من المواقع التي تطلب المال أو تعدك \"بأن تفعل كل شيء من أجلك\". لم يطلب أبدا الدفع للتقاعد",
+                      "pt":  "Cuidado com sites falsos. Digite info-retraite.fr você mesmo. Seguro e gratuito Desconfie de sites que pedem dinheiro ou prometem “fazer tudo por você”. Nunca solicitou pagamento de aposentadoria"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "04",
+                      "en":  "04",
+                      "es":  "04",
+                      "ar":  "04",
+                      "pt":  "04"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DEUX CHEMINS POSSIBLES",
+                      "en":  "TWO POSSIBLE PATHS",
+                      "es":  "DOS CAMINOS POSIBLES",
+                      "ar":  "مساران محتملان",
+                      "pt":  "DOIS CAMINHOS POSSÍVEIS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En ligne ou sur papier ?",
+                      "en":  "Online or on paper?",
+                      "es":  "¿En línea o en papel?",
+                      "ar":  "على الانترنت أم على الورق؟",
+                      "pt":  "Online ou em papel?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En ligne Sur papier Le plus simple aujourd\u0027hui Si vous n\u0027avez pas Internet",
+                      "en":  "Online On paper The easiest today If you don\u0027t have Internet",
+                      "es":  "En línea En papel Lo más fácil hoy Si no tienes Internet",
+                      "ar":  "عبر الإنترنت على الورق الأسهل اليوم إذا لم يكن لديك إنترنت",
+                      "pt":  "Online No papel O mais fácil hoje Se você não tem Internet"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sur info-retraite.fr Formulaire « Cerfa » à remplir à la main",
+                      "en":  "On info-retraite.fr “Cerfa” form to be completed by hand",
+                      "es":  "En info-retraite.fr El formulario “Cerfa” debe cumplimentarse a mano.",
+                      "ar":  "على info-retraite.fr نموذج \"Cerfa\" الذي يجب تعبئته يدويًا",
+                      "pt":  "Em info-retraite.fr Formulário “Cerfa” a ser preenchido à mão"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Une seule demande pour tous les régimes À retirer à la Carsat ou France services",
+                      "en":  "A single request for all plans To be collected from Carsat or France services",
+                      "es":  "Una única solicitud para todos los planes A recoger en los servicios Carsat o Francia",
+                      "ar":  "طلب واحد لجميع الخطط يتم تحصيله من خدمات كارسات أو فرنسا",
+                      "pt":  "Um único pedido para todos os planos A cobrar nos serviços Carsat ou França"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Formulaire déjà pré-rempli Une demande par régime concerné",
+                      "en":  "Form already pre-filled One request per scheme concerned",
+                      "es":  "Formulario ya completado Una solicitud por esquema en cuestión",
+                      "ar":  "تم ملء النموذج مسبقًا بطلب واحد لكل مخطط معني",
+                      "pt":  "Formulário já preenchido Um pedido por regime em causa"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Suivi en direct de votre dossier Envoi par courrier avec les copies",
+                      "en":  "Live monitoring of your file Sending by mail with copies",
+                      "es":  "Seguimiento en vivo de su expediente Envío por correo con copias",
+                      "ar":  "المراقبة المباشرة لملفك الذي يتم إرساله عن طريق البريد مع النسخ",
+                      "pt":  "Monitoramento ao vivo do seu arquivo Envio por correio com cópias"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Documents joints en photo / scan Un peu plus long à traiter",
+                      "en":  "Documents attached in photo / scan A little longer to process",
+                      "es":  "Documentos adjuntos en foto/escaneo. Un poco más de tiempo para procesar.",
+                      "ar":  "المستندات المرفقة بالصور / المسح الضوئي تستغرق وقتًا أطول قليلاً للمعالجة",
+                      "pt":  "Documentos anexados em foto/digitalização Um pouco mais para processar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "05",
+                      "en":  "05",
+                      "es":  "05",
+                      "ar":  "05",
+                      "pt":  "05"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "JE M\u0027INSTALLE",
+                      "en":  "I\u0027M SETTING UP",
+                      "es":  "ESTOY CONFIGURANDO",
+                      "ar":  "أنا أقوم بالإعداد",
+                      "pt":  "ESTOU CONFIGURANDO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Avant de commencer : ce qu\u0027il faut sous la main",
+                      "en":  "Before you start: what you need on hand",
+                      "es":  "Antes de empezar: lo que necesitas a mano",
+                      "ar":  "قبل أن تبدأ: ما تحتاجه في متناول اليد",
+                      "pt":  "Antes de começar: o que você precisa em mãos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un appareil connecté Mon adresse e-mail",
+                      "en":  "A connected device My email address",
+                      "es":  "Un dispositivo conectado Mi dirección de correo electrónico",
+                      "ar":  "جهاز متصل عنوان بريدي الإلكتروني",
+                      "pt":  "Um dispositivo conectado Meu endereço de e-mail"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ordinateur, tablette ou téléphone avec Internet Et mon mot de passe de messagerie (pour les codes)",
+                      "en":  "Computer, tablet or phone with Internet And my email password (for codes)",
+                      "es":  "Computadora, tableta o teléfono con Internet Y mi contraseña de correo electrónico (para códigos)",
+                      "ar":  "جهاز كمبيوتر أو جهاز لوحي أو هاتف متصل بالإنترنت وكلمة المرور الخاصة بالبريد الإلكتروني (للرموز)",
+                      "pt":  "Computador, tablet ou telefone com Internet E senha do meu e-mail (para códigos)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon téléphone portable Mes identifiants FranceConnect",
+                      "en":  "My mobile phone My FranceConnect identifiers",
+                      "es":  "Mi teléfono móvil Mis identificadores FranceConnect",
+                      "ar":  "هاتفي المحمول معرفات FranceConnect",
+                      "pt":  "Meu celular Meus identificadores FranceConnect"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour recevoir un code de sécurité par SMS Impôts, Ameli, La Poste… un compte que vous avez déjà",
+                      "en":  "To receive a security code by SMS Impôts, Ameli, La Poste… an account you already have",
+                      "es":  "Para recibir un código de seguridad por SMS Impôts, Ameli, La Poste… una cuenta que ya tienes",
+                      "ar":  "لتلقي رمز الحماية عبر الرسائل القصيرة Impôts، Ameli، La Poste... حساب لديك بالفعل",
+                      "pt":  "Para receber um código de segurança por SMS Impôts, Ameli, La Poste… uma conta que você já possui"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon RIB Un peu de temps au calme",
+                      "en":  "My RIB A little quiet time",
+                      "es":  "Mi RIB Un poco de tranquilidad",
+                      "ar":  "بلدي RIB وقت هادئ قليلا",
+                      "pt":  "Meu RIB Um pouco de silêncio"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le relevé qui donne le numéro de mon compte bancaire Comptez 20 à 30 minutes, sans être pressé",
+                      "en":  "The statement which gives my bank account number Allow 20 to 30 minutes, without being in a hurry",
+                      "es":  "El extracto que indica mi número de cuenta bancaria. Espera entre 20 y 30 minutos, sin prisas.",
+                      "ar":  "كشف الحساب الذي يعطي رقم حسابي البنكي يسمح بـ 20 إلى 30 دقيقة، دون أن تكون في عجلة من أمرك",
+                      "pt":  "O extrato que dá o número da minha conta bancária Reserve de 20 a 30 minutos, sem pressa"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "06",
+                      "en":  "06",
+                      "es":  "06",
+                      "ar":  "06",
+                      "pt":  "06"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 1",
+                      "en":  "STEP 1",
+                      "es":  "PASO 1",
+                      "ar":  "الخطوة 1",
+                      "pt":  "PASSO 1"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se connecter avec FranceConnect",
+                      "en":  "Connect with FranceConnect",
+                      "es":  "Conéctese con FranceConnect",
+                      "ar":  "تواصل مع فرانس كونيكت",
+                      "pt":  "Conecte-se com FranceConnect"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pourquoi c\u0027est pratique FranceConnect, c\u0027est quoi ? Plus sûr Vos données sont protégées par l\u0027État C\u0027est un bouton qui vous permet de vous connecter sans créer de nouveau mot de passe. Un seul compte Pas un mot de passe de plus à retenir Vous réutilisez un compte que vous avez déjà :",
+                      "en":  "Why is it practical, what is FranceConnect? More secure Your data is protected by the State It is a button that allows you to log in without creating a new password. Just one account Not one more password to remember You reuse an account you already have:",
+                      "es":  "¿Por qué es práctico? ¿Qué es FranceConnect? Más seguro Tus datos están protegidos por el Estado Es un botón que te permite iniciar sesión sin crear una nueva contraseña. Solo una cuenta Ni una contraseña más para recordar Reutilizas una cuenta que ya tienes:",
+                      "ar":  "لماذا هو عملي، ما هو FranceConnect؟ أكثر أمانًا بياناتك محمية بواسطة الدولة وهو زر يسمح لك بتسجيل الدخول دون إنشاء كلمة مرور جديدة. حساب واحد فقط ليس هناك كلمة مرور أخرى لتتذكرها يمكنك إعادة استخدام حساب لديك بالفعل:",
+                      "pt":  "Por que é prático, o que é FranceConnect? Mais seguro Seus dados são protegidos pelo Estado É um botão que permite fazer login sem criar uma nova senha. Apenas uma conta Nenhuma senha a mais para lembrar Você reutiliza uma conta que já possui:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Impôts (impots.gouv.fr) l\u0027Assurance Maladie (Ameli) Reconnu partout La Poste / L\u0027Identité Numérique Le même bouton sur de nombreux sites publics MSA, Yris…",
+                      "en":  "Taxes (impots.gouv.fr) Health Insurance (Ameli) Recognized everywhere La Poste / Digital Identity The same button on many public sites MSA, Yris…",
+                      "es":  "Impuestos (impots.gouv.fr) Seguro médico (Ameli) Reconocido en todas partes La Poste / Identidad digital El mismo botón en muchos sitios públicos MSA, Yris…",
+                      "ar":  "الضرائب (impots.gouv.fr) التأمين الصحي (Ameli) معترف به في كل مكان La Poste / الهوية الرقمية نفس الزر في العديد من المواقع العامة MSA، Yris…",
+                      "pt":  "Impostos (impots.gouv.fr) Seguro de saúde (Ameli) Reconhecido em todos os lugares La Poste / Identidade Digital O mesmo botão em muitos sites públicos MSA, Yris…"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "07",
+                      "en":  "07",
+                      "es":  "07",
+                      "ar":  "07",
+                      "pt":  "07"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 1 · PAS À PAS",
+                      "en":  "STEP 1 · STEP BY STEP",
+                      "es":  "PASO 1 · PASO A PASO",
+                      "ar":  "الخطوة 1 · خطوة بخطوة",
+                      "pt":  "PASSO 1 · PASSO A PASSO"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Où cliquer pour se connecter",
+                      "en":  "Where to click to connect",
+                      "es":  "Dónde hacer clic para conectarse",
+                      "ar":  "حيث انقر للاتصال",
+                      "pt":  "Onde clicar para se conectar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Allez sur le site Tapez info-retraite.fr dans la barre du navigateur, puis Entrée.",
+                      "en":  "1 Go to the site Type info-retraite.fr in the browser bar, then Enter.",
+                      "es":  "1 Vaya al sitio Escriba info-retraite.fr en la barra del navegador y luego ingrese.",
+                      "ar":  "1 اذهب إلى الموقع، اكتب info-retraite.fr في شريط المتصفح، ثم أدخل.",
+                      "pt":  "1 Vá para o site Digite info-retraite.fr na barra do navegador e pressione Enter."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Cliquez sur « Mon compte » Le bouton est en haut à droite de la page d\u0027accueil.",
+                      "en":  "2 Click on “My Account” The button is at the top right of the home page.",
+                      "es":  "2 Haga clic en \"Mi cuenta\". El botón está en la parte superior derecha de la página de inicio.",
+                      "ar":  "2 انقر على \"حسابي\" الزر الموجود في أعلى يمين الصفحة الرئيسية.",
+                      "pt":  "2 Clique em “Minha conta”. O botão está no canto superior direito da página inicial."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Choisissez « S\u0027identifier avec FranceConnect » Le bouton bleu avec le logo FranceConnect.",
+                      "en":  "3 Choose “Log in with FranceConnect” The blue button with the FranceConnect logo.",
+                      "es":  "3 Elija “Iniciar sesión con FranceConnect” El botón azul con el logotipo de FranceConnect.",
+                      "ar":  "3 اختر \"تسجيل الدخول باستخدام FranceConnect\" الزر الأزرق الذي يحمل شعار FranceConnect.",
+                      "pt":  "3 Escolha “Login com FranceConnect” O botão azul com o logotipo FranceConnect."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Sélectionnez votre compte Par ex. « Impôts ». Entrez l\u0027identifiant que vous connaissez déjà.",
+                      "en":  "4 Select your account E.g. “Taxes”. Enter the username you already know.",
+                      "es":  "4 Seleccione su cuenta P. ej. “Impuestos”. Ingrese el nombre de usuario que ya conoce.",
+                      "ar":  "4 حدد حسابك على سبيل المثال. \"الضرائب\". أدخل اسم المستخدم الذي تعرفه بالفعل.",
+                      "pt":  "4 Selecione sua conta. Por exemplo. “Impostos”. Digite o nome de usuário que você já conhece."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Validez le code reçu Recopiez le code envoyé par SMS ou par e-mail. C\u0027est fait, vous êtes connecté !",
+                      "en":  "5 Validate the code received Copy the code sent by SMS or e-mail. It\u0027s done, you are connected!",
+                      "es":  "5 Validar el código recibido Copiar el código enviado por SMS o correo electrónico. ¡Ya está, estás conectado!",
+                      "ar":  "5 التحقق من صحة الرمز المستلم انسخ الرمز المرسل عبر الرسائل القصيرة أو البريد الإلكتروني. لقد تم الأمر، أنت متصل!",
+                      "pt":  "5 Valide o código recebido Copie o código enviado por SMS ou e-mail. Pronto, você está conectado!"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "08",
+                      "en":  "08",
+                      "es":  "08",
+                      "ar":  "08",
+                      "pt":  "08"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 2",
+                      "en":  "STEP 2",
+                      "es":  "PASO 2",
+                      "ar":  "الخطوة 2",
+                      "pt":  "PASSO 2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vérifier ma carrière",
+                      "en":  "Check my career",
+                      "es":  "revisa mi carrera",
+                      "ar":  "تحقق من مسيرتي المهنية",
+                      "pt":  "Confira minha carreira"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Service « Ma carrière » La liste de tout ce que vous avez travaillé, année par année. C\u0027est ce relevé qui sert à calculer votre âge de départ et le montant de votre retraite.",
+                      "en":  "“My Career” service The list of everything you have worked on, year by year. It is this statement which is used to calculate your retirement age and the amount of your retirement.",
+                      "es":  "Servicio “Mi Carrera” La lista de todo en lo que has trabajado, año tras año. Es esta declaración la que se utiliza para calcular su edad de jubilación y el monto de su jubilación.",
+                      "ar":  "خدمة \"مسيرتي المهنية\" قائمة بكل ما عملت عليه سنة بعد سنة. هذا هو البيان الذي يستخدم لحساب سن التقاعد الخاص بك ومبلغ التقاعد الخاص بك.",
+                      "pt":  "Serviço “Minha Carreira” A lista de tudo em que você trabalhou, ano a ano. É esta declaração que é usada para calcular a sua idade de reforma e o montante da sua reforma."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Regardez chaque ligne Repérez un oubli ? Demandez une correction Vérifiez que toutes vos périodes de travail Un trimestre manquant, un employeur Dès 55 ans, vous pouvez demander à apparaissent absent… notez-le corriger votre carrière",
+                      "en":  "Look at each line Spot an oversight? Request a correction Check that all your periods of work A missing quarter, an employer From the age of 55, you can request to appear absent… note it correct your career",
+                      "es":  "Mire cada línea. ¿Detecta un descuido? Solicita una corrección Comprueba que todos tus periodos de trabajo Un trimestre faltante, un empleador A partir de los 55 años, puedes solicitar comparecer ausente… anótalo corrige tu carrera",
+                      "ar":  "انظر إلى كل سطر بقعة سهو؟ طلب تصحيح تأكد من أن جميع فترات عملك ربع مفقود، صاحب عمل من سن 55 يمكنك طلب الحضور غائباً.. لاحظ ذلك تصحيح حياتك المهنية",
+                      "pt":  "Observe cada linha Identificou um descuido? Solicite uma correção Verifique se todos os seus períodos de trabalho Um trimestre faltante, um empregador A partir dos 55 anos, você pode solicitar a comparência… anote corrija sua carreira"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "09",
+                      "en":  "09",
+                      "es":  "09",
+                      "ar":  "09",
+                      "pt":  "09"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 3",
+                      "en":  "STEP 3",
+                      "es":  "PASO 3",
+                      "ar":  "الخطوة 3",
+                      "pt":  "PASSO 3"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Estimer mon âge et mon montant",
+                      "en":  "Estimate my age and amount",
+                      "es":  "Estimar mi edad y cantidad",
+                      "ar":  "تقدير عمري والمبلغ",
+                      "pt":  "Estime minha idade e quantidade"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bon à savoir « Mon estimation retraite » Atteindre l\u0027âge légal ne donne pas toujours la retraite « à taux plein ». Le simulateur aide à choisir le meilleur moment. Un simulateur qui vous montre, selon l\u0027âge où vous partez :",
+                      "en":  "Good to know “My retirement estimate” Reaching the legal age does not always give you a “full rate” retirement. The simulator helps you choose the best time. A simulator which shows you, depending on the age at which you leave:",
+                      "es":  "Es bueno saberlo “Mi estimación de jubilación” Alcanzar la edad legal no siempre te da una jubilación a “tarifa completa”. El simulador te ayuda a elegir el mejor momento. Un simulador que te muestra, según la edad a la que sales:",
+                      "ar":  "من الجيد أن تعرف \"تقدير التقاعد الخاص بي\" إن الوصول إلى السن القانوني لا يمنحك دائمًا تقاعدًا \"بالمعدل الكامل\". يساعدك جهاز المحاكاة على اختيار أفضل وقت. جهاز محاكاة يوضح لك، حسب العمر الذي تغادر فيه:",
+                      "pt":  "É bom saber “Minha estimativa de aposentadoria” Alcançar a maioridade legal nem sempre proporciona uma aposentadoria com “taxa integral”. O simulador ajuda você a escolher o melhor horário. Um simulador que mostra, dependendo da idade em que você sai:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À quel âge vous pouvez partir Pas encore décidé ? Quel montant vous toucheriez par mois",
+                      "en":  "At what age you can leave Not decided yet? How much you would receive per month",
+                      "es":  "¿A qué edad puedes salir? ¿Aún no lo has decidido? ¿Cuánto recibirías por mes?",
+                      "ar":  "في أي عمر يمكنك المغادرة لم تقرر بعد؟ كم سوف تتلقى شهريا",
+                      "pt":  "Com que idade você pode sair Ainda não decidiu? Quanto você receberia por mês"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Inscrivez-vous à « Mon agenda retraite » : le site vous envoie des Ce que ça change si vous partez plus tard conseils par mail au bon moment avant votre départ.",
+                      "en":  "Subscribe to “My retirement agenda”: the site sends you advice by email at the right time before your departure.",
+                      "es":  "Suscríbete a “Mi agenda de jubilación”: el sitio te envía consejos por correo electrónico en el momento justo antes de tu partida.",
+                      "ar":  "اشترك في \"أجندة التقاعد الخاصة بي\": يرسل لك الموقع النصائح عبر البريد الإلكتروني في الوقت المناسب قبل مغادرتك.",
+                      "pt":  "Assine “Minha agenda de aposentadoria”: o site envia conselhos por e-mail na hora certa antes da sua partida."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "10",
+                      "en":  "10",
+                      "es":  "10",
+                      "ar":  "10",
+                      "pt":  "10"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 4 · LE BON MOMENT",
+                      "en":  "STEP 4 · THE RIGHT TIME",
+                      "es":  "PASO 4 · EL MOMENTO ADECUADO",
+                      "ar":  "الخطوة 4 · الوقت المناسب",
+                      "pt":  "PASSO 4 · A HORA CERTA"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Quand faire ma demande ?",
+                      "en":  "When should I apply?",
+                      "es":  "¿Cuándo debo presentar la solicitud?",
+                      "ar":  "متى يجب أن أتقدم بطلب؟",
+                      "pt":  "Quando devo me inscrever?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Vous choisissez votre date Elle ne peut pas être avant l\u0027âge légal de départ",
+                      "en":  "4 You choose your date It cannot be before the legal age of departure",
+                      "es":  "4 Tú eliges tu fecha No puede ser antes de la edad legal de salida",
+                      "ar":  "4. اختر تاريخك ولا يمكن أن يكون قبل السن القانوني للمغادرة",
+                      "pt":  "4 Você escolhe sua data Não pode ser antes da idade legal de partida"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ni trop tôt, ni trop tard 4 mois avant laisse le temps de traiter votre dossier mois avant Garantie de versement la date de départ que vous avez choisie Dossier complet à temps = paiement assuré à la date choisie",
+                      "en":  "Neither too early nor too late 4 months before leaves time to process your file months before Guaranteed payment on the departure date you have chosen Complete file on time = payment assured on the chosen date",
+                      "es":  "Ni demasiado pronto ni demasiado tarde 4 meses antes deja tiempo para tramitar tu expediente meses antes Pago garantizado en la fecha de salida que hayas elegido Completar expediente a tiempo = pago asegurado en la fecha elegida",
+                      "ar":  "ليس مبكرًا جدًا ولا متأخرًا جدًا، قبل 4 أشهر من موعد مغادرة الملف الخاص بك، قبل أشهر من الدفع المضمون في تاريخ المغادرة الذي اخترته، الملف الكامل في الوقت المحدد = الدفع مضمون في التاريخ المختار",
+                      "pt":  "Nem muito cedo nem muito tarde 4 meses antes da partida Tempo para processar seu arquivo meses antes Pagamento garantido na data de partida que você escolheu Arquivo completo no prazo = pagamento garantido na data escolhida"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil 11",
+                      "en":  "Yggdrasil 11",
+                      "es":  "Yggdrasil 11",
+                      "ar":  "يغدراسيل 11",
+                      "pt":  "Yggdrasil 11"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 5",
+                      "en":  "STEP 5",
+                      "es":  "PASO 5",
+                      "ar":  "الخطوة 5",
+                      "pt":  "PASSO 5"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Demander ma retraite » : la démarche",
+                      "en":  "“Request my retirement”: the process",
+                      "es":  "“Solicitar mi retiro”: el proceso",
+                      "ar":  "\"أطلب تقاعدي\": العملية",
+                      "pt":  "“Solicitar minha aposentadoria”: o processo"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Une fois connecté, cliquez sur le service « Demander ma retraite ». Le formulaire est déjà pré-rempli et se fait en 6 étapes guidées.",
+                      "en":  "Once logged in, click on the “Request my retirement” service. The form is already pre-filled and is completed in 6 guided steps.",
+                      "es":  "Una vez registrado, haga clic en el servicio “Solicitar mi retiro”. El formulario ya está precompletado y se completa en 6 pasos guiados.",
+                      "ar":  "بعد تسجيل الدخول، اضغط على خدمة \"طلب التقاعد\". تم بالفعل ملء النموذج مسبقًا وتم إكماله في 6 خطوات إرشادية.",
+                      "pt":  "Uma vez logado, clique no serviço “Solicitar minha aposentadoria”. O formulário já vem pré-preenchido e é preenchido em 6 etapas guiadas."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Vos informations 2 Vos coordonnées et votre RIB 3 Votre date de départ choisie personnelles",
+                      "en":  "1 Your information 2 Your contact details and your RIB 3 Your chosen personal departure date",
+                      "es":  "1 Su información 2 Sus datos de contacto y su RIB 3 Su fecha de salida personal elegida",
+                      "ar":  "1 معلوماتك 2 تفاصيل الاتصال الخاصة بك وRIB الخاص بك 3 تاريخ المغادرة الشخصي الذي اخترته",
+                      "pt":  "1 Suas informações 2 Seus dados de contato e seu RIB 3 Sua data de partida pessoal escolhida"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Vos régimes (cochés 5 Vos justificatifs à joindre 6 Vérification et validation automatiquement)",
+                      "en":  "4 Your plans (checked 5 Your supporting documents to attach 6 Verification and validation automatically)",
+                      "es":  "4 Tus planes (marcados 5 Tus documentos justificativos para adjuntar 6 Verificación y validación automática)",
+                      "ar":  "4 خططك (تم تحديد 5 المستندات الداعمة الخاصة بك لإرفاقها 6 التحقق والتحقق تلقائيًا)",
+                      "pt":  "4 Seus planos (marcado 5 Seus documentos comprovativos para anexar 6 Verificação e validação automaticamente)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pas le temps de finir ? Vous pouvez enregistrer et revenir plus tard : votre demande est conservée 90 jours.",
+                      "en":  "No time to finish? You can save and come back later: your request is kept for 90 days.",
+                      "es":  "¿No hay tiempo para terminar? Puedes guardar y volver más tarde: tu solicitud se conserva durante 90 días.",
+                      "ar":  "لا وقت للانتهاء؟ يمكنك الحفظ والعودة لاحقًا: يتم الاحتفاظ بطلبك لمدة 90 يومًا.",
+                      "pt":  "Não há tempo para terminar? Você pode salvar e voltar mais tarde: sua solicitação fica guardada por 90 dias."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "12",
+                      "en":  "12",
+                      "es":  "12",
+                      "ar":  "12",
+                      "pt":  "12"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LES PAPIERS À FOURNIR",
+                      "en":  "PAPERS TO BE PROVIDED",
+                      "es":  "PAPELES A APORTAR",
+                      "ar":  "الأوراق المطلوب تقديمها",
+                      "pt":  "DOCUMENTOS A SER FORNECIDOS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le socle commun : à préparer dans tous les cas",
+                      "en":  "The common base: to be prepared in all cases",
+                      "es":  "La base común: estar preparados en todos los casos",
+                      "ar":  "القاعدة المشتركة: أن نكون مستعدين في جميع الأحوال",
+                      "pt":  "A base comum: estar preparado em todos os casos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Une pièce d\u0027identité Un RIB",
+                      "en":  "An identity document A RIB",
+                      "es":  "Un documento de identidad Una RIB",
+                      "ar":  "وثيقة هوية RIB",
+                      "pt":  "Um documento de identidade Um RIB"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte d\u0027identité ou passeport (ou titre de séjour) À votre nom — le compte où sera versée la pension",
+                      "en":  "Identity card or passport (or residence permit) In your name — the account where the pension will be paid",
+                      "es":  "Documento de identidad o pasaporte (o permiso de residencia) A su nombre: la cuenta donde se pagará la pensión",
+                      "ar":  "بطاقة الهوية أو جواز السفر (أو تصريح الإقامة) باسمك – الحساب الذي سيتم فيه دفع المعاش التقاعدي",
+                      "pt":  "Bilhete de identidade ou passaporte (ou autorização de residência) Em seu nome — conta onde será paga a pensão"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vos avis d\u0027impôt Un justificatif d\u0027état civil",
+                      "en":  "Your tax notices Proof of civil status",
+                      "es":  "Sus avisos fiscales Prueba de estado civil",
+                      "ar":  "الإشعارات الضريبية الخاصة بك. إثبات الحالة المدنية",
+                      "pt":  "Seus avisos fiscais Prova de estado civil"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vos 2 derniers avis d\u0027impôt sur le revenu Acte de naissance récent ou livret de famille",
+                      "en":  "Your last 2 income tax notices Recent birth certificate or family record book",
+                      "es":  "Sus 2 últimos avisos de impuestos sobre la renta Acta de nacimiento reciente o libro de registro familiar",
+                      "ar":  "آخر إشعارين لضريبة الدخل لديك شهادة ميلاد حديثة أو دفتر سجل عائلي",
+                      "pt":  "Suas duas últimas notificações de imposto de renda Certidão de nascimento recente ou livro de registro familiar"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un justificatif de domicile Le relevé de carrière",
+                      "en":  "Proof of address Career record",
+                      "es":  "Comprobante de domicilio Historial profesional",
+                      "ar":  "إثبات العنوان - السجل الوظيفي",
+                      "pt":  "Comprovante de endereço Histórico de carreira"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Selon votre situation (facture, attestation…) Le « RIS » que vous avez vérifié à l\u0027étape 2",
+                      "en":  "Depending on your situation (invoice, certificate, etc.) The “RIS” that you checked in step 2",
+                      "es":  "Dependiendo de su situación (factura, certificado, etc.) El “RIS” que marcó en el paso 2",
+                      "ar":  "اعتمادًا على حالتك (الفاتورة، الشهادة، وما إلى ذلك) \"RIS\" الذي قمت بتحديده في الخطوة 2",
+                      "pt":  "Dependendo da sua situação (fatura, certificado, etc.) O “RIS” que você verificou no passo 2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "13",
+                      "en":  "13",
+                      "es":  "13",
+                      "ar":  "13",
+                      "pt":  "13"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LES PAPIERS À FOURNIR",
+                      "en":  "PAPERS TO BE PROVIDED",
+                      "es":  "PAPELES A APORTAR",
+                      "ar":  "الأوراق المطلوب تقديمها",
+                      "pt":  "DOCUMENTOS A SER FORNECIDOS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En plus, selon votre situation",
+                      "en":  "In addition, depending on your situation",
+                      "es":  "Además, dependiendo de tu situación",
+                      "ar":  "بالإضافة إلى ذلك، اعتمادا على الوضع الخاص بك",
+                      "pt":  "Além disso, dependendo da sua situação"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "J\u0027ai eu des enfants J\u0027ai connu le chômage Attestation France Travail (ex-Pôle emploi), même Livret de famille ou actes de naissance des enfants ancienne",
+                      "en":  "I have had children I have experienced unemployment France Travail certificate (formerly Pôle emploi), same old family record book or birth certificates for children",
+                      "es":  "He tenido hijos He vivido el desempleo Certificado de France Travail (anteriormente Pôle emploi), el mismo antiguo libro de familia o partidas de nacimiento de los niños",
+                      "ar":  "لقد أنجبت أطفالًا وعانيت من البطالة شهادة France Travail (المعروفة سابقًا باسم Pôle emploi) أو نفس دفتر السجل العائلي القديم أو شهادات ميلاد الأطفال",
+                      "pt":  "Tive filhos, sofri desemprego França Certificado de Travail (anteriormente Pôle emploi), o mesmo antigo livro de registo familiar ou certidões de nascimento de crianças"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je suis fonctionnaire Je suis indépendant Certificat de radiation des cadres ; finalisation sur Certificat de cessation d\u0027activité ensap.gouv.fr",
+                      "en":  "I am a civil servant I am independent Certificate of removal from management; finalization on Certificate of cessation of activity ensap.gouv.fr",
+                      "es":  "Soy funcionario Soy independiente Certificado de destitución de la dirección; finalización del Certificado de cese de actividad ensap.gouv.fr",
+                      "ar":  "أنا موظف حكومي أنا مستقل شهادة عزل من الإدارة؛ وضع اللمسات الأخيرة على شهادة التوقف عن النشاط ensap.gouv.fr",
+                      "pt":  "Sou funcionário público Sou independente Certificado de afastamento da administração; finalização do Certificado de cessação de atividade ensap.gouv.fr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Astuce : sur le site, l\u0027outil « Justificatifs à fournir » vous donne la liste exacte adaptée à VOTRE situation.",
+                      "en":  "Tip: on the site, the “Supports to provide” tool gives you the exact list adapted to YOUR situation.",
+                      "es":  "Consejo: en el sitio, la herramienta “Apoyos a proporcionar” le ofrece la lista exacta adaptada a SU situación.",
+                      "ar":  "نصيحة: على الموقع، توفر لك أداة \"الدعم المقدم\" القائمة الدقيقة التي تتكيف مع موقفك.",
+                      "pt":  "Dica: no site, a ferramenta “Apoios a prestar” dá-lhe a lista exata e adaptada à SUA situação."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "14",
+                      "en":  "14",
+                      "es":  "14",
+                      "ar":  "14",
+                      "pt":  "14"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "POUR DÉBUTANTS",
+                      "en":  "FOR BEGINNERS",
+                      "es":  "PARA PRINCIPIANTES",
+                      "ar":  "للمبتدئين",
+                      "pt":  "PARA INICIANTES"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mettre mes papiers « dans » l\u0027ordinateur",
+                      "en":  "Put my papers “in” the computer",
+                      "es":  "Poner mis papeles “en” la computadora",
+                      "ar":  "ضع أوراقي \"في\" الكمبيوتر",
+                      "pt":  "Coloque meus papéis “dentro” do computador"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour joindre un document en ligne, il faut d\u0027abord en faire une photo ou un scan. Voici comment, simplement.",
+                      "en":  "To attach a document online, you must first take a photo or scan of it. Here\u0027s how, simply.",
+                      "es":  "Para adjuntar un documento en línea, primero debe tomarle una foto o escanearlo. He aquí cómo, de forma sencilla.",
+                      "ar":  "لإرفاق مستند عبر الإنترنت، يجب عليك أولاً التقاط صورة أو مسح ضوئي له. وإليك الطريقة بكل بساطة.",
+                      "pt":  "Para anexar um documento online, você deve primeiro tirar uma foto ou digitalizá-lo. Veja como, simplesmente."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 · Photographier 2 · Vérifier 3 · Téléverser Posez le papier à plat, bien éclairé. Prenez la Le document doit être net et entièrement Sur le site, cliquez « Ajouter un document », photo bien droite, sans ombre. lisible, jusque dans les coins. puis choisissez votre photo.",
+                      "en":  "1 · Photograph 2 · Check 3 · Upload Lay the paper flat, well lit. Take the The document must be clear and completely On the site, click “Add a document”, straight photo, without shadow. legible, right down to the corners. then choose your photo.",
+                      "es":  "1 · Fotografía 2 · Verificar 3 · Cargar Coloque el papel en posición horizontal y bien iluminado. Tome el El documento debe ser claro y completo En el sitio, haga clic en \"Agregar un documento\", foto recta, sin sombras. legible, hasta las esquinas. luego elige tu foto.",
+                      "ar":  "1 · الصورة 2 · الفحص 3 · التحميل ضع الورقة بشكل مسطح، مضاءة جيدًا. خذ المستند يجب أن يكون واضحًا وكاملًا. في الموقع، انقر فوق \"إضافة مستند\"، صورة مستقيمة، بدون ظل. مقروءة، وصولا إلى الزوايا. ثم اختر صورتك.",
+                      "pt":  "1 · Fotografia 2 · Verificação 3 · Carregar Coloque o papel plano e bem iluminado. Pegue o O documento deve estar claro e completo. No site, clique em “Adicionar documento”, foto direta, sem sombra. legível, até os cantos. em seguida, escolha sua foto."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Formats acceptés : photo (JPG / PNG) ou PDF. Un fichier trop lourd ? Une simple photo de smartphone suffit la plupart du temps.",
+                      "en":  "Accepted formats: photo (JPG / PNG) or PDF. Too big a file? A simple smartphone photo is enough most of the time.",
+                      "es":  "Formatos aceptados: foto (JPG/PNG) o PDF. ¿Un archivo demasiado grande? Una simple foto con un teléfono inteligente es suficiente la mayor parte del tiempo.",
+                      "ar":  "التنسيقات المقبولة: صورة (JPG / PNG) أو PDF. ملف كبير جدًا؟ صورة بسيطة بالهاتف الذكي تكفي في معظم الأوقات.",
+                      "pt":  "Formatos aceitos: foto (JPG/PNG) ou PDF. Um arquivo muito grande? Uma simples foto do smartphone é suficiente na maioria das vezes."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "15",
+                      "en":  "15",
+                      "es":  "15",
+                      "ar":  "15",
+                      "pt":  "15"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÉTAPE 6",
+                      "en":  "STEP 6",
+                      "es":  "PASO 6",
+                      "ar":  "الخطوة 6",
+                      "pt":  "PASSO 6"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Joindre mes justificatifs et valider",
+                      "en":  "Attach my supporting documents and validate",
+                      "es":  "Adjuntar mis justificantes y validar",
+                      "ar":  "إرفاق المستندات الداعمة الخاصة بي والتحقق من صحتها",
+                      "pt":  "Anexe meus documentos comprovativos e valide"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je joins mes documents Pour chaque pièce demandée, j\u0027ajoute la photo ou le scan correspondant.",
+                      "en":  "I attach my documents For each piece requested, I add the corresponding photo or scan.",
+                      "es":  "Adjunto mis documentos Por cada pieza solicitada agrego la foto o escaneo correspondiente.",
+                      "ar":  "أرفق المستندات الخاصة بي لكل قطعة مطلوبة، أقوم بإضافة الصورة المقابلة أو المسح الضوئي.",
+                      "pt":  "Anexo meus documentos. Para cada peça solicitada adiciono a foto ou digitalização correspondente."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je relis tout Je vérifie ma date de départ, mon RIB et que rien ne manque.",
+                      "en":  "I reread everything. I check my departure date, my RIB and that nothing is missing.",
+                      "es":  "Releí todo. Reviso mi fecha de salida, mi RIB y que no falte nada.",
+                      "ar":  "أعيد قراءة كل شيء. أتحقق من تاريخ مغادرتي، ورقم RIB الخاص بي، وأنه لا يوجد شيء مفقود.",
+                      "pt":  "Eu reli tudo. Verifico minha data de saída, meu RIB e se não falta nada."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je valide ma demande Un clic sur « Valider » : ma demande part vers tous mes régimes.",
+                      "en":  "I validate my request One click on “Validate”: my request goes to all my plans.",
+                      "es":  "Valido mi solicitud Un clic en “Validar”: mi solicitud va a todos mis planes.",
+                      "ar":  "أقوم بالتحقق من صحة طلبي بنقرة واحدة على \"التحقق من الصحة\": يذهب طلبي إلى جميع خططي.",
+                      "pt":  "Valido minha solicitação Um clique em “Validar”: minha solicitação vai para todos os meus planos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je reçois une confirmation Un accusé de réception arrive ; je peux le conserver.",
+                      "en":  "I receive a confirmation An acknowledgment of receipt arrives; I can keep it.",
+                      "es":  "Recibo una confirmación Llega un acuse de recibo; Puedo quedármelo.",
+                      "ar":  "أتلقى تأكيدًا ويصل إقرار بالاستلام؛ يمكنني الاحتفاظ بها.",
+                      "pt":  "Recebo uma confirmação Chega um aviso de recebimento; Eu posso ficar com ele."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "16",
+                      "en":  "16",
+                      "es":  "16",
+                      "ar":  "16",
+                      "pt":  "16"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ET APRÈS ?",
+                      "en":  "WHAT AFTER?",
+                      "es":  "¿Y DESPUÉS?",
+                      "ar":  "ماذا بعد؟",
+                      "pt":  "E DEPOIS?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Suivre ma demande",
+                      "en":  "Follow my request",
+                      "es":  "Sigue mi solicitud",
+                      "ar":  "اتبع طلبي",
+                      "pt":  "Siga meu pedido"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je suis l\u0027avancement On peut me contacter",
+                      "en":  "I follow the progress You can contact me",
+                      "es":  "Sigo el progreso Puedes contactarme",
+                      "ar":  "أنا أتابع التقدم يمكنك الاتصال بي",
+                      "pt":  "Eu acompanho o progresso Você pode entrar em contato comigo"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Dans « Suivi de mes demandes », je vois où en est mon Un conseiller peut m\u0027appeler si une pièce manque ou dossier. pour préciser.",
+                      "en":  "In “Monitoring my requests”, I see where my request is. An advisor can call me if a document or file is missing. to clarify.",
+                      "es":  "En “Seguimiento de mis solicitudes”, veo dónde está mi solicitud. Un asesor puede llamarme si falta algún documento o expediente. para aclarar.",
+                      "ar":  "في \"مراقبة طلباتي\"، أرى أين يوجد طلبي. يمكن للمستشار الاتصال بي في حالة فقدان مستند أو ملف. للتوضيح.",
+                      "pt":  "Em “Monitorando minhas solicitações”, vejo onde está minha solicitação. Um consultor pode me ligar se algum documento ou arquivo estiver faltando. para esclarecer."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je reçois ma notification Paiement garanti",
+                      "en":  "I receive my Guaranteed Payment notification",
+                      "es":  "Recibo mi notificación de Pago Garantizado",
+                      "ar":  "أتلقى إشعار الدفع المضمون الخاص بي",
+                      "pt":  "Recebo minha notificação de Pagamento Garantido"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Dossier complet à temps : versement assuré à la date Un courrier officiel m\u0027indique le montant de ma retraite. choisie.",
+                      "en":  "Complete file on time: payment assured on date An official letter tells me the amount of my pension. chosen.",
+                      "es":  "Completar expediente a tiempo: pago asegurado en fecha Un oficio me indica el monto de mi pensión. preferido.",
+                      "ar":  "استكمال الملف في الوقت المحدد: الدفع مضمون في التاريخ. رسالة رسمية تخبرني بمبلغ معاش تقاعدي. اختيار.",
+                      "pt":  "Preencher o processo dentro do prazo: pagamento garantido na data Um ofício informa o valor da minha pensão. escolhido."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "17",
+                      "en":  "17",
+                      "es":  "17",
+                      "ar":  "17",
+                      "pt":  "17"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SANS INTERNET OU PAR PRÉFÉRENCE",
+                      "en":  "WITHOUT INTERNET OR BY PREFERENCE",
+                      "es":  "SIN INTERNET O POR PREFERENCIA",
+                      "ar":  "بدون الإنترنت أو حسب التفضيل",
+                      "pt":  "SEM INTERNET OU POR PREFERÊNCIA"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le chemin papier, en clair",
+                      "en":  "The paper path, in plain language",
+                      "es":  "La ruta del papel, en lenguaje sencillo",
+                      "ar":  "مسار الورق، بلغة واضحة",
+                      "pt":  "O caminho do papel, em linguagem simples"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 · Retirer le formulaire 2 · Le remplir à la main",
+                      "en":  "1 · Remove the form 2 · Fill it out by hand",
+                      "es":  "1 · Retirar el formulario 2 · Rellénelo a mano",
+                      "ar":  "1 · إزالة النموذج 2 · املأه باليد",
+                      "pt":  "1 · Retire o formulário 2 · Preencha à mão"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le « Cerfa » de demande de retraite : à la Carsat, en France Calmement, avec un stylo noir. En cas de doute, faites-vous services ou à télécharger. aider.",
+                      "en":  "The “Cerfa” retirement request: at Carsat, in France Calmly, with a black pen. If in doubt, get services or download. help.",
+                      "es":  "La petición de jubilación “Cerfa”: en Carsat, en Francia Con calma, con bolígrafo negro. En caso de duda, obtenga servicios o descárguelos. ayuda.",
+                      "ar":  "طلب التقاعد \"سيرفا\": عند كارسات في فرنسا بكل هدوء بقلم أسود. إذا كنت في شك، احصل على الخدمات أو قم بتنزيلها. يساعد.",
+                      "pt":  "O pedido de aposentadoria “Cerfa”: na Carsat, na França Com calma, com caneta preta. Em caso de dúvida, obtenha serviços ou faça download. ajuda."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 · Joindre les copies 4 · Envoyer par courrier",
+                      "en":  "3 · Attach copies 4 · Send by mail",
+                      "es":  "3 · Adjuntar copias 4 · Enviar por correo",
+                      "ar":  "3 · إرفاق نسخ 4 · إرسال عن طريق البريد",
+                      "pt":  "3 · Anexe cópias 4 · Enviar por correio"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À chaque caisse concernée. Gardez une copie de tout votre Les mêmes papiers qu\u0027en ligne : identité, RIB, avis d\u0027impôt… dossier.",
+                      "en":  "At each fund concerned. Keep a copy of all your The same papers as online: identity, RIB, tax notice, etc. file.",
+                      "es":  "En cada fondo afectado. Guarde una copia de todos sus archivos Los mismos documentos que en línea: identidad, RIB, aviso de impuestos, etc.",
+                      "ar":  "في كل صندوق معني. احتفظ بنسخة من جميع أوراقك الموجودة على الإنترنت: ملف الهوية، وRIB، والإشعار الضريبي، وما إلى ذلك.",
+                      "pt":  "Em cada fundo em questão. Mantenha uma cópia de todos os seus documentos online: arquivo de identidade, RIB, aviso fiscal, etc."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À noter : sur papier, il faut une demande par régime. En ligne, une seule suffit pour tous.",
+                      "en":  "Please note: on paper, you need one request per plan. Online, one is enough for all.",
+                      "es":  "Tenga en cuenta: en papel, necesita una solicitud por plan. En línea, uno es suficiente para todos.",
+                      "ar":  "يرجى ملاحظة: على الورق، تحتاج إلى طلب واحد لكل خطة. على الإنترنت، واحد يكفي للجميع.",
+                      "pt":  "Observação: no papel, você precisa de uma solicitação por plano. Online, um é suficiente para todos."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "18",
+                      "en":  "18",
+                      "es":  "18",
+                      "ar":  "18",
+                      "pt":  "18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LES PIÈGES FRÉQUENTS",
+                      "en":  "COMMON TRAPS",
+                      "es":  "TRAMPAS COMUNES",
+                      "ar":  "الفخاخ المشتركة",
+                      "pt":  "ARMADILHAS COMUNS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 erreurs qui retardent le paiement",
+                      "en":  "3 mistakes that delay payment",
+                      "es":  "3 errores que retrasan el pago",
+                      "ar":  "3 أخطاء تؤخر السداد",
+                      "pt":  "3 erros que atrasam o pagamento"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Acte de naissance périmé RIB au nom du conjoint Attestation chômage oubliée Demandez-en un récent à votre mairie de La pension se verse sur un compte à VOTRE Chaque période de chômage doit être naissance (gratuit, en ligne). nom. Pas celui du conjoint. justifiée, même très ancienne.",
+                      "en":  "Expired birth certificate RIB in the name of the spouse Forgotten unemployment certificate Ask for a recent one at your town hall The pension is paid into an account in YOUR account Each period of unemployment must be birth (free, online). name. Not that of the spouse. justified, even very old.",
+                      "es":  "Certificado de nacimiento caducado RIB a nombre del cónyuge Certificado de desempleo olvidado Solicite uno reciente en su ayuntamiento La pensión se ingresa en una cuenta en SU cuenta Cada período de desempleo debe ser de nacimiento (gratuito, en línea). nombre. No la del cónyuge. justificado, incluso muy antiguo.",
+                      "ar":  "شهادة ميلاد منتهية الصلاحية RIB باسم الزوج/الزوجة نسيت شهادة البطالة اطلب شهادة حديثة في دار البلدية الخاصة بك يتم دفع المعاش التقاعدي إلى حساب في حسابك كل فترة بطالة يجب أن تكون ولادة (مجانية، عبر الإنترنت). اسم. وليس ذلك من الزوج. مبررة، حتى القديمة جدا.",
+                      "pt":  "Certidão de nascimento vencida RIB em nome do cônjuge Certidão de desemprego esquecida Peça uma recente na Câmara Municipal A pensão é paga numa conta na SUA conta Cada período de desemprego deve ser de nascimento (gratuito, online). nome. Não o do cônjuge. justificado, mesmo muito antigo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un seul papier manquant peut repousser votre premier versement de plusieurs semaines. Préparez tout AVANT de valider : c\u0027est le meilleur moyen d\u0027être payé à temps.",
+                      "en":  "A single missing piece of paper can delay your first payment by several weeks. Prepare everything BEFORE validating: this is the best way to get paid on time.",
+                      "es":  "Una sola hoja de papel perdida puede retrasar su primer pago varias semanas. Prepara todo ANTES de validar: esta es la mejor manera de cobrar a tiempo.",
+                      "ar":  "يمكن أن تؤدي قطعة واحدة مفقودة من الورق إلى تأخير دفعتك الأولى لعدة أسابيع. قم بإعداد كل شيء قبل التحقق من صحته: هذه هي أفضل طريقة للحصول على أموالك في الوقت المحدد.",
+                      "pt":  "Um único pedaço de papel perdido pode atrasar seu primeiro pagamento em várias semanas. Prepare tudo ANTES de validar: esta é a melhor forma de receber em dia."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "19",
+                      "en":  "19",
+                      "es":  "19",
+                      "ar":  "19",
+                      "pt":  "19"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "RESTER EN SÉCURITÉ",
+                      "en":  "STAY SAFE",
+                      "es":  "MANTÉNGASE SEGURO",
+                      "ar":  "ابقَ آمنًا",
+                      "pt":  "FIQUE SEGURO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se protéger des arnaques",
+                      "en":  "Protect yourself from scams",
+                      "es":  "Protégete de las estafas",
+                      "ar":  "احمِ نفسك من عمليات الاحتيال",
+                      "pt":  "Proteja-se de fraudes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le site officiel se termine en .fr On ne paie JAMAIS",
+                      "en":  "The official site ends in .fr We NEVER pay",
+                      "es":  "El sitio oficial termina en .fr NUNCA pagamos",
+                      "ar":  "الموقع الرسمي ينتهي بـ .fr نحن لا ندفع أبدًا",
+                      "pt":  "O site oficial termina em .fr NUNCA pagamos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Faire sa retraite est gratuit. Un site qui réclame de l\u0027argent est info-retraite.fr ou lassuranceretraite.fr. Tapez-le vous-même. un piège.",
+                      "en":  "Retiring is free. A site that asks for money is info-retraite.fr or lassuranceretraite.fr. Type it yourself. a trap.",
+                      "es":  "Retirarse es gratis. Un sitio que pide dinero es info-retraite.fr o lassuranceretraite.fr. Escríbalo usted mismo. una trampa.",
+                      "ar":  "التقاعد مجاني. الموقع الذي يطلب المال هو info-retraite.fr أو lassuranceretraite.fr. اكتبها بنفسك. فخ.",
+                      "pt":  "Aposentar-se é grátis. Um site que pede dinheiro é info-retraite.fr ou lassuranceretraite.fr. Digite você mesmo. uma armadilha."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vos codes restent secrets Un doute ? Demandez de l\u0027aide",
+                      "en":  "Your codes remain secret Any doubts? Ask for help",
+                      "es":  "Tus códigos permanecen secretos ¿Alguna duda? pide ayuda",
+                      "ar":  "رموزك تبقى سرية هل لديك أي شكوك؟ اطلب المساعدة",
+                      "pt":  "Seus códigos permanecem secretos. Alguma dúvida? Peça ajuda"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Aucun organisme officiel ne demande votre mot de passe par Un proche, France services, ou votre médiateur numérique. téléphone.",
+                      "en":  "No official body asks for your password through a loved one, France services, or your digital mediator. phone.",
+                      "es":  "Ningún organismo oficial solicita su contraseña a través de un ser querido, de los servicios de Francia o de su mediador digital. teléfono.",
+                      "ar":  "لا توجد جهة رسمية تطلب منك كلمة المرور الخاصة بك من خلال أحد أفراد أسرتك أو خدمات فرنسا أو الوسيط الرقمي الخاص بك. هاتف.",
+                      "pt":  "Nenhum órgão oficial solicita sua senha por meio de um ente querido, de serviços franceses ou de seu mediador digital. telefone."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil 20",
+                      "en":  "Yggdrasil 20",
+                      "es":  "Yggdrasil 20",
+                      "ar":  "يغدراسيل 20",
+                      "pt":  "Yggdrasil 20"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À GARDER",
+                      "en":  "TO KEEP",
+                      "es":  "PARA MANTENER",
+                      "ar":  "للحفاظ على",
+                      "pt":  "PARA MANTER"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon mémo en 6 points",
+                      "en":  "My 6-point memo",
+                      "es":  "Mi nota de 6 puntos",
+                      "ar":  "مذكرتي المكونة من 6 نقاط",
+                      "pt":  "Meu memorando de 6 pontos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Je vais sur info-retraite.fr et je clique « Mon compte » 2 Je me connecte avec FranceConnect",
+                      "en":  "1 I go to info-retraite.fr and click “My account” 2 I connect with FranceConnect",
+                      "es":  "1 Entro en info-retraite.fr y hago clic en “Mi cuenta” 2 Me conecto con FranceConnect",
+                      "ar":  "1 أذهب إلى info-retraite.fr وانقر على \"حسابي\" 2 أتواصل مع FranceConnect",
+                      "pt":  "1 Vou para info-retraite.fr e clico em “Minha conta” 2 Eu me conecto com FranceConnect"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Je vérifie ma carrière et j\u0027estime mon montant 4 Je clique « Demander ma retraite » (4 mois avant)",
+                      "en":  "3 I check my career and estimate my amount 4 I click “Request my retirement” (4 months before)",
+                      "es":  "3 Reviso mi carrera y calculo mi monto 4 Hago clic en “Solicitar mi retiro” (4 meses antes)",
+                      "ar":  "3 أتحقق من مسيرتي المهنية وأقدر مبلغي 4 أضغط على \"طلب التقاعد\" (قبل 4 أشهر)",
+                      "pt":  "3 Verifico minha carreira e estimo meu valor 4 Clico em “Solicitar minha aposentadoria” (4 meses antes)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Je prépare et je joins mes justificatifs 6 Je valide, puis je suis mon dossier en ligne",
+                      "en":  "5 I prepare and attach my supporting documents 6 I validate, then I follow my file online",
+                      "es":  "5 Preparo y adjunto mis justificantes 6 Valido, luego sigo mi expediente en línea",
+                      "ar":  "5 أقوم بإعداد المستندات الداعمة وإرفاقها 6 أقوم بالمصادقة، ثم أتابع ملفي عبر الإنترنت",
+                      "pt":  "5 Preparo e anexo meus documentos comprovativos 6 Valido e acompanho meu arquivo on-line"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "21",
+                      "en":  "21",
+                      "es":  "21",
+                      "ar":  "21",
+                      "pt":  "21"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À VOUS DE JOUER",
+                      "en":  "YOUR PLAY",
+                      "es":  "TU JUEGO",
+                      "ar":  "اللعب الخاص بك",
+                      "pt":  "SEU JOGO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Petit exercice ensemble",
+                      "en":  "Little exercise together",
+                      "es":  "Un poco de ejercicio juntos",
+                      "ar":  "ممارسة القليل من التمارين معًا",
+                      "pt":  "Pequeno exercício juntos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sur le site, retrouvez : Ma check-list maison",
+                      "en":  "On the site, find: My home checklist",
+                      "es":  "En el sitio, encuentre: Mi lista de control de casa",
+                      "ar":  "في الموقع، ابحث عن: قائمة التحقق الخاصة بمنزلي",
+                      "pt":  "No site, encontre: Minha lista de verificação de casa"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cochez les papiers déjà prêts : Le bouton « Mon compte » en haut à droite Pièce d\u0027identité Le bouton bleu « FranceConnect » RIB à mon nom",
+                      "en":  "Check the papers already ready: The “My account” button at the top right Identity document The blue “FranceConnect” button RIB in my name",
+                      "es":  "Compruebe los documentos ya preparados: El botón “Mi cuenta” arriba a la derecha Documento de identidad El botón azul “FranceConnect” RIB a mi nombre",
+                      "ar":  "تأكد من أن الأوراق جاهزة بالفعل: زر \"حسابي\" في أعلى اليمين وثيقة الهوية زر \"FranceConnect\" الأزرق RIB باسمي",
+                      "pt":  "Confira os documentos já prontos: O botão “Minha conta” no canto superior direito Documento de identidade O botão azul “FranceConnect” RIB em meu nome"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le service « Ma carrière » Avis d\u0027impôt",
+                      "en":  "The “My career” service Tax notice",
+                      "es":  "El servicio “Mi carrera” Aviso fiscal",
+                      "ar":  "خدمة \"مسيرتي المهنية\" الإشعار الضريبي",
+                      "pt":  "O serviço “Minha carreira” Aviso fiscal"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "État civil / livret L\u0027outil « Justificatifs à fournir » Justif. selon situation",
+                      "en":  "Civil status / booklet The “Supports to provide” tool Proof. depending on situation",
+                      "es":  "Estado civil/cuadernillo La herramienta “Apoyos a prestar” Comprobante. dependiendo de la situación",
+                      "ar":  "الأحوال المدنية / كتيب أداة \"يدعم تقديم\" الإثبات. اعتمادا على الوضع",
+                      "pt":  "Estado civil/cartilha A ferramenta “Apoios a prestar” Prova. dependendo da situação"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "22",
+                      "en":  "22",
+                      "es":  "22",
+                      "ar":  "22",
+                      "pt":  "22"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "VOUS N\u0027ÊTES PAS SEUL",
+                      "en":  "YOU ARE NOT ALONE",
+                      "es":  "NO ESTÁS SOLO",
+                      "ar":  "أنت لست وحدك",
+                      "pt":  "VOCÊ NÃO ESTÁ SOZINHO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Où trouver de l\u0027aide",
+                      "en":  "Where to find help",
+                      "es":  "Dónde encontrar ayuda",
+                      "ar":  "أين تجد المساعدة",
+                      "pt":  "Onde encontrar ajuda"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "France services Le 3960",
+                      "en":  "France services Le 3960",
+                      "es":  "Francia servicios Le 3960",
+                      "ar":  "خدمات فرنسا لو 3960",
+                      "pt":  "França serviços Le 3960"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un accueil près de chez vous pour être accompagné dans La ligne de l\u0027Assurance retraite (prix d\u0027un appel local). vos démarches.",
+                      "en":  "A reception near you to receive support on the Retirement Insurance line (price of a local call). your steps.",
+                      "es":  "Una recepción cerca de ti para recibir apoyo en la línea del Seguro de Retiro (precio de una llamada local). tus pasos.",
+                      "ar":  "استقبال قريب منك لتلقي الدعم على خط تأمين التقاعد (سعر المكالمة المحلية). خطواتك.",
+                      "pt":  "Uma recepção perto de si para receber apoio na linha Seguro de Reforma (preço de uma chamada local). seus passos."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Votre médiateur numérique Les services en ligne",
+                      "en":  "Your digital mediator Online services",
+                      "es":  "Tu mediador digital Servicios online",
+                      "ar":  "خدمات الوسيط الرقمي الخاص بك عبر الإنترنت",
+                      "pt":  "Seu mediador digital Serviços online"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un atelier, un rendez-vous, un coup de main au moment Sur info-retraite.fr, des vidéos et un mode d\u0027emploi pas à de cliquer. pas.",
+                      "en":  "A workshop, an appointment, a helping hand at the moment On info-retraite.fr, videos and instructions, just a click away. not.",
+                      "es":  "Un taller, una cita, una mano amiga en el momento En info-retraite.fr, vídeos e instrucciones, a un clic de distancia. no.",
+                      "ar":  "ورشة عمل، موعد، يد العون في الوقت الحالي على info-retraite.fr، مقاطع الفيديو والتعليمات، بنقرة واحدة فقط. لا.",
+                      "pt":  "Um workshop, um encontro, uma ajuda no momento Em info-retraite.fr, vídeos e instruções à distância de um clique. não."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "23",
+                      "en":  "23",
+                      "es":  "23",
+                      "ar":  "23",
+                      "pt":  "23"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LE COIN DES MOTS",
+                      "en":  "THE WORDS CORNER",
+                      "es":  "EL RINCÓN DE LAS PALABRAS",
+                      "ar":  "ركن الكلمات",
+                      "pt":  "O CANTO DAS PALAVRAS"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Petit lexique pour débutants",
+                      "en":  "A short glossary for beginners",
+                      "es":  "Un breve glosario para principiantes.",
+                      "ar":  "معجم قصير للمبتدئين",
+                      "pt":  "Um breve glossário para iniciantes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "FranceConnect Mon compte retraite",
+                      "en":  "FranceConnect My retirement account",
+                      "es":  "FranceConnect Mi cuenta de jubilación",
+                      "ar":  "FranceConnect حساب التقاعد الخاص بي",
+                      "pt":  "FranceConnect Minha conta de aposentadoria"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le bouton bleu pour se connecter avec un compte qu\u0027on a déjà Votre espace personnel sur info-retraite.fr",
+                      "en":  "The blue button to connect with an account you already have Your personal space on info-retraite.fr",
+                      "es":  "El botón azul para conectarte con una cuenta que ya tienes Tu espacio personal en info-retraite.fr",
+                      "ar":  "الزر الأزرق للاتصال بحساب لديك بالفعل مساحتك الشخصية على info-retraite.fr",
+                      "pt":  "O botão azul para conectar-se a uma conta que você já possui Seu espaço pessoal em info-retraite.fr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Relevé de carrière RIB",
+                      "en":  "RIB career statement",
+                      "es":  "Declaración de carrera de RIB",
+                      "ar":  "بيان مهنة RIB",
+                      "pt":  "Declaração de carreira RIB"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La liste de tout ce que vous avez travaillé Le papier qui donne le numéro de votre compte bancaire",
+                      "en":  "The list of everything you have worked on The paper that gives your bank account number",
+                      "es":  "La lista de todo en lo que has trabajado. El papel que indica tu número de cuenta bancaria.",
+                      "ar":  "قائمة بكل ما عملت عليه الورقة التي تحتوي على رقم حسابك البنكي",
+                      "pt":  "A lista de tudo em que você trabalhou O papel que fornece o número da sua conta bancária"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cerfa Téléverser",
+                      "en":  "Cerfa Upload",
+                      "es":  "Cerfa Subir",
+                      "ar":  "تحميل سيرفا",
+                      "pt":  "Carregar Cerfa"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un formulaire officiel de l\u0027administration (version papier) Envoyer un fichier depuis votre appareil vers le site",
+                      "en":  "An official administration form (paper version) Send a file from your device to the site",
+                      "es":  "Un formulario de administración oficial (versión impresa) Envíe un archivo desde su dispositivo al sitio",
+                      "ar":  "نموذج الإدارة الرسمي (نسخة ورقية) إرسال ملف من جهازك إلى الموقع",
+                      "pt":  "Um formulário de administração oficial (versão em papel) Envie um arquivo do seu dispositivo para o site"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "24",
+                      "en":  "24",
+                      "es":  "24",
+                      "ar":  "24",
+                      "pt":  "24"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vous savez désormais demander votre retraite Un site, une demande, à votre rythme — et de l\u0027aide à chaque étape si besoin.",
+                      "en":  "You now know how to apply for your retirement One site, one request, at your own pace — and help at each stage if necessary.",
+                      "es":  "Ahora sabe cómo solicitar su jubilación. Un sitio, una solicitud, a su propio ritmo y ayuda en cada etapa si es necesario.",
+                      "ar":  "أنت تعرف الآن كيفية التقدم بطلب التقاعد الخاص بك. موقع واحد، طلب واحد، بالسرعة التي تناسبك - والمساعدة في كل مرحلة إذا لزم الأمر.",
+                      "pt":  "Agora você sabe como solicitar sua aposentadoria Um site, uma solicitação, no seu próprio ritmo – e ajuda em cada etapa, se necessário."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "info-retraite.fr · « Mon compte retraite »",
+                      "en":  "info-retraite.fr · “My retirement account”",
+                      "es":  "info-retraite.fr · “Mi cuenta de jubilación”",
+                      "ar":  "info-retraite.fr · \"حساب التقاعد الخاص بي\"",
+                      "pt":  "info-retraite.fr · “Minha conta de aposentadoria”"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Médiation numérique · Ateliers pour débutants",
+                      "en":  "Yggdrasil — Digital mediation · Workshops for beginners",
+                      "es":  "Yggdrasil — Mediación digital · Talleres para principiantes",
+                      "ar":  "Yggdrasil — الوساطة الرقمية · ورش عمل للمبتدئين",
+                      "pt":  "Yggdrasil — Mediação digital · Workshops para iniciantes"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

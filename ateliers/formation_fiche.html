@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#pro">← Retour aux ateliers</a>
-    <div class="eyebrow">💼 Trouver une formation en ligne</div>
-    <h1>Fiche</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#pro">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">💼 Trouver une formation en ligne</div>
+    <h1 id="h1El">Fiche</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -79,8 +84,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">Trouver sa Formation 2026 Yggdrasil Médiation Numérique Choisir, financer avec le CPF, viser l'emploi 1/2</p>
       <p>4 questions à se poser avant de chercher</p>
       <p>1 2 3 4 Quel est mon but ? Certifiante ou non ? Distance ou en salle ? Quel budget ? Emploi, reconversion, diplôme, ou Pour l'emploi, visez du RNCP / RS. En ligne, en présentiel, ou un Beaucoup de formations sont juste se perfectionner ? mélange des deux. finançables par le CPF.</p>
@@ -111,13 +116,279 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "💼 Encontre treinamento online",
+                    "en":  "💼 Find online training",
+                    "fr":  "💼 Trouver une formation en ligne",
+                    "ar":  "💼 ابحث عن التدريب عبر الإنترنت",
+                    "es":  "💼 Encuentra formación en línea"
+                },
+    "h1":  {
+               "pt":  "Folha",
+               "en":  "Sheet",
+               "fr":  "Fiche",
+               "ar":  "ورقة",
+               "es":  "Hoja"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "Trouver sa Formation 2026 Yggdrasil Médiation Numérique Choisir, financer avec le CPF, viser l\u0027emploi 1/2",
+                      "en":  "Find your Training 2026 Yggdrasil Digital Mediation Choose, finance with the CPF, aim for employment 1/2",
+                      "es":  "Encuentra tu Formación 2026 Yggdrasil Mediación Digital Elige, financia con el CPF, apunta al empleo 1/2",
+                      "ar":  "ابحث عن التدريب الخاص بك 2026 Yggdrasil Digital Mediation اختر التمويل باستخدام CPF، استهدف التوظيف 1/2",
+                      "pt":  "Encontre seu Treinamento 2026 Yggdrasil Mediação Digital Escolha, financie com o CPF, almeje emprego 1/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 questions à se poser avant de chercher",
+                      "en":  "4 questions to ask yourself before looking",
+                      "es":  "4 preguntas que debes hacerte antes de mirar",
+                      "ar":  "4 أسئلة يجب أن تسألها لنفسك قبل أن تبحث",
+                      "pt":  "4 perguntas para se fazer antes de olhar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 2 3 4 Quel est mon but ? Certifiante ou non ? Distance ou en salle ? Quel budget ? Emploi, reconversion, diplôme, ou Pour l\u0027emploi, visez du RNCP / RS. En ligne, en présentiel, ou un Beaucoup de formations sont juste se perfectionner ? mélange des deux. finançables par le CPF.",
+                      "en":  "1 2 3 4 What is my goal? Certified or not? Distance or indoors? What budget? Employment, retraining, diploma, or For employment, aim for RNCP / RS. Online, face-to-face, or Many training courses are just for improvement? mixture of the two. financed by the CPF.",
+                      "es":  "1 2 3 4 ¿Cuál es mi objetivo? ¿Certificado o no? ¿Distancia o en interiores? ¿Qué presupuesto? Empleo, reciclaje, diploma o Para empleo, apunte a RNCP / RS. ¿En línea, presencial o muchos cursos de formación son solo para mejorar? mezcla de los dos. financiado por el FPC.",
+                      "ar":  "1 2 3 4 ما هو هدفي؟ معتمد أم لا؟ المسافة أم في الداخل؟ ما الميزانية؟ التوظيف أو إعادة التدريب أو الدبلوم أو للتوظيف، استهدف RNCP / RS. عبر الإنترنت، وجهاً لوجه، أو العديد من الدورات التدريبية مخصصة للتحسين فقط؟ خليط من الاثنين. بتمويل من صندوق الشراكة التعاوني.",
+                      "pt":  "1 2 3 4 Qual é o meu objetivo? Certificado ou não? À distância ou dentro de casa? Qual orçamento? Emprego, reciclagem, diploma, ou Para emprego, procure o RNCP/RS. Online, presencial ou Muitos cursos de treinamento são apenas para melhoria? mistura dos dois. financiado pelo CPF."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le CPF, c\u0027est quoi ?",
+                      "en":  "What is the CPF?",
+                      "es":  "¿Qué es el CPF?",
+                      "ar":  "ما هو CPF؟",
+                      "pt":  "O que é o CPF?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Compte Personnel de Formation : une cagnotte en euros que l\u0027État crédite quand vous travaillez, pour payer des formations.",
+                      "en":  "Personal Training Account: a pot of euros that the State credits when you work, to pay for training.",
+                      "es":  "Cuenta Personal de Entrenamiento: un bote de euros que el Estado acredita cuando trabajas, para pagar la formación.",
+                      "ar":  "حساب التدريب الشخصي: مبلغ من اليورو تودعه الدولة عند العمل لدفع تكاليف التدريب.",
+                      "pt":  "Conta Pessoal de Formação: um pote de euros que o Estado credita quando você trabalha, para pagar a formação."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "500€/an 5 000 € 800€/an crédités si vous travaillez plafond maximum niveau \u0026lt; CAP ou handicap (plafond 8 000 €)",
+                      "en":  "€500/year €5,000 €800/year credited if you work maximum level ceiling \u003c CAP or disability (ceiling €8,000)",
+                      "es":  "500 €/año 5.000 € 800 €/año se acreditan si trabajas nivel máximo techo \u003c PAC o discapacidad (techo 8.000 €)",
+                      "ar":  "500 يورو في السنة 5000 يورو 800 يورو في السنة تُضاف إذا كنت تعمل بسقف المستوى الأقصى \u003c الحد الأقصى المسموح به أو الإعاقة (السقف 8000 يورو)",
+                      "pt":  "500€/ano 5.000€ 800€/ano creditados se trabalhar no nível máximo máximo \u003c PAC ou invalidez (teto 8.000€)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Consulter son CPF : comment faire ?",
+                      "en":  "Consult your CPF: how to do it?",
+                      "es":  "Consulte a su CPF: ¿cómo hacerlo?",
+                      "ar":  "استشر CPF الخاص بك: كيف تفعل ذلك؟",
+                      "pt":  "Consulte seu CPF: como fazer?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 2 3 4 Site officiel Identité Numérique La Poste FranceConnect+ Regardez votre solde moncompteformation.gouv.fr ou Gratuite, obligatoire pour le CPF Confirmez votre identité depuis Cagnotte, droits et formations l\u0027appli « Mon Compte Formation » depuis 2022 l\u0027appli sur smartphone possibles",
+                      "en":  "1 2 3 4 Official website Digital Identity La Poste FranceConnect+ Look at your balance moncompteformation.gouv.fr or Free, mandatory for the CPF Confirm your identity from Cagnotte, rights and training the “My Account Training” app since 2022 the smartphone app possible",
+                      "es":  "1 2 3 4 Sitio web oficial Identidad digital La Poste FranceConnect+ Consulta tu saldo moncompteformation.gouv.fr o Gratis, obligatorio para el CPF Confirma tu identidad en Cagnotte, derechos y formación la aplicación “Mi Cuenta Formación” desde 2022 la aplicación para smartphone posible",
+                      "ar":  "1 2 3 4 الموقع الرسمي الهوية الرقمية La Poste FranceConnect+ انظر إلى رصيدك moncompteformation.gouv.fr أو مجاني، إلزامي لـ CPF قم بتأكيد هويتك من Cagnotte والحقوق والتدريب تطبيق \"My Account Training\" منذ عام 2022، تطبيق الهاتف الذكي ممكن",
+                      "pt":  "1 2 3 4 Site oficial Identidade Digital La Poste FranceConnect+ Veja seu saldo moncompteformation.gouv.fr ou Gratuito, obrigatório para o CPF Confirme sua identidade de Cagnotte, direitos e treinamento o aplicativo “Minha Conta Treinamento” desde 2022 o aplicativo para smartphone possível"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se former aujourd\u0027hui, décrocher l\u0027emploi de demain.",
+                      "en":  "Train today, get the job of tomorrow.",
+                      "es":  "Entrene hoy, consiga el trabajo de mañana.",
+                      "ar":  "تدرب اليوم، واحصل على وظيفة الغد.",
+                      "pt":  "Treine hoje, consiga o emprego de amanhã."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Trouver sa Formation 2026 Yggdrasil Médiation Numérique Financement, aides disponibles, arnaques à éviter 2/2",
+                      "en":  "Find your Training 2026 Yggdrasil Digital Mediation Financing, help available, scams to avoid 2/2",
+                      "es":  "Encuentre su Capacitación 2026 Financiamiento de mediación digital Yggdrasil, ayuda disponible, estafas a evitar 2/2",
+                      "ar":  "ابحث عن التدريب الخاص بك لعام 2026 لتمويل الوساطة الرقمية Yggdrasil، والمساعدة المتاحة، وعمليات الاحتيال التي يجب تجنبها 2/2",
+                      "pt":  "Encontre seu Financiamento de Mediação Digital do Treinamento 2026 Yggdrasil, ajuda disponível, golpes para evitar 2/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ce que le CPF peut financer",
+                      "en":  "What the CPF can finance",
+                      "es":  "Qué puede financiar el CPF",
+                      "ar":  "ما الذي يمكن لصندوق الشراكة التعاونية تمويله",
+                      "pt":  "O que o CPF pode financiar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Formations diplômantes : RNCP/RS (informatique, secrétariat, petite enfance...)Langues : anglais, espagnol avec certification (plafond 1 500 €)",
+                      "en":  "Diploma courses: RNCP/RS (computer science, secretarial work, early childhood, etc.) Languages: English, Spanish with certification (ceiling €1,500)",
+                      "es":  "Diplomados: RNCP/RS (informática, secretariado, primera infancia, etc.) Idiomas: inglés, español con certificación (máximo 1.500 €)",
+                      "ar":  "دورات الدبلوم: RNCP/RS (علوم الكمبيوتر، أعمال السكرتارية، الطفولة المبكرة، إلخ.) اللغات: الإنجليزية، الإسبانية مع شهادة (السقف 1500 يورو)",
+                      "pt":  "Cursos de diploma: RNCP/RS (informática, secretariado, primeira infância, etc.) Idiomas: Inglês, Espanhol com certificação (teto € 1.500)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Permis de conduire : permis B jusqu\u0027à 900 €Bilan de compétences : jusqu\u0027à 1 600 €",
+                      "en":  "Driving license: B license up to €900 Skills assessment: up to €1,600",
+                      "es":  "Permiso de conducción: Carnet B hasta 900€ Evaluación de competencias: hasta 1.600€",
+                      "ar":  "رخصة القيادة: رخصة B تصل إلى 900 يورو. تقييم المهارات: حتى 1600 يورو",
+                      "pt":  "Carta de condução: carta B até 900€ Avaliação de competências: até 1.600€"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "VAE : faire reconnaître son expérience pour un diplômeCréation d\u0027entreprise : utile pour la micro-entreprise",
+                      "en":  "VAE: have your experience recognized for a diplomaBusiness creation: useful for micro-enterprises",
+                      "es":  "VAE: reconozca su experiencia para obtener un diplomaCreación de empresas: útil para microempresas",
+                      "ar":  "VAE: اجعل خبرتك معترف بها للحصول على دبلوم إنشاء الأعمال: مفيد للمؤسسات الصغيرة",
+                      "pt":  "VAE: tenha sua experiência reconhecida por um diplomaCriação de negócios: útil para microempresas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le CPF ne paie pas le matériel, les loisirs, ni les formations non certifiantes.",
+                      "en":  "The CPF does not pay for equipment, leisure activities or non-certifying training.",
+                      "es":  "El CPF no paga equipos, actividades de ocio ni formación no certificada.",
+                      "ar":  "لا يدفع CPF مقابل المعدات أو الأنشطة الترفيهية أو التدريب غير المعتمد.",
+                      "pt":  "O CPF não paga equipamentos, atividades de lazer ou treinamentos não certificados."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "150 € de participation — qui en est exonéré ? Les demandeurs d\u0027emploi inscrits à France TravailLes personnes dont l\u0027employeur complète le financement",
+                      "en":  "€150 participation — who is exempt? Job seekers registered with France Travail People whose employer completes the financing",
+                      "es":  "Participación de 150 €: ¿quién está exento? Solicitantes de empleo inscritos en France Travail Personas cuyo empleador completa la financiación",
+                      "ar":  "مشاركة بقيمة 150 يورو - من المُعفى؟ الباحثون عن عمل المسجلون لدى France Travail People الذين يكمل صاحب عملهم التمويل",
+                      "pt":  "Participação de 150€ — quem está isento? Candidatos registrados na France Travail Pessoas cujo empregador conclui o financiamento"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les bénéficiaires du Compte Professionnel de Prévention (C2P)Les personnes en accident du travail / maladie professionnelle",
+                      "en":  "Beneficiaries of the Professional Prevention Account (C2P) People with work accidents/occupational illnesses",
+                      "es":  "Beneficiarios de la Cuenta de Prevención Profesional (C2P) Personas con accidentes de trabajo/enfermedades profesionales",
+                      "ar":  "المستفيدون من حساب الوقاية المهنية (C2P) الأشخاص الذين يعانون من حوادث العمل/ الأمراض المهنية",
+                      "pt":  "Beneficiários da Conta de Prevenção Profissional (C2P) Pessoas com acidentes de trabalho/doenças profissionais"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Qui peut financer votre formation ? CPF France Travail (AIF) PRF Région N.-A. Chèque Formation Plan de compétences Transitions Pro (PTP) Tous dès 16 ans Demandeurs d\u0027emploi Demandeurs d\u0027emploi Demandeurs d\u0027emploi \u0026amp; Salariés Salariés en reconversion précaires",
+                      "en":  "Who can finance your training? CPF France Travail (AIF) PRF Region N.-A. Training voucher Skills plan Transitions Pro (PTP) All from 16 years old Job seekers Job seekers Job seekers \u0026 Employees Employees in precarious retraining",
+                      "es":  "¿Quién puede financiar tu formación? CPF France Travail (AIF) PRF Región N.-A. Bono de formación Plan de competencias Transitions Pro (PTP) Todos a partir de 16 años Solicitantes de empleo Solicitantes de empleo Solicitantes de empleo y Empleados Empleados en reconversión precaria",
+                      "ar":  "من يستطيع تمويل تدريبك؟ CPF France Travail (AIF) منطقة PRF N.-A. قسيمة التدريب خطة المهارات Transitions Pro (PTP) الكل من سن 16 عامًا الباحثون عن عمل الباحثون عن عمل الباحثون عن عمل الموظفون الموظفون في عملية إعادة التدريب غير المستقرة",
+                      "pt":  "Quem pode financiar a sua formação? CPF França Travail (AIF) PRF Região N.-A. Voucher de formação Plano de competências Transitions Pro (PTP) Todos a partir de 16 anos Candidatos a emprego Candidatos a emprego e Colaboradores Colaboradores em reconversão profissional precária"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Attention aux arnaques au CPF",
+                      "en":  "Beware of CPF scams",
+                      "es":  "Cuidado con las estafas del CPF",
+                      "ar":  "احذر من عمليات الاحتيال الخاصة بـ CPF",
+                      "pt":  "Cuidado com golpes de CPF"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Méfiez-vous si... Les bons réflexes On vous appelle pour vos droits « avant expiration » Le CPF ne démarche JAMAIS par tél. ou SMS On demande votre n° sécu ou vos codes Un seul site officiel : moncompteformation.gouv.fr On promet argent ou cadeau en échange Ne donnez jamais vos codes FranceConnect On met la pression pour signer vite Dans le doute, raccrochez et demandez conseil",
+                      "en":  "Be wary if... Good reflexes We call you for your rights “before expiration” The CPF NEVER approaches you by telephone. or SMS We ask for your social security number or your codes Only one official site: moncompteformation.gouv.fr We promise money or a gift in exchange Never give your FranceConnect codes We put pressure on you to sign quickly If in doubt, hang up and ask for advice",
+                      "es":  "Tenga cuidado si... Buenos reflejos Le llamamos por sus derechos “antes de su vencimiento” El CPF NUNCA se comunica con usted por teléfono. o SMS Le pedimos su número de seguridad social o sus códigos Un solo sitio oficial: moncompteformation.gouv.fr Prometemos dinero o un regalo a cambio Nunca dé sus códigos FranceConnect Le presionamos para que firme rápidamente En caso de duda, cuelgue y pida consejo.",
+                      "ar":  "كن حذرًا إذا... ردود أفعال جيدة نحن نطالبك بحقوقك \"قبل انتهاء الصلاحية\" لا يتصل بك CPF أبدًا عبر الهاتف. أو الرسائل النصية القصيرة نطلب رقم الضمان الاجتماعي الخاص بك أو الرموز الخاصة بك موقع رسمي واحد فقط: moncompteformation.gouv.fr نعدك بالحصول على أموال أو هدية في المقابل لا تقدم أبدًا رموز FranceConnect الخاصة بك، نحن نضغط عليك للتوقيع بسرعة إذا كنت في شك، أغلق الخط واطلب النصيحة",
+                      "pt":  "Fique atento se... Bons reflexos Solicitamos seus direitos “antes do vencimento” O CPF NUNCA aborda você por telefone. ou SMS Solicitamos o seu número de segurança social ou os seus códigos Apenas um site oficial: moncompteformation.gouv.fr Prometemos dinheiro ou um presente em troca Nunca forneça os seus códigos FranceConnect Pressionamo-lo a assinar rapidamente Em caso de dúvida, desligue e peça aconselhamento"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour aller plus loin — flashez",
+                      "en":  "To go further — flash",
+                      "es":  "Para ir más lejos: flashear",
+                      "ar":  "للمضي قدمًا — فلاش",
+                      "pt":  "Para ir mais longe - flash"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon CompteFrance TravailMon CEP FormationInscription, AIF, conseiller —Conseil gratuit en évolution Consulter ses droits et39 49professionnelle s\u0027inscrire",
+                      "en":  "My AccountFrance TravailMy CEP TrainingRegistration, AIF, advisor —Free advice in progress Consult your rights and39 49professional register",
+                      "es":  "Mi cuentaFrance TravailMi formación CEPInscripción, AIF, asesor —Asesoramiento gratuito en curso Consulte sus derechos y39 49registro profesional",
+                      "ar":  "حسابيFrance Travailتسجيل تدريب CEP الخاص بي، AIF، مستشار - نصيحة مجانية قيد التقدم، استشر حقوقك و39 49 التسجيل المهني",
+                      "pt":  "Minha contaFrança TravailMeu treinamento CEPRegistro, AIF, consultor —Aconselhamento gratuito em andamento Consulte seus direitos e39 49registro profissional"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se former aujourd\u0027hui, décrocher l\u0027emploi de demain.",
+                      "en":  "Train today, get the job of tomorrow.",
+                      "es":  "Entrene hoy, consiga el trabajo de mañana.",
+                      "ar":  "تدرب اليوم، واحصل على وظيفة الغد.",
+                      "pt":  "Treine hoje, consiga o emprego de amanhã."
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

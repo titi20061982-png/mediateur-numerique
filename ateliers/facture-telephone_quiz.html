@@ -29,10 +29,16 @@
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
-  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
+  .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
+  .lang-switch { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card, html[dir="rtl"] .qcard { text-align: right; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
   #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  html[dir="rtl"] #levelScreen .level-btn { text-align: right; }
   #levelScreen .level-btn:hover { border-color: var(--accent); }
   #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
   #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
@@ -54,6 +60,7 @@
   .opt.correct { border-color: var(--good); background: color-mix(in srgb, var(--good) 12%, var(--card)); }
   .opt.incorrect { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--card)); }
   .explain { display: none; margin-top: 0.8rem; padding: 0.8rem 1rem; border-radius: 10px; background: var(--bg-soft); font-size: 0.88rem; color: var(--muted); border-left: 3px solid var(--accent); }
+  html[dir="rtl"] .explain { border-left: none; border-right: 3px solid var(--accent); }
   .explain.show { display: block; }
 
   .actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; flex-wrap: wrap; }
@@ -69,26 +76,33 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#culture">← Retour aux ateliers</a>
+    <a class="back" href="../index.html#culture" id="backLink">← <span id="backText">Retour aux ateliers</span></a>
     <div class="eyebrow">🌐 Comprendre sa facture téléphonique</div>
-    <h1>Test de connaissances</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <span class="visits" id="visitsCounter">👥 …</span>
+    <h1 id="h1El">Test de connaissances</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div><span class="visits" id="visitsCounter">👥 …</span></div>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
+    </div>
   </div>
 </header>
 <main>
   <div id="levelScreen">
     <button type="button" class="level-btn" data-level="debutant">
-      <strong>🌱 Débutant</strong>
-      <span>Questions simples pour commencer en douceur.</span>
+      <strong id="levelDebTitle">🌱 Débutant</strong>
+      <span id="levelDebDesc">Questions simples pour commencer en douceur.</span>
     </button>
     <button type="button" class="level-btn" data-level="intermediaire">
-      <strong>🌿 Intermédiaire</strong>
-      <span>Le niveau standard, pour vérifier ses acquis.</span>
+      <strong id="levelIntTitle">🌿 Intermédiaire</strong>
+      <span id="levelIntDesc">Le niveau standard, pour vérifier ses acquis.</span>
     </button>
     <button type="button" class="level-btn" data-level="avance">
-      <strong>🌳 Avancé</strong>
-      <span>Questions plus précises, pour aller plus loin.</span>
+      <strong id="levelAvaTitle">🌳 Avancé</strong>
+      <span id="levelAvaDesc">Questions plus précises, pour aller plus loin.</span>
     </button>
   </div>
 
@@ -103,10 +117,32 @@
   </div>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  const LEVELS = {"debutant":[{"q":"Le \"hors forfait\", c\u0027est :","options":["Ce qui est compris dans le forfait","Ce que vous consommez en plus du forfait","Une remise","Un bonus fidélité"],"correct":1,"explain":"Le hors-forfait correspond à ce qui est consommé en plus du forfait souscrit."},{"q":"TTC veut dire :","options":["Taxe Totale Comprise","Toutes Taxes Comprises","Tarif Très Cher","Tarif Type Client"],"correct":1,"explain":"TTC signifie Toutes Taxes Comprises."}],"intermediaire":[{"q":"En France, le taux de TVA appliqué sur un forfait mobile est de :","options":["10 %","20 %","30 %","5,5 %"],"correct":1,"explain":"La TVA standard en France, appliquée sur les forfaits mobiles, est de 20 %."},{"q":"Le prix \"TTC\" correspond à :","options":["Le prix sans taxe","Le prix final, taxe comprise","Le prix du hors-forfait uniquement","Le prix à l\u0027étranger"],"correct":1,"explain":"TTC signifie \"Toutes Taxes Comprises\" : c\u0027est le prix réellement payé."},{"q":"Le \"roaming\" désigne :","options":["Un bug réseau","L\u0027utilisation du téléphone à l\u0027étranger","Un forfait illimité","Une option de sécurité"],"correct":1,"explain":"Le roaming (itinérance) correspond à l\u0027usage de son téléphone hors de son pays d\u0027origine."},{"q":"En cas de litige sur sa facture, il faut d\u0027abord contacter :","options":["Directement un avocat","Son opérateur, puis le médiateur des télécoms si besoin","La police","Les impôts"],"correct":1,"explain":"Il faut d\u0027abord se tourner vers son opérateur, puis le médiateur des communications électroniques en cas de désaccord persistant."},{"q":"Que faut-il vérifier en premier en recevant sa facture ?","options":["Le montant total et les options payantes en plus","La couleur du papier","Le nom de l\u0027imprimante","Rien, c\u0027est automatique"],"correct":0,"explain":"Le montant total et les lignes en plus du forfait (hors-forfait, options, roaming) sont les premiers points à vérifier."}],"avance":[{"q":"Vers quel site officiel se tourner en dernier recours en cas de litige non résolu avec son opérateur ?","options":["impots.gouv.fr","mediation-telecom.org","ants.gouv.fr","service-public.fr uniquement"],"correct":1,"explain":"Le médiateur des communications électroniques (mediation-telecom.org) intervient après l\u0027opérateur en cas de litige non résolu."}]};
+  const LEVELS = {"debutant":[{"q":{"fr":"Le \"hors forfait\", c\u0027est :","en":"The “outside package” is:","es":"El “paquete externo” es:","ar":"\"الحزمة الخارجية\" هي:","pt":"O “pacote externo” é:"},"options":{"fr":["Ce qui est compris dans le forfait","Ce que vous consommez en plus du forfait","Une remise","Un bonus fidélité"],"en":["What is included in the package","What you consume in addition to the package","A discount","A loyalty bonus"],"es":["¿Qué está incluido en el paquete?","Lo que consumes además del paquete","un descuento","Un bono de fidelidad"],"ar":["ما هو مدرج في الحزمة","ما تستهلكه بالإضافة إلى الحزمة","خصم","مكافأة الولاء"],"pt":["O que está incluído no pacote","O que você consome além do pacote","Um desconto","Um bônus de fidelidade"]},"explain":{"fr":"Le hors-forfait correspond à ce qui est consommé en plus du forfait souscrit.","en":"The extra package corresponds to what is consumed in addition to the subscribed package.","es":"El paquete extra corresponde a lo consumido adicionalmente al paquete suscrito.","ar":"الباقة الإضافية تتوافق مع ما يتم استهلاكه بالإضافة إلى الباقة المشتركة.","pt":"O pacote extra corresponde ao que é consumido além do pacote subscrito."},"correct":1},{"q":{"fr":"TTC veut dire :","en":"TTC means:","es":"TTC significa:","ar":"TTC يعني:","pt":"TTC significa:"},"options":{"fr":["Taxe Totale Comprise","Toutes Taxes Comprises","Tarif Très Cher","Tarif Type Client"],"en":["Total Tax Included","All Taxes Included","Very Expensive Price","Customer Type Price"],"es":["Impuesto total incluido","Todos los impuestos incluidos","Precio muy caro","Tipo de cliente Precio"],"ar":["إجمالي الضريبة متضمنة","جميع الضرائب متضمنة","سعر باهظ الثمن للغاية","سعر نوع العميل"],"pt":["Total de impostos incluídos","Todos os impostos incluídos","Preço muito caro","Preço do tipo de cliente"]},"explain":{"fr":"TTC signifie Toutes Taxes Comprises.","en":"TTC means All Taxes Included.","es":"TTC significa Todos los impuestos incluidos.","ar":"يعنيTTC جميع الضرائب مشمولة.","pt":"TTC significa Todos os Impostos Incluídos."},"correct":1}],"intermediaire":[{"q":{"fr":"En France, le taux de TVA appliqué sur un forfait mobile est de :","en":"In France, the VAT rate applied to a mobile plan is:","es":"En Francia, el tipo de IVA aplicado a un plan móvil es:","ar":"في فرنسا، معدل ضريبة القيمة المضافة المطبق على خطة الهاتف المحمول هو:","pt":"Em França, a taxa de IVA aplicada a um plano móvel é:"},"options":{"fr":["10 %","20 %","30 %","5,5 %"],"en":["10%","20%","30%","5.5%"],"es":["10%","20%","30%","5,5%"],"ar":["10%","20%","30%","5.5%"],"pt":["10%","20%","30%","5,5%"]},"explain":{"fr":"La TVA standard en France, appliquée sur les forfaits mobiles, est de 20 %.","en":"The standard VAT in France, applied to mobile plans, is 20%.","es":"El IVA estándar en Francia, aplicado a los planes móviles, es del 20%.","ar":"تبلغ ضريبة القيمة المضافة القياسية في فرنسا، المطبقة على خطط الهاتف المحمول، 20%.","pt":"O IVA padrão em França, aplicado aos planos móveis, é de 20%."},"correct":1},{"q":{"fr":"Le prix \"TTC\" correspond à :","en":"The “inclusive of tax” price corresponds to:","es":"El precio “impuestos incluidos” corresponde a:","ar":"السعر \"الشامل للضريبة\" يتوافق مع:","pt":"O preço “incluindo impostos” corresponde a:"},"options":{"fr":["Le prix sans taxe","Le prix final, taxe comprise","Le prix du hors-forfait uniquement","Le prix à l\u0027étranger"],"en":["The price without tax","The final price, tax included","The price of the extra package only","The price abroad"],"es":["El precio sin impuestos.","El precio final, IVA incluido.","El precio del paquete extra solo","El precio en el extranjero"],"ar":["السعر بدون ضريبة","السعر النهائي شامل الضريبة","سعر الباقة الاضافية فقط","السعر في الخارج"],"pt":["O preço sem impostos","O preço final, impostos incluídos","O preço apenas do pacote extra","O preço no exterior"]},"explain":{"fr":"TTC signifie \"Toutes Taxes Comprises\" : c\u0027est le prix réellement payé.","en":"TTC means “All Taxes Included”: this is the price actually paid.","es":"TTC significa “Todos los impuestos incluidos”: es el precio realmente pagado.","ar":"TTC تعني \"جميع الضرائب مشمولة\": هذا هو السعر المدفوع فعليًا.","pt":"TTC significa “Todos os Impostos Incluídos”: é o preço efetivamente pago."},"correct":1},{"q":{"fr":"Le \"roaming\" désigne :","en":"“Roaming” refers to:","es":"“Roaming” se refiere a:","ar":"\"التجوال\" يشير إلى:","pt":"“Roaming” refere-se a:"},"options":{"fr":["Un bug réseau","L\u0027utilisation du téléphone à l\u0027étranger","Un forfait illimité","Une option de sécurité"],"en":["A network bug","Using the telephone abroad","An unlimited package","A security option"],"es":["Un error de red","Usar el teléfono en el extranjero","Un paquete ilimitado","Una opción de seguridad"],"ar":["خطأ في الشبكة","استخدام الهاتف في الخارج","باقة غير محدودة","خيار أمني"],"pt":["Um bug de rede","Usando o telefone no exterior","Um pacote ilimitado","Uma opção de segurança"]},"explain":{"fr":"Le roaming (itinérance) correspond à l\u0027usage de son téléphone hors de son pays d\u0027origine.","en":"Roaming corresponds to using your phone outside your country of origin.","es":"Roaming corresponde al uso de tu teléfono fuera de tu país de origen.","ar":"التجوال يعني استخدام هاتفك خارج بلدك الأصلي.","pt":"Roaming corresponde à utilização do seu telefone fora do seu país de origem."},"correct":1},{"q":{"fr":"En cas de litige sur sa facture, il faut d\u0027abord contacter :","en":"In the event of a dispute over your invoice, you must first contact:","es":"En caso de disputa sobre su factura, primero debe comunicarse con:","ar":"في حالة وجود نزاع حول فاتورتك، يجب عليك أولاً الاتصال بـ:","pt":"Em caso de litígio sobre a sua fatura, deverá primeiro contactar:"},"options":{"fr":["Directement un avocat","Son opérateur, puis le médiateur des télécoms si besoin","La police","Les impôts"],"en":["Directly a lawyer","Its operator, then the telecoms mediator if necessary","The police","Taxes"],"es":["Directamente un abogado","Su operador y, si es necesario, el mediador de telecomunicaciones.","la policia","Impuestos"],"ar":["محامي مباشرة","مشغلها، ثم وسيط الاتصالات إذا لزم الأمر","الشرطة","الضرائب"],"pt":["Diretamente um advogado","O seu operador e, em seguida, o mediador de telecomunicações, se necessário","A polícia","Impostos"]},"explain":{"fr":"Il faut d\u0027abord se tourner vers son opérateur, puis le médiateur des communications électroniques en cas de désaccord persistant.","en":"You must first turn to your operator, then the electronic communications mediator in the event of persistent disagreement.","es":"En caso de desacuerdo persistente, deberá dirigirse primero a su operador y luego al mediador de comunicaciones electrónicas.","ar":"يجب عليك أولاً التوجه إلى المشغل الخاص بك، ثم وسيط الاتصالات الإلكترونية في حالة استمرار الخلاف.","pt":"Deve dirigir-se primeiro ao seu operador e, em seguida, ao mediador de comunicações eletrónicas em caso de desacordo persistente."},"correct":1},{"q":{"fr":"Que faut-il vérifier en premier en recevant sa facture ?","en":"What should you check first when receiving your invoice?","es":"¿Qué debes comprobar primero al recibir tu factura?","ar":"ما الذي يجب عليك التحقق منه أولاً عند استلام فاتورتك؟","pt":"O que você deve verificar primeiro ao receber sua fatura?"},"options":{"fr":["Le montant total et les options payantes en plus","La couleur du papier","Le nom de l\u0027imprimante","Rien, c\u0027est automatique"],"en":["The total amount and additional paid options","The color of the paper","The name of the printer","Nothing, it\u0027s automatic"],"es":["El monto total y las opciones pagadas adicionales.","El color del papel","El nombre de la impresora.","Nada, es automatico."],"ar":["المبلغ الإجمالي والخيارات الإضافية المدفوعة","لون الورقة","اسم الطابعة","لا شيء، إنه تلقائي"],"pt":["O valor total e opções adicionais pagas","A cor do papel","O nome da impressora","Nada, é automático"]},"explain":{"fr":"Le montant total et les lignes en plus du forfait (hors-forfait, options, roaming) sont les premiers points à vérifier.","en":"The total amount and the lines in addition to the package (outside the package, options, roaming) are the first points to check.","es":"El importe total y las líneas adicionales al paquete (fuera del paquete, opciones, roaming) son los primeros puntos a comprobar.","ar":"المبلغ الإجمالي والخطوط بالإضافة إلى الباقة (خارج الباقة، الخيارات، التجوال) هي النقاط الأولى التي يجب التحقق منها.","pt":"O valor total e as linhas adicionais ao pacote (fora do pacote, opções, roaming) são os primeiros pontos a verificar."},"correct":0}],"avance":[{"q":{"fr":"Vers quel site officiel se tourner en dernier recours en cas de litige non résolu avec son opérateur ?","en":"Which official site should you turn to as a last resort in the event of an unresolved dispute with your operator?","es":"¿A qué sitio oficial debería recurrir como último recurso en caso de una disputa no resuelta con su operador?","ar":"ما الموقع الرسمي الذي يجب عليك اللجوء إليه كحل أخير في حالة وجود نزاع لم يتم حله مع المشغل الخاص بك؟","pt":"A qual site oficial você deve recorrer como último recurso em caso de disputa não resolvida com sua operadora?"},"options":{"fr":["impots.gouv.fr","mediation-telecom.org","ants.gouv.fr","service-public.fr uniquement"],"en":["impots.gouv.fr","mediation-telecom.org","ants.gouv.fr","service-public.fr only"],"es":["impots.gouv.fr","mediación-telecom.org","hormigas.gouv.fr","solo service-public.fr"],"ar":["impots.gouv.fr","Mediation-telecom.org","ants.gouv.fr","خدمة public.fr فقط"],"pt":["impots.gouv.fr","mediation-telecom.org","formigas.gouv.fr","somente service-public.fr"]},"explain":{"fr":"Le médiateur des communications électroniques (mediation-telecom.org) intervient après l\u0027opérateur en cas de litige non résolu.","en":"The electronic communications mediator (mediation-telecom.org) intervenes after the operator in the event of an unresolved dispute.","es":"El mediador de comunicaciones electrónicas (mediation-telecom.org) interviene después del operador en caso de litigio no resuelto.","ar":"يتدخل وسيط الاتصالات الإلكترونية (mediation-telecom.org) بعد المشغل في حالة وجود نزاع لم يتم حله.","pt":"O mediador de comunicações eletrónicas (mediation-telecom.org) intervém após o operador em caso de litígio não resolvido."},"correct":1}]};
+  const UI = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"},
+  "h1": {"fr":"Test de connaissances","en":"Knowledge test","es":"Test de conocimientos","ar":"اختبار المعرفة","pt":"Teste de conhecimento"},
+  "levelDebTitle": {"fr":"🌱 Débutant","en":"🌱 Beginner","es":"🌱 Principiante","ar":"🌱 مبتدئ","pt":"🌱 Iniciante"},
+  "levelDebDesc": {"fr":"Questions simples pour commencer en douceur.","en":"Simple questions to ease into it.","es":"Preguntas simples para empezar suavemente.","ar":"أسئلة بسيطة للبدء بسهولة.","pt":"Perguntas simples para começar com calma."},
+  "levelIntTitle": {"fr":"🌿 Intermédiaire","en":"🌿 Intermediate","es":"🌿 Intermedio","ar":"🌿 متوسط","pt":"🌿 Intermediário"},
+  "levelIntDesc": {"fr":"Le niveau standard, pour vérifier ses acquis.","en":"The standard level, to check what you've learned.","es":"El nivel estándar, para comprobar lo aprendido.","ar":"المستوى القياسي، للتحقق من معارفك.","pt":"O nível padrão, para verificar o que você aprendeu."},
+  "levelAvaTitle": {"fr":"🌳 Avancé","en":"🌳 Advanced","es":"🌳 Avanzado","ar":"🌳 متقدم","pt":"🌳 Avançado"},
+  "levelAvaDesc": {"fr":"Questions plus précises, pour aller plus loin.","en":"More precise questions, to go further.","es":"Preguntas más precisas, para ir más lejos.","ar":"أسئلة أكثر دقة، للمضي قدمًا.","pt":"Perguntas mais precisas, para ir mais longe."},
+  "seeScore": {"fr":"Voir mon score","en":"See my score","es":"Ver mi puntuación","ar":"عرض نتيجتي","pt":"Ver minha pontuação"},
+  "restart": {"fr":"Recommencer","en":"Start over","es":"Reiniciar","ar":"إعادة المحاولة","pt":"Recomeçar"},
+  "changeLevel": {"fr":"Changer de niveau","en":"Change level","es":"Cambiar de nivel","ar":"تغيير المستوى","pt":"Mudar de nível"},
+  "questionLabel": {"fr":"Question","en":"Question","es":"Pregunta","ar":"سؤال","pt":"Pergunta"},
+  "scoreLabel": {"fr":"Score","en":"Score","es":"Puntuación","ar":"النتيجة","pt":"Pontuação"},
+  "tierLow": {"fr":"À revoir ! Relisez la fiche de l'atelier et retentez le test.","en":"Needs work! Reread the workshop sheet and try again.","es":"¡A repasar! Vuelve a leer la ficha del taller e inténtalo de nuevo.","ar":"يحتاج إلى مراجعة! أعد قراءة ورقة الورشة وحاول مرة أخرى.","pt":"Precisa melhorar! Releia a ficha da oficina e tente novamente."},
+  "tierMid": {"fr":"Pas mal ! Encore quelques points à consolider.","en":"Not bad! A few points still to work on.","es":"¡No está mal! Todavía hay algunos puntos por reforzar.","ar":"لا بأس! لا تزال هناك بعض النقاط التي يجب تعزيزها.","pt":"Nada mal! Ainda há alguns pontos a consolidar."},
+  "tierHigh": {"fr":"Excellent ! Vous maîtrisez bien le sujet.","en":"Excellent! You have a solid grasp of the topic.","es":"¡Excelente! Dominas bien el tema.","ar":"ممتاز! أنت تتقن الموضوع جيدًا.","pt":"Excelente! Você domina bem o assunto."},
+  "visits": {"fr":"visite(s) sur ce test","en":"visit(s) on this test","es":"visita(s) en este test","ar":"زيارة لهذا الاختبار","pt":"visita(s) neste teste"}
+};
   const levelScreen = document.getElementById('levelScreen');
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
@@ -115,19 +151,22 @@
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
   let currentLevel = null;
+  let currentLang = 'fr';
+  let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function tr(dict, lang) { return dict[lang] || dict.fr; }
 
-  function renderQuiz(level) {
+  function renderQuiz(level, lang) {
     currentLevel = level;
     const QUIZ = LEVELS[level];
     form.innerHTML = QUIZ.map(function(q, i) {
-      const opts = q.options.map(function(o, j) {
+      const opts = tr(q.options, lang).map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
-      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+      return '<div class="qcard"><div class="qnum">' + esc(UI.questionLabel[lang] || UI.questionLabel.fr) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(tr(q.q, lang)) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(tr(q.explain, lang)) + '</div></div>';
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
@@ -138,8 +177,43 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function applyStaticUI(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = tr(UI.back, lang);
+    document.getElementById('h1El').textContent = tr(UI.h1, lang);
+    document.getElementById('subEl').textContent = tr(UI.sub, lang);
+    document.getElementById('footerCopyEl').textContent = tr(UI.footerCopy, lang);
+    document.getElementById('footerLinkEl').textContent = tr(UI.footerBack, lang);
+    document.getElementById('levelDebTitle').textContent = tr(UI.levelDebTitle, lang);
+    document.getElementById('levelDebDesc').textContent = tr(UI.levelDebDesc, lang);
+    document.getElementById('levelIntTitle').textContent = tr(UI.levelIntTitle, lang);
+    document.getElementById('levelIntDesc').textContent = tr(UI.levelIntDesc, lang);
+    document.getElementById('levelAvaTitle').textContent = tr(UI.levelAvaTitle, lang);
+    document.getElementById('levelAvaDesc').textContent = tr(UI.levelAvaDesc, lang);
+    submitBtn.textContent = tr(UI.seeScore, lang);
+    resetBtn.textContent = tr(UI.restart, lang);
+    levelBtn.textContent = tr(UI.changeLevel, lang);
+    if (visitCount !== null) {
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + (tr(UI.visits, lang));
+    }
+    document.querySelectorAll('#langSwitch button').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    applyStaticUI(lang);
+    if (currentLevel && quizScreen.style.display !== 'none') {
+      renderQuiz(currentLevel, lang);
+    }
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
+  }
+
   document.querySelectorAll('.level-btn').forEach(function(b) {
-    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
+  });
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { setLang(b.dataset.lang); });
   });
 
   levelBtn.addEventListener('click', function() {
@@ -165,22 +239,29 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = 'À revoir ! Relisez la fiche de l\'atelier et retentez le test.';
-    if (pct >= 80) { tier = 'tier-high'; msg = 'Excellent ! Vous maîtrisez bien le sujet.'; }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = 'Pas mal ! Encore quelques points à consolider.'; }
+    let tier = 'tier-low', msg = tr(UI.tierLow, currentLang);
+    if (pct >= 80) { tier = 'tier-high'; msg = tr(UI.tierHigh, currentLang); }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = tr(UI.tierMid, currentLang); }
     banner.className = 'show ' + tier;
-    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.innerHTML = esc(tr(UI.scoreLabel, currentLang)) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel, currentLang); });
 
   fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/facture-telephone-quiz')
     .then(function(r) { return r.json(); })
-    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .then(function(d) {
+      visitCount = d.value;
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + tr(UI.visits, currentLang);
+    })
     .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
+
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  setLang(__savedLang);
 </script>
 </body>
 </html>

@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#culture">← Retour aux ateliers</a>
-    <div class="eyebrow">🌐 Comprendre sa facture téléphonique</div>
-    <h1>Fiche exercice</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#culture">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🌐 Comprendre sa facture téléphonique</div>
+    <h1 id="h1El">Fiche exercice</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -79,8 +84,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">Ma facture téléphonique Fiche d'exercice — on coche, on relie, on s'entraîne</p>
       <p>Nom / Prénom : Date :</p>
       <p>Exercice 1 Coche la bonne réponse Une seule case à cocher par question.</p>
@@ -126,13 +131,402 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🌐 Entenda sua conta telefônica",
+                    "en":  "🌐 Understand your phone bill",
+                    "fr":  "🌐 Comprendre sa facture téléphonique",
+                    "ar":  "🌐 فهم فاتورة الهاتف الخاص بك",
+                    "es":  "🌐 Comprenda su factura telefónica"
+                },
+    "h1":  {
+               "pt":  "Folha de exercícios",
+               "en":  "Exercise sheet",
+               "fr":  "Fiche exercice",
+               "ar":  "ورقة التمرين",
+               "es":  "Hoja de ejercicios"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "Ma facture téléphonique Fiche d\u0027exercice — on coche, on relie, on s\u0027entraîne",
+                      "en":  "My phone bill Exercise sheet — check, connect, practice",
+                      "es":  "Mi factura de teléfono Hoja de ejercicios: consulta, conecta, practica",
+                      "ar":  "ورقة تمرين على فاتورة هاتفي - تحقق، اتصل، تدرب",
+                      "pt":  "Minha conta telefônica Folha de exercícios - verifique, conecte, pratique"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Nom / Prénom : Date :",
+                      "en":  "Last name / First name: Date:",
+                      "es":  "Apellido / Nombre: Fecha:",
+                      "ar":  "الاسم الأخير / الاسم الأول: التاريخ:",
+                      "pt":  "Sobrenome/Nome: Data:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 1 Coche la bonne réponse Une seule case à cocher par question.",
+                      "en":  "Exercise 1 Check the correct answer Only one check box per question.",
+                      "es":  "Ejercicio 1 Marque la respuesta correcta Sólo una casilla de verificación por pregunta.",
+                      "ar":  "التمرين 1 حدد الإجابة الصحيحة خانة اختيار واحدة فقط لكل سؤال.",
+                      "pt":  "Exercício 1 Marque a resposta correta Apenas uma caixa de seleção por pergunta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En France, la TVA sur un forfait est de : 10 % 20 % 30 % Le prix que je paie vraiment, c\u0027est le prix : HT TTC « Hors forfait », cela veut dire : compris dans le forfait en plus du forfait À l\u0027étranger hors Europe, je dois plutôt : laisser la data mobile couper la data mobile",
+                      "en":  "In France, the VAT on a package is: 10% 20% 30% The price I really pay is the price: excluding VAT “Outside package”, this means: included in the package in addition to the package Abroad outside Europe, I must instead: let the mobile data cut off the mobile data",
+                      "es":  "En Francia, el IVA sobre un paquete es: 10% 20% 30% El precio que realmente pago es el precio: sin IVA \"Paquete exterior\", es decir: incluido en el paquete además del paquete En el extranjero fuera de Europa, debo en cambio: dejar que los datos móviles corten los datos móviles",
+                      "ar":  "في فرنسا، ضريبة القيمة المضافة على الحزمة هي: 10% 20% 30% السعر الذي أدفعه حقًا هو السعر: باستثناء ضريبة القيمة المضافة \"الحزمة الخارجية\"، وهذا يعني: متضمنة في الحزمة بالإضافة إلى الحزمة في الخارج خارج أوروبا، يجب علي بدلاً من ذلك: السماح لبيانات الهاتف المحمول بقطع بيانات الهاتف المحمول",
+                      "pt":  "Na França, o IVA de um pacote é: 10% 20% 30% O preço que realmente pago é o preço: sem IVA “Pacote externo”, isto significa: incluído no pacote além do pacote No exterior fora da Europa, devo em vez disso: deixar os dados móveis cortarem os dados móveis"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 2 Relie chaque mot à son sens Trace un trait entre le mot (à gauche) et son sens (à droite).",
+                      "en":  "Exercise 2 Connect each word to its meaning Draw a line between the word (left) and its meaning (right).",
+                      "es":  "Ejercicio 2 Relaciona cada palabra con su significado Traza una línea entre la palabra (izquierda) y su significado (derecha).",
+                      "ar":  "التمرين 2 قم بتوصيل كل كلمة بمعناها ارسم خطًا بين الكلمة (يسار) ومعناها (يمين).",
+                      "pt":  "Exercício 2 Conecte cada palavra ao seu significado Desenhe uma linha entre a palavra (esquerda) e seu significado (direita)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "HT prix sans la taxe",
+                      "en":  "excluding tax price without tax",
+                      "es":  "sin IVA precio sin IVA",
+                      "ar":  "باستثناء سعر الضريبة دون ضريبة",
+                      "pt":  "excluindo preço de imposto sem imposto"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "TTC utiliser son téléphone à l\u0027étranger",
+                      "en":  "TTC use your phone abroad",
+                      "es":  "TTC usa tu teléfono en el extranjero",
+                      "ar":  "TTC استخدم هاتفك في الخارج",
+                      "pt":  "TTC use seu telefone no exterior"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Roaming prix final, taxe comprise",
+                      "en":  "Roaming final price, tax included",
+                      "es":  "Precio final roaming, IVA incluido",
+                      "ar":  "السعر النهائي للتجوال شامل الضريبة",
+                      "pt":  "Preço final do roaming, taxas incluídas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Hors forfait ce que je consomme en plus",
+                      "en":  "Excluding the package, what I consume in addition",
+                      "es":  "Excluyendo el paquete, lo que consumo además",
+                      "ar":  "باستثناء الحزمة، ما أستهلك بالإضافة إلى ذلك",
+                      "pt":  "Excluindo o pacote, o que consumo além"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 3 Vrai ou faux ? Coche la bonne case pour chaque phrase.",
+                      "en":  "Exercise 3 True or false? Check the correct box for each sentence.",
+                      "es":  "Ejercicio 3 ¿Verdadero o falso? Marque la casilla correcta para cada oración.",
+                      "ar":  "التمرين 3 صح أم خطأ؟ ضع علامة في المربع الصحيح لكل جملة.",
+                      "pt":  "Exercício 3 Verdadeiro ou falso? Marque a caixa correta para cada frase."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vrai Faux",
+                      "en":  "True False",
+                      "es":  "Verdadero Falso",
+                      "ar":  "صحيح كاذب",
+                      "pt":  "Verdadeiro Falso"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En France, la TVA est de 20 %. En Europe, l\u0027étranger est souvent compris dans le forfait. Le hors forfait ne coûte rien de plus. Je peux demander un plafond pour ne pas trop payer. Le prix TTC est le prix affiché dans les magasins.",
+                      "en":  "In France, VAT is 20%. In Europe, abroad is often included in the package. The extra package costs nothing extra. I can ask for a ceiling so as not to pay too much. The price including tax is the price displayed in stores.",
+                      "es":  "En Francia, el IVA es del 20%. En Europa, el extranjero suele estar incluido en el paquete. El paquete extra no cuesta nada extra. Puedo pedir un tope para no pagar demasiado. El precio con IVA incluido es el precio expuesto en las tiendas.",
+                      "ar":  "وفي فرنسا تبلغ ضريبة القيمة المضافة 20%. في أوروبا، غالبا ما يتم تضمين الخارج في الحزمة. الحزمة الإضافية لا تكلف شيئًا إضافيًا. يمكنني أن أطلب سقفًا حتى لا أدفع الكثير. السعر شامل الضريبة هو السعر المعروض في المتاجر.",
+                      "pt":  "Na França, o IVA é de 20%. Na Europa, o exterior costuma estar incluído no pacote. O pacote extra não custa nada a mais. Posso pedir um teto para não pagar muito. O preço incluindo impostos é o preço exibido nas lojas."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Litige : d\u0027abord votre opérateur, puis le médiateur des communications électroniques · mediation-telecom.org Fiche d\u0027exercice · 1 / 3",
+                      "en":  "Dispute: first your operator, then the electronic communications mediator · mediation-telecom.org Exercise sheet · 1 / 3",
+                      "es":  "Conflicto: primero su operador, luego el mediador de comunicaciones electrónicas · mediation-telecom.org Hoja de ejercicios · 1 / 3",
+                      "ar":  "النزاع: أولاً المشغل الخاص بك، ثم وسيط الاتصالات الإلكترونية · ورقة تمرين Mediation-telecom.org · 1 / 3",
+                      "pt":  "Litígio: primeiro o seu operador, depois o mediador de comunicações eletrónicas · mediation-telecom.org Ficha de exercícios · 1 / 3"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ma facture téléphonique Fiche d\u0027exercice — sur une vraie facture",
+                      "en":  "My phone bill Worksheet — on a real bill",
+                      "es":  "Hoja de trabajo de mi factura telefónica: en una factura real",
+                      "ar":  "ورقة عمل فاتورة هاتفي - على فاتورة حقيقية",
+                      "pt":  "Planilha da minha conta telefônica - em uma conta real"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 4 Lis l\u0027extrait de facture Entoure les 2 lignes qui coûtent EN PLUS du forfait.",
+                      "en":  "Exercise 4 Read the invoice extract. Circle the 2 lines that cost IN ADDITION to the package.",
+                      "es":  "Ejercicio 4 Leer el extracto de la factura. Circula las 2 líneas que cuestan ADICIONALMENTE al paquete.",
+                      "ar":  "التمرين 4 اقرأ مستخلص الفاتورة. ضع دائرة حول الخطين اللذين يكلفان بالإضافة إلى الحزمة.",
+                      "pt":  "Exercício 4 Leia o extrato da fatura. Circule as 2 linhas que custam ADICIONALMENTE ao pacote."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Détail de votre facture — Mars Pour éviter les frais à l\u0027étranger, je dois :",
+                      "en":  "Details of your invoice — March To avoid charges abroad, I must:",
+                      "es":  "Detalles de tu factura — Marzo Para evitar cargos en el extranjero debo:",
+                      "ar":  "تفاصيل فاتورتك - مارس لتجنب الرسوم في الخارج، يجب علي:",
+                      "pt":  "Detalhes da sua fatura — Março Para evitar cobranças no exterior, devo:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Forfait Mobile 100 Go 19,99 € laisser la data mobile",
+                      "en":  "100 GB Mobile plan €19.99 leave mobile data",
+                      "es":  "Plan Móvil 100 GB 19,99€ dejar datos móviles",
+                      "ar":  "خطة الهاتف المحمول سعة 100 جيجابايت بسعر 19.99 يورو اترك بيانات الهاتف المحمول",
+                      "pt":  "Plano móvel de 100 GB € 19,99 sem dados móveis"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Option Cloud+ (stockage) 4,99 € couper la data mobile Hors forfait — appels 8,50 € Roaming hors UE 12,30 €",
+                      "en":  "Cloud+ option (storage) €4.99 cut mobile data Outside of the package — calls €8.50 Roaming outside the EU €12.30",
+                      "es":  "Opción Nube+ (almacenamiento) 4,99 € corte datos móviles Fuera del paquete — llamadas 8,50 € Roaming fuera de la UE 12,30 €",
+                      "ar":  "خيار Cloud+ (التخزين) 4.99 يورو قطع بيانات الهاتف المحمول خارج الحزمة - المكالمات 8.50 يورو التجوال خارج الاتحاد الأوروبي 12.30 يورو",
+                      "pt":  "Opção Cloud+ (armazenamento) 4,99€ cortar dados móveis Fora do pacote — chamadas 8,50€ Roaming fora da UE 12,30€"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Total à payer (TTC) 45,78 €",
+                      "en":  "Total to pay (including tax) €45.78",
+                      "es":  "Total a pagar (IVA incluido) 45,78 €",
+                      "ar":  "إجمالي الدفع (بما في ذلك الضريبة) 45.78 يورو",
+                      "pt":  "Total a pagar (incluindo impostos) 45,78€"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 5 Le petit calcul : trouve le prix à payer La TVA est déjà calculée. Additionne pour trouver le prix TTC.",
+                      "en":  "Exercise 5 The little calculation: find the price to pay The VAT is already calculated. Add up to find the price including tax.",
+                      "es":  "Ejercicio 5 El pequeño cálculo: encuentra el precio a pagar El IVA ya está calculado. Sume para encontrar el precio con impuestos incluidos.",
+                      "ar":  "التمرين 5 العملية الحسابية الصغيرة: ابحث عن السعر الذي يجب دفعه. لقد تم حساب ضريبة القيمة المضافة بالفعل. أضف ما يصل للعثور على السعر بما في ذلك الضريبة.",
+                      "pt":  "Exercício 5 O pequeno cálculo: encontre o preço a pagar O IVA já está calculado. Some para encontrar o preço incluindo impostos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exemple : 10,00 € (HT) + 2,00 € (TVA) = 12,00 € (TTC)",
+                      "en":  "Example: €10.00 (excl. VAT) + €2.00 (VAT) = €12.00 (incl. VAT)",
+                      "es":  "Ejemplo: 10,00 € (sin IVA) + 2,00 € (IVA) = 12,00 € (IVA incluido)",
+                      "ar":  "مثال: 10.00 يورو (باستثناء ضريبة القيمة المضافة) + 2.00 يورو (ضريبة القيمة المضافة) = 12.00 يورو (شاملة ضريبة القيمة المضافة)",
+                      "pt":  "Exemplo: 10,00€ (sem IVA) + 2,00€ (IVA) = 12,00€ (com IVA)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "a) 15,00 € (HT) + 3,00 € (TVA) = € (TTC)",
+                      "en":  "a) €15.00 (excl. VAT) + €3.00 (VAT) = € (incl. VAT)",
+                      "es":  "a) 15,00 € (sin IVA) + 3,00 € (IVA) = € (IVA incluido)",
+                      "ar":  "أ) 15.00 يورو (باستثناء ضريبة القيمة المضافة) + 3.00 يورو (ضريبة القيمة المضافة) = يورو (شاملة ضريبة القيمة المضافة)",
+                      "pt":  "a) 15,00€ (sem IVA) + 3,00€ (IVA) = € (com IVA)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "b) 20,00 € (HT) + 4,00 € (TVA) = € (TTC)",
+                      "en":  "b) €20.00 (excl. VAT) + €4.00 (VAT) = € (incl. VAT)",
+                      "es":  "b) 20,00 € (sin IVA) + 4,00 € (IVA) = € (IVA incluido)",
+                      "ar":  "ب) 20.00 يورو (باستثناء ضريبة القيمة المضافة) + 4.00 يورو (ضريبة القيمة المضافة) = يورو (شاملة ضريبة القيمة المضافة)",
+                      "pt":  "b) 20,00€ (sem IVA) + 4,00€ (IVA) = € (com IVA)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 6 Ma checklist : coche 3 choses à vérifier Quand tu reçois ta facture, que regardes-tu en premier ? Coche 3 cases.",
+                      "en":  "Exercise 6 My checklist: check 3 things to check When you receive your invoice, what do you look at first? Check 3 boxes.",
+                      "es":  "Ejercicio 6 Mi lista de verificación: marcar 3 cosas a verificar Cuando recibes tu factura, ¿qué miras primero? Marque 3 casillas.",
+                      "ar":  "التمرين 6 قائمة المراجعة الخاصة بي: تحقق من ثلاثة أشياء يجب التحقق منها عندما تتلقى فاتورتك، ما الذي تنظر إليه أولاً؟ تحقق من 3 مربعات.",
+                      "pt":  "Exercício 6 A minha lista de verificação: verifique 3 coisas a verificar Quando recebe a sua fatura, o que vê primeiro? Marque 3 caixas."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le montant total Les options en plus (payantes)",
+                      "en":  "The total amount Additional options (paid)",
+                      "es":  "El monto total Opciones adicionales (pagadas)",
+                      "ar":  "المبلغ الإجمالي خيارات إضافية (مدفوعة)",
+                      "pt":  "O valor total Opções adicionais (pagas)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les frais hors forfait La date de prélèvement",
+                      "en":  "Out-of-package costs The collection date",
+                      "es":  "Costos fuera del paquete La fecha de recogida",
+                      "ar":  "التكاليف خارج العبوة. تاريخ التحصيل",
+                      "pt":  "Custos fora do pacote A data de coleta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027engagement en cours Le nom de mon offre",
+                      "en":  "The current commitment The name of my offer",
+                      "es":  "El compromiso actual El nombre de mi oferta",
+                      "ar":  "الالتزام الحالي اسم العرض الخاص بي",
+                      "pt":  "O compromisso atual O nome da minha oferta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Litige : d\u0027abord votre opérateur, puis le médiateur des communications électroniques · mediation-telecom.org Fiche d\u0027exercice · 2 / 3",
+                      "en":  "Dispute: first your operator, then the electronic communications mediator · mediation-telecom.org Exercise sheet · 2 / 3",
+                      "es":  "Conflicto: primero su operador, luego el mediador de comunicaciones electrónicas · mediation-telecom.org Hoja de ejercicios · 2 / 3",
+                      "ar":  "النزاع: أولاً المشغل الخاص بك، ثم وسيط الاتصالات الإلكترونية · ورقة تمرين Mediation-telecom.org · 2 / 3",
+                      "pt":  "Litígio: primeiro o seu operador, depois o mediador de comunicações eletrónicas · mediation-telecom.org Ficha de exercícios · 2 / 3"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ma facture téléphonique Fiche d\u0027exercice — corrigé (pour le formateur)",
+                      "en":  "My telephone bill Exercise sheet — corrected (for the trainer)",
+                      "es":  "Mi factura de teléfono Hoja de ejercicios — corregida (para el formador)",
+                      "ar":  "ورقة تمرين فاتورة الهاتف - مصححة (للمدرب)",
+                      "pt":  "Minha conta telefônica Folha de exercícios — corrigida (para o treinador)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 1 — Coche la bonne réponse 1. 20 %. 2. TTC. 3. en plus du forfait. 4. couper la data mobile.",
+                      "en":  "Exercise 1 — Check the correct answer 1. 20%. 2. Tax included. 3. in addition to the package. 4. cut off mobile data.",
+                      "es":  "Ejercicio 1: marca la respuesta correcta 1. 20%. 2. Impuestos incluidos. 3. además del paquete. 4. cortar los datos móviles.",
+                      "ar":  "التمرين 1 - تحقق من الإجابة الصحيحة 1. 20%. 2. شامل الضريبة. 3. بالإضافة إلى الحزمة. 4. قطع بيانات الجوال.",
+                      "pt":  "Exercício 1 — Verifique a resposta correta 1. 20%. 2. Imposto incluído. 3. além do pacote. 4. Corte os dados móveis."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 2 — Relier HT → prix sans la taxe. TTC → prix final, taxe comprise. Roaming → utiliser son téléphone à l\u0027étranger. Hors forfait → ce que je consomme en plus.",
+                      "en":  "Exercise 2 — Link excluding tax → price without tax. Tax included → final price, tax included. Roaming → use your phone abroad. Excluding the package → what I consume in addition.",
+                      "es":  "Ejercicio 2 — Enlace sin IVA → precio sin IVA. Impuestos incluidos → precio final, impuestos incluidos. Roaming → usa tu teléfono en el extranjero. Excluyendo el paquete → lo que consumo además.",
+                      "ar":  "التمرين 2 - الرابط باستثناء الضريبة ← السعر بدون ضريبة. شامل الضريبة → السعر النهائي، شامل الضريبة. التجوال → استخدم هاتفك في الخارج. باستثناء الحزمة → ما أستهلكه بالإضافة إلى ذلك.",
+                      "pt":  "Exercício 2 — Relação sem impostos → preço sem impostos. Imposto incluído → preço final, imposto incluído. Roaming → use seu telefone no exterior. Excluindo a embalagem → o que consumo adicionalmente."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 3 — Vrai / Faux 1. Vrai. 2. Vrai. 3. Faux (le hors forfait coûte en plus). 4. Vrai. 5. Vrai.",
+                      "en":  "Exercise 3 — True / False 1. True. 2. True. 3. False (the extra package costs extra). 4. True. 5. True.",
+                      "es":  "Ejercicio 3: Verdadero / Falso 1. Verdadero. 2. Verdadero. 3. Falso (el paquete extra cuesta extra). 4. Verdadero. 5. Verdadero.",
+                      "ar":  "التمرين 3 - صحيح / خطأ 1. صحيح. 2. صحيح. 3. خطأ (الباقة الإضافية تكاليفها إضافية). 4. صحيح. 5. صحيح.",
+                      "pt":  "Exercício 3 — Verdadeiro/Falso 1. Verdadeiro. 2. Verdadeiro. 3. Falso (o pacote extra tem um custo extra). 4. Verdadeiro. 5. Verdadeiro."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 4 — Extrait de facture Les 2 lignes en plus du forfait : « Hors forfait — appels » (8,50 €) et « Roaming hors UE » (12,30 €). Pour éviter les frais à l\u0027étranger : couper la data mobile.",
+                      "en":  "Exercise 4 — Invoice extract The 2 lines in addition to the package: “Outside package – calls” (€8.50) and “Roaming outside the EU” (€12.30). To avoid charges abroad: cut off mobile data.",
+                      "es":  "Ejercicio 4 — Extracto de factura Las 2 líneas además del paquete: “Paquete exterior – llamadas” (8,50 €) y “Roaming fuera de la UE” (12,30 €). Para evitar cargos en el extranjero: corta los datos móviles.",
+                      "ar":  "التمرين 4 - استخراج الفاتورة السطران بالإضافة إلى الحزمة: \"الباقة الخارجية - المكالمات\" (8.50 يورو) و\"التجوال خارج الاتحاد الأوروبي\" (12.30 يورو). لتجنب الرسوم في الخارج: قم بقطع بيانات الهاتف المحمول.",
+                      "pt":  "Exercício 4 — Extrato da fatura As 2 linhas adicionais ao pacote: “Pacote externo – chamadas” (8,50€) e “Roaming fora da UE” (12,30€). Para evitar cobranças no exterior: corte os dados móveis."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 5 — Le petit calcul a) 15,00 € + 3,00 € = 18,00 € (TTC). b) 20,00 € + 4,00 € = 24,00 € (TTC).",
+                      "en":  "Exercise 5 — The little calculation a) €15.00 + €3.00 = €18.00 (including tax). b) €20.00 + €4.00 = €24.00 (including tax).",
+                      "es":  "Ejercicio 5 — El pequeño cálculo a) 15,00 € + 3,00 € = 18,00 € (IVA incluido). b) 20,00 € + 4,00 € = 24,00 € (IVA incluido).",
+                      "ar":  "التمرين 5 – العملية الحسابية البسيطة أ) 15.00 يورو + 3.00 يورو = 18.00 يورو (شاملة الضريبة). ب) 20.00 يورو + 4.00 يورو = 24.00 يورو (شاملة الضريبة).",
+                      "pt":  "Exercício 5 — O pequeno cálculo a) 15,00€ + 3,00€ = 18,00€ (incluindo impostos). b) 20,00€ + 4,00€ = 24,00€ (impostos incluídos)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exercice 6 — Ma checklist Toutes les réponses sont bonnes : l\u0027important est de cocher 3 vérifications et d\u0027en discuter ensemble.",
+                      "en":  "Exercise 6 — My checklist All answers are correct: the important thing is to check 3 checks and discuss them together.",
+                      "es":  "Ejercicio 6: Mi lista de verificación Todas las respuestas son correctas: lo importante es marcar 3 comprobaciones y discutirlas juntos.",
+                      "ar":  "التمرين 6 - قائمة المراجعة الخاصة بي جميع الإجابات صحيحة: الشيء المهم هو التحقق من 3 عمليات التحقق ومناقشتها معًا.",
+                      "pt":  "Exercício 6 — A minha lista de verificação Todas as respostas estão corretas: o importante é assinalar 3 verificações e discuti-las em conjunto."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Litige : d\u0027abord votre opérateur, puis le médiateur des communications électroniques · mediation-telecom.org Fiche d\u0027exercice · 3 / 3",
+                      "en":  "Dispute: first your operator, then the electronic communications mediator · mediation-telecom.org Exercise sheet · 3 / 3",
+                      "es":  "Conflicto: primero su operador, luego el mediador de comunicaciones electrónicas · mediation-telecom.org Hoja de ejercicios · 3 / 3",
+                      "ar":  "النزاع: أولاً المشغل الخاص بك، ثم وسيط الاتصالات الإلكترونية · ورقة تمرين Mediation-telecom.org · 3 / 3",
+                      "pt":  "Litígio: primeiro o seu operador, depois o mediador de comunicações eletrónicas · mediation-telecom.org Ficha de exercícios · 3 / 3"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

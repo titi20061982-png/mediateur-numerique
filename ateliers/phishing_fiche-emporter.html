@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#securite">← Retour aux ateliers</a>
-    <div class="eyebrow">🔒 Phishing (hameçonnage)</div>
-    <h1>Fiche à emporter</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#securite">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🔒 Phishing (hameçonnage)</div>
+    <h1 id="h1El">Fiche à emporter</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -77,8 +82,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">Phishing : signaler, se faire aider &amp; porter plainte Fiche a garder chez vous | Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026</p>
       <p>Ou signaler et obtenir de l'aide</p>
       <p>Signaler un phishing, obtenir de l'aide et trouver un prestataire cybermalveillance.gouv.fr pres de chez vous. Gratuit.</p>
@@ -98,13 +103,186 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🔒 Phishing",
+                    "en":  "🔒 Phishing",
+                    "fr":  "🔒 Phishing (hameçonnage)",
+                    "ar":  "🔒 التصيد",
+                    "es":  "🔒 Phishing"
+                },
+    "h1":  {
+               "pt":  "Folha para levar",
+               "en":  "Takeaway sheet",
+               "fr":  "Fiche à emporter",
+               "ar":  "ورقة الوجبات الجاهزة",
+               "es":  "hoja para llevar"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "Phishing : signaler, se faire aider \u0026amp; porter plainte Fiche a garder chez vous | Atelier mediation numerique - Cedric WALTENER - AFPA Gueret 2026",
+                      "en":  "Phishing: report, get help \u0026 file a complaint Sheet to keep at home | Digital mediation workshop - Cedric WALTENER - AFPA Gueret 2026",
+                      "es":  "Phishing: denuncia, consigue ayuda y presenta una denuncia Hoja para tener en casa | Taller de mediación digital - Cedric WALTENER - AFPA Gueret 2026",
+                      "ar":  "التصيد الاحتيالي: قم بالإبلاغ والحصول على المساعدة وتقديم ورقة شكوى للاحتفاظ بها في المنزل | ورشة عمل الوساطة الرقمية - سيدريك والتنر - AFPA Gueret 2026",
+                      "pt":  "Phishing: denunciar, obter ajuda e registrar uma reclamação Folha para manter em casa | Oficina de mediação digital - Cedric WALTENER - AFPA Gueret 2026"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ou signaler et obtenir de l\u0027aide",
+                      "en":  "Where to report and get help",
+                      "es":  "Dónde informar y obtener ayuda",
+                      "ar":  "مكان الإبلاغ والحصول على المساعدة",
+                      "pt":  "Onde denunciar e obter ajuda"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Signaler un phishing, obtenir de l\u0027aide et trouver un prestataire cybermalveillance.gouv.fr pres de chez vous. Gratuit.",
+                      "en":  "Report phishing, get help and find a cybermalveillance.gouv.fr service provider near you. Free.",
+                      "es":  "Denuncie el phishing, obtenga ayuda y encuentre un proveedor de servicios cybermalveillance.gouv.fr cerca de usted. Gratis.",
+                      "ar":  "قم بالإبلاغ عن التصيد الاحتيالي، واحصل على المساعدة وابحث عن مزود خدمة cybermalveillance.gouv.fr القريب منك. حر.",
+                      "pt":  "Denuncie phishing, obtenha ajuda e encontre um provedor de serviços cybermalveillance.gouv.fr perto de você. Livre."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Scannez-moi",
+                      "en":  "Scan me",
+                      "es":  "escaneame",
+                      "ar":  "مسح لي",
+                      "pt":  "Escaneie-me"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "33700 (par SMS) Transferez le SMS suspect au 33700. Immediat et gratuit.",
+                      "en":  "33700 (by SMS) Forward the suspicious SMS to 33700. Immediate and free.",
+                      "es":  "33700 (por SMS) Reenvía el SMS sospechoso al 33700. Inmediato y gratuito.",
+                      "ar":  "33700 (عبر الرسائل القصيرة) قم بتحويل الرسالة المشبوهة إلى 33700. فوري ومجاني.",
+                      "pt":  "33700 (por SMS) Encaminhe o SMS suspeito para o 33700. Imediato e gratuito."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SMS au 33700",
+                      "en":  "Text to 33700",
+                      "es":  "Envía un mensaje de texto al 33700",
+                      "ar":  "أرسل رسالة نصية إلى 33700",
+                      "pt":  "Envie uma mensagem para 33700"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "signal-spam.fr Transferez le mail frauduleux pour alimenter les filtres anti-spam.",
+                      "en":  "signal-spam.fr Forward the fraudulent email to feed the anti-spam filters.",
+                      "es":  "signal-spam.fr Reenvía el correo electrónico fraudulento para alimentar los filtros antispam.",
+                      "ar":  "signal-spam.fr قم بإعادة توجيه البريد الإلكتروني الاحتيالي لتغذية مرشحات مكافحة البريد العشوائي.",
+                      "pt":  "signal-spam.fr Encaminhe o e-mail fraudulento para alimentar os filtros anti-spam."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Scannez-moi",
+                      "en":  "Scan me",
+                      "es":  "escaneame",
+                      "ar":  "مسح لي",
+                      "pt":  "Escaneie-me"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Coordonnees bancaires saisies ? Appelez immediatement le Numero au dos Votre banque de la carte numero indique au dos de votre carte.",
+                      "en":  "Bank details entered? Immediately call the number on the back of your bank card number on the back of your card.",
+                      "es":  "¿Datos bancarios introducidos? Llame inmediatamente al número que figura en el reverso de su tarjeta bancaria. número que figura en el reverso de su tarjeta.",
+                      "ar":  "تفاصيل البنك دخلت؟ اتصل فورًا بالرقم الموجود على ظهر رقم بطاقتك المصرفية الموجود على ظهر بطاقتك.",
+                      "pt":  "Dados bancários inseridos? Ligue imediatamente para o número indicado no verso do cartão bancário."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Astuce : scannez les QR codes avec l\u0027appareil photo de votre telephone pour ouvrir directement les sites officiels.",
+                      "en":  "Tip: scan the QR codes with your phone\u0027s camera to directly open the official sites.",
+                      "es":  "Consejo: escanea los códigos QR con la cámara de tu teléfono para abrir directamente los sitios oficiales.",
+                      "ar":  "نصيحة: قم بمسح رموز QR باستخدام كاميرا هاتفك لفتح المواقع الرسمية مباشرة.",
+                      "pt":  "Dica: escaneie os códigos QR com a câmera do seu telefone para abrir diretamente os sites oficiais."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "J\u0027ai clique — que faire ? Porter plainte 1. Fermez la page sans rien saisir • En ligne : masecurite.interieur.gouv.fr (THESEE) 2. Changez vos mots de passe • En gendarmerie avec vos captures d\u0027ecran 3. Appelez l\u0027organisme avec son vrai numero • Gardez les messages : ce sont des preuves 4. Alertez votre banque si vous avez saisi des • Delai d\u0027opposition bancaire : 13 mois donnees bancaires",
+                      "en":  "I clicked — what should I do? File a complaint 1. Close the page without entering anything • Online: masecurite.interieur.gouv.fr (THESEE) 2. Change your passwords • At the police station with your screenshots 3. Call the organization with its real number • Keep the messages: they are proof 4. Alert your bank if you have entered • Bank opposition period: 13 months banking data",
+                      "es":  "Hice clic: ¿qué debo hacer? Presentar una denuncia 1. Cierra la página sin introducir nada • En línea: masecurite.interieur.gouv.fr (THESEE) 2. Cambia tus contraseñas • En la comisaría con tus capturas de pantalla 3. Llama a la organización con su número real • Conserva los mensajes: son la prueba 4. Avisa a tu banco si has entrado • Plazo de oposición bancaria: 13 meses datos bancarios",
+                      "ar":  "لقد نقرت - ماذا علي أن أفعل؟ قم بتقديم شكوى 1. أغلق الصفحة دون إدخال أي شيء • عبر الإنترنت: masecurite.interieur.gouv.fr (THESEE) 2. قم بتغيير كلمات المرور الخاصة بك • في مركز الشرطة مع لقطات الشاشة الخاصة بك 3. اتصل بالمؤسسة برقمها الحقيقي • احتفظ بالرسائل: فهي دليل 4. قم بتنبيه البنك الذي تتعامل معه إذا قمت بالدخول • فترة معارضة البنك: بيانات مصرفية لمدة 13 شهرًا",
+                      "pt":  "Cliquei – o que devo fazer? Faça uma reclamação 1. Feche a página sem inserir nada • Online: masecurite.interieur.gouv.fr (THESEE) 2. Altere suas senhas • Na delegacia com suas capturas de tela 3. Ligue para a organização com seu número real • Guarde as mensagens: são a prova 4. Alerte seu banco se você tiver inserido • Período de oposição bancária: 13 meses dados bancários"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Porter plainte en ligne (THESEE)",
+                      "en":  "File a complaint online (THESEE)",
+                      "es":  "Presentar una queja en línea (ESTE)",
+                      "ar":  "تقديم شكوى عبر الإنترنت (THESEE)",
+                      "pt":  "Registre uma reclamação on-line (THESEE)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En cas de doute : ne cliquez jamais — tapez l\u0027adresse vous-meme — verifiez avec un proche ou un conseiller.",
+                      "en":  "If in doubt: never click — type the address yourself — check with a loved one or advisor.",
+                      "es":  "En caso de duda: nunca haga clic; escriba la dirección usted mismo; consulte con un ser querido o un asesor.",
+                      "ar":  "إذا كنت في شك: لا تنقر أبدًا على العنوان - اكتب العنوان بنفسك - وتحقق من الأمر مع أحد أفراد أسرتك أو أحد المستشارين.",
+                      "pt":  "Em caso de dúvida: nunca clique – digite você mesmo o endereço – verifique com um ente querido ou consultor."
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

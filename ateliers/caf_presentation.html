@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#demarches">← Retour aux ateliers</a>
-    <div class="eyebrow">🏛️ Mon compte CAF</div>
-    <h1>Pas à pas</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#demarches">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🏛️ Mon compte CAF</div>
+    <h1 id="h1El">Pas à pas</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -94,8 +99,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">12 démarches expliquées pas à pas</p>
       <p>Mon compte</p>
       <p>ATELIER NUMÉRIQUE · PAS À PAS</p>
@@ -292,13 +297,1629 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🏛️ Minha conta CAF",
+                    "en":  "🏛️ My CAF account",
+                    "fr":  "🏛️ Mon compte CAF",
+                    "ar":  "🏛️ حسابي في الكاف",
+                    "es":  "🏛️ Mi cuenta CAF"
+                },
+    "h1":  {
+               "pt":  "Passo a passo",
+               "en":  "Step by step",
+               "fr":  "Pas à pas",
+               "ar":  "خطوة بخطوة",
+               "es":  "paso a paso"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "12 démarches expliquées pas à pas",
+                      "en":  "12 procedures explained step by step",
+                      "es":  "12 procedimientos explicados paso a paso",
+                      "ar":  "شرح 12 إجراء خطوة بخطوة",
+                      "pt":  "12 procedimentos explicados passo a passo"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon compte",
+                      "en":  "My account",
+                      "es":  "mi cuenta",
+                      "ar":  "حسابي",
+                      "pt":  "Minha conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ATELIER NUMÉRIQUE · PAS À PAS",
+                      "en":  "DIGITAL WORKSHOP · STEP BY STEP",
+                      "es":  "TALLER DIGITAL · PASO A PASO",
+                      "ar":  "ورشة العمل الرقمية · خطوة بخطوة",
+                      "pt":  "WORKSHOP DIGITAL · PASSO A PASSO"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon compte CAF de A à Z ✓ Pour bien débuter : chaque démarche est expliquée clic par Connecté en 2 minutes clic, avec le nom exact des boutons. Se connecter, suivre ses paiements, télécharger une attestation, déclarer, envoyer un document…",
+                      "en":  "My CAF account from A to Z ✓ To get started: each step is explained click by Connected in 2 minutes click, with the exact name of the buttons. Log in, track your payments, download a certificate, declare, send a document…",
+                      "es":  "Mi cuenta CAF de la A a la Z ✓ Para empezar: cada paso se explica clic en Conectado en 2 minutos clic, con el nombre exacto de los botones. Inicia sesión, realiza un seguimiento de tus pagos, descarga un certificado, declara, envía un documento…",
+                      "ar":  "حساب CAF الخاص بي من الألف إلى الياء ✓ للبدء: يتم شرح كل خطوة، انقر فوق \"متصل\" في دقيقتين، مع الاسم الدقيق للأزرار. قم بتسجيل الدخول، وتتبع مدفوعاتك، وتنزيل شهادة، والإعلان، وإرسال مستند...",
+                      "pt":  "Minha conta CAF de A a Z ✓ Para começar: cada passo é explicado clicando em Conectado em 2 minutos clique, com o nome exato dos botões. Faça login, acompanhe seus pagamentos, baixe um certificado, declare, envie um documento…"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SOMMAIRE DE L\u0027ATELIER",
+                      "en":  "WORKSHOP SUMMARY",
+                      "es":  "RESUMEN DEL TALLER",
+                      "ar":  "ملخص ورشة العمل",
+                      "pt":  "RESUMO DO WORKSHOP"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cliquez sur un thème pour y accéder À quoi ça sert ? Y accéder : site appli",
+                      "en":  "Click on a theme to access it What is it for? Access it: app site",
+                      "es":  "Haz clic en un tema para acceder a él ¿Para qué sirve? Accede a él: sitio de la aplicación",
+                      "ar":  "انقر على الموضوع للوصول إليه ما الغرض منه؟ الوصول إليه: موقع التطبيق",
+                      "pt":  "Clique em um tema para acessá-lo. Para que serve? Acesse: site do aplicativo"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 2",
+                      "en":  "1 2",
+                      "es":  "1 2",
+                      "ar":  "1 2",
+                      "pt":  "1 2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 À quoi ça sert ? 2 Y accéder : site \u0026amp; appli Se connecter Créer son compte",
+                      "en":  "1 What is it for? 2 Access it: site \u0026 app Log in Create your account",
+                      "es":  "1 ¿Para qué sirve? 2 Accede: sitio y aplicación Iniciar sesión Crea tu cuenta",
+                      "ar":  "1 ما هو الغرض منه؟ 2 الوصول إليه: الموقع والتطبيق تسجيل الدخول إنشاء حسابك",
+                      "pt":  "1 Para que serve? 2 Acesse: site e aplicativo Faça login Crie sua conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 4",
+                      "en":  "3 4",
+                      "es":  "3 4",
+                      "ar":  "3 4",
+                      "pt":  "3 4"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Se connecter 4 Créer son compte Se repérer sur l\u0027accueil Suivre mes paiements",
+                      "en":  "3 Log in 4 Create your account Find your way to home Track my payments",
+                      "es":  "3 Iniciar sesión 4 Crear tu cuenta Encuentra el camino a casa Seguimiento de mis pagos",
+                      "ar":  "3 تسجيل الدخول 4 قم بإنشاء حسابك ابحث عن طريقك إلى المنزل تتبع مدفوعاتي",
+                      "pt":  "3 Faça login 4 Crie sua conta Encontre o caminho para casa Acompanhe meus pagamentos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 6",
+                      "en":  "5 6",
+                      "es":  "5 6",
+                      "ar":  "5 6",
+                      "pt":  "5 6"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Se repérer sur l\u0027accueil 6 Suivre mes paiements Télécharger une attestation Déclarer un changement",
+                      "en":  "5 Find your way to reception 6 Track my payments Download a certificate Declare a change",
+                      "es":  "5 Encuentra el camino a recepción 6 Seguimiento de mis pagos Descargar un certificado Declarar un cambio",
+                      "ar":  "5 ابحث عن طريقك إلى الاستقبال 6 تتبع مدفوعاتي قم بتنزيل شهادة أعلن عن تغيير",
+                      "pt":  "5 Encontre o caminho para a recepção 6 Acompanhe meus pagamentos Baixe um certificado Declare uma alteração"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "7 8",
+                      "en":  "7 8",
+                      "es":  "7 8",
+                      "ar":  "7 8",
+                      "pt":  "7 8"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "7 Télécharger une attestation 8 Déclarer un changement La déclaration trimestrielle Envoyer un document",
+                      "en":  "7 Download a certificate 8 Declare a change The quarterly declaration Send a document",
+                      "es":  "7 Descargar un certificado 8 Declarar un cambio La declaración trimestral Enviar un documento",
+                      "ar":  "7 تنزيل شهادة 8 إعلان تغيير الإعلان ربع السنوي إرسال مستند",
+                      "pt":  "7 Baixe um certificado 8 Declare uma alteração A declaração trimestral Envie um documento"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "9 10",
+                      "en":  "9 10",
+                      "es":  "9 10",
+                      "ar":  "9 10",
+                      "pt":  "9 10"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "9 La déclaration trimestrielle 10 Envoyer un document Écrire à la CAF Sécurité dépannage",
+                      "en":  "9 The quarterly declaration 10 Send a document Write to the CAF Security troubleshooting",
+                      "es":  "9 La declaración trimestral 10 Enviar un documento Escribir a la CAF Solución de problemas de seguridad",
+                      "ar":  "9 الإعلان الربع سنوي 10 أرسل مستندًا واكتب إلى CAF Security لاستكشاف الأخطاء وإصلاحها",
+                      "pt":  "9 A declaração trimestral 10 Envie um documento Escreva para a CAF Solução de problemas de segurança"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "11 12",
+                      "en":  "11 12",
+                      "es":  "11 12",
+                      "ar":  "11 12",
+                      "pt":  "11 12"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "11 Écrire à la CAF 12 Sécurité \u0026amp; dépannage",
+                      "en":  "11 Write to the CAF 12 Security \u0026 troubleshooting",
+                      "es":  "11 Escriba al CAF 12 Seguridad y solución de problemas",
+                      "ar":  "11 اكتب إلى CAF 12 الأمن واستكشاف الأخطاء وإصلاحها",
+                      "pt":  "11 Escreva para o CAF 12 Segurança e solução de problemas"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Astuce : en bas à droite de chaque diapo, les boutons ⊞ ◄ ► permettent de revenir au sommaire ou de naviguer.",
+                      "en":  "Tip: at the bottom right of each slide, the ⊞ ◄ ► buttons allow you to return to the summary or navigate.",
+                      "es":  "Consejo: en la parte inferior derecha de cada diapositiva, los botones ⊞ ◄ ► te permiten volver al resumen o navegar.",
+                      "ar":  "نصيحة: في الجزء السفلي الأيمن من كل شريحة، تتيح لك الأزرار ⊞ ◄ ► العودة إلى الملخص أو التنقل.",
+                      "pt":  "Dica: no canto inferior direito de cada slide, os botões ⊞ ◄ ► permitem retornar ao resumo ou navegar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LE COMPTE CAF · 1",
+                      "en":  "THE CIF ACCOUNT · 1",
+                      "es":  "LA CUENTA CIF · 1",
+                      "ar":  "حساب CIF · 1",
+                      "pt":  "A CONTA CIF · 1"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "À quoi sert mon compte CAF ?",
+                      "en":  "What is my CAF account used for?",
+                      "es":  "¿Para qué se utiliza mi cuenta CAF?",
+                      "ar":  "ما هو الغرض من استخدام حساب CAF الخاص بي؟",
+                      "pt":  "Para que serve minha conta CAF?"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Mon Compte » est votre espace personnel et sécurisé, sur le site caf.fr et dans l\u0027application mobile. Tout votre dossier se gère là, sans déplacement ni courrier.",
+                      "en":  "“My Account” is your personal and secure space, on the caf.fr website and in the mobile application. Your entire file is managed there, without travel or mail.",
+                      "es":  "“Mi Cuenta” es su espacio personal y seguro, en el sitio web caf.fr y en la aplicación móvil. Allí se gestiona todo tu expediente, sin desplazamientos ni correo.",
+                      "ar":  "\"حسابي\" هو مساحتك الشخصية والآمنة، على موقع caf.fr وفي تطبيق الهاتف المحمول. تتم إدارة ملفك بالكامل هناك، دون السفر أو البريد.",
+                      "pt":  "“Minha Conta” é o seu espaço pessoal e seguro, no site caf.fr e no aplicativo móvel. Todo o seu arquivo é gerenciado lá, sem viagens ou correio."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Voir mes droits et paiements Télécharger mes documents",
+                      "en":  "See my rights and payments Download my documents",
+                      "es":  "Ver mis derechos y pagos Descargar mis documentos",
+                      "ar":  "راجع حقوقي ومدفوعاتي، قم بتنزيل مستنداتي",
+                      "pt":  "Veja meus direitos e pagamentos Baixe meus documentos"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ce que la CAF me verse : dates et montants. Attestations, relevés… en PDF.",
+                      "en":  "What CAF pays me: dates and amounts. Certificates, statements… in PDF.",
+                      "es":  "Lo que me paga CAF: fechas y montos. Certificados, declaraciones… en PDF.",
+                      "ar":  "ما يدفعه لي CAF: التواريخ والمبالغ. الشهادات والبيانات ... بصيغة PDF.",
+                      "pt":  "O que a CAF me paga: datas e valores. Certificados, declarações… em PDF."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Déclarer ma situation Échanger avec ma CAF",
+                      "en":  "Declare my situation Exchange with my CAF",
+                      "es":  "Declarar mi situación Intercambio con mi CAF",
+                      "ar":  "أعلن عن موقفي تبادل مع CAF الخاص بي",
+                      "pt":  "Declarar minha situação Trocar com meu CAF"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Déménagement, naissance, RIB, ressources… Messagerie, suivi et envoi de documents.",
+                      "en":  "Moving, birth, RIB, resources… Messaging, tracking and sending documents.",
+                      "es":  "Mudanza, nacimiento, RIB, recursos… Mensajería, seguimiento y envío de documentos.",
+                      "ar":  "النقل والولادة والضلع والموارد... المراسلة والتتبع وإرسال المستندات.",
+                      "pt":  "Mudança, nascimento, RIB, recursos… Mensagens, rastreamento e envio de documentos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "LE COMPTE CAF · 1",
+                      "en":  "THE CIF ACCOUNT · 1",
+                      "es":  "LA CUENTA CIF · 1",
+                      "ar":  "حساب CIF · 1",
+                      "pt":  "A CONTA CIF · 1"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les principales aides gérées par la CAF",
+                      "en":  "The main aid managed by CAF",
+                      "es":  "Las principales ayudas gestionadas por CAF",
+                      "ar":  "المساعدات الرئيسية التي يديرها CAF",
+                      "pt":  "As principais ajudas geridas pela CAF"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Selon votre situation, la CAF peut verser plusieurs aides. Toutes se suivent depuis le même compte.",
+                      "en":  "Depending on your situation, CAF can pay several types of aid. They all follow each other from the same account.",
+                      "es":  "Dependiendo de tu situación, CAF puede pagar varios tipos de ayudas. Todos se siguen desde la misma cuenta.",
+                      "ar":  "اعتمادًا على حالتك، يمكن لـ CAF دفع عدة أنواع من المساعدات. كلهم يتابعون بعضهم البعض من نفس الحساب.",
+                      "pt":  "Dependendo da sua situação, a CAF pode pagar diversos tipos de auxílios. Todos eles seguem uns aos outros na mesma conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Aides au logement RSA Prime d\u0027activité APL, ALF, ALS : aider à payer un loyer ou Pour les personnes sans ou avec peu de Complément pour ceux qui travaillent un prêt. ressources. avec un petit salaire.",
+                      "en":  "Housing aid RSA Activity bonus APL, ALF, ALS: help to pay rent or For people with no or little Supplement for those who work a loan. resources. with a small salary.",
+                      "es":  "Ayuda a la vivienda RSA Bono de actividad APL, ALF, ALS: ayuda para pagar el alquiler o Para personas con poco o ningún suplemento para quienes trabajan un préstamo. recursos. con un pequeño salario.",
+                      "ar":  "مساعدات الإسكان مكافأة نشاط RSA APL، ALF، ALS: المساعدة في دفع الإيجار أو للأشخاص الذين ليس لديهم ملحق أو القليل لأولئك الذين يعملون على قرض. موارد. براتب صغير.",
+                      "pt":  "Auxílio habitação RSA Bônus de atividade APL, ALF, ALS: ajuda para pagar aluguel ou Para pessoas com nenhum ou pouco complemento para quem trabalha com empréstimo. recursos. com um pequeno salário."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Allocations familiales AAH Petite enfance (Paje) Pour les familles avec au moins deux Naissance, allocation de base, garde Allocation aux Adultes Handicapés. enfants. d\u0027enfant.",
+                      "en":  "Family allowances AAH Early childhood (Paje) For families with at least two Birth, basic allowance, care Allowance for Disabled Adults. children. child.",
+                      "es":  "Asignaciones familiares AAH Primera infancia (Paje) Para familias con al menos dos Nacimiento, Asignación básica, Asignación de cuidados para Adultos Discapacitados. niños. niño.",
+                      "ar":  "البدلات العائلية AAH الطفولة المبكرة (Paje) للعائلات التي لديها طفلان على الأقل، بدل أساسي، بدل رعاية للبالغين المعاقين. أطفال. طفل.",
+                      "pt":  "Abonos de família AAH Primeira infância (Paje) Para famílias com pelo menos dois nascimentos, abono básico, abono de assistência a adultos com deficiência. crianças. criança."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ACCÈS · 2",
+                      "en":  "ACCESS · 2",
+                      "es":  "ACCESO · 2",
+                      "ar":  "الوصول · 2",
+                      "pt":  "ACESSO · 2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Deux façons d\u0027accéder à Mon Compte",
+                      "en":  "Two ways to access My Account",
+                      "es":  "Dos formas de acceder a Mi cuenta",
+                      "ar":  "طريقتان للوصول إلى حسابي",
+                      "pt":  "Duas maneiras de acessar Minha conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sur ordinateur Sur smartphone / tablette Site officiel : www.caf.fr Application gratuite : « Caf - Mon Compte »",
+                      "en":  "On computer On smartphone / tablet Official website: www.caf.fr Free application: “Caf - My Account”",
+                      "es":  "En el ordenador En el smartphone/tableta Sitio web oficial: www.caf.fr Aplicación gratuita: “Caf - Mi Cuenta”",
+                      "ar":  "على الكمبيوتر على الهاتف الذكي/الجهاز اللوحي الموقع الرسمي: www.caf.fr التطبيق المجاني: \"Caf - حسابي\"",
+                      "pt":  "No computador No smartphone / tablet Site oficial: www.caf.fr Aplicativo gratuito: “Caf - Minha conta”"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "• Ouvrir le navigateur (Chrome, Edge…) • Installer depuis Play Store / App Store • Aller sur www.caf.fr • Les mêmes services que le site • Cliquer « Mon Compte » en haut à droite • Alertes en cas de message ou décision • Écran plus grand : pratique pour imprimer • Connexion par empreinte ou visage",
+                      "en":  "• Open the browser (Chrome, Edge, etc.) • Install from Play Store / App Store • Go to www.caf.fr • The same services as the site • Click “My Account” at the top right • Alerts in the event of a message or decision • Larger screen: convenient for printing • Connection by fingerprint or face",
+                      "es":  "• Abra el navegador (Chrome, Edge, etc.) • Instale desde Play Store / App Store • Vaya a www.caf.fr • Los mismos servicios que el sitio • Haga clic en “Mi cuenta” en la parte superior derecha • Alertas en caso de mensaje o decisión • Pantalla más grande: conveniente para imprimir • Conexión por huella digital o rostro",
+                      "ar":  "• افتح المتصفح (Chrome وEdge وما إلى ذلك) • التثبيت من Play Store / App Store • انتقل إلى www.caf.fr • نفس خدمات الموقع • انقر فوق \"حسابي\" في أعلى اليمين • تنبيهات في حالة وجود رسالة أو قرار • شاشة أكبر: مناسبة للطباعة • الاتصال عن طريق بصمة الإصبع أو الوجه",
+                      "pt":  "• Abra o navegador (Chrome, Edge, etc.) • Instale na Play Store / App Store • Acesse www.caf.fr • Os mesmos serviços do site • Clique em “Minha conta” no canto superior direito • Alertas em caso de mensagem ou decisão • Tela maior: conveniente para imprimir • Conexão por impressão digital ou rosto"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 3",
+                      "en":  "STEP BY STEP · 3",
+                      "es":  "PASO A PASO · 3",
+                      "ar":  "خطوة بخطوة · 3",
+                      "pt":  "PASSO A PASSO · 3"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se connecter à Mon Compte",
+                      "en":  "Login to My Account",
+                      "es":  "Inicie sesión en Mi cuenta",
+                      "ar":  "تسجيل الدخول إلى حسابي",
+                      "pt":  "Faça login em minha conta"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sur ordinateur, depuis le site www.caf.fr : 1 Ouvrir le navigateur et taper www.caf.fr dans la barre d\u0027adresse.",
+                      "en":  "On a computer, from the site www.caf.fr: 1 Open the browser and type www.caf.fr in the address bar.",
+                      "es":  "En un ordenador, desde el sitio www.caf.fr: 1 Abra el navegador y escriba www.caf.fr en la barra de direcciones.",
+                      "ar":  "على جهاز الكمبيوتر، من موقع www.caf.fr: 1 افتح المتصفح واكتب www.caf.fr في شريط العناوين.",
+                      "pt":  "Num computador, no site www.caf.fr: 1 Abra o navegador e digite www.caf.fr na barra de endereço."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 En haut à droite, cliquer sur le bouton « Mon Compte ».",
+                      "en":  "2 At the top right, click on the “My Account” button.",
+                      "es":  "2 En la parte superior derecha, haga clic en el botón \"Mi cuenta\".",
+                      "ar":  "2- في الجزء العلوي الأيمن، انقر على زر \"حسابي\".",
+                      "pt":  "2 No canto superior direito, clique no botão “Minha conta”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Saisir son numéro de Sécurité sociale (13 chiffres, carte Vitale) ou son numéro d\u0027allocataire.",
+                      "en":  "3 Enter your Social Security number (13 digits, Vitale card) or your beneficiary number.",
+                      "es":  "3 Ingrese su número de Seguro Social (13 dígitos, tarjeta Vitale) o su número de beneficiario.",
+                      "ar":  "3 أدخل رقم الضمان الاجتماعي الخاص بك (المكون من 13 رقمًا، بطاقة Vitale) أو رقم المستفيد الخاص بك.",
+                      "pt":  "3 Digite seu número de Seguro Social (13 dígitos, cartão Vitale) ou seu número de beneficiário."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Saisir son mot de passe (il s\u0027affiche en points).",
+                      "en":  "4 Enter your password (it is displayed in dots).",
+                      "es":  "4 Ingrese su contraseña (se muestra en puntos).",
+                      "ar":  "4 أدخل كلمة المرور الخاصة بك (يتم عرضها بالنقاط).",
+                      "pt":  "4 Digite sua senha (ela é exibida em pontos)."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Cliquer sur « Me connecter ».",
+                      "en":  "5 Click on “Connect”.",
+                      "es":  "5 Haga clic en “Conectar”.",
+                      "ar":  "5 انقر على \"الاتصال\".",
+                      "pt":  "5 Clique em “Conectar”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Plus simple : cliquer sur le bouton bleu « FranceConnect » et se connecter avec ses identifiants des Impôts ou d\u0027Ameli. Sur l\u0027appli, on peut ensuite utiliser l\u0027empreinte ou le visage.",
+                      "en":  "Simpler: click on the blue “FranceConnect” button and connect with your Tax or Ameli identifiers. On the app, you can then use the fingerprint or the face.",
+                      "es":  "Más sencillo: haga clic en el botón azul “FranceConnect” y conéctese con sus identificadores Tax o Ameli. En la aplicación, puedes usar la huella digital o la cara.",
+                      "ar":  "أبسط: انقر على زر \"FranceConnect\" الأزرق واتصل بمعرفات الضرائب أو Ameli الخاصة بك. ومن خلال التطبيق، يمكنك بعد ذلك استخدام بصمة الإصبع أو الوجه.",
+                      "pt":  "Mais simples: clique no botão azul “FranceConnect” e conecte-se com seus identificadores fiscais ou Ameli. No aplicativo, você pode usar a impressão digital ou o rosto."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 4",
+                      "en":  "STEP BY STEP · 4",
+                      "es":  "PASO A PASO · 4",
+                      "ar":  "خطوة بخطوة · 4",
+                      "pt":  "PASSO A PASSO · 4"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Créer son compte (nouvel allocataire)",
+                      "en":  "Create your account (new beneficiary)",
+                      "es":  "Crea tu cuenta (nuevo beneficiario)",
+                      "ar":  "أنشئ حسابك (مستفيد جديد)",
+                      "pt":  "Crie sua conta (novo beneficiário)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pas encore de compte ? La création se fait sur www.caf.fr en moins de 10 minutes. 1 Préparer : numéro de Sécurité sociale, une adresse e-mail et un numéro de portable.",
+                      "en":  "No account yet? Creation is done on www.caf.fr in less than 10 minutes. 1 Prepare: Social Security number, an email address and a cell phone number.",
+                      "es":  "¿Aún no tienes cuenta? La creación se realiza en www.caf.fr en menos de 10 minutos. 1 Prepare: número de Seguro Social, una dirección de correo electrónico y un número de teléfono celular.",
+                      "ar":  "ليس لديك حساب بعد؟ يتم الإنشاء على www.caf.fr في أقل من 10 دقائق. 1 التحضير: رقم الضمان الاجتماعي وعنوان البريد الإلكتروني ورقم الهاتف الخليوي.",
+                      "pt":  "Ainda não tem conta? A criação é feita em www.caf.fr em menos de 10 minutos. 1 Prepare: número do Seguro Social, um endereço de e-mail e um número de telefone celular."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Sur www.caf.fr, suivre le parcours de création de compte.",
+                      "en":  "2 On www.caf.fr, follow the account creation process.",
+                      "es":  "2 En www.caf.fr, siga el proceso de creación de cuenta.",
+                      "ar":  "2 على www.caf.fr، اتبع عملية إنشاء الحساب.",
+                      "pt":  "2 Em www.caf.fr, siga o processo de criação de conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Recevoir un code de vérification par SMS ou e-mail, puis le recopier.",
+                      "en":  "3 Receive a verification code by SMS or email, then copy it.",
+                      "es":  "3 Reciba un código de verificación por SMS o correo electrónico y luego cópielo.",
+                      "ar":  "3 استلم رمز التحقق عبر رسالة نصية قصيرة أو عبر البريد الإلكتروني، ثم انسخه.",
+                      "pt":  "3 Receba um código de verificação por SMS ou e-mail e copie-o."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Choisir un mot de passe fort : majuscules, minuscules, chiffres et caractère spécial.",
+                      "en":  "4 Choose a strong password: uppercase, lowercase, numbers and special character.",
+                      "es":  "4 Elija una contraseña segura: mayúsculas, minúsculas, números y caracteres especiales.",
+                      "ar":  "4 اختر كلمة مرور قوية: أحرف كبيرة وصغيرة وأرقام وحرف خاص.",
+                      "pt":  "4 Escolha uma senha forte: maiúsculas, minúsculas, números e caracteres especiais."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Noter son numéro d\u0027allocataire et garder son mot de passe en lieu sûr.",
+                      "en":  "5 Write down your beneficiary number and keep your password in a safe place.",
+                      "es":  "5 Anota tu número de beneficiario y guarda tu contraseña en un lugar seguro.",
+                      "ar":  "5 قم بتدوين رقم المستفيد الخاص بك واحتفظ بكلمة المرور الخاصة بك في مكان آمن.",
+                      "pt":  "5 Anote seu número de beneficiário e guarde sua senha em local seguro."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bon réflexe : ne jamais écrire son mot de passe sur un papier visible, ni le donner à quelqu\u0027un par téléphone ou par mail.",
+                      "en":  "Good reflex: never write your password on visible paper, nor give it to anyone by telephone or email.",
+                      "es":  "Buen reflejo: nunca escribas tu contraseña en un papel visible, ni la des a nadie por teléfono o correo electrónico.",
+                      "ar":  "رد الفعل الجيد: لا تكتب أبدًا كلمة المرور الخاصة بك على ورق مرئي، ولا تعطيها لأي شخص عبر الهاتف أو البريد الإلكتروني.",
+                      "pt":  "Bom reflexo: nunca escreva sua senha em papel visível, nem a entregue a ninguém por telefone ou e-mail."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "NAVIGATION · 5",
+                      "en":  "NAVIGATION · 5",
+                      "es":  "NAVEGACIÓN · 5",
+                      "ar":  "الملاحة · 5",
+                      "pt":  "NAVEGAÇÃO · 5"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Se repérer sur la page d\u0027accueil",
+                      "en":  "Find your way to the home page",
+                      "es":  "Encuentre el camino a la página de inicio",
+                      "ar":  "ابحث عن طريقك إلى الصفحة الرئيسية",
+                      "pt":  "Encontre o caminho para a página inicial"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Une fois connecté, voici les boutons à connaître sur la page d\u0027accueil :",
+                      "en":  "Once logged in, here are the buttons to know on the home page:",
+                      "es":  "Una vez que haya iniciado sesión, estos son los botones que debe conocer en la página de inicio:",
+                      "ar":  "بمجرد تسجيل الدخول، إليك الأزرار التي يجب معرفتها في الصفحة الرئيسية:",
+                      "pt":  "Uma vez logado, aqui estão os botões para saber na página inicial:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Ma situation / Mon profil » « Mes paiements » Vérifier mes infos : adresse, RIB, foyer. Les versements reçus, dates et montants.",
+                      "en":  "“My situation / My profile” “My payments” Check my information: address, RIB, household. Payments received, dates and amounts.",
+                      "es":  "“Mi situación / Mi perfil” “Mis pagos” Consulta mis datos: dirección, RIB, domicilio. Pagos recibidos, fechas e importes.",
+                      "ar":  "\"حالتي / ملفي الشخصي\" \"مدفوعاتي\" تحقق من معلوماتي: العنوان، RIB، الأسرة. المدفوعات المستلمة والتواريخ والمبالغ.",
+                      "pt":  "“Minha situação / Meu perfil” “Meus pagamentos” Verifique meus dados: endereço, RIB, domicílio. Pagamentos recebidos, datas e valores."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Mes démarches » « Mes courriers, courriels » L\u0027avancement de mes demandes et les pièces à Écrire à la CAF et lire ses réponses. fournir.",
+                      "en":  "“My procedures” “My letters, emails” The progress of my requests and the documents to Write to the CAF and read its responses. provide.",
+                      "es":  "“Mis trámites” “Mis cartas, correos electrónicos” El avance de mis solicitudes y los documentos para Escribir a la CAF y leer sus respuestas. proporcionar.",
+                      "ar":  "\"إجراءاتي\" \"رسائلي ورسائل البريد الإلكتروني\" التقدم المحرز في طلباتي والمستندات اللازمة للكتابة إلى CAF وقراءة ردودها. يمد.",
+                      "pt":  "“Meus procedimentos” “Minhas cartas, e-mails” O andamento das minhas solicitações e os documentos para Escrever à CAF e ler suas respostas. fornecer."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "« Mes attestations » Mes alertes / agenda Télécharger mes documents en PDF. Rappels et démarches à faire.",
+                      "en":  "“My certificates” My alerts / diary Download my documents in PDF. Reminders and steps to take.",
+                      "es":  "“Mis certificados” Mis alertas/diario Descarga mis documentos en PDF. Recordatorios y pasos a seguir.",
+                      "ar":  "\"شهاداتي\" تنبيهاتي/مذكراتي قم بتنزيل مستنداتي بصيغة PDF. تذكيرات وخطوات يجب اتخاذها.",
+                      "pt":  "“Meus certificados” Meus alertas/diária Baixe meus documentos em PDF. Lembretes e etapas a serem seguidas."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 6",
+                      "en":  "STEP BY STEP · 6",
+                      "es":  "PASO A PASO · 6",
+                      "ar":  "خطوة بخطوة · 6",
+                      "pt":  "PASSO A PASSO · 6"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Suivre mes paiements",
+                      "en":  "Track my payments",
+                      "es":  "Seguimiento de mis pagos",
+                      "ar":  "تتبع مدفوعاتي",
+                      "pt":  "Acompanhar meus pagamentos"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour vérifier ce que la CAF vous a versé :",
+                      "en":  "To check what CAF has paid you:",
+                      "es":  "Para consultar lo que te ha pagado CAF:",
+                      "ar":  "للتحقق مما دفعه لك CAF:",
+                      "pt":  "Para verificar quanto a CAF pagou a você:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Se connecter à Mon Compte.",
+                      "en":  "1 Log in to My Account.",
+                      "es":  "1 Inicie sesión en Mi cuenta.",
+                      "ar":  "1 قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Faça login em Minha conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Sur la page d\u0027accueil, cliquer sur « Mes paiements ».",
+                      "en":  "2 On the home page, click on “My payments”.",
+                      "es":  "2 En la página de inicio, haga clic en “Mis pagos”.",
+                      "ar":  "2 في الصفحة الرئيسية، انقر على \"مدفوعاتي\".",
+                      "pt":  "2 Na página inicial, clique em “Meus pagamentos”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 La liste affiche les 10 derniers versements : date, montant et prestation.",
+                      "en":  "3 The list displays the last 10 payments: date, amount and service.",
+                      "es":  "3 La lista muestra los últimos 10 pagos: fecha, monto y servicio.",
+                      "ar":  "3 تعرض القائمة آخر 10 دفعات: التاريخ والمبلغ والخدمة.",
+                      "pt":  "3 A lista exibe os últimos 10 pagamentos: data, valor e serviço."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Pour les plus anciens, faire défiler (jusqu\u0027à 24 mois).",
+                      "en":  "4 For the oldest, scroll (up to 24 months).",
+                      "es":  "4 Para los más antiguos, desplácese (hasta 24 meses).",
+                      "ar":  "4 بالنسبة للأقدم، قم بالتمرير (حتى 24 شهرًا).",
+                      "pt":  "4 Para os mais antigos, role (até 24 meses)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Pour un justificatif : « Mon relevé de compte » puis « Télécharger ».",
+                      "en":  "5 For proof: “My account statement” then “Download”.",
+                      "es":  "5 Para comprobante: “Mi estado de cuenta” y luego “Descargar”.",
+                      "ar":  "5 للإثبات: “كشف حسابي” ثم “تحميل”.",
+                      "pt":  "5 Para comprovação: “Extrato da minha conta” e depois “Baixar”."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 7",
+                      "en":  "STEP BY STEP · 7",
+                      "es":  "PASO A PASO · 7",
+                      "ar":  "خطوة بخطوة · 7",
+                      "pt":  "PASSO A PASSO · 7"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Télécharger une attestation",
+                      "en":  "Download a certificate",
+                      "es":  "Descargar un certificado",
+                      "ar":  "قم بتنزيل شهادة",
+                      "pt":  "Baixe um certificado"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour obtenir une attestation de paiement ou de quotient familial :",
+                      "en":  "To obtain a payment or family quotient certificate:",
+                      "es":  "Para obtener un certificado de pago o cociente familiar:",
+                      "ar":  "للحصول على شهادة السداد أو الحاصل العائلي:",
+                      "pt":  "Para obter um certificado de pagamento ou quociente familiar:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Se connecter à Mon Compte.",
+                      "en":  "1 Log in to My Account.",
+                      "es":  "1 Inicie sesión en Mi cuenta.",
+                      "ar":  "1 قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Faça login em Minha conta."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Sur la page d\u0027accueil, cliquer sur « Mes attestations ».",
+                      "en":  "2 On the home page, click on “My certificates”.",
+                      "es":  "2 En la página de inicio, haga clic en “Mis certificados”.",
+                      "ar":  "2 في الصفحة الرئيسية، اضغط على \"شهاداتي\".",
+                      "pt":  "2 Na página inicial, clique em “Meus certificados”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Choisir « Attestation de paiement » ou « Attestation de quotient familial ».",
+                      "en":  "3 Choose “Payment certificate” or “Family quotient certificate”.",
+                      "es":  "3 Elige “Certificado de pago” o “Certificado de cociente familiar”.",
+                      "ar":  "3 اختر \"شهادة الدفع\" أو \"شهادة الحصيلة العائلية\".",
+                      "pt":  "3 Escolha “Certificado de pagamento” ou “Certificado de quociente familiar”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Choisir la période (mois précédent ou autre).",
+                      "en":  "4 Choose the period (previous month or other).",
+                      "es":  "4 Elige el periodo (mes anterior u otro).",
+                      "ar":  "4 اختر الفترة (الشهر السابق أو غيره).",
+                      "pt":  "4 Escolha o período (mês anterior ou outro)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Cliquer sur « Télécharger » : le PDF s\u0027enregistre (ou « Recevoir par courrier »).",
+                      "en":  "5 Click on “Download”: the PDF is saved (or “Receive by mail”).",
+                      "es":  "5 Pulsa en “Descargar”: el PDF se guarda (o “Recibir por correo”).",
+                      "ar":  "5 انقر فوق \"تنزيل\": يتم حفظ ملف PDF (أو \"الاستلام عبر البريد\").",
+                      "pt":  "5 Clique em “Baixar”: o PDF é salvo (ou “Receber por correio”)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 8",
+                      "en":  "STEP BY STEP · 8",
+                      "es":  "PASO A PASO · 8",
+                      "ar":  "خطوة بخطوة · 8",
+                      "pt":  "PASSO A PASSO · 8"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Déclarer un changement de situation",
+                      "en":  "Report a change of situation",
+                      "es":  "Informar de un cambio de situación",
+                      "ar":  "الإبلاغ عن تغيير الوضع",
+                      "pt":  "Relatar uma mudança de situação"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Dès qu\u0027un changement arrive, on le signale (évite les erreurs de paiement) :",
+                      "en":  "As soon as a change occurs, we report it (avoid payment errors):",
+                      "es":  "Tan pronto como se produce un cambio, lo informamos (evita errores de pago):",
+                      "ar":  "بمجرد حدوث تغيير، نقوم بالإبلاغ عنه (تجنب أخطاء الدفع):",
+                      "pt":  "Assim que ocorre uma alteração, nós a reportamos (evita erros de pagamento):"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Se connecter à Mon Compte.",
+                      "en":  "1 Log in to My Account.",
+                      "es":  "1 Inicie sesión en Mi cuenta.",
+                      "ar":  "1 قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Faça login em Minha conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Cliquer sur « Mon profil » (ou « Ma situation »).",
+                      "en":  "2 Click on “My profile” (or “My situation”).",
+                      "es":  "2 Haz clic en “Mi perfil” (o “Mi situación”).",
+                      "ar":  "2 انقر على \"ملفي الشخصي\" (أو \"وضعي\").",
+                      "pt":  "2 Clique em “Meu perfil” (ou “Minha situação”)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Choisir ce qui change : adresse, situation familiale, emploi, RIB…",
+                      "en":  "3 Choose what changes: address, family situation, employment, RIB, etc.",
+                      "es":  "3 Elige qué cambia: dirección, situación familiar, empleo, RIB, etc.",
+                      "ar":  "3 اختر التغييرات: العنوان، والوضع العائلي، والوظيفة، والضلع، وما إلى ذلك.",
+                      "pt":  "3 Escolha o que muda: endereço, situação familiar, emprego, RIB, etc."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Saisir les nouvelles informations.",
+                      "en":  "4 Enter the new information.",
+                      "es":  "4 Ingrese la nueva información.",
+                      "ar":  "4 أدخل المعلومات الجديدة.",
+                      "pt":  "4 Insira as novas informações."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Cliquer sur « Valider ». Le plus souvent, aucun justificatif à envoyer.",
+                      "en":  "5 Click on “Validate”. Most often, no proof to send.",
+                      "es":  "5 Haga clic en “Validar”. En la mayoría de los casos, no hay pruebas para enviar.",
+                      "ar":  "5 انقر على \"التحقق من الصحة\". في أغلب الأحيان، لا يوجد دليل لإرساله.",
+                      "pt":  "5 Clique em “Validar”. Na maioria das vezes, nenhuma prova para enviar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 9",
+                      "en":  "STEP BY STEP · 9",
+                      "es":  "PASO A PASO · 9",
+                      "ar":  "خطوة بخطوة · 9",
+                      "pt":  "PASSO A PASSO · 9"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La déclaration trimestrielle (RSA / prime d\u0027activité)",
+                      "en":  "The quarterly declaration (RSA / activity bonus)",
+                      "es":  "La declaración trimestral (RSA / bonificación de actividad)",
+                      "ar":  "الإعلان ربع السنوي (RSA / مكافأة النشاط)",
+                      "pt":  "A declaração trimestral (RSA/bônus de atividade)"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Tous les 3 mois. Depuis mars 2025, elle est pré-remplie : on vérifie et on valide.",
+                      "en":  "Every 3 months. Since March 2025, it has been pre-filled: we check and validate.",
+                      "es":  "Cada 3 meses. Desde marzo de 2025 está precargado: lo comprobamos y validamos.",
+                      "ar":  "كل 3 أشهر. منذ مارس 2025، تم ملؤها مسبقًا: نقوم بالتحقق والتحقق من صحتها.",
+                      "pt":  "A cada 3 meses. Desde março de 2025 está pré-preenchido: verificamos e validamos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Vous recevez un mail ou un SMS : se connecter à Mon Compte.",
+                      "en":  "1 You receive an email or SMS: log in to My Account.",
+                      "es":  "1 Recibes un correo electrónico o SMS: inicia sesión en Mi Cuenta.",
+                      "ar":  "1 تتلقى بريدًا إلكترونيًا أو رسالة نصية قصيرة: قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Você recebe um e-mail ou SMS: faça login em Minha conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Aller dans « Mes ressources » puis « Déclarer mes ressources trimestrielles ».",
+                      "en":  "2 Go to “My resources” then “Declare my quarterly resources”.",
+                      "es":  "2 Vaya a “Mis recursos” y luego a “Declarar mis recursos trimestrales”.",
+                      "ar":  "2 اذهب إلى \"مواردي\" ثم \"أعلن عن مواردي الربع سنوية\".",
+                      "pt":  "2 Vá em “Meus recursos” e depois em “Declarar meus recursos trimestrais”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Accepter (« J\u0027ai compris »), puis confirmer ou corriger sa situation.",
+                      "en":  "3 Accept (“I understand”), then confirm or correct your situation.",
+                      "es":  "3 Acepte (“Entiendo”) y luego confirme o corrija su situación.",
+                      "ar":  "3 اقبل (\"أنا أفهم\")، ثم قم بتأكيد موقفك أو تصحيحه.",
+                      "pt":  "3 Aceite (“Eu entendo”) e confirme ou corrija sua situação."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Vérifier les montants déjà inscrits (salaires, chômage…), en montant net social.",
+                      "en":  "4 Check the amounts already entered (salaries, unemployment, etc.), in net social amount.",
+                      "es":  "4 Consultar los importes ya ingresados ​​(salarios, paro, etc.), en importe social neto.",
+                      "ar":  "4 التحقق من المبالغ التي تم إدخالها بالفعل (الرواتب والبطالة وغيرها) في صافي المبلغ الاجتماعي.",
+                      "pt":  "4 Verifique os valores já lançados (salários, desemprego, etc.), em valor social líquido."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Compléter ce qui manque (pension alim., indépendant, conjoint, enfants +15 ans) ou cocher « Absence de 5 ressources ».",
+                      "en":  "Complete what is missing (alimony, self-employed person, spouse, children over 15 years old) or check “Absence of 5 resources”.",
+                      "es":  "Completar lo que falta (pensión alimenticia, trabajador por cuenta propia, cónyuge, hijos mayores de 15 años) o marcar “Ausencia de 5 recursos”.",
+                      "ar":  "أكمل ما هو ناقص (النفقة، العامل لحسابه الخاص، الزوج، الأبناء فوق 15 سنة) أو ضع علامة على \"غياب 5 موارد\".",
+                      "pt":  "Preencha o que falta (pensão alimentícia, autônomo, cônjuge, filhos maiores de 15 anos) ou marque “Ausência de 5 recursos”."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "6 Cliquer sur « Valider » (et télécharger le récapitulatif si besoin).",
+                      "en":  "6 Click on “Validate” (and download the summary if necessary).",
+                      "es":  "6 Haga clic en “Validar” (y descargue el resumen si es necesario).",
+                      "ar":  "6 انقر على \"التحقق من الصحة\" (وقم بتنزيل الملخص إذا لزم الأمر).",
+                      "pt":  "6 Clique em “Validar” (e baixe o resumo se necessário)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ZOOM · 9",
+                      "en":  "ZOOM · 9",
+                      "es":  "AMPLIAR · 9",
+                      "ar":  "تكبير · 9",
+                      "pt":  "ZOOM · 9"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le montant net social (MNS)",
+                      "en":  "The social net amount (MNS)",
+                      "es":  "El monto social neto (MNS)",
+                      "ar":  "المبلغ الصافي الاجتماعي (MNS)",
+                      "pt":  "O valor líquido social (MNS)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "C\u0027est LE montant à utiliser pour le RSA et la prime d\u0027activité. Il est calculé pour vous.",
+                      "en":  "This is THE amount to use for the RSA and the activity bonus. It is calculated for you.",
+                      "es":  "Esta es LA cantidad a utilizar para el RSA y el bono de actividad. Está calculado para ti.",
+                      "ar":  "هذا هو المبلغ الذي سيتم استخدامه في RSA ومكافأة النشاط. يتم حسابه بالنسبة لك.",
+                      "pt":  "Este é o valor a ser usado para o RSA e o bônus de atividade. É calculado para você."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "C\u0027est quoi ? Le revenu pris en compte par la CAF pour calculer le RSA et la prime d\u0027activité.",
+                      "en":  "It\u0027s what ? The income taken into account by the CAF to calculate the RSA and the activity bonus.",
+                      "es":  "¿Es qué? Los ingresos que toma en cuenta la CAF para calcular el RSA y el bono de actividad.",
+                      "ar":  "هذا ماذا؟ الدخل الذي يأخذه CAF في الاعتبار لحساب RSA ومكافأة النشاط.",
+                      "pt":  "É o quê? As receitas consideradas pela CAF para o cálculo do RSA e do bônus de atividade."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Où le trouver ? Sur le bulletin de salaire et les relevés, ligne « Montant net social ».",
+                      "en":  "Where to find it? On the pay slip and statements, “Net social amount” line.",
+                      "es":  "¿Dónde encontrarlo? En la nómina y extractos, línea “Monto social neto”.",
+                      "ar":  "أين يمكن العثور عليه؟ على قسيمة الراتب والكشوف، سطر \"صافي المبلغ الاجتماعي\".",
+                      "pt":  "Onde encontrar? No contracheque e nos extratos, linha “Valor social líquido”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Et en ligne ? Aussi sur mesdroitssociaux.gouv.fr (Mes services › Mes ressources).",
+                      "en":  "And online? Also on mesdroitssociaux.gouv.fr (My services › My resources).",
+                      "es":  "¿Y en línea? También en mesdroitssociaux.gouv.fr (Mis servicios › Mis recursos).",
+                      "ar":  "وعلى الانترنت؟ أيضًا على mesdroitssociaux.gouv.fr (خدماتي › مواردي).",
+                      "pt":  "E on-line? Também em mesdroitssociaux.gouv.fr (Meus serviços › Meus recursos)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bon à savoir : si le net social d\u0027un mois est négatif ou nul, on déclare 0 €. preencoded.png preencoded.png preencoded.png",
+                      "en":  "Good to know: if the social net for a month is negative or zero, €0 is declared. preencoded.png preencoded.png preencoded.png",
+                      "es":  "Es bueno saberlo: si el neto social de un mes es negativo o cero, se declara 0€. precodificado.png precodificado.png precodificado.png",
+                      "ar":  "من الجيد أن تعرف: إذا كانت شبكة التواصل الاجتماعي لمدة شهر سلبية أو صفر، فسيتم الإعلان عن 0 يورو. preencoded.png preencoded.png preencoded.png",
+                      "pt":  "É bom saber: se a rede social de um mês for negativa ou zero, é declarado 0€. pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "PAS À PAS · 10",
+                      "en":  "STEP BY STEP · 10",
+                      "es":  "PASO A PASO · 10",
+                      "ar":  "خطوة بخطوة · 10",
+                      "pt":  "PASSO A PASSO · 10"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Envoyer un document à la CAF",
+                      "en":  "Send a document to CAF",
+                      "es":  "Enviar un documento a CAF",
+                      "ar":  "أرسل مستندًا إلى CAF",
+                      "pt":  "Envie um documento para a CAF"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Quand la CAF demande un justificatif, on l\u0027envoie directement depuis le compte :",
+                      "en":  "When CAF requests proof, we send it directly from the account:",
+                      "es":  "Cuando CAF solicita comprobante, lo enviamos directamente desde la cuenta:",
+                      "ar":  "عندما يطلب CAF إثباتًا، نرسله مباشرة من الحساب:",
+                      "pt":  "Quando a CAF solicita um comprovante, nós o enviamos diretamente da conta:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Se connecter à Mon Compte.",
+                      "en":  "1 Log in to My Account.",
+                      "es":  "1 Inicie sesión en Mi cuenta.",
+                      "ar":  "1 قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Faça login em Minha conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Aller dans « Mes démarches ».",
+                      "en":  "2 Go to “My procedures”.",
+                      "es":  "2 Vaya a “Mis trámites”.",
+                      "ar":  "2 اذهب إلى \"إجراءاتي\".",
+                      "pt":  "2 Vá em “Meus procedimentos”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Cliquer sur l\u0027onglet « À transmettre » (ou « La Caf me demande »).",
+                      "en":  "3 Click on the “To transmit” tab (or “Caf asks me”).",
+                      "es":  "3 Haz clic en la pestaña “Para transmitir” (o “Caf me pregunta”).",
+                      "ar":  "3 انقر فوق علامة التبويب \"لإرسال\" (أو \"الكاف يسألني\").",
+                      "pt":  "3 Clique na aba “Para transmitir” (ou “Caf me pergunta”)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "4 Cliquer sur l\u0027icône pour choisir un fichier (PDF ou photo, max 5 Mo) ou le prendre en photo.",
+                      "en":  "4 Click on the icon to choose a file (PDF or photo, max 5 MB) or take a photo.",
+                      "es":  "4 Haga clic en el icono para elegir un archivo (PDF o foto, máximo 5 MB) o tomar una foto.",
+                      "ar":  "4 انقر على الأيقونة لاختيار ملف (PDF أو صورة، بحد أقصى 5 ميجابايت) أو التقاط صورة.",
+                      "pt":  "4 Clique no ícone para escolher um arquivo (PDF ou foto, no máximo 5 MB) ou tirar uma foto."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "5 Vérifier avec le petit œil ; supprimer (poubelle) si c\u0027est flou.",
+                      "en":  "5 Check with the little eye; delete (trash) if it\u0027s blurry.",
+                      "es":  "5 Comprueba con el ojito; eliminar (papelera) si está borroso.",
+                      "ar":  "5 تحقق بالعين الصغيرة؛ حذف (سلة المهملات) إذا كانت ضبابية.",
+                      "pt":  "5 Verifique com o olhinho; exclua (lixeira) se estiver desfocado."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "6 Cliquer sur « Continuer ». Suivi dans « Mes courriers, courriels ».",
+                      "en":  "6 Click on “Continue”. Tracked in “My letters, emails”.",
+                      "es":  "6 Haga clic en “Continuar”. Seguimiento en \"Mis cartas, correos electrónicos\".",
+                      "ar":  "6 اضغط على \"متابعة\". تم تتبعه في \"رسائلي ورسائل البريد الإلكتروني\".",
+                      "pt":  "6 Clique em “Continuar”. Rastreado em “Minhas cartas, e-mails”."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ÊTRE AIDÉ · 11",
+                      "en":  "BE HELPED · 11",
+                      "es":  "SER AYUDADO · 11",
+                      "ar":  "كن مساعدًا · 11",
+                      "pt":  "SEJA AJUDADO · 11"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Écrire à la CAF et obtenir de l\u0027aide",
+                      "en":  "Write to CAF and get help",
+                      "es":  "Escribe a CAF y obtén ayuda",
+                      "ar":  "اكتب إلى CAF واحصل على المساعدة",
+                      "pt":  "Escreva para a CAF e obtenha ajuda"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le plus simple : la messagerie de votre compte.",
+                      "en":  "The simplest: your account messaging.",
+                      "es":  "Lo más sencillo: la mensajería de tu cuenta.",
+                      "ar":  "أبسطها: مراسلة حسابك.",
+                      "pt":  "O mais simples: as mensagens da sua conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 Se connecter à Mon Compte.",
+                      "en":  "1 Log in to My Account.",
+                      "es":  "1 Inicie sesión en Mi cuenta.",
+                      "ar":  "1 قم بتسجيل الدخول إلى حسابي.",
+                      "pt":  "1 Faça login em Minha conta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "2 Ouvrir « Mes courriers, courriels » (la messagerie).",
+                      "en":  "2 Open “My mail, emails” (messaging).",
+                      "es":  "2 Abra “Mi correo, correos electrónicos” (mensajería).",
+                      "ar":  "2 افتح \"بريدي ورسائل البريد الإلكتروني\" (المراسلة).",
+                      "pt":  "2 Abra “Meu e-mail, e-mails” (mensagens)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "3 Écrire son message et l\u0027envoyer. La réponse arrive au même endroit.",
+                      "en":  "3 Write your message and send it. The answer comes in the same place.",
+                      "es":  "3 Escribe tu mensaje y envíalo. La respuesta viene en el mismo lugar.",
+                      "ar":  "3 اكتب رسالتك وأرسلها. الجواب يأتي في نفس المكان",
+                      "pt":  "3 Escreva sua mensagem e envie-a. A resposta vem no mesmo lugar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Autres contacts utiles :",
+                      "en":  "Other useful contacts:",
+                      "es":  "Otros contactos útiles:",
+                      "ar":  "اتصالات مفيدة أخرى:",
+                      "pt":  "Outros contactos úteis:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le 3230 Un accueil près de chez soi L\u0027aide en ligne Numéro de la CAF (au téléphone). CAF ou point France Services. Pages d\u0027aide de caf.fr.",
+                      "en":  "3230 A welcome close to home Online help CAF number (by telephone). CIF or France Services point. caf.fr help pages.",
+                      "es":  "3230 Una bienvenida cerca de casa Ayuda online Número CAF (por teléfono). Punto de Servicios CIF o Francia. páginas de ayuda de caf.fr.",
+                      "ar":  "3230 مرحبا بكم بالقرب من المنزل رقم CAF للمساعدة عبر الإنترنت (عن طريق الهاتف). نقطة خدمات CIF أو فرنسا. صفحات المساعدة caf.fr.",
+                      "pt":  "3230 Uma recepção perto de casa. Ajuda online Número CAF (por telefone). Ponto CIF ou France Services. páginas de ajuda do caf.fr."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SÉCURITÉ · 12",
+                      "en":  "SAFETY · 12",
+                      "es":  "SEGURIDAD · 12",
+                      "ar":  "السلامة · 12",
+                      "pt":  "SEGURANÇA · 12"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Protéger mon compte \u0026amp; repérer les arnaques",
+                      "en":  "Protect my account \u0026 spot scams",
+                      "es":  "Proteger mi cuenta y detectar estafas",
+                      "ar":  "حماية حسابي واكتشاف عمليات الاحتيال",
+                      "pt":  "Proteja minha conta e identifique golpes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mes bons réflexes Les signaux d\u0027arnaque",
+                      "en":  "My good reflexes Scam signals",
+                      "es":  "Mis buenos reflejos Señales de estafa",
+                      "ar":  "ردود أفعالي الجيدة إشارات احتيال",
+                      "pt":  "Meus bons reflexos Sinais de fraude"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un mot de passe long, gardé secret Un SMS / mail « remboursement » avec un lien",
+                      "en":  "A long password, kept secret A “reimbursement” SMS/email with a link",
+                      "es":  "Una contraseña larga, mantenida en secreto. Un SMS/correo electrónico de “reembolso” con un enlace.",
+                      "ar":  "كلمة مرور طويلة، تبقى سرية رسالة نصية قصيرة/بريد إلكتروني \"للسداد\" تحتوي على رابط",
+                      "pt":  "Uma senha longa, mantida em segredo Um SMS/e-mail de “reembolso” com um link"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je passe par caf.fr ou l\u0027appli officielle On demande mes identifiants ou mon RIB",
+                      "en":  "I go through caf.fr or the official app We ask for my identifiers or my RIB",
+                      "es":  "Entro en caf.fr o en la aplicación oficial. Solicitamos mis identificadores o mi RIB.",
+                      "ar":  "أذهب عبر caf.fr أو التطبيق الرسمي ونطلب معرفاتي أو RIB الخاص بي",
+                      "pt":  "Eu acesso caf.fr ou o aplicativo oficial Pedimos meus identificadores ou meu RIB"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je vérifie l\u0027adresse du site (caf.fr) Un ton pressant : « urgent », « dernier délai »",
+                      "en":  "I check the site address (caf.fr) An urgent tone: “urgent”, “last deadline”",
+                      "es":  "Compruebo la dirección del sitio (caf.fr) Un tono urgente: “urgente”, “último plazo”",
+                      "ar":  "أتحقق من عنوان الموقع (caf.fr) بنبرة عاجلة: \"عاجل\"، \"آخر موعد\"",
+                      "pt":  "Verifico o endereço do site (caf.fr) Um tom urgente: “urgente”, “último prazo”"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La CAF ne demande jamais ma carte bancaire Une adresse bizarre qui imite caf.fr",
+                      "en":  "CAF never asks for my bank card A strange address that imitates caf.fr",
+                      "es":  "CAF nunca me pide mi tarjeta bancaria Una dirección extraña que imita a caf.fr",
+                      "ar":  "لا يطلب CAF أبدًا بطاقتي المصرفية عنوان غريب يقلد caf.fr",
+                      "pt":  "CAF nunca pede meu cartão bancário Um endereço estranho que imita caf.fr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En cas de doute : ne cliquez pas. Connectez-vous vous-même à caf.fr ou à l\u0027appli pour vérifier.",
+                      "en":  "If in doubt: don\u0027t click. Log in yourself to caf.fr or the app to check.",
+                      "es":  "En caso de duda: no hagas clic. Inicie sesión en caf.fr o en la aplicación para comprobarlo.",
+                      "ar":  "إذا كنت في شك: لا تنقر فوق. قم بتسجيل الدخول بنفسك إلى caf.fr أو التطبيق للتحقق.",
+                      "pt":  "Em caso de dúvida: não clique. Faça login no caf.fr ou no aplicativo para verificar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DÉPANNAGE · 12",
+                      "en":  "TROUBLESHOOTING · 12",
+                      "es":  "SOLUCIÓN DE PROBLEMAS · 12",
+                      "ar":  "استكشاف الأخطاء وإصلاحها · 12",
+                      "pt":  "RESOLUÇÃO DE PROBLEMAS · 12"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "En cas de problème de connexion",
+                      "en":  "In case of connection problem",
+                      "es":  "En caso de problema de conexión",
+                      "ar":  "في حالة وجود مشكلة في الاتصال",
+                      "pt":  "Em caso de problema de conexão"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les blocages les plus courants se règlent en quelques clics :",
+                      "en":  "The most common blockages can be resolved in a few clicks:",
+                      "es":  "Los bloqueos más comunes se pueden resolver con unos pocos clics:",
+                      "ar":  "يمكن حل العوائق الأكثر شيوعًا ببضع نقرات:",
+                      "pt":  "Os bloqueios mais comuns podem ser resolvidos em poucos cliques:"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mot de passe oublié Numéro d\u0027allocataire perdu Sur l\u0027écran de connexion : cliquer « Mot de Il est sur tous les courriers CAF. Sinon, se passe oublié » → on reçoit un lien pour en connecter via FranceConnect ou contacter la créer un nouveau. CAF.",
+                      "en":  "Forgotten password Lost beneficiary number On the connection screen: click “Word from It is on all CAF letters. Otherwise, happens forgotten » → we receive a link to connect via FranceConnect or contact the create a new one. CIF.",
+                      "es":  "Contraseña olvidada Número de beneficiario perdido En la pantalla de conexión: haga clic en \"La palabra de Está en todas las letras CAF. De lo contrario, sucede que se olvidó » → recibimos un enlace para conectarnos a través de FranceConnect o contactarnos para crear uno nuevo. CIF.",
+                      "ar":  "نسيت كلمة المرور فقدت رقم المستفيد على شاشة الاتصال: انقر فوق \"كلمة منه موجودة على جميع أحرف CAF. وإلا فسيتم نسيانها » → نتلقى رابطًا للاتصال عبر FranceConnect أو نتصل بإنشاء رابط جديد. CIF.",
+                      "pt":  "Senha esquecida Número de beneficiário perdido Na tela de conexão: clique em \"Palavra de Está em todas as cartas da CAF. Caso contrário, acontece esquecido » → recebemos um link para conectar via FranceConnect ou entre em contato para criar um novo. CIF."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027appli ne s\u0027ouvre plus Toujours bloqué ? Mettre l\u0027appli à jour, vérifier sa connexion La messagerie, le 3230 ou un point d\u0027accueil Internet, puis se reconnecter avec ses peuvent débloquer la situation. identifiants.",
+                      "en":  "The app no ​​longer opens Still stuck? Updating the app, checking its connection to messaging, 3230 or an Internet reception point, then reconnecting with it can resolve the situation. identifiers.",
+                      "es":  "La aplicación ya no abre ¿Sigues atascado? Actualizar la aplicación, verificar su conexión a mensajería, 3230 o un punto de recepción de Internet y luego volver a conectarse puede resolver la situación. identificadores.",
+                      "ar":  "التطبيق لم يعد يفتح هل ما زال عالقا؟ تحديث التطبيق والتحقق من اتصاله بالرسائل أو 3230 أو نقطة استقبال الإنترنت ثم إعادة الاتصال به يمكن أن يحل المشكلة. معرفات.",
+                      "pt":  "O aplicativo não abre mais Ainda travado? Atualizar o aplicativo, verificar sua conexão com o serviço de mensagens, 3230 ou um ponto de recepção de Internet e, em seguida, reconectar-se a ele pode resolver a situação. identificadores."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png preencoded.png preencoded.png",
+                      "en":  "preencoded.png preencoded.png preencoded.png",
+                      "es":  "precodificado.png precodificado.png precodificado.png",
+                      "ar":  "preencoded.png preencoded.png preencoded.png",
+                      "pt":  "pré-codificado.png pré-codificado.png pré-codificado.png"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique",
+                      "en":  "Yggdrasil · Digital mediation",
+                      "es":  "Yggdrasil · Mediación digital",
+                      "ar":  "يغدراسيل · الوساطة الرقمية",
+                      "pt":  "Yggdrasil · Mediação digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027ESSENTIEL À RETENIR",
+                      "en":  "THE ESSENTIAL TO REMEMBER",
+                      "es":  "LO IMPRESCINDIBLE PARA RECORDAR",
+                      "ar":  "من الضروري أن نتذكر",
+                      "pt":  "O ESSENCIAL A LEMBRAR"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mon compte CAF, mode d\u0027emploi",
+                      "en":  "My CAF account, instructions for use",
+                      "es":  "Mi cuenta CAF, instrucciones de uso",
+                      "ar":  "حسابي في CAF، تعليمات الاستخدام",
+                      "pt":  "Minha conta CAF, instruções de uso"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Un seul espace Je sais me connecter",
+                      "en":  "Only one space I know how to connect",
+                      "es":  "Sólo un espacio sé cómo conectarme.",
+                      "ar":  "مساحة واحدة فقط أعرف كيفية الاتصال بها",
+                      "pt":  "Apenas um espaço que sei como conectar"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le site caf.fr et l\u0027appli « Caf - Mon Compte » : le N° d\u0027allocataire + mot de passe, FranceConnect, même dossier. ou empreinte / visage.",
+                      "en":  "The caf.fr website and the “Caf – My Account” app: beneficiary number + password, FranceConnect, same file. or fingerprint/face.",
+                      "es":  "El sitio caf.fr y la aplicación “Caf – Mi Cuenta”: número de beneficiario + contraseña, FranceConnect, mismo archivo. o huella dactilar/rostro.",
+                      "ar":  "موقع caf.fr وتطبيق \"Caf – My Account\": رقم المستفيد + كلمة المرور، FranceConnect، نفس الملف. أو بصمة/الوجه.",
+                      "pt":  "O site caf.fr e o aplicativo “Caf – Minha Conta”: número do beneficiário + senha, FranceConnect, mesmo arquivo. ou impressão digital/rosto."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Je vérifie et je valide Je reste prudent",
+                      "en":  "I check and validate I remain cautious",
+                      "es":  "Compruebo y valido sigo siendo cauteloso",
+                      "ar":  "أتحقق وأؤكد أنني مازلت حذرًا",
+                      "pt":  "Eu verifico e valido, continuo cauteloso"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La déclaration trimestrielle est pré-remplie : je Je passe toujours par caf.fr / l\u0027appli ; je me méfie contrôle puis je valide. des liens reçus.",
+                      "en":  "The quarterly declaration is pre-filled: I always go through caf.fr / the app; I am wary, check then I validate. links received.",
+                      "es":  "La declaración trimestral está precumplimentada: siempre visito caf.fr/la aplicación; Soy cauteloso, compruebo y luego valido. enlaces recibidos.",
+                      "ar":  "يتم ملء الإعلان ربع السنوي مسبقًا: أذهب دائمًا عبر caf.fr / التطبيق؛ أنا حذر، تحقق ثم أقوم بالتحقق. تم استلام الروابط",
+                      "pt":  "A declaração trimestral é pré-preenchida: passo sempre pelo caf.fr / app; Estou cauteloso, verifico e valido. links recebidos."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "preencoded.png",
+                      "en":  "preencoded.png",
+                      "es":  "precodificado.png",
+                      "ar":  "مشفر مسبقًا.png",
+                      "pt":  "pré-codificado.png"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil · Médiation numérique — atelier « Mon compte CAF de A à Z »",
+                      "en":  "Yggdrasil · Digital mediation — workshop “My CAF account from A to Z”",
+                      "es":  "Yggdrasil · Mediación digital — taller “Mi cuenta CAF de la A a la Z”",
+                      "ar":  "يغدراسيل · الوساطة الرقمية – ورشة عمل “حسابي في CAF من الألف إلى الياء”",
+                      "pt":  "Yggdrasil · Mediação digital — workshop “Minha conta CAF de A a Z”"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

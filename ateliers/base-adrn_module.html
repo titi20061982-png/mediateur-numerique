@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#premiers-pas">← Retour aux ateliers</a>
-    <div class="eyebrow">🖥️ Base ADRN (montage / diagnostic PC)</div>
-    <h1>Module 01-02</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#premiers-pas">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🖥️ Base ADRN (montage / diagnostic PC)</div>
+    <h1 id="h1El">Module 01-02</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -99,8 +104,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">Mediation Numerique &amp; Reconditionnement</p>
       <p>FORMATION AGENT DE RECONDITIONNEMENT NUMERIQUE</p>
       <p>Materiel &amp; logiciel Les bases indispensables pour diagnostiquer, entretenir et remettre en service un ordinateur : du materiel qui le compose au systeme qui le fait fonctionner.</p>
@@ -264,13 +269,1362 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🖥️ Base ADRN (montagem/diagnóstico de PC)",
+                    "en":  "🖥️ ADRN base (PC assembly / diagnosis)",
+                    "fr":  "🖥️ Base ADRN (montage / diagnostic PC)",
+                    "ar":  "🖥️ قاعدة ADRN (تجميع/تشخيص أجهزة الكمبيوتر)",
+                    "es":  "🖥️ Base ADRN (montaje/diagnóstico de PC)"
+                },
+    "h1":  {
+               "pt":  "Módulo 01-02",
+               "en":  "Module 01-02",
+               "fr":  "Module 01-02",
+               "ar":  "الوحدة 01-02",
+               "es":  "Módulo 01-02"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "Mediation Numerique \u0026amp; Reconditionnement",
+                      "en":  "Digital Mediation \u0026 Reconditioning",
+                      "es":  "Mediación y Reacondicionamiento Digital",
+                      "ar":  "الوساطة الرقمية والتجديد",
+                      "pt":  "Mediação e Recondicionamento Digital"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "FORMATION AGENT DE RECONDITIONNEMENT NUMERIQUE",
+                      "en":  "DIGITAL RECONDITIONING AGENT TRAINING",
+                      "es":  "FORMACIÓN DE AGENTES DE REACONDICIONAMIENTO DIGITAL",
+                      "ar":  "تدريب وكيل التجديد الرقمي",
+                      "pt":  "TREINAMENTO DE AGENTE DE RECONDICIONAMENTO DIGITAL"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Materiel \u0026amp; logiciel Les bases indispensables pour diagnostiquer, entretenir et remettre en service un ordinateur : du materiel qui le compose au systeme qui le fait fonctionner.",
+                      "en":  "Hardware \u0026 software The essential basics for diagnosing, maintaining and putting a computer back into service: from the hardware that makes it up to the system that makes it work.",
+                      "es":  "Hardware y software Los conceptos básicos esenciales para diagnosticar, mantener y volver a poner en servicio una computadora: desde el hardware que la compone hasta el sistema que la hace funcionar.",
+                      "ar":  "الأجهزة والبرامج الأساسيات الأساسية لتشخيص الكمبيوتر وصيانته وإعادته إلى الخدمة: بدءًا من الأجهزة التي تصنعه وحتى النظام الذي يجعله يعمل.",
+                      "pt":  "Hardware e software Os princípios básicos para diagnosticar, manter e colocar um computador novamente em serviço: desde o hardware que o compõe até o sistema que o faz funcionar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Module 01 — Hardware PC Module 02 — Logiciel Les composants qui constituent une unite centrale, leur role et leur Le systeme d\u0027exploitation, les pilotes materiels et les reflexes de securite reconnaissance visuelle. logicielle.",
+                      "en":  "Module 01 — PC Hardware Module 02 — Software The components that constitute a central unit, their role and their The operating system, hardware drivers and security reflexes visual recognition. software.",
+                      "es":  "Módulo 01 — Hardware de PC Módulo 02 — Software Los componentes que constituyen una unidad central, su función y su El sistema operativo, controladores de hardware y reflejos de seguridad reconocimiento visual. software.",
+                      "ar":  "الوحدة 01 - أجهزة الكمبيوتر الوحدة 02 - البرامج المكونات التي تشكل وحدة مركزية ودورها وانعكاسات نظام التشغيل وبرامج تشغيل الأجهزة وردود الفعل الأمنية على التعرف البصري. برمجة.",
+                      "pt":  "Módulo 01 — Hardware do PC Módulo 02 — Software Os componentes que constituem uma unidade central, sua função e seu reconhecimento visual do sistema operacional, drivers de hardware e reflexos de segurança. software."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 1",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 1",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 1",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 1",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 1"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "SOMMAIRE",
+                      "en":  "SUMMARY",
+                      "es":  "RESUMEN",
+                      "ar":  "ملخص",
+                      "pt":  "RESUMO"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Deux modules pour maitriser les fondamentaux du PC Du materiel qui compose la machine au systeme logiciel qui la fait fonctionner.",
+                      "en":  "Two modules to master the fundamentals of the PC From the hardware that makes up the machine to the software system that makes it work.",
+                      "es":  "Dos módulos para dominar los fundamentos del PC Desde el hardware que conforma la máquina hasta el sistema de software que la hace funcionar.",
+                      "ar":  "وحدتان لإتقان أساسيات الكمبيوتر، بدءًا من الأجهزة التي يتكون منها الجهاز وحتى نظام البرامج الذي يجعله يعمل.",
+                      "pt":  "Dois módulos para dominar os fundamentos do PC Desde o hardware que compõe a máquina até o sistema de software que a faz funcionar."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "01 Hardware PC 02 Logiciel",
+                      "en":  "01 PC Hardware 02 Software",
+                      "es":  "01 Hardware de PC 02 Software",
+                      "ar":  "01 أجهزة الكمبيوتر 02 البرمجيات",
+                      "pt":  "01 Hardware para PC 02 Software"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte mere Qu\u0027est-ce qu\u0027un systeme d\u0027exploitation",
+                      "en":  "Motherboard What is an operating system",
+                      "es":  "Placa base ¿Qué es un sistema operativo?",
+                      "ar":  "اللوحة الأم ما هو نظام التشغيل؟",
+                      "pt":  "Placa-mãe O que é um sistema operacional"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Processeur (CPU) Les grandes familles d\u0027OS Memoire vive (RAM) Installer un systeme d\u0027exploitation Stockage (HDD / SSD / NVMe) Les pilotes (drivers) Alimentation \u0026amp; refroidissement Trouver et installer les bons pilotes Carte graphique",
+                      "en":  "Processor (CPU) The main OS families RAM (RAM) Install an operating system Storage (HDD / SSD / NVMe) Drivers Power supply \u0026 cooling Find and install the right drivers Graphics card",
+                      "es":  "Procesador (CPU) Las principales familias de sistemas operativos RAM (RAM) Instalar un sistema operativo Almacenamiento (HDD / SSD / NVMe) Controladores Fuente de alimentación y refrigeración Encuentre e instale los controladores adecuados Tarjeta gráfica",
+                      "ar":  "المعالج (CPU) عائلات نظام التشغيل الرئيسية ذاكرة الوصول العشوائي (RAM) تثبيت نظام التشغيل التخزين (HDD / SSD / NVMe) برامج التشغيل مصدر الطاقة والتبريد البحث عن برامج التشغيل المناسبة وتثبيتها بطاقة الرسومات",
+                      "pt":  "Processador (CPU) As principais famílias de sistemas operacionais RAM (RAM) Instale um sistema operacional Armazenamento (HDD / SSD / NVMe) Drivers Fonte de alimentação e resfriamento Encontre e instale os drivers corretos Placa gráfica"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Connectique Antivirus et pare-feu",
+                      "en":  "Antivirus and firewall connectivity",
+                      "es":  "Conectividad antivirus y firewall",
+                      "ar":  "اتصال مكافحة الفيروسات وجدار الحماية",
+                      "pt":  "Conectividade antivírus e firewall"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte Wi-Fi Bonnes pratiques de securite",
+                      "en":  "Wi-Fi card Best security practices",
+                      "es":  "Tarjeta Wi-Fi Mejores prácticas de seguridad",
+                      "ar":  "بطاقة Wi-Fi أفضل الممارسات الأمنية",
+                      "pt":  "Placa Wi-Fi Melhores práticas de segurança"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Entretien materiel",
+                      "en":  "Equipment maintenance",
+                      "es":  "Mantenimiento de equipos",
+                      "ar":  "صيانة المعدات",
+                      "pt":  "Manutenção de equipamentos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 2",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 2",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 2",
+                      "ar":  "Yggdrasil — وكيل التجديد الرقمي 2",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les composants d\u0027un ordinateur Panorama des elements qui composent une unite centrale : role de chaque piece, interactions et vocabulaire technique indispensable au diagnostic.",
+                      "en":  "The components of a computer Panorama of the elements that make up a central unit: role of each part, interactions and technical vocabulary essential for diagnosis.",
+                      "es":  "Los componentes de un ordenador Panorama de los elementos que componen una unidad central: función de cada parte, interacciones y vocabulario técnico imprescindible para el diagnóstico.",
+                      "ar":  "مكونات بانوراما الحاسوب للعناصر التي تشكل الوحدة المركزية: دور كل جزء، التفاعلات والمفردات التقنية الضرورية للتشخيص.",
+                      "pt":  "Os componentes de um computador Panorama dos elementos que constituem uma unidade central: função de cada parte, interações e vocabulário técnico essencial ao diagnóstico."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte mere Processeur Memoire vive Stockage Alimentation Carte graphique Carte Wi-Fi",
+                      "en":  "Motherboard Processor RAM Storage Power supply Graphics card Wi-Fi card",
+                      "es":  "Placa base Procesador RAM Almacenamiento Fuente de alimentación Tarjeta gráfica Tarjeta Wi-Fi",
+                      "ar":  "اللوحة الأم المعالج ذاكرة الوصول العشوائي التخزين مصدر الطاقة بطاقة الرسومات بطاقة Wi-Fi",
+                      "pt":  "Placa-mãe Processador RAM Armazenamento Fonte de alimentação Placa gráfica Placa Wi-Fi"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 3",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 3",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 3",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 3",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 3"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La carte mere : le chef d\u0027orchestre La carte mere relie et fait communiquer tous les composants entre eux. Elle determine la compatibilite de l\u0027ensemble de la machine.",
+                      "en":  "The motherboard: the conductor The motherboard connects and communicates all the components with each other. It determines the compatibility of the entire machine.",
+                      "es":  "La placa base: el conductor La placa base conecta y comunica todos los componentes entre sí. Determina la compatibilidad de toda la máquina.",
+                      "ar":  "اللوحة الأم: الموصل تقوم اللوحة الأم بتوصيل وتوصيل جميع المكونات مع بعضها البعض. فهو يحدد توافق الجهاز بأكمله.",
+                      "pt":  "A placa-mãe: o condutor A placa-mãe conecta e comunica todos os componentes entre si. Determina a compatibilidade de toda a máquina."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Chipset Circuit qui pilote les echanges entre CPU, RAM, stockage et peripheriques. Determine les fonctionnalites disponibles (overclocking, nombre de ports...).",
+                      "en":  "Chipset Circuit that controls exchanges between CPU, RAM, storage and peripherals. Determines the available features (overclocking, number of ports, etc.).",
+                      "es":  "Circuito Chipset que controla los intercambios entre CPU, RAM, almacenamiento y periféricos. Determina las funciones disponibles (overclocking, número de puertos, etc.).",
+                      "ar":  "دائرة مجموعة الشرائح التي تتحكم في التبادلات بين وحدة المعالجة المركزية وذاكرة الوصول العشوائي والتخزين والأجهزة الطرفية. يحدد الميزات المتاحة (رفع تردد التشغيل، عدد المنافذ، وما إلى ذلك).",
+                      "pt":  "Circuito Chipset que controla trocas entre CPU, RAM, armazenamento e periféricos. Determina os recursos disponíveis (overclocking, número de portas, etc.)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Format (form factor) ATX (standard), Micro-ATX (compact), Mini-ITX (tres compact). Le format conditionne la taille du boitier et le nombre de slots.",
+                      "en":  "Format (form factor) ATX (standard), Micro-ATX (compact), Mini-ITX (very compact). The format determines the size of the case and the number of slots.",
+                      "es":  "Formato (factor de forma) ATX (estándar), Micro-ATX (compacto), Mini-ITX (muy compacto). El formato determina el tamaño de la caja y el número de ranuras.",
+                      "ar":  "التنسيق (عامل الشكل) ATX (قياسي)، Micro-ATX (مدمج)، Mini-ITX (مضغوط جدًا). يحدد التنسيق حجم العلبة وعدد الفتحات.",
+                      "pt":  "Formato (fator de forma) ATX (padrão), Micro-ATX (compacto), Mini-ITX (muito compacto). O formato determina o tamanho da caixa e o número de slots."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Socket processeur Emplacement physique du CPU. Chaque socket (ex. LGA1700, AM5) n\u0027accepte qu\u0027une famille de processeurs precise.",
+                      "en":  "Processor socket Physical location of the CPU. Each socket (e.g. LGA1700, AM5) only accepts a specific family of processors.",
+                      "es":  "Zócalo del procesador Ubicación física de la CPU. Cada socket (por ejemplo, LGA1700, AM5) solo acepta una familia específica de procesadores.",
+                      "ar":  "مقبس المعالج الموقع الفعلي لوحدة المعالجة المركزية. كل مقبس (مثل LGA1700، AM5) يقبل فقط عائلة معينة من المعالجات.",
+                      "pt":  "Soquete do processador Localização física da CPU. Cada soquete (por exemplo, LGA1700, AM5) aceita apenas uma família específica de processadores."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Connectique embarquee Slots RAM (DIMM), emplacements PCIe pour carte graphique, ports SATA/M.2 pour le stockage, ports arriere USB/reseau/audio.",
+                      "en":  "Onboard connectivity RAM slots (DIMM), PCIe slots for graphics card, SATA/M.2 ports for storage, rear USB/network/audio ports.",
+                      "es":  "Conectividad integrada Ranuras RAM (DIMM), ranuras PCIe para tarjeta gráfica, puertos SATA/M.2 para almacenamiento, puertos USB/red/audio traseros.",
+                      "ar":  "فتحات ذاكرة الوصول العشوائي (DIMM)، وفتحات PCIe لبطاقة الرسومات، ومنافذ SATA/M.2 للتخزين، ومنافذ USB/شبكة/صوت خلفية.",
+                      "pt":  "Conectividade integrada Slots RAM (DIMM), slots PCIe para placa gráfica, portas SATA/M.2 para armazenamento, portas traseiras USB/rede/áudio."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 4",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 4",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 4",
+                      "ar":  "Yggdrasil — وكيل التجديد الرقمي 4",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 4"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le processeur (CPU) : le cerveau de la machine Le CPU execute les instructions et effectue les calculs. Ses caracteristiques principales determinent la puissance de traitement disponible.",
+                      "en":  "The processor (CPU): the brain of the machine The CPU executes instructions and performs calculations. Its main characteristics determine the processing power available.",
+                      "es":  "El procesador (CPU): el cerebro de la máquina La CPU ejecuta instrucciones y realiza cálculos. Sus principales características determinan la potencia de procesamiento disponible.",
+                      "ar":  "المعالج (CPU): عقل الآلة. تقوم وحدة المعالجة المركزية بتنفيذ التعليمات وإجراء العمليات الحسابية. تحدد خصائصه الرئيسية قوة المعالجة المتاحة.",
+                      "pt":  "O processador (CPU): o cérebro da máquina A CPU executa instruções e realiza cálculos. Suas principais características determinam o poder de processamento disponível."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Coeurs et threads Un CPU multicoeur execute plusieurs taches en parallele. L\u0027hyperthreading (SMT) simule des coeurs supplementaires pour le multitache.",
+                      "en":  "Cores and threads A multi-core CPU executes several tasks in parallel. Hyperthreading (SMT) simulates additional cores for multitasking.",
+                      "es":  "Núcleos e hilos Una CPU multinúcleo ejecuta varias tareas en paralelo. Hyperthreading (SMT) simula núcleos adicionales para realizar múltiples tareas.",
+                      "ar":  "النوى والخيوط تقوم وحدة المعالجة المركزية متعددة النواة بتنفيذ عدة مهام بالتوازي. يحاكي Hyperthreading (SMT) النوى الإضافية لتعدد المهام.",
+                      "pt":  "Núcleos e threads Uma CPU multi-core executa diversas tarefas em paralelo. Hyperthreading (SMT) simula núcleos adicionais para multitarefa."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Frequence (GHz) Nombre de cycles d\u0027horloge par seconde. Plus elle est elevee, plus le CPU traite d\u0027instructions rapidement, a architecture egale.",
+                      "en":  "Frequency (GHz) Number of clock cycles per second. The higher it is, the more quickly the CPU processes instructions, with equal architecture.",
+                      "es":  "Frecuencia (GHz) Número de ciclos de reloj por segundo. Cuanto más alto es, más rápidamente la CPU procesa las instrucciones, con la misma arquitectura.",
+                      "ar":  "التردد (جيجاهرتز) عدد دورات الساعة في الثانية. كلما كان أعلى، كلما زادت سرعة معالجة وحدة المعالجة المركزية للتعليمات وببنية متساوية.",
+                      "pt":  "Frequência (GHz) Número de ciclos de clock por segundo. Quanto maior, mais rapidamente a CPU processa as instruções, com arquitetura igual."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cache L1 / L2 / L3 Memoire ultra-rapide integree au processeur qui stocke les donnees frequemment utilisees pour eviter les allers-retours vers la RAM.",
+                      "en":  "L1 / L2 / L3 cache Ultra-fast memory integrated into the processor which stores frequently used data to avoid round trips to RAM.",
+                      "es":  "Caché L1 / L2 / L3 Memoria ultrarrápida integrada en el procesador que almacena datos de uso frecuente para evitar viajes de ida y vuelta a la RAM.",
+                      "ar":  "ذاكرة تخزين مؤقت L1 / L2 / L3 ذاكرة فائقة السرعة مدمجة في المعالج تقوم بتخزين البيانات المستخدمة بشكل متكرر لتجنب الرحلات ذهابًا وإيابًا إلى ذاكرة الوصول العشوائي (RAM).",
+                      "pt":  "Cache L1 / L2 / L3 Memória ultrarrápida integrada ao processador que armazena dados usados ​​com frequência para evitar viagens de ida e volta à RAM."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Socket et compatibilite Un CPU Intel ou AMD n\u0027est compatible qu\u0027avec les cartes meres dotees du bon socket et du chipset correspondant.",
+                      "en":  "Socket and Compatibility An Intel or AMD CPU is only compatible with motherboards with the correct socket and corresponding chipset.",
+                      "es":  "Zócalo y compatibilidad Una CPU Intel o AMD sólo es compatible con placas base con el zócalo correcto y el chipset correspondiente.",
+                      "ar":  "المقبس والتوافق وحدة المعالجة المركزية Intel أو AMD متوافقة فقط مع اللوحات الأم ذات المقبس الصحيح ومجموعة الشرائح المقابلة.",
+                      "pt":  "Soquete e Compatibilidade Uma CPU Intel ou AMD só é compatível com placas-mãe com o soquete correto e chipset correspondente."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 5",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 5",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 5",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 5",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 5"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La memoire vive (RAM) : la memoire de travail Memoire volatile qui stocke temporairement les donnees en cours d\u0027utilisation. Plusieurs generations coexistent, non interchangeables.",
+                      "en":  "Random access memory (RAM): working memory Volatile memory which temporarily stores data in use. Several generations coexist, not interchangeable.",
+                      "es":  "Memoria de acceso aleatorio (RAM): memoria de trabajo Memoria volátil que almacena temporalmente los datos en uso. Varias generaciones coexisten, no intercambiables.",
+                      "ar":  "ذاكرة الوصول العشوائي (RAM): الذاكرة العاملة، الذاكرة المتطايرة التي تقوم بتخزين البيانات المستخدمة مؤقتًا. عدة أجيال تتعايش، غير قابلة للتبديل.",
+                      "pt":  "Memória de acesso aleatório (RAM): memória de trabalho Memória volátil que armazena temporariamente os dados em uso. Várias gerações coexistem, não são intercambiáveis."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Role : memoire de travail temporaire ou le processeur lit et ecrit les donnees des programmes en cours d\u0027execution. Volatile : son contenu est efface a chaque extinction, contrairement au stockage.",
+                      "en":  "Role: temporary working memory where the processor reads and writes data from running programs. Volatile: its content is erased each time it is turned off, unlike storage.",
+                      "es":  "Función: memoria de trabajo temporal donde el procesador lee y escribe datos de programas en ejecución. Volátil: su contenido se borra cada vez que se apaga, a diferencia del almacenamiento.",
+                      "ar":  "الدور: ذاكرة عمل مؤقتة حيث يقوم المعالج بقراءة وكتابة البيانات من البرامج قيد التشغيل. متقلب: يتم مسح محتواه في كل مرة يتم إيقاف تشغيله، على عكس التخزين.",
+                      "pt":  "Função: memória de trabalho temporária onde o processador lê e grava dados de programas em execução. Volátil: seu conteúdo é apagado sempre que é desligado, diferentemente do armazenamento."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Reconnaitre la generation d\u0027une barrette Le plus simple : lire l\u0027etiquette du fabricant, qui indique presque toujours la generation (ex. \"DDR3-1600\", \"PC3-12800\"). Si elle est absente, effacee ou illisible, on se repere visuellement a la position de l\u0027encoche et a la forme du connecteur.",
+                      "en":  "Recognizing the generation of a strip The simplest: read the manufacturer\u0027s label, which almost always indicates the generation (eg \"DDR3-1600\", \"PC3-12800\"). If it is absent, erased or illegible, we can visually identify the position of the notch and the shape of the connector.",
+                      "es":  "Reconocer la generación de una regleta Lo más sencillo: leer la etiqueta del fabricante, que casi siempre indica la generación (p. ej. \"DDR3-1600\", \"PC3-12800\"). Si está ausente, borrado o ilegible, podemos identificar visualmente la posición de la muesca y la forma del conector.",
+                      "ar":  "التعرف على جيل الشريط أبسطها: اقرأ ملصق الشركة المصنعة، والذي يشير دائمًا تقريبًا إلى الجيل (على سبيل المثال \"DDR3-1600\"، \"PC3-12800\"). إذا كان غائبًا أو تم مسحه أو غير مقروء، فيمكننا تحديد موضع الشق وشكل الموصل بصريًا.",
+                      "pt":  "Reconhecendo a geração de uma tira O mais simples: leia a etiqueta do fabricante, que quase sempre indica a geração (ex. “DDR3-1600”, “PC3-12800”). Caso esteja ausente, apagado ou ilegível, podemos identificar visualmente a posição do entalhe e o formato do conector."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Generation Marquage typique Repere visuel si pas d\u0027etiquette DDR PC-xxxx (ex. PC3200) 184 broches, encoche proche du bord gauche",
+                      "en":  "Generation Typical marking Visual indicator if no DDR label PC-xxxx (e.g. PC3200) 184 pins, notch near left edge",
+                      "es":  "Generación Marca típica Indicador visual si no hay etiqueta DDR PC-xxxx (p. ej. PC3200) 184 pines, muesca cerca del borde izquierdo",
+                      "ar":  "إنشاء علامة نموذجية مؤشر مرئي في حالة عدم وجود ملصق DDR PC-xxxx (على سبيل المثال PC3200) 184 سنًا، حز بالقرب من الحافة اليسرى",
+                      "pt":  "Geração Marcação típica Indicador visual se não houver etiqueta DDR PC-xxxx (por exemplo, PC3200) 184 pinos, entalhe próximo à borda esquerda"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DDR2 PC2-xxxx (ex. PC2-6400) 240 broches, encoche legerement a droite du centre",
+                      "en":  "DDR2 PC2-xxxx (e.g. PC2-6400) 240 pin, notched slightly right of center",
+                      "es":  "DDR2 PC2-xxxx (por ejemplo, PC2-6400) 240 pines, con muescas ligeramente a la derecha del centro",
+                      "ar":  "DDR2 PC2-xxxx (على سبيل المثال PC2-6400) 240 دبوسًا، محززة قليلاً على يمين المركز",
+                      "pt":  "DDR2 PC2-xxxx (por exemplo, PC2-6400) 240 pinos, entalhado ligeiramente à direita do centro"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DDR3 PC3-xxxx (ex. PC3-12800) 240 broches aussi, mais encoche decalee vs DDR2 : non interchangeables",
+                      "en":  "DDR3 PC3-xxxx (e.g. PC3-12800) 240 pins too, but offset notch vs DDR2: not interchangeable",
+                      "es":  "DDR3 PC3-xxxx (por ejemplo, PC3-12800) 240 pines también, pero muesca compensada frente a DDR2: no intercambiable",
+                      "ar":  "DDR3 PC3-xxxx (على سبيل المثال PC3-12800) 240 دبوسًا أيضًا، ولكن درجة الإزاحة مقابل DDR2: غير قابلة للتبديل",
+                      "pt":  "DDR3 PC3-xxxx (por exemplo, PC3-12800) 240 pinos também, mas offset notch vs DDR2: não intercambiável"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DDR4 PC4-xxxx (ex. PC4-19200) 288 broches, bord de connecteur legerement incurve (bombe)",
+                      "en":  "DDR4 PC4-xxxx (e.g. PC4-19200) 288 pin, slightly curved connector edge (bulge)",
+                      "es":  "DDR4 PC4-xxxx (por ejemplo, PC4-19200) 288 pines, borde del conector ligeramente curvado (bulto)",
+                      "ar":  "DDR4 PC4-xxxx (على سبيل المثال PC4-19200) 288 سنًا، حافة موصل منحنية قليلاً (منتفخة)",
+                      "pt":  "DDR4 PC4-xxxx (por exemplo, PC4-19200) 288 pinos, borda do conector levemente curvada (protuberância)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "DDR5 PC5-xxxx (ex. PC5-38400) 288 broches, puce PMIC visible sur le module Yggdrasil — Agent de Reconditionnement Numerique 6",
+                      "en":  "DDR5 PC5-xxxx (ex. PC5-38400) 288 pins, PMIC chip visible on the Yggdrasil module — Digital Refurbishment Agent 6",
+                      "es":  "DDR5 PC5-xxxx (ej. PC5-38400) 288 pines, chip PMIC visible en el módulo Yggdrasil — Agente de restauración digital 6",
+                      "ar":  "DDR5 PC5-xxxx (مثل PC5-38400) 288 سنًا، ورقاقة PMIC مرئية على وحدة Yggdrasil — عامل التجديد الرقمي 6",
+                      "pt":  "DDR5 PC5-xxxx (ex. PC5-38400) 288 pinos, chip PMIC visível no módulo Yggdrasil — Digital Refurbishment Agent 6"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le stockage : HDD, SSD et NVMe Memoire non volatile qui conserve durablement le systeme et les fichiers, meme hors tension. Trois technologies, trois niveaux de performance.",
+                      "en":  "Storage: HDD, SSD and NVMe Non-volatile memory which permanently preserves the system and files, even when powered off. Three technologies, three levels of performance.",
+                      "es":  "Almacenamiento: HDD, SSD y NVMe Memoria no volátil que preserva permanentemente el sistema y los archivos, incluso cuando está apagado. Tres tecnologías, tres niveles de rendimiento.",
+                      "ar":  "التخزين: ذاكرة HDD وSSD وNVMe غير متطايرة تحافظ على النظام والملفات بشكل دائم، حتى عند إيقاف تشغيله. ثلاث تقنيات، وثلاثة مستويات من الأداء.",
+                      "pt":  "Armazenamento: HDD, SSD e NVMe Memória não volátil que preserva permanentemente o sistema e os arquivos, mesmo quando desligado. Três tecnologias, três níveis de desempenho."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Caracteristique HDD SSD (SATA) NVMe (M.2)",
+                      "en":  "Characteristic HDD SSD (SATA) NVMe (M.2)",
+                      "es":  "Característica HDD SSD (SATA) NVMe (M.2)",
+                      "ar":  "خصائص محرك الأقراص الصلبة SSD (SATA) NVMe (M.2)",
+                      "pt":  "Característica HDD SSD (SATA) NVMe (M.2)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Technologie Plateaux magnetiques rotatifs Memoire flash Memoire flash sur bus PCIe",
+                      "en":  "Technology Rotating magnetic plates Flash memory Flash memory on PCIe bus",
+                      "es":  "Tecnología Placas magnéticas giratorias Memoria flash Memoria flash en bus PCIe",
+                      "ar":  "التكنولوجيا لوحات مغناطيسية دوارة ذاكرة فلاش ذاكرة فلاش على ناقل PCIe",
+                      "pt":  "Tecnologia Placas magnéticas rotativas Memória Flash Memória Flash no barramento PCIe"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Vitesse Lente (~150 Mo/s) Rapide (~550 Mo/s) Tres rapide (2000 a 7000 Mo/s)",
+                      "en":  "Speed Slow (~150 MB/s) Fast (~550 MB/s) Very fast (2000 to 7000 MB/s)",
+                      "es":  "Velocidad Lenta (~150 MB/s) Rápida (~550 MB/s) Muy rápida (2000 a 7000 MB/s)",
+                      "ar":  "السرعة بطيئة (~150 ميجابايت/ثانية) سريعة (~550 ميجابايت/ثانية) سريعة جدًا (2000 إلى 7000 ميجابايت/ثانية)",
+                      "pt":  "Velocidade Lenta (~150 MB/s) Rápida (~550 MB/s) Muito rápida (2.000 a 7.000 MB/s)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Connectique SATA SATA PCIe via slot M.2",
+                      "en":  "SATA SATA PCIe connection via M.2 slot",
+                      "es":  "Conexión SATA PCIe a través de ranura M.2",
+                      "ar":  "اتصال SATA SATA PCIe عبر فتحة M.2",
+                      "pt":  "Conexão SATA SATA PCIe via slot M.2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Prix au Go Bas Moyen Eleve",
+                      "en":  "Price per GB Low Medium High",
+                      "es":  "Precio por GB Bajo Medio Alto",
+                      "ar":  "السعر لكل جيجابايت منخفض متوسط مرتفع",
+                      "pt":  "Preço por GB Baixo Médio Alto"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Usage typique Stockage de masse, sauvegarde Usage courant, OS Applications exigeantes, montage, jeu",
+                      "en":  "Typical use Mass storage, backup Common use, OS Demanding applications, editing, gaming",
+                      "es":  "Uso típico Almacenamiento masivo, copia de seguridad Uso común, SO Aplicaciones exigentes, edición, juegos",
+                      "ar":  "الاستخدام النموذجي للتخزين كبير السعة، والنسخ الاحتياطي، والاستخدام الشائع، والتطبيقات التي تتطلب نظام تشغيل، والتحرير، والألعاب",
+                      "pt":  "Uso típico Armazenamento em massa, backup Uso comum, SO Aplicativos exigentes, edição, jogos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 7",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 7",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 7",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 7",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 7"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Alimentation et refroidissement Deux elements essentiels et souvent negliges : fournir une energie stable et evacuer la chaleur produite par les composants.",
+                      "en":  "Power supply and cooling Two essential and often neglected elements: providing stable energy and dissipating the heat produced by the components.",
+                      "es":  "Alimentación y refrigeración Dos elementos esenciales y a menudo descuidados: proporcionar energía estable y disipar el calor producido por los componentes.",
+                      "ar":  "إمدادات الطاقة والتبريد عنصران أساسيان وغالبًا ما يتم إهمالهما: توفير طاقة مستقرة وتبديد الحرارة التي تنتجها المكونات.",
+                      "pt":  "Alimentação e refrigeração Dois elementos essenciais e muitas vezes negligenciados: fornecer energia estável e dissipar o calor produzido pelos componentes."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Alimentation (PSU) Refroidissement Puissance (Watts) : doit couvrir la consommation cumulee, avec marge de Air : ventirad (dissipateur + ventilateur), solution la plus courante et fiable. securite. Liquide (watercooling) : circuit ferme (AIO) plus performant et silencieux pour Certification 80+ : Bronze a Platinum, indique le rendement energetique. charges elevees. Connecteurs cles : 24 broches carte mere, 4/8 broches CPU, PCIe, SATA. Pate thermique : assure le contact thermique entre CPU et dissipateur.",
+                      "en":  "Power supply (PSU) Cooling Power (Watts): must cover the cumulative consumption, with a margin of Air: cooler (sink + fan), the most common and reliable solution. security. Liquid (watercooling): closed circuit (AIO) more efficient and silent for Certification 80+: Bronze to Platinum, indicates energy efficiency. high loads. Key connectors: 24 pin motherboard, 4/8 pin CPU, PCIe, SATA. Thermal paste: ensures thermal contact between CPU and heatsink.",
+                      "es":  "Fuente de alimentación (PSU) Potencia de refrigeración (Watts): debe cubrir el consumo acumulado, con un margen de Aire: enfriador (disipador + ventilador), la solución más común y fiable. seguridad. Líquido (watercooling): circuito cerrado (AIO) más eficiente y silencioso para Certificación 80+: Bronce a Platino, indica eficiencia energética. cargas elevadas. Conectores clave: placa base de 24 pines, CPU de 4/8 pines, PCIe, SATA. Pasta térmica: asegura el contacto térmico entre CPU y disipador.",
+                      "ar":  "مصدر الطاقة (PSU) قوة التبريد (واتس): يجب أن تغطي الاستهلاك التراكمي، مع هامش الهواء: المبرد (الحوض + المروحة)، وهو الحل الأكثر شيوعًا وموثوقًا. حماية. السائل (التبريد المائي): دائرة مغلقة (AIO) أكثر كفاءة وصمتًا للحصول على شهادة 80+: من البرونز إلى البلاتين، يشير إلى كفاءة استخدام الطاقة. أحمال عالية. الموصلات الرئيسية: اللوحة الأم ذات 24 سنًا، وحدة المعالجة المركزية 4/8 سنون، PCIe، SATA. المعجون الحراري: يضمن الاتصال الحراري بين وحدة المعالجة المركزية والمبدد الحراري.",
+                      "pt":  "Fonte de alimentação (PSU) Potência de resfriamento (Watts): deve cobrir o consumo cumulativo, com margem de Ar: cooler (dissipador + ventilador), solução mais comum e confiável. segurança. Líquido (watercooling): circuito fechado (AIO) mais eficiente e silencioso para Certificação 80+: Bronze a Platina, indica eficiência energética. cargas elevadas. Conectores principais: placa-mãe de 24 pinos, CPU de 4/8 pinos, PCIe, SATA. Pasta térmica: garante o contato térmico entre CPU e dissipador de calor."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 8",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 8",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 8",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 8",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 8"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte graphique La carte graphique traite les calculs d\u0027affichage et transmet l\u0027image a l\u0027ecran.",
+                      "en":  "Graphics card The graphics card processes the display calculations and transmits the image to the screen.",
+                      "es":  "Tarjeta gráfica La tarjeta gráfica procesa los cálculos de visualización y transmite la imagen a la pantalla.",
+                      "ar":  "بطاقة الرسومات تقوم بطاقة الرسومات بمعالجة حسابات العرض وتنقل الصورة إلى الشاشة.",
+                      "pt":  "Placa gráfica A placa gráfica processa os cálculos de exibição e transmite a imagem para a tela."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "GPU integre vs GPU dedie Le GPU integre au CPU suffit pour la bureautique. Une carte dediee, avec sa propre memoire (VRAM), est necessaire pour le jeu, la 3D et la video.",
+                      "en":  "Integrated GPU vs dedicated GPU The GPU integrated into the CPU is sufficient for office automation. A dedicated card, with its own memory (VRAM), is necessary for gaming, 3D and video.",
+                      "es":  "GPU integrada versus GPU dedicada La GPU integrada en la CPU es suficiente para la ofimática. Es necesaria una tarjeta dedicada, con memoria propia (VRAM), para juegos, 3D y vídeo.",
+                      "ar":  "وحدة معالجة الرسومات المدمجة مقابل وحدة معالجة الرسومات المخصصة تعد وحدة معالجة الرسومات المدمجة في وحدة المعالجة المركزية كافية لأتمتة المكاتب. تعد البطاقة المخصصة ذات الذاكرة الخاصة بها (VRAM) ضرورية للألعاب والصور ثلاثية الأبعاد والفيديو.",
+                      "pt":  "GPU integrada versus GPU dedicada A GPU integrada na CPU é suficiente para automação de escritório. Uma placa dedicada, com memória própria (VRAM), é necessária para jogos, 3D e vídeo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "VRAM et refroidissement La VRAM stocke les textures et images en cours de calcul. Un bon refroidissement (ventirad) evite la surchauffe et le throttling.",
+                      "en":  "VRAM and cooling VRAM stores textures and images currently being calculated. Good cooling (cooler) prevents overheating and throttling.",
+                      "es":  "VRAM y refrigeración La VRAM almacena texturas e imágenes que se están calculando actualmente. Un buen enfriamiento (enfriador) evita el sobrecalentamiento y la estrangulación.",
+                      "ar":  "VRAM والتبريد VRAM يقومان بتخزين الأنسجة والصور التي يتم حسابها حاليًا. التبريد الجيد (المبرد) يمنع ارتفاع درجة الحرارة والاختناق.",
+                      "pt":  "VRAM e resfriamento VRAM armazena texturas e imagens que estão sendo calculadas no momento. Um bom resfriamento (resfriador) evita superaquecimento e estrangulamento."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Format \u0026amp; alimentation Une carte dediee necessite souvent un connecteur d\u0027alimentation PCIe (6/8 broches) et existe en format standard ou low-profile.",
+                      "en":  "Format \u0026 power supply A dedicated card often requires a PCIe power connector (6/8 pin) and is available in standard or low-profile format.",
+                      "es":  "Formato y fuente de alimentación Una tarjeta dedicada suele requerir un conector de alimentación PCIe (6/8 pines) y está disponible en formato estándar o de perfil bajo.",
+                      "ar":  "التنسيق وإمدادات الطاقة غالبًا ما تتطلب البطاقة المخصصة موصل طاقة PCIe (6/8 سنون) وهي متوفرة بتنسيق قياسي أو منخفض الحجم.",
+                      "pt":  "Formato e fonte de alimentação Uma placa dedicada geralmente requer um conector de alimentação PCIe (6/8 pinos) e está disponível em formato padrão ou discreto."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 9",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 9",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 9",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 9",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 9"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Connectique Les ports permettent de connecter ecrans, peripheriques et reseau a l\u0027ordinateur.",
+                      "en":  "Connections Ports allow you to connect screens, peripherals and networks to the computer.",
+                      "es":  "Los puertos de conexiones le permiten conectar pantallas, periféricos y redes a la computadora.",
+                      "ar":  "تتيح لك منافذ الاتصالات توصيل الشاشات والأجهزة الطرفية والشبكات بالكمبيوتر.",
+                      "pt":  "As portas de conexões permitem conectar telas, periféricos e redes ao computador."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ports USB-A / USB-C Connexion des peripheriques et du stockage externe. L\u0027USB-C permet aussi la charge et l\u0027affichage video.",
+                      "en":  "USB-A / USB-C ports Connect peripherals and external storage. USB-C also allows charging and video display.",
+                      "es":  "Puertos USB-A/USB-C Conecte periféricos y almacenamiento externo. USB-C también permite la carga y visualización de vídeo.",
+                      "ar":  "منافذ USB-A / USB-C لتوصيل الأجهزة الطرفية ووحدات التخزين الخارجية. يسمح USB-C أيضًا بالشحن وعرض الفيديو.",
+                      "pt":  "Portas USB-A/USB-C Conecte periféricos e armazenamento externo. USB-C também permite carregamento e exibição de vídeo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "HDMI / DisplayPort Sortie image vers l\u0027ecran, portee par la carte graphique (dediee ou integree).",
+                      "en":  "HDMI / DisplayPort Image output to the screen, carried by the graphics card (dedicated or integrated).",
+                      "es":  "HDMI / DisplayPort Salida de imagen a la pantalla, transportada por la tarjeta gráfica (dedicada o integrada).",
+                      "ar":  "إخراج صورة HDMI / DisplayPort إلى الشاشة، محمولة بواسطة بطاقة الرسومات (المخصصة أو المدمجة).",
+                      "pt":  "HDMI / DisplayPort Saída de imagem para a tela, transportada pela placa gráfica (dedicada ou integrada)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Ethernet Connexion reseau filaire stable, generalement portee par la carte mere.",
+                      "en":  "Ethernet Stable wired network connection, usually carried by the motherboard.",
+                      "es":  "Ethernet Conexión de red por cable estable, generalmente transportada por la placa base.",
+                      "ar":  "إيثرنت اتصال شبكة سلكية مستقر، يتم حمله عادةً بواسطة اللوحة الأم.",
+                      "pt":  "Ethernet Conexão de rede com fio estável, geralmente transportada pela placa-mãe."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 10",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 10",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 10",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 10",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 10"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "La carte Wi-Fi : la connexion sans fil Une petite carte enfichable sur la carte mere assure la connexion au reseau Wi-Fi et souvent au Bluetooth.",
+                      "en":  "The Wi-Fi card: wireless connection A small card plugged into the motherboard provides connection to the Wi-Fi network and often to Bluetooth.",
+                      "es":  "La tarjeta Wi-Fi: conexión inalámbrica Una pequeña tarjeta conectada a la placa base proporciona conexión a la red Wi-Fi y, a menudo, a Bluetooth.",
+                      "ar":  "بطاقة Wi-Fi: اتصال لاسلكي بطاقة صغيرة متصلة باللوحة الأم توفر الاتصال بشبكة Wi-Fi وغالبًا بالبلوتوث.",
+                      "pt":  "A placa Wi-Fi: conexão sem fio Uma pequena placa conectada à placa-mãe fornece conexão à rede Wi-Fi e, muitas vezes, ao Bluetooth."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Format Mini PCIe / M.2 Petite carte d\u0027extension enfichee directement sur un connecteur dedie de la carte mere, tres courante en portable et mini-PC.",
+                      "en":  "Mini PCIe / M.2 format Small expansion card plugged directly into a dedicated connector on the motherboard, very common in laptops and mini-PCs.",
+                      "es":  "Formato Mini PCIe / M.2 Pequeña tarjeta de expansión que se conecta directamente a un conector dedicado de la placa base, muy común en portátiles y mini-PC.",
+                      "ar":  "تنسيق Mini PCIe / M.2 بطاقة توسيع صغيرة يتم توصيلها مباشرةً بموصل مخصص على اللوحة الأم، وهي شائعة جدًا في أجهزة الكمبيوتر المحمولة وأجهزة الكمبيوتر الصغيرة.",
+                      "pt":  "Formato Mini PCIe/M.2 Pequena placa de expansão conectada diretamente em um conector dedicado na placa-mãe, muito comum em laptops e mini-PCs."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Antennes Connecteurs coaxiaux miniatures (u.FL) reliant la carte aux antennes Wi-Fi integrees au boitier ou a l\u0027ecran du portable.",
+                      "en":  "Antennas Miniature coaxial connectors (u.FL) connecting the card to the Wi-Fi antennas integrated into the case or the laptop screen.",
+                      "es":  "Antenas Conectores coaxiales miniatura (u.FL) que conectan la tarjeta a las antenas Wi-Fi integradas en la carcasa o en la pantalla del portátil.",
+                      "ar":  "الهوائيات موصلات محورية مصغرة (u.FL) تربط البطاقة بهوائيات Wi-Fi المدمجة في العلبة أو شاشة الكمبيوتر المحمول.",
+                      "pt":  "Antenas Conectores coaxiais miniatura (u.FL) conectando a placa às antenas Wi-Fi integradas no gabinete ou na tela do laptop."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Normes Wi-Fi Wi-Fi 4/5/6 (802.11n/ac/ax) : debit, portee et bande de frequence utilisee (2,4 GHz et/ou 5 GHz).",
+                      "en":  "Wi-Fi standards Wi-Fi 4/5/6 (802.11n/ac/ax): speed, range and frequency band used (2.4 GHz and/or 5 GHz).",
+                      "es":  "Estándares Wi-Fi Wi-Fi 4/5/6 (802.11n/ac/ax): velocidad, alcance y banda de frecuencia utilizada (2,4 GHz y/o 5 GHz).",
+                      "ar":  "معايير Wi-Fi Wi-Fi 4/5/6 (802.11n/ac/ax): السرعة والمدى ونطاق التردد المستخدم (2.4 جيجا هرتز و/أو 5 جيجا هرتز).",
+                      "pt":  "Padrões Wi-Fi Wi-Fi 4/5/6 (802.11n/ac/ax): velocidade, alcance e banda de frequência utilizada (2,4 GHz e/ou 5 GHz)."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bluetooth combine De nombreuses cartes integrent aussi une puce Bluetooth, partageant parfois la meme antenne.",
+                      "en":  "Combined Bluetooth Many cards also include a Bluetooth chip, sometimes sharing the same antenna.",
+                      "es":  "Bluetooth combinado Muchas tarjetas también incluyen un chip Bluetooth, compartiendo a veces la misma antena.",
+                      "ar":  "تقنية Bluetooth المدمجة تشتمل العديد من البطاقات أيضًا على شريحة Bluetooth، وفي بعض الأحيان تشترك في نفس الهوائي.",
+                      "pt":  "Bluetooth combinado Muitas placas também incluem um chip Bluetooth, às vezes compartilhando a mesma antena."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 11",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 11",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 11",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 11",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 11"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027entretien materiel d\u0027un ordinateur Quelques verifications physiques regulieres suffisent a prolonger la duree de vie d\u0027un poste et a prevenir la majorite des pannes materielles.",
+                      "en":  "Hardware maintenance of a computer A few regular physical checks are enough to extend the life of a computer and prevent the majority of hardware failures.",
+                      "es":  "Mantenimiento del hardware de una computadora Unas cuantas comprobaciones físicas periódicas son suficientes para prolongar la vida útil de una computadora y prevenir la mayoría de fallas de hardware.",
+                      "ar":  "صيانة أجهزة الكمبيوتر تكفي بعض الفحوصات المادية المنتظمة لإطالة عمر الكمبيوتر ومنع غالبية أعطال الأجهزة.",
+                      "pt":  "Manutenção de hardware de um computador Algumas verificações físicas regulares são suficientes para prolongar a vida útil de um computador e evitar a maioria das falhas de hardware."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Depoussierage interne Verification des connexions Etat du ventirad et pate thermique Nettoyer grilles d\u0027aeration, ventilateurs et dissipateurs : S\u0027assurer que RAM, cables d\u0027alimentation et cartes Un ventirad encrasse ou une pate thermique sechee la poussiere est la premiere cause de surchauffe. d\u0027extension sont bien enclenches, sans jeu ni faux degradent fortement le refroidissement du processeur. contact.",
+                      "en":  "Internal dust removal Checking the connections Condition of the cooler and thermal paste Clean ventilation grilles, fans and heatsinks: Ensure that RAM, power cables and cards A dirty cooler or dried thermal paste dust is the primary cause of overheating. extension are properly engaged, without play or false, significantly degrading processor cooling. contact.",
+                      "es":  "Eliminación de polvo interno Comprobación de las conexiones Estado del disipador y de la pasta térmica Limpie las rejillas de ventilación, los ventiladores y los disipadores: Asegúrese de que la RAM, los cables de alimentación y las tarjetas Un disipador sucio o el polvo seco de la pasta térmica son la causa principal del sobrecalentamiento. extensión estén correctamente acoplados, sin holguras ni falsas, degradando notablemente la refrigeración del procesador. contacto.",
+                      "ar":  "إزالة الغبار الداخلي فحص التوصيلات حالة المبرد والمعجون الحراري تنظيف شبكات التهوية والمراوح والمبددات الحرارية: تأكد من أن ذاكرة الوصول العشوائي (RAM) وكابلات الطاقة والبطاقات غبار المبرد المتسخ أو المعجون الحراري المجفف هو السبب الرئيسي لارتفاع درجة الحرارة. يتم تشغيل الامتداد بشكل صحيح، بدون تشغيل أو خطأ، مما يؤدي إلى تدهور تبريد المعالج بشكل كبير. اتصال.",
+                      "pt":  "Remoção de poeira interna Verificando as conexões Condição do cooler e da pasta térmica Limpe as grades de ventilação, ventiladores e dissipadores de calor: Certifique-se de que RAM, cabos de alimentação e placas Um cooler sujo ou poeira seca da pasta térmica seja a principal causa do superaquecimento. extensão estão devidamente encaixadas, sem folga ou falsa, degradando significativamente o resfriamento do processador. contato."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Surveillance thermique et sonore Nettoyage des ports et connecteurs Controle visuel general Une chauffe excessive ou un bruit inhabituel signale un Poussiere et oxydation sur USB, HDMI ou alimentation Verifier l\u0027absence de vis desserrees, de composants probleme mecanique a traiter rapidement. peuvent provoquer de mauvais contacts. gonfles (condensateurs) ou de traces d\u0027humidite.",
+                      "en":  "Thermal and sound monitoring Cleaning of ports and connectors General visual inspection Excessive heating or unusual noise indicates Dust and oxidation on USB, HDMI or power supply Check for loose screws, components, mechanical problem to be dealt with quickly. can cause poor contact. swelling (capacitors) or traces of humidity.",
+                      "es":  "Monitoreo térmico y de sonido Limpieza de puertos y conectores Inspección visual general Calentamiento excesivo o ruido inusual indica polvo y oxidación en USB, HDMI o fuente de alimentación Verifique que no haya tornillos, componentes o problemas mecánicos sueltos que deban solucionarse rápidamente. puede causar un mal contacto. hinchazón (condensadores) o restos de humedad.",
+                      "ar":  "المراقبة الحرارية والصوتية تنظيف المنافذ والموصلات الفحص البصري العام تشير التدفئة المفرطة أو الضوضاء غير العادية إلى وجود غبار وأكسدة على USB أو HDMI أو مصدر الطاقة تحقق من عدم وجود براغي أو مكونات أو مشكلة ميكانيكية مفكوكة يجب التعامل معها بسرعة. يمكن أن يسبب ضعف الاتصال. تورم (المكثفات) أو آثار رطوبة.",
+                      "pt":  "Monitoramento térmico e sonoro Limpeza de portas e conectores Inspeção visual geral Aquecimento excessivo ou ruído incomum indicam Poeira e oxidação no USB, HDMI ou fonte de alimentação Verifique se há parafusos soltos, componentes ou problemas mecânicos a serem resolvidos rapidamente. pode causar mau contato. inchaço (capacitores) ou vestígios de umidade."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 12",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 12",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 12",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 12",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 12"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 01 — HARDWARE PC",
+                      "en":  "MODULE 01 — PC HARDWARE",
+                      "es":  "MÓDULO 01 — HARDWARE PARA PC",
+                      "ar":  "الوحدة 01 – أجهزة الكمبيوتر",
+                      "pt":  "MÓDULO 01 — HARDWARE DE PC"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Synthese : le role de chaque composant Sept pieces, sept fonctions complementaires. Retenir le role de chacune est la base du diagnostic materiel.",
+                      "en":  "Summary: the role of each component Seven pieces, seven complementary functions. Remembering the role of each is the basis of the material diagnosis.",
+                      "es":  "Resumen: el papel de cada componente Siete piezas, siete funciones complementarias. Recordar el papel de cada uno es la base del diagnóstico material.",
+                      "ar":  "ملخص: دور كل مكون سبع قطع، سبع وظائف متكاملة. وتذكر دور كل منهم هو أساس التشخيص المادي.",
+                      "pt":  "Resumo: o papel de cada componente Sete peças, sete funções complementares. Lembrar o papel de cada um é a base do diagnóstico do material."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Carte mere Processeur (CPU) Memoire vive (RAM) Stockage Relie et fait communiquer tous les Execute les calculs et instructions Stocke temporairement les donnees en Conserve durablement systeme et fichiers composants cours d\u0027usage",
+                      "en":  "Motherboard Processor (CPU) Random access memory (RAM) Storage Connects and communicates all components Executes calculations and instructions Temporarily stores data in Permanently preserved system and component files during use",
+                      "es":  "Placa base Procesador (CPU) Memoria de acceso aleatorio (RAM) Almacenamiento Conecta y comunica todos los componentes Ejecuta cálculos e instrucciones Almacena datos temporalmente en archivos del sistema y de los componentes que se conservan permanentemente durante el uso",
+                      "ar":  "معالج اللوحة الأم (CPU) ذاكرة الوصول العشوائي (RAM) التخزين توصيل جميع المكونات وتوصيلها تنفيذ الحسابات والتعليمات تخزين البيانات مؤقتًا في ملفات النظام والمكونات المحفوظة بشكل دائم أثناء الاستخدام",
+                      "pt":  "Placa-mãe Processador (CPU) Memória de acesso aleatório (RAM) Armazenamento Conecta e comunica todos os componentes Executa cálculos e instruções Armazena dados temporariamente no sistema e arquivos de componentes preservados permanentemente durante o uso"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Alimentation Carte graphique Carte Wi-Fi Fournit l\u0027energie a l\u0027ensemble des Traite et affiche les images a l\u0027ecran Assure la connexion reseau sans fil et le composants Bluetooth",
+                      "en":  "Power supply Graphics card Wi-Fi card Provides power to all Processes and displays images on the screen Ensures wireless network connection and Bluetooth components",
+                      "es":  "Fuente de alimentación Tarjeta gráfica Tarjeta Wi-Fi Proporciona energía a todos Procesa y muestra imágenes en la pantalla Garantiza la conexión de red inalámbrica y los componentes Bluetooth",
+                      "ar":  "مصدر الطاقة بطاقة الرسومات بطاقة Wi-Fi توفر الطاقة لجميع العمليات وتعرض الصور على الشاشة تضمن الاتصال بالشبكة اللاسلكية ومكونات Bluetooth",
+                      "pt":  "Fonte de alimentação Placa gráfica Placa Wi-Fi Fornece energia para todos Processa e exibe imagens na tela Garante conexão de rede sem fio e componentes Bluetooth"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 13",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 13",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 13",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 13",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 13"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Y G G D R AS I L Mediation Numerique \u0026amp; Reconditionnement",
+                      "en":  "Y G G D R AS I L Digital Mediation \u0026 Reconditioning",
+                      "es":  "Y G G D R AS I L Mediación y Reacondicionamiento Digital",
+                      "ar":  "Y G G D R AS I L الوساطة الرقمية والتجديد",
+                      "pt":  "Y G G D R AS I L Mediação e Recondicionamento Digital"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Systeme, pilotes et securite Atelier de formation — comprendre le systeme d\u0027exploitation, le role des pilotes materiels et les bons reflexes de securite logicielle.",
+                      "en":  "System, drivers and security Training workshop — understand the operating system, the role of hardware drivers and good software security reflexes.",
+                      "es":  "Taller de formación sobre sistemas, controladores y seguridad: comprenda el sistema operativo, el papel de los controladores de hardware y los buenos reflejos de seguridad del software.",
+                      "ar":  "ورشة عمل تدريبية حول النظام وبرامج التشغيل والأمن - فهم نظام التشغيل ودور برامج تشغيل الأجهزة وردود الفعل الأمنية الجيدة للبرامج.",
+                      "pt":  "Workshop de treinamento de sistema, drivers e segurança — entenda o sistema operacional, o papel dos drivers de hardware e bons reflexos de segurança de software."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Systeme d\u0027exploitation Pilotes (drivers) Securite logicielle",
+                      "en":  "Operating system Drivers Software security",
+                      "es":  "Sistema operativo Controladores Seguridad del software",
+                      "ar":  "نظام التشغيل برامج التشغيل أمن البرمجيات",
+                      "pt":  "Sistema operacional Drivers Segurança de software"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 14",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 14",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 14",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 14",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 14"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Trois piliers du bon fonctionnement d\u0027un PC Un ordinateur fonctionne grace a la synergie entre son systeme d\u0027exploitation, les pilotes qui pilotent son materiel, et les protections qui le securisent.",
+                      "en":  "Three pillars of the proper functioning of a PC A computer functions thanks to the synergy between its operating system, the drivers which control its hardware, and the protections which secure it.",
+                      "es":  "Tres pilares del buen funcionamiento de un PC Un ordenador funciona gracias a la sinergia entre su sistema operativo, los drivers que controlan su hardware y las protecciones que lo protegen.",
+                      "ar":  "الركائز الثلاث للتشغيل السليم لجهاز الكمبيوتر يعمل الكمبيوتر بفضل التآزر بين نظام التشغيل الخاص به، وبرامج التشغيل التي تتحكم في أجهزته، ووسائل الحماية التي تؤمّنه.",
+                      "pt":  "Três pilares do bom funcionamento de um PC Um computador funciona graças à sinergia entre o seu sistema operacional, os drivers que controlam o seu hardware e as proteções que o protegem."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Systeme d\u0027exploitation Pilotes (drivers) Securite logicielle",
+                      "en":  "Operating system Drivers Software security",
+                      "es":  "Sistema operativo Controladores Seguridad del software",
+                      "ar":  "نظام التشغيل برامج التشغيل أمن البرمجيات",
+                      "pt":  "Sistema operacional Drivers Segurança de software"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le logiciel de base qui gere le materiel, les Les programmes qui traduisent le dialogue entre Antivirus, pare-feu et bonnes pratiques qui fichiers et permet d\u0027executer tous les autres l\u0027OS et chaque composant materiel : sans eux, le protegent la machine et les donnees contre les programmes (Windows, Linux, macOS). materiel n\u0027est pas exploite correctement. menaces numeriques.",
+                      "en":  "The basic software which manages the hardware, the programs which translate the dialogue between Antivirus, firewall and good practices which files and allows to execute all the other the OS and each hardware component: without them, protect the machine and the data against the programs (Windows, Linux, macOS). equipment is not operated correctly. digital threats.",
+                      "es":  "El software básico que gestiona el hardware, los programas que traducen el diálogo entre Antivirus, firewall y buenas prácticas que archiva y permite ejecutar todos los demás sistemas operativos y cada componente del hardware: sin ellos, protege la máquina y los datos contra los programas (Windows, Linux, macOS). el equipo no se opera correctamente. amenazas digitales.",
+                      "ar":  "البرامج الأساسية التي تدير الأجهزة، والبرامج التي تترجم الحوار بين برامج مكافحة الفيروسات وجدار الحماية والممارسات الجيدة للملفات وتسمح بتنفيذ جميع أنظمة التشغيل الأخرى وكل مكون من مكونات الأجهزة: بدونها، حماية الجهاز والبيانات من البرامج (Windows، Linux، macOS). المعدات لا تعمل بشكل صحيح. التهديدات الرقمية.",
+                      "pt":  "O software básico que gere o hardware, os programas que traduzem o diálogo entre Antivírus, firewall e boas práticas que arquivam e permitem executar todos os outros SO e cada componente de hardware: sem eles, protegem a máquina e os dados contra os programas (Windows, Linux, macOS). equipamento não é operado corretamente. ameaças digitais."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 15",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 15",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 15",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 15",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 15"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le systeme d\u0027exploitation (OS) : le chef d\u0027orchestre Logiciel de base qui demarre au lancement de la machine et gere l\u0027ensemble des ressources materielles et logicielles.",
+                      "en":  "The operating system (OS): the conductor Basic software which starts when the machine is launched and manages all hardware and software resources.",
+                      "es":  "El sistema operativo (OS): el conductor Software básico que se inicia cuando se inicia la máquina y gestiona todos los recursos de hardware y software.",
+                      "ar":  "نظام التشغيل (OS): موصل البرنامج الأساسي الذي يبدأ تشغيله عند تشغيل الجهاز ويدير جميع موارد الأجهزة والبرامج.",
+                      "pt":  "O sistema operacional (SO): o condutor Software básico que é iniciado quando a máquina é iniciada e gerencia todos os recursos de hardware e software."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Gestion des ressources Interface utilisateur Repartit la memoire, le temps processeur et l\u0027acces au stockage entre les programmes en Fournit l\u0027environnement graphique (bureau, fenetres, menus) qui permet d\u0027utiliser la cours d\u0027execution. machine sans commandes complexes.",
+                      "en":  "Resource management User interface Distributes memory, processor time and access to storage between programs by Provides the graphical environment (desktop, windows, menus) that allows you to use the runtime. machine without complex controls.",
+                      "es":  "Gestión de recursos Interfaz de usuario Distribuye la memoria, el tiempo del procesador y el acceso al almacenamiento entre programas mediante Proporciona el entorno gráfico (escritorio, ventanas, menús) que le permite utilizar el tiempo de ejecución. Máquina sin controles complejos.",
+                      "ar":  "إدارة الموارد واجهة المستخدم توزع الذاكرة ووقت المعالج والوصول إلى التخزين بين البرامج عن طريق توفير البيئة الرسومية (سطح المكتب والنوافذ والقوائم) التي تسمح لك باستخدام وقت التشغيل. آلة دون ضوابط معقدة.",
+                      "pt":  "Gerenciamento de recursos Interface do usuário Distribui memória, tempo de processador e acesso ao armazenamento entre programas por meio de Fornece o ambiente gráfico (desktop, janelas, menus) que permite utilizar o tempo de execução. máquina sem controles complexos."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Gestion des peripheriques Execution des programmes Detecte et communique avec les composants et peripheriques via les pilotes appropries. Charge, execute et isole les applications les unes des autres pour eviter qu\u0027une erreur ne bloque tout le systeme.",
+                      "en":  "Device Management Program Execution Detects and communicates with components and devices through the appropriate drivers. Loads, executes and isolates applications from each other to prevent an error from blocking the entire system.",
+                      "es":  "Ejecución del programa de administración de dispositivos Detecta y se comunica con componentes y dispositivos a través de los controladores apropiados. Carga, ejecuta y aísla aplicaciones entre sí para evitar que un error bloquee todo el sistema.",
+                      "ar":  "يقوم تنفيذ برنامج إدارة الأجهزة بالكشف عن المكونات والأجهزة والتواصل معها من خلال برامج التشغيل المناسبة. يقوم بتحميل التطبيقات وتنفيذها وعزلها عن بعضها البعض لمنع حدوث خطأ يؤدي إلى حظر النظام بأكمله.",
+                      "pt":  "Execução do programa de gerenciamento de dispositivos Detecta e se comunica com componentes e dispositivos por meio de drivers apropriados. Carrega, executa e isola aplicativos uns dos outros para evitar que um erro bloqueie todo o sistema."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 16",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 16",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 16",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 16",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 16"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les grandes familles de systemes d\u0027exploitation Trois familles dominent le marche des ordinateurs personnels, avec des logiques et des usages differents.",
+                      "en":  "The main families of operating systems Three families dominate the personal computer market, with different logics and uses.",
+                      "es":  "Las principales familias de sistemas operativos Tres familias dominan el mercado de los ordenadores personales, con diferentes lógicas y usos.",
+                      "ar":  "العائلات الرئيسية لأنظمة التشغيل هناك ثلاث عائلات تهيمن على سوق أجهزة الكمبيوتر الشخصية، بمنطق واستخدامات مختلفة.",
+                      "pt":  "As principais famílias de sistemas operacionais Três famílias dominam o mercado de computadores pessoais, com lógicas e utilizações diferentes."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Windows (Microsoft) Linux (Ubuntu, Debian...) macOS (Apple)",
+                      "en":  "Windows (Microsoft) Linux (Ubuntu, Debian...) macOS (Apple)",
+                      "es":  "Windows (Microsoft) Linux (Ubuntu, Debian...) macOS (Apple)",
+                      "ar":  "ويندوز (مايكروسوفت) لينكس (أوبونتو، ديبيان...) ماك أو إس (آبل)",
+                      "pt":  "Windows (Microsoft) Linux (Ubuntu, Debian...) macOS (Apple)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Le plus repandu sur les PC grand public et Systeme libre et gratuit, tres utilise en Reserve aux machines Apple (Mac), integre professionnels. Large compatibilite materielle et reconditionnement pour redonner vie a du etroitement au materiel du constructeur. logicielle. materiel ancien ou limite.",
+                      "en":  "Most widespread on general public PCs and free and open system, widely used in Reserve for Apple machines (Mac), integrated professionals. Wide hardware compatibility and reconditioning to bring the manufacturer\u0027s hardware back to life closely. software. old or limited equipment.",
+                      "es":  "Más extendido en PC del público en general y en sistema abierto y gratuito, muy utilizado en Reserve para máquinas Apple (Mac), profesionales integrados. Amplia compatibilidad de hardware y reacondicionamiento para devolverle la vida al hardware del fabricante de cerca. software. equipo viejo o limitado.",
+                      "ar":  "الأكثر انتشارًا على أجهزة الكمبيوتر الشخصية العامة والأنظمة المجانية والمفتوحة، ويستخدم على نطاق واسع في أجهزة Apple (Mac)، للمحترفين المتكاملين. توافق الأجهزة على نطاق واسع وتجديدها لإعادة أجهزة الشركة المصنعة إلى الحياة عن كثب. برمجة. المعدات القديمة أو المحدودة.",
+                      "pt":  "Mais difundido em PCs do público em geral e sistema gratuito e aberto, muito utilizado em máquinas Reserve para Apple (Mac), profissionais integrados. Ampla compatibilidade e recondicionamento de hardware para trazer de volta à vida o hardware do fabricante. software. equipamento antigo ou limitado."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 17",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 17",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 17",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 17",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 17"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Installer un systeme d\u0027exploitation : les etapes cles Une installation reussie suit toujours la meme logique, quel que soit l\u0027OS installe.",
+                      "en":  "Installing an operating system: the key steps A successful installation always follows the same logic, regardless of the OS installed.",
+                      "es":  "Instalación de un sistema operativo: los pasos clave Una instalación exitosa siempre sigue la misma lógica, independientemente del sistema operativo instalado.",
+                      "ar":  "تثبيت نظام التشغيل: الخطوات الأساسية يتبع التثبيت الناجح دائمًا نفس المنطق، بغض النظر عن نظام التشغيل المثبت.",
+                      "pt":  "Instalando um sistema operacional: as principais etapas Uma instalação bem-sucedida sempre segue a mesma lógica, independentemente do sistema operacional instalado."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "1 2 3 4 5 Configurer le Partitionner le Mises a jour et Preparer le support Suivre l\u0027assistant BIOS/UEFI disque pilotes Creer une cle USB bootable Placer la cle USB en premier Choisir ou creer la partition Renseigner langue, compte Une fois l\u0027OS installe, lancer avec l\u0027outil officiel (Media choix de demarrage (boot d\u0027installation, en effacant si utilisateur et parametres de les mises a jour puis installer Creation Tool, Rufus...). order). besoin l\u0027ancien systeme. base demandes par les pilotes manquants. l\u0027installateur.",
+                      "en":  "1 2 3 4 5 Configure the Partition the Updates and Prepare the media Follow the BIOS/UEFI wizard disk drivers Create a bootable USB key Place the USB key first Choose or create the partition Enter language, account Once the OS is installed, launch with the official tool (Media boot choice (installation boot, deleting if user and parameters of the updates then install Creation Tool, Rufus...). need the old system. basic requests by missing drivers. the installer.",
+                      "es":  "1 2 3 4 5 Configure la partición, las actualizaciones y prepare los medios Siga los controladores de disco del asistente BIOS/UEFI Cree una llave USB de arranque Coloque la llave USB primero Elija o cree la partición Ingrese el idioma, la cuenta Una vez que el sistema operativo esté instalado, inicie con la herramienta oficial (elección de arranque de medios (arranque de instalación, eliminación del usuario y los parámetros de las actualizaciones, luego instale la herramienta de creación, Rufus...). necesita el sistema antiguo. solicitudes básicas por falta de controladores. el instalador.",
+                      "ar":  "1 2 3 4 5 تكوين القسم التحديثات وإعداد الوسائط اتبع برامج تشغيل القرص لمعالج BIOS/UEFI أنشئ مفتاح USB قابل للتشغيل ضع مفتاح USB أولاً اختر القسم أو أنشئه أدخل اللغة والحساب بمجرد تثبيت نظام التشغيل، قم بتشغيله باستخدام الأداة الرسمية (اختيار تمهيد الوسائط (تمهيد التثبيت، وحذف المستخدم ومعلمات التحديثات، ثم تثبيت أداة الإنشاء، Rufus...). تحتاج إلى النظام القديم. الطلبات الأساسية من خلال برامج التشغيل المفقودة. المثبت.",
+                      "pt":  "1 2 3 4 5 Configure a partição, as atualizações e prepare a mídia Siga os drivers de disco do assistente BIOS / UEFI Crie uma chave USB inicializável Coloque a chave USB primeiro Escolha ou crie a partição Insira o idioma, conta Assim que o sistema operacional estiver instalado, inicie com a ferramenta oficial (escolha de inicialização de mídia (inicialização da instalação, excluindo se usuário e parâmetros das atualizações, em seguida, instale a ferramenta de criação, Rufus...). precisa do sistema antigo. solicitações básicas por drivers ausentes. o instalador."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 18",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 18",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 18",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 18",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 18"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les pilotes : le lien entre l\u0027OS et le materiel Un pilote (driver) est le programme qui traduit le dialogue entre le systeme d\u0027exploitation et un composant materiel precis.",
+                      "en":  "Drivers: the link between the OS and the hardware A driver is the program which translates the dialogue between the operating system and a specific hardware component.",
+                      "es":  "Controladores: el vínculo entre el sistema operativo y el hardware Un controlador es el programa que traduce el diálogo entre el sistema operativo y un componente de hardware específico.",
+                      "ar":  "برامج التشغيل: الرابط بين نظام التشغيل والأجهزة برنامج التشغيل هو البرنامج الذي يترجم الحوار بين نظام التشغيل ومكون جهاز معين.",
+                      "pt":  "Drivers: a ligação entre o sistema operacional e o hardware Um driver é o programa que traduz o diálogo entre o sistema operacional e um componente de hardware específico."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "A quoi sert un pilote ? Sans le bon pilote Il permet a l\u0027OS de comprendre et d\u0027exploiter pleinement les capacites d\u0027un composant Le composant peut ne pas etre reconnu, fonctionner en mode degrade (ex. resolution (carte graphique, carte reseau, imprimante...). d\u0027ecran minimale) ou generer des erreurs.",
+                      "en":  "What is a pilot for? Without the right driver It allows the OS to understand and fully exploit the capabilities of a component The component may not be recognized, operate in degraded mode (e.g. resolution (graphics card, network card, printer, etc.). minimum screen) or generate errors.",
+                      "es":  "¿Para qué sirve un piloto? Sin el controlador adecuado Permite que el sistema operativo comprenda y aproveche al máximo las capacidades de un componente. Es posible que el componente no se reconozca, funcione en modo degradado (por ejemplo, resolución (tarjeta gráfica, tarjeta de red, impresora, etc.). pantalla mínima) o genere errores.",
+                      "ar":  "ما هو الطيار ل؟ بدون برنامج التشغيل الصحيح، فإنه يسمح لنظام التشغيل بفهم قدرات أحد المكونات واستغلالها بشكل كامل. قد لا يتم التعرف على المكون، أو يعمل في وضع منخفض (على سبيل المثال، الدقة (بطاقة الرسومات، بطاقة الشبكة، الطابعة، إلخ.). الحد الأدنى من الشاشة) أو إنشاء أخطاء.",
+                      "pt":  "Para que serve um piloto? Sem o driver correto Permite que o sistema operacional entenda e explore totalmente os recursos de um componente O componente pode não ser reconhecido, operar em modo degradado (por exemplo, resolução (placa gráfica, placa de rede, impressora, etc.), tela mínima) ou gerar erros."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pilote generique vs constructeur Compatibilite et versions Windows installe souvent un pilote generique basique. Le pilote du fabricant est optimise Un pilote est specifique a un composant, une version d\u0027OS et une architecture (32/64 bits) et debloque toutes les fonctionnalites. : il faut installer la bonne version.",
+                      "en":  "Generic driver vs manufacturer Compatibility and versions Windows often installs a basic generic driver. The manufacturer\u0027s driver is optimized A driver is specific to a component, an OS version and an architecture (32/64 bits) and unlocks all features. : you must install the correct version.",
+                      "es":  "Controlador genérico versus fabricante Compatibilidad y versiones Windows suele instalar un controlador genérico básico. El controlador del fabricante está optimizado. Un controlador es específico para un componente, una versión del sistema operativo y una arquitectura (32/64 bits) y desbloquea todas las funciones. : debes instalar la versión correcta.",
+                      "ar":  "التوافق بين برنامج التشغيل العام والشركة المصنعة والإصدارات غالبًا ما يقوم Windows بتثبيت برنامج تشغيل عام أساسي. تم تحسين برنامج التشغيل الخاص بالشركة المصنعة. برنامج التشغيل خاص بمكون وإصدار نظام تشغيل وبنية (32/64 بت) ويفتح جميع الميزات. : يجب عليك تثبيت الإصدار الصحيح.",
+                      "pt":  "Driver genérico versus fabricante Compatibilidade e versões O Windows geralmente instala um driver genérico básico. O driver do fabricante é otimizado Um driver é específico para um componente, uma versão do sistema operacional e uma arquitetura (32/64 bits) e desbloqueia todos os recursos. : você deve instalar a versão correta."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 19",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 19",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 19",
+                      "ar":  "Yggdrasil - وكيل التجديد الرقمي 19",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 19"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Trouver et installer les bons pilotes Plusieurs sources permettent de recuperer un pilote, avec des niveaux de fiabilite et de simplicite differents.",
+                      "en":  "Finding and installing the right drivers Several sources allow you to obtain a driver, with different levels of reliability and simplicity.",
+                      "es":  "Encontrar e instalar los controladores adecuados Varias fuentes le permiten obtener un controlador, con diferentes niveles de confiabilidad y simplicidad.",
+                      "ar":  "البحث عن برامج التشغيل المناسبة وتثبيتها تتيح لك العديد من المصادر الحصول على برنامج تشغيل بمستويات مختلفة من الموثوقية والبساطة.",
+                      "pt":  "Localizando e instalando os drivers corretos Diversas fontes permitem obter um driver, com diferentes níveis de confiabilidade e simplicidade."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Source Avantage Limite",
+                      "en":  "Source Advantage Limit",
+                      "es":  "Límite de ventaja de fuente",
+                      "ar":  "حد ميزة المصدر",
+                      "pt":  "Limite de vantagem da fonte"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Windows Update Automatique, simple, aucun risque de mauvaise version Pilotes parfois generiques ou en retard sur les dernieres versions",
+                      "en":  "Windows Update Automatic, simple, no risk of bad version Drivers sometimes generic or behind the latest versions",
+                      "es":  "Actualización de Windows Automática, sencilla, sin riesgo de versiones incorrectas. Los controladores a veces son genéricos o están detrás de las últimas versiones.",
+                      "ar":  "Windows Update تلقائي، وبسيط، ولا يوجد خطر من إصدار سيء، وأحيانًا تكون برامج التشغيل عامة أو متأخرة عن أحدث الإصدارات",
+                      "pt":  "Windows Update Automático, simples, sem risco de versões ruins Drivers às vezes genéricos ou atrás das versões mais recentes"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Permet de diagnostiquer precisement un composant non reconnu Gestionnaire de peripheriques Ne telecharge pas toujours le pilote automatiquement (point d\u0027exclamation)",
+                      "en":  "Allows you to accurately diagnose an unrecognized component Device Manager Does not always download the driver automatically (exclamation mark)",
+                      "es":  "Le permite diagnosticar con precisión un componente no reconocido. Administrador de dispositivos No siempre descarga el controlador automáticamente (signo de exclamación)",
+                      "ar":  "يسمح لك بتشخيص مكون غير معروف بدقة. لا يقوم مدير الأجهزة دائمًا بتنزيل برنامج التشغيل تلقائيًا (علامة التعجب)",
+                      "pt":  "Permite diagnosticar com precisão um componente não reconhecido Gerenciador de dispositivos Nem sempre baixa o driver automaticamente (ponto de exclamação)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Site du fabricant Pilote officiel, complet et optimise pour le composant exact Necessite de connaitre le modele precis du materiel",
+                      "en":  "Manufacturer\u0027s website Official driver, complete and optimized for the exact component Need to know the precise model of the hardware",
+                      "es":  "Sitio web del fabricante Controlador oficial, completo y optimizado para el componente exacto Necesita saber el modelo preciso del hardware",
+                      "ar":  "موقع الشركة المصنعة على الويب برنامج التشغيل الرسمي، كامل ومُحسّن للمكون الدقيق. تحتاج إلى معرفة الطراز الدقيق للجهاز",
+                      "pt":  "Site do fabricante Driver oficial, completo e otimizado para o componente exato Necessidade de saber o modelo preciso do hardware"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pratique pour identifier du materiel inconnu (carte mere sans Outils tiers/generiques A utiliser avec prudence : privilegier des outils reconnus reference)",
+                      "en":  "Practical for identifying unknown hardware (motherboard without third-party/generic tools. Use with caution: favor recognized reference tools)",
+                      "es":  "Práctico para identificar hardware desconocido (placa base sin herramientas genéricas/de terceros. Úselo con precaución: prefiera herramientas de referencia reconocidas)",
+                      "ar":  "عملي لتحديد الأجهزة غير المعروفة (اللوحة الأم بدون أدوات خارجية/أدوات عامة. استخدم بحذر: تفضل الأدوات المرجعية المعترف بها)",
+                      "pt":  "Prático para identificar hardware desconhecido (placa-mãe sem ferramentas genéricas/de terceiros. Use com cuidado: favoreça ferramentas de referência reconhecidas)"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 20",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 20",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 20",
+                      "ar":  "Yggdrasil — وكيل التجديد الرقمي 20",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 20"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les logiciels de securite : antivirus et pare-feu Deux lignes de defense complementaires protegent la machine contre les menaces venues de fichiers ou du reseau.",
+                      "en":  "Security software: antivirus and firewall Two complementary lines of defense protect the machine against threats from files or the network.",
+                      "es":  "Software de seguridad: antivirus y firewall Dos líneas de defensa complementarias protegen la máquina contra amenazas de archivos o de la red.",
+                      "ar":  "برنامج الأمان: مضاد الفيروسات وجدار الحماية خطان دفاعيان متكاملان يحميان الجهاز من التهديدات الصادرة عن الملفات أو الشبكة.",
+                      "pt":  "Software de segurança: antivírus e firewall Duas linhas de defesa complementares protegem a máquina contra ameaças de arquivos ou da rede."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Antivirus Pare-feu (firewall)",
+                      "en":  "Antivirus Firewall",
+                      "es":  "Cortafuegos antivirus",
+                      "ar":  "جدار الحماية لمكافحة الفيروسات",
+                      "pt":  "Firewall antivírus"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Role : Role : detecte, bloque et supprime les logiciels malveillants (virus, ransomware, filtre les connexions reseau entrantes et sortantes selon des regles de spyware, chevaux de Troie). securite.",
+                      "en":  "Role: Role: detects, blocks and removes malware (viruses, ransomware, filters incoming and outgoing network connections according to spyware rules, Trojan horses). security.",
+                      "es":  "Rol: Rol: detecta, bloquea y elimina malware (virus, ransomware, filtra conexiones de red entrantes y salientes según reglas de spyware, caballos de Troya). seguridad.",
+                      "ar":  "الدور: الدور: يكتشف البرامج الضارة ويحظرها ويزيلها (الفيروسات وبرامج الفدية وتصفية اتصالات الشبكة الواردة والصادرة وفقًا لقواعد برامج التجسس وأحصنة طروادة). حماية.",
+                      "pt":  "Função: Função: detecta, bloqueia e remove malware (vírus, ransomware, filtra conexões de rede de entrada e saída de acordo com regras de spyware, cavalos de Tróia). segurança."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Fonctionnement : Fonctionnement : analyse en temps reel des fichiers ouverts, plus des analyses planifiees de bloque les tentatives d\u0027acces non autorisees depuis internet ou un reseau l\u0027ensemble du disque. local.",
+                      "en":  "Operation: Operation: Real-time scans of open files, plus scheduled scans to block unauthorized access attempts from the internet or network to the entire drive. local.",
+                      "es":  "Operación: Operación: Escaneos en tiempo real de archivos abiertos, además de escaneos programados para bloquear intentos de acceso no autorizados desde Internet o la red a todo el disco. local.",
+                      "ar":  "العملية: التشغيل: عمليات الفحص في الوقت الحقيقي للملفات المفتوحة، بالإضافة إلى عمليات الفحص المجدولة لمنع محاولات الوصول غير المصرح بها من الإنترنت أو الشبكة إلى محرك الأقراص بأكمله. محلي.",
+                      "pt":  "Operação: Operação: verificações em tempo real de arquivos abertos, além de verificações programadas para bloquear tentativas de acesso não autorizado da Internet ou rede a toda a unidade. local."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Exemples : Bon reflexe : Windows Defender (integre et gratuit), solutions tierces (payantes ou laisser le pare-feu de l\u0027OS active en permanence, meme avec un antivirus gratuites) selon les besoins. tiers installe.",
+                      "en":  "Examples: Good reflex: Windows Defender (integrated and free), third-party solutions (paid or leave the OS firewall permanently active, even with a free antivirus) as needed. third party installs.",
+                      "es":  "Ejemplos: Buen reflejo: Windows Defender (integrado y gratuito), soluciones de terceros (de pago o dejar el firewall del sistema operativo permanentemente activo, incluso con un antivirus gratuito) según sea necesario. instalaciones de terceros.",
+                      "ar":  "أمثلة: رد الفعل الجيد: Windows Defender (متكامل ومجاني)، وحلول الجهات الخارجية (المدفوعة أو ترك جدار حماية نظام التشغيل نشطًا بشكل دائم، حتى مع برنامج مكافحة فيروسات مجاني) حسب الحاجة. عمليات التثبيت من طرف ثالث.",
+                      "pt":  "Exemplos: Bom reflexo: Windows Defender (integrado e gratuito), soluções de terceiros (pagas ou deixar o firewall do SO permanentemente ativo, mesmo com antivírus gratuito) conforme necessidade. instalações de terceiros."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 21",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 21",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 21",
+                      "ar":  "Yggdrasil — وكيل التجديد الرقمي 21",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 21"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Bonnes pratiques de securite logicielle La meilleure protection reste une combinaison d\u0027outils a jour et de reflexes de prudence au quotidien.",
+                      "en":  "Good software security practices The best protection remains a combination of up-to-date tools and daily precautionary reflexes.",
+                      "es":  "Buenas prácticas de seguridad del software La mejor protección sigue siendo una combinación de herramientas actualizadas y reflejos de precaución diarios.",
+                      "ar":  "الممارسات الأمنية الجيدة للبرامج تظل أفضل حماية هي مزيج من الأدوات الحديثة والردود الاحترازية اليومية.",
+                      "pt":  "Boas práticas de segurança de software A melhor proteção continua sendo uma combinação de ferramentas atualizadas e reflexos diários de precaução."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mises a jour regulieres Analyses planifiees Prudence face au phishing OS, antivirus et logiciels a jour pour corriger les failles Programmer des analyses antivirus completes Se mefier des emails, liens et pieces jointes inattendus, de securite connues. reguliere, pas seulement a la demande. meme d\u0027un expediteur connu.",
+                      "en":  "Regular updates Scheduled scans Caution against phishing OS, antivirus and software up to date to correct flaws Schedule full antivirus scans Be wary of unexpected emails, links and attachments of known security. regularly, not just on demand. even from a known sender.",
+                      "es":  "Actualizaciones periódicas Análisis programados Precaución contra el phishing SO, antivirus y software actualizados para corregir fallas Programe análisis antivirus completos Tenga cuidado con correos electrónicos, enlaces y archivos adjuntos inesperados de seguridad conocida. regularmente, no sólo a pedido. incluso de un remitente conocido.",
+                      "ar":  "تحديثات منتظمة عمليات فحص مجدولة الحذر ضد التصيد الاحتيالي نظام التشغيل وبرامج مكافحة الفيروسات والبرامج محدثة لتصحيح العيوب جدولة عمليات فحص كاملة لمكافحة الفيروسات كن حذرًا من رسائل البريد الإلكتروني والروابط والمرفقات غير المتوقعة ذات الأمان المعروف. بانتظام، وليس فقط عند الطلب. حتى من مرسل معروف.",
+                      "pt":  "Atualizações regulares Verificações agendadas Cuidado contra phishing Sistema operacional, antivírus e software atualizados para corrigir falhas Agende verificações antivírus completas Tenha cuidado com e-mails inesperados, links e anexos de segurança conhecida. regularmente, não apenas sob demanda. mesmo de um remetente conhecido."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Mots de passe robustes Compte utilisateur standard Sauvegardes regulieres Utiliser des mots de passe longs et uniques, et activer la Reserver le compte administrateur aux taches qui le Une sauvegarde a jour est la meilleure protection double authentification si possible. necessitent, au quotidien utiliser un compte standard. contre un ransomware ou une panne materielle.",
+                      "en":  "Strong passwords Standard user account Regular backups Use long, unique passwords, and enable Reserve the administrator account for tasks that require An up-to-date backup is the best double-authentication protection if possible. require, on a daily basis, to use a standard account. against ransomware or hardware failure.",
+                      "es":  "Contraseñas seguras Cuenta de usuario estándar Copias de seguridad periódicas Utilice contraseñas largas y únicas y habilite Reserve la cuenta de administrador para tareas que requieran. Una copia de seguridad actualizada es la mejor protección de doble autenticación, si es posible. requieren, a diario, utilizar una cuenta estándar. contra ransomware o fallas de hardware.",
+                      "ar":  "كلمات مرور قوية حساب مستخدم قياسي نسخ احتياطية منتظمة استخدم كلمات مرور طويلة وفريدة وتمكين حجز حساب المسؤول للمهام التي تتطلب نسخة احتياطية محدثة هي أفضل حماية للمصادقة المزدوجة إن أمكن. تتطلب، على أساس يومي، استخدام حساب قياسي. ضد برامج الفدية أو فشل الأجهزة.",
+                      "pt":  "Senhas fortes Conta de usuário padrão Backups regulares Use senhas longas e exclusivas e ative Reserve a conta do administrador para tarefas que exigem Um backup atualizado é a melhor proteção de autenticação dupla, se possível. exigem, diariamente, o uso de uma conta padrão. contra ransomware ou falha de hardware."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 22",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 22",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 22",
+                      "ar":  "يغدراسيل – وكيل التجديد الرقمي 22",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 22"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "MODULE 02 — LOGICIEL",
+                      "en":  "MODULE 02 — SOFTWARE",
+                      "es":  "MÓDULO 02 — SOFTWARE",
+                      "ar":  "الوحدة 02 – البرمجيات",
+                      "pt":  "MÓDULO 02 — SOFTWARE"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Synthese : systeme, pilotes et securite Trois piliers logiciels qui, ensemble, conditionnent la stabilite et la longevite d\u0027un poste informatique.",
+                      "en":  "Summary: system, drivers and security Three software pillars which, together, determine the stability and longevity of a computer station.",
+                      "es":  "Resumen: sistema, controladores y seguridad Tres pilares de software que, juntos, determinan la estabilidad y longevidad de una estación informática.",
+                      "ar":  "ملخص: النظام وبرامج التشغيل والأمان ثلاث ركائز برمجية تحدد معًا استقرار وطول عمر محطة الكمبيوتر.",
+                      "pt":  "Resumo: sistema, drivers e segurança Três pilares de software que, juntos, determinam a estabilidade e longevidade de uma estação de computador."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Systeme d\u0027exploitation Familles d\u0027OS Pilotes (drivers) Gere le materiel et permet l\u0027execution des programmes Windows, Linux, macOS : usages et compatibilites Traduisent le dialogue entre l\u0027OS et le materiel differents",
+                      "en":  "Operating system OS families Drivers Manage the hardware and allow the execution of programs Windows, Linux, macOS: uses and compatibility Translate the dialogue between the OS and the different hardware",
+                      "es":  "Sistema operativo Familias de SO Drivers Gestionan el hardware y permiten la ejecución de programas Windows, Linux, macOS: usos y compatibilidad Traduce el diálogo entre el SO y los diferentes hardware",
+                      "ar":  "عائلات أنظمة التشغيل برامج التشغيل إدارة الأجهزة والسماح بتنفيذ البرامج Windows وLinux وmacOS: الاستخدامات والتوافق ترجمة الحوار بين نظام التشغيل والأجهزة المختلفة",
+                      "pt":  "Sistema operacional Famílias de SO Drivers Gerenciam o hardware e permitem a execução de programas Windows, Linux, macOS: usos e compatibilidade Traduzem o diálogo entre o SO e os diferentes hardwares"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Sources de pilotes Antivirus \u0026amp; pare-feu Bonnes pratiques Windows Update, gestionnaire de peripheriques, site Detectent les menaces et filtrent les connexions reseau Mises a jour, sauvegardes et vigilance au quotidien fabricant",
+                      "en":  "Driver sources Antivirus \u0026 firewall Best practices Windows Update, device manager, site Detect threats and filter network connections Updates, backups and daily vigilance manufacturer",
+                      "es":  "Fuentes de controladores Antivirus y firewall Mejores prácticas Windows Update, administrador de dispositivos, sitio Detecta amenazas y filtra conexiones de red Actualizaciones, copias de seguridad y vigilancia diaria Fabricante",
+                      "ar":  "مصادر برامج التشغيل برامج مكافحة الفيروسات وجدار الحماية أفضل الممارسات Windows Update ومدير الأجهزة والموقع اكتشاف التهديدات وتصفية اتصالات الشبكة التحديثات والنسخ الاحتياطية واليقظة اليومية للشركة المصنعة",
+                      "pt":  "Fontes de driver Antivírus e firewall Melhores práticas Windows Update, gerenciador de dispositivos, site Detecte ameaças e filtre conexões de rede Atualizações, backups e vigilância diária fabricante"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Yggdrasil — Agent de Reconditionnement Numerique 23",
+                      "en":  "Yggdrasil — Digital Reconditioning Agent 23",
+                      "es":  "Yggdrasil — Agente de reacondicionamiento digital 23",
+                      "ar":  "يغدراسيل – وكيل التجديد الرقمي 23",
+                      "pt":  "Yggdrasil — Agente de Recondicionamento Digital 23"
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
