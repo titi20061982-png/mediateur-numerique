@@ -100,15 +100,6 @@
   .card:hover .card-tilt-glow { opacity: 1; }
   .card > * { position: relative; z-index: 1; }
 
-  .theme-toggle {
-    position: fixed; top: 1.1rem; right: 1.1rem; z-index: 50;
-    width: 2.6rem; height: 2.6rem; border-radius: 999px;
-    background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
-    cursor: pointer; font-size: 1.15rem; display: flex; align-items: center; justify-content: center;
-    transition: transform .2s ease, border-color .2s ease;
-  }
-  .theme-toggle:hover { transform: scale(1.08) rotate(12deg); border-color: var(--accent); }
-
   .back-to-top {
     position: fixed; bottom: 1.4rem; right: 1.1rem; z-index: 50;
     width: 2.8rem; height: 2.8rem; border-radius: 999px;
@@ -304,18 +295,27 @@
     padding: 0.9rem 1.5rem;
   }
   .search-wrap {
-    max-width: 560px; margin: 0 auto 0.8rem; padding: 0;
-    position: relative; z-index: 2; display: flex; align-items: center;
+    max-width: 640px; margin: 0 auto 0.8rem; padding: 0;
+    position: relative; z-index: 2; display: flex; align-items: center; gap: 0.5rem;
   }
-  .search-wrap input {
+  .search-input-inner { position: relative; flex: 1 1 auto; min-width: 0; }
+  .search-input-inner input {
     width: 100%; font-family: "Inter", sans-serif; font-size: 0.92rem;
     padding: 0.75rem 1.1rem; border-radius: 999px; border: 1px solid var(--border);
     background: var(--card); color: var(--text); box-shadow: var(--shadow);
     outline: none; transition: border-color .15s ease, box-shadow .15s ease;
   }
-  .search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
-  .search-wrap input::placeholder { color: var(--muted); }
-  .search-count { position: absolute; right: 2.3rem; font-size: 0.75rem; color: var(--muted); pointer-events: none; }
+  .search-input-inner input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .search-input-inner input::placeholder { color: var(--muted); }
+  .search-count { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--muted); pointer-events: none; }
+  .icon-btn {
+    flex: 0 0 auto; width: 2.6rem; height: 2.6rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow);
+    cursor: pointer; font-size: 1.05rem; display: flex; align-items: center; justify-content: center;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .icon-btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .icon-btn.active { background: var(--accent); border-color: var(--accent); }
   .card.search-hide, section.category.search-hide { display: none !important; }
   .card mark, .search-no-results mark { background: color-mix(in srgb, var(--accent) 35%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
   .search-no-results { text-align: center; color: var(--muted); padding: 3rem 1rem 1rem; font-size: 0.95rem; display: none; }
@@ -334,6 +334,16 @@
   }
   .card.flash { animation: cardFlash 1.1s ease; }
   @media (prefers-reduced-motion: reduce) { .card.flash { animation: none; } }
+  .fav-star {
+    position: absolute; top: 0.7rem; right: 0.7rem; z-index: 3;
+    background: none; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1;
+    color: var(--muted); padding: 0.15rem; transition: transform .15s ease, color .15s ease;
+  }
+  .fav-star:hover { transform: scale(1.2); color: #e0a52c; }
+  .fav-star.is-fav { color: #e0a52c; }
+  .card.fav-filter-hide { display: none !important; }
+  .fav-empty { text-align: center; color: var(--muted); padding: 3rem 1rem; font-size: 0.95rem; display: none; }
+  .fav-empty.show { display: block; }
 
   /* ---------- Nav (category jump links) ---------- */
   .catnav {
@@ -787,7 +797,7 @@
     </g>
   </svg>
   <div class="hero-inner">
-    <span class="eyebrow">Portfolio pédagogique</span>
+    <span class="eyebrow" id="heroGreeting">Portfolio pédagogique</span>
     <h1>Ateliers Médiation Numérique</h1>
     <p>Supports pédagogiques créés dans le cadre d'activités de médiation numérique
     (Titre Professionnel Médiateur Numérique, AFPA Guéret) — pour le grand public,
@@ -810,13 +820,17 @@
 </div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
-<button type="button" class="theme-toggle" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 
 <div class="sticky-toolbar">
   <div class="search-wrap">
-    <input type="search" id="siteSearch" placeholder="🔎 Rechercher un atelier…" aria-label="Rechercher">
-    <span class="search-count" id="searchCount"></span>
+    <div class="search-input-inner">
+      <input type="search" id="siteSearch" placeholder="🔎 Rechercher un atelier… (touche /)" aria-label="Rechercher">
+      <span class="search-count" id="searchCount"></span>
+    </div>
+    <button type="button" class="icon-btn" id="randomBtn" title="Atelier au hasard" aria-label="Atelier au hasard">🎲</button>
+    <button type="button" class="icon-btn" id="favToggleBtn" title="Voir mes favoris" aria-label="Voir mes favoris">⭐</button>
+    <button type="button" class="icon-btn" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
   </div>
   <nav class="catnav" id="catnav">
     <a href="#premiers-pas">🖥️ Premiers pas</a>
@@ -1069,6 +1083,8 @@
     </div>
   </div>
 
+  <p class="fav-empty" id="favEmpty">⭐ Vous n'avez pas encore de favori. Cliquez sur l'étoile en haut d'un atelier pour l'ajouter ici.</p>
+
 </main>
 
 <div class="page-watermark">
@@ -1244,41 +1260,92 @@
     targets.forEach(function (el) { obs.observe(el); });
   })();
 
-  // Recherche instantanee
+  // Recherche instantanee, favoris et atelier au hasard
   (function () {
     var input = document.getElementById('siteSearch');
     var noResults = document.getElementById('searchNoResults');
+    var favEmpty = document.getElementById('favEmpty');
     var countEl = document.getElementById('searchCount');
     var catnav = document.getElementById('catnav');
+    var randomBtn = document.getElementById('randomBtn');
+    var favToggleBtn = document.getElementById('favToggleBtn');
+    var listEl = document.getElementById('allWorkshopsList');
     var categories = Array.from(document.querySelectorAll('main > section.category')).filter(function (s) { return s.id !== 'stats-section' && s.id !== 'apropos'; });
 
-    // Liste complete cliquable des 17 ateliers (visible quand la recherche ne trouve rien)
-    var listEl = document.getElementById('allWorkshopsList');
+    var favorites = [];
+    try { favorites = JSON.parse(localStorage.getItem('fav_ateliers') || '[]'); } catch (e) { favorites = []; }
+    function saveFavorites() { try { localStorage.setItem('fav_ateliers', JSON.stringify(favorites)); } catch (e) {} }
+    function isFav(key) { return favorites.indexOf(key) !== -1; }
+
+    var favMode = false;
+
+    // Index de tous les ateliers (cle stable = data-key du quiz, sinon titre)
+    var allCards = [];
     categories.forEach(function (section) {
       section.querySelectorAll('.card').forEach(function (card) {
         var h3 = card.querySelector('h3');
         if (!h3) return;
+        var quizEl = card.querySelector('.quiz-count[data-key]');
+        var key = quizEl ? quizEl.getAttribute('data-key') : h3.textContent;
+        allCards.push({ el: card, title: h3.textContent, key: key });
+
+        // Etoile favoris
+        var star = document.createElement('button');
+        star.type = 'button';
+        star.className = 'fav-star';
+        star.setAttribute('aria-label', 'Ajouter aux favoris');
+        star.title = 'Ajouter aux favoris';
+        star.textContent = isFav(key) ? '★' : '☆';
+        star.classList.toggle('is-fav', isFav(key));
+        star.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var idx = favorites.indexOf(key);
+          if (idx === -1) { favorites.push(key); }
+          else { favorites.splice(idx, 1); }
+          saveFavorites();
+          star.textContent = isFav(key) ? '★' : '☆';
+          star.classList.toggle('is-fav', isFav(key));
+          if (favMode) applyFavFilter();
+        });
+        card.appendChild(star);
+
+        // Liste complete cliquable (etat "aucun resultat")
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.textContent = h3.textContent;
-        btn.addEventListener('click', function () {
-          input.value = '';
-          document.querySelectorAll('.card.search-hide, section.category.search-hide').forEach(function (el) { el.classList.remove('search-hide'); });
-          noResults.classList.remove('show');
-          countEl.textContent = '';
-          catnav.style.display = '';
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card.classList.remove('flash');
-          void card.offsetWidth;
-          card.classList.add('flash');
-        });
+        btn.addEventListener('click', function () { jumpToCard(card); });
         listEl.appendChild(btn);
       });
     });
 
+    function resetSearchUI() {
+      document.querySelectorAll('.card.search-hide, section.category.search-hide').forEach(function (el) { el.classList.remove('search-hide'); });
+      noResults.classList.remove('show');
+      countEl.textContent = '';
+      input.value = '';
+    }
+
+    function resetFavUI() {
+      document.querySelectorAll('.card.fav-filter-hide, section.category.fav-filter-hide').forEach(function (el) { el.classList.remove('fav-filter-hide'); });
+      favEmpty.classList.remove('show');
+      favMode = false;
+      favToggleBtn.classList.remove('active');
+    }
+
+    function jumpToCard(card) {
+      resetSearchUI();
+      resetFavUI();
+      catnav.style.display = '';
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('flash');
+      void card.offsetWidth;
+      card.classList.add('flash');
+    }
+
     input.addEventListener('input', function () {
       var q = input.value.trim().toLowerCase();
       var totalVisible = 0;
+      resetFavUI();
 
       if (q === '') {
         document.querySelectorAll('.card.search-hide, section.category.search-hide').forEach(function (el) { el.classList.remove('search-hide'); });
@@ -1304,6 +1371,75 @@
       noResults.classList.toggle('show', totalVisible === 0);
       countEl.textContent = totalVisible > 0 ? (totalVisible + ' résultat' + (totalVisible > 1 ? 's' : '')) : '';
     });
+
+    // Bouton favoris : n'afficher que les ateliers etoiles
+    function applyFavFilter() {
+      var totalVisible = 0;
+      categories.forEach(function (section) {
+        var cards = section.querySelectorAll('.card');
+        var visibleInSection = 0;
+        cards.forEach(function (card) {
+          var quizEl = card.querySelector('.quiz-count[data-key]');
+          var h3 = card.querySelector('h3');
+          var key = quizEl ? quizEl.getAttribute('data-key') : (h3 ? h3.textContent : '');
+          var fav = isFav(key);
+          card.classList.toggle('fav-filter-hide', !fav);
+          if (fav) { visibleInSection++; totalVisible++; }
+        });
+        section.classList.toggle('fav-filter-hide', visibleInSection === 0);
+      });
+      favEmpty.classList.toggle('show', totalVisible === 0);
+    }
+
+    favToggleBtn.addEventListener('click', function () {
+      resetSearchUI();
+      favMode = !favMode;
+      favToggleBtn.classList.toggle('active', favMode);
+      if (favMode) {
+        catnav.style.display = 'none';
+        applyFavFilter();
+      } else {
+        resetFavUI();
+        catnav.style.display = '';
+      }
+    });
+
+    // Bouton atelier au hasard
+    var lastRandom = -1;
+    randomBtn.addEventListener('click', function () {
+      if (!allCards.length) return;
+      var idx = Math.floor(Math.random() * allCards.length);
+      if (allCards.length > 1 && idx === lastRandom) idx = (idx + 1) % allCards.length;
+      lastRandom = idx;
+      jumpToCard(allCards[idx].el);
+    });
+
+    // Raccourci clavier "/" pour aller directement a la recherche
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && document.activeElement !== input) {
+        var tag = document.activeElement ? document.activeElement.tagName : '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        e.preventDefault();
+        input.focus();
+      } else if (e.key === 'Escape' && document.activeElement === input) {
+        resetSearchUI();
+        catnav.style.display = '';
+        input.blur();
+      }
+    });
+  })();
+
+  // Salutation selon l'heure
+  (function () {
+    var el = document.getElementById('heroGreeting');
+    if (!el) return;
+    var h = new Date().getHours();
+    var greeting = 'Bonjour';
+    if (h >= 5 && h < 12) greeting = '☀️ Bonjour';
+    else if (h >= 12 && h < 18) greeting = '👋 Bonjour';
+    else if (h >= 18 && h < 23) greeting = '🌆 Bonsoir';
+    else greeting = '🌙 Bonne nuit';
+    el.textContent = greeting + ' · Portfolio pédagogique';
   })();
 
   // Barre de progression de lecture
