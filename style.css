@@ -326,8 +326,12 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   .qr-box { position: static; margin: 1.1rem auto 0; }
 }
 
+.hero-corner-right {
+  position: absolute; top: 1.3rem; right: 1.3rem; z-index: 5;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem;
+}
+.hero-corner-right .qr-box { position: static; }
 .inscription-badge {
-  position: absolute; top: 1.3rem; left: 1.3rem; z-index: 5;
   display: inline-flex; align-items: center; gap: 0.4rem;
   font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.85rem;
   color: #fff; text-decoration: none; background: var(--accent);
@@ -336,7 +340,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 }
 .inscription-badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
 @media (max-width: 760px) {
-  .inscription-badge { position: static; display: flex; width: fit-content; margin: 0 auto 1.2rem; }
+  .hero-corner-right { position: static; align-items: center; margin: 0 auto 1.2rem; }
 }
 
 .hero-art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; color: var(--accent); opacity: 0.5; }
