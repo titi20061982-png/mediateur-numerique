@@ -29,9 +29,11 @@
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
   main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
-  .translate-box { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; color: var(--muted); }
-  #google_translate_element select { font-family: "Inter", sans-serif; font-size: 0.82rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); color: var(--text); padding: 0.15rem 0.4rem; }
-  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+  .lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[dir="rtl"] .text-card { text-align: right; }
 
   .slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
   .slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
@@ -61,13 +63,16 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="back" href="../index.html#culture">← Retour aux ateliers</a>
-    <div class="eyebrow">🌐 Intelligence artificielle : panorama</div>
-    <h1>Fiche</h1>
-    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
-    <div class="translate-box">
-      <span>🌐</span>
-      <div id="google_translate_element"></div>
+    <a class="back" href="../index.html#culture">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">🌐 Intelligence artificielle : panorama</div>
+    <h1 id="h1El">Fiche</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="pt">PT</button>
     </div>
   </div>
 </header>
@@ -79,8 +84,8 @@
   </div>
 
   <details open>
-    <summary class="text-toggle">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
-    <div class="text-card">
+    <summary class="text-toggle" id="toggleEl">📄 Texte de la page (traduisible — les images ci-dessus restent en français)</summary>
+    <div class="text-card" id="textCardEl">
       <p class="lead">L'Intelligence Artificielle Yggdrasil Médiation Numérique Comprendre les IA du quotidien 1/2</p>
       <p>Qu'est-ce que l'IA ? Un programme entraîné sur d'énormes quantités de données pour reconnaître des schémas et produire une réponse plausible. Elle prédit le mot le plus probable — elle ne « comprend » pas comme un humain.</p>
       <p>■Elle peut se tromper avec assurance : c'est l'« hallucination ». D'où l'importance de garder son esprit critique.</p>
@@ -112,13 +117,288 @@
   </details>
 </main>
 <footer>
-  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({ pageLanguage: 'fr', autoDisplay: false }, 'google_translate_element');
+  const PAGE_I18N = {
+    "eyebrow":  {
+                    "pt":  "🌐 Inteligência artificial: visão geral",
+                    "en":  "🌐 Artificial intelligence: overview",
+                    "fr":  "🌐 Intelligence artificielle : panorama",
+                    "ar":  "🌐 الذكاء الاصطناعي: نظرة عامة",
+                    "es":  "🌐 Inteligencia artificial: descripción general"
+                },
+    "h1":  {
+               "pt":  "Folha",
+               "en":  "Sheet",
+               "fr":  "Fiche",
+               "ar":  "ورقة",
+               "es":  "Hoja"
+           },
+    "nodes":  [
+                  {
+                      "type":  "p",
+                      "cls":  "lead",
+                      "text":  "L\u0027Intelligence Artificielle Yggdrasil Médiation Numérique Comprendre les IA du quotidien 1/2",
+                      "en":  "Artificial Intelligence Yggdrasil Digital Mediation Understanding everyday AI 1/2",
+                      "es":  "Inteligencia artificial Yggdrasil Mediación digital Comprender la IA cotidiana 1/2",
+                      "ar":  "الذكاء الاصطناعي يغدراسيل الوساطة الرقمية فهم الذكاء الاصطناعي اليومي 1/2",
+                      "pt":  "Inteligência Artificial Yggdrasil Mediação Digital Compreendendo a IA cotidiana 1/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Qu\u0027est-ce que l\u0027IA ? Un programme entraîné sur d\u0027énormes quantités de données pour reconnaître des schémas et produire une réponse plausible. Elle prédit le mot le plus probable — elle ne « comprend » pas comme un humain.",
+                      "en":  "What is AI? A program trained on huge amounts of data to recognize patterns and produce a plausible answer. She predicts the most likely word — she doesn\u0027t \"understand\" like a human.",
+                      "es":  "¿Qué es la IA? Un programa entrenado con enormes cantidades de datos para reconocer patrones y producir una respuesta plausible. Ella predice la palabra más probable: no \"entiende\" como un humano.",
+                      "ar":  "ما هو الذكاء الاصطناعي؟ برنامج تم تدريبه على كميات هائلة من البيانات للتعرف على الأنماط وتقديم إجابة معقولة. إنها تتنبأ بالكلمة الأكثر احتمالاً، فهي لا \"تفهم\" مثل الإنسان.",
+                      "pt":  "O que é IA? Um programa treinado em grandes quantidades de dados para reconhecer padrões e produzir uma resposta plausível. Ela prevê a palavra mais provável – ela não “entende” como um humano."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "■Elle peut se tromper avec assurance : c\u0027est l\u0027« hallucination ». D\u0027où l\u0027importance de garder son esprit critique.",
+                      "en":  "■She can be mistaken with confidence: this is “hallucination”. Hence the importance of maintaining critical thinking.",
+                      "es":  "■Puede equivocarse con confianza: esto es una “alucinación”. De ahí la importancia de mantener el pensamiento crítico.",
+                      "ar":  "■ يمكن أن تخطئ بالثقة: هذه \"هلوسة\". ومن هنا تأتي أهمية الحفاظ على التفكير النقدي.",
+                      "pt":  "■Ela pode ser confundida com confiança: isso é “alucinação”. Daí a importância de manter o pensamento crítico."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027IA en France",
+                      "en":  "AI in France",
+                      "es":  "IA en Francia",
+                      "ar":  "منظمة العفو الدولية في فرنسا",
+                      "pt":  "IA na França"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "48 % 10 % 26 % 5M des Français ont utilisé l\u0027IA des entreprises françaises utilisent des PME françaises l\u0027utilisent déjà d\u0027emplois potentiellement exposés générative en 2026 l\u0027IA (2024) au quotidien d\u0027ici 2030",
+                      "en":  "48% 10% 26% 5M French people have used AI French companies use French SMEs already use it potentially exposed jobs generative in 2026 AI (2024) on a daily basis by 2030",
+                      "es":  "48% 10% 26% 5 millones de franceses han utilizado la IA Las empresas francesas la utilizan Las pymes francesas ya la utilizan Empleos potencialmente expuestos que generarán en 2026 IA (2024) a diario para 2030",
+                      "ar":  "48% 10% 26% 5 ملايين فرنسي استخدموا الذكاء الاصطناعي تستخدم الشركات الفرنسية الشركات الصغيرة والمتوسطة الفرنسية تستخدمه بالفعل والتي من المحتمل أن تعرض وظائف مولدة في عام 2026 الذكاء الاصطناعي (2024) على أساس يومي بحلول عام 2030",
+                      "pt":  "48% 10% 26% 5 milhões de franceses usaram IA As empresas francesas usam PME francesas já a usam empregos potencialmente expostos geradores em 2026 AI (2024) diariamente até 2030"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les bienfaits au quotidien Gain de temps : rédiger, résumer, planifierAccessibilité : synthèse vocale, sous-titres",
+                      "en":  "Daily benefits Save time: write, summarize, plan Accessibility: voice synthesis, subtitles",
+                      "es":  "Beneficios diarios Ahorre tiempo: escriba, resuma, planifique Accesibilidad: síntesis de voz, subtítulos",
+                      "ar":  "الفوائد اليومية توفير الوقت: الكتابة والتلخيص والتخطيط إمكانية الوصول: التركيب الصوتي والترجمة",
+                      "pt":  "Benefícios diários Economize tempo: escreva, resuma, planeje Acessibilidade: síntese de voz, legendas"
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Santé : aide au diagnostic, suivi de traitementÉducation : tuteur personnalisé, aide aux devoirs",
+                      "en":  "Health: diagnostic assistance, treatment monitoringEducation: personalized tutor, homework help",
+                      "es":  "Salud: asistencia diagnóstica, seguimiento del tratamientoEducación: tutor personalizado, ayuda con las tareas",
+                      "ar":  "الصحة: المساعدة التشخيصية، مراقبة العلاج، التعليم: مدرس شخصي، مساعدة في الواجبات المنزلية",
+                      "pt":  "Saúde: assistência diagnóstica, acompanhamento do tratamentoEducação: tutor personalizado, ajuda com a lição de casa"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Créativité : génération d\u0027images, de musique, d\u0027idéesMédiation multilingue : traduction quasi instantanée",
+                      "en":  "Creativity: generation of images, music, ideas Multilingual mediation: almost instantaneous translation",
+                      "es":  "Creatividad: generación de imágenes, música, ideas Mediación multilingüe: traducción casi instantánea",
+                      "ar":  "الإبداع: توليد الصور والموسيقى والأفكار. الوساطة متعددة اللغات: ترجمة فورية تقريبًا",
+                      "pt":  "Criatividade: geração de imagens, músicas, ideias Mediação multilíngue: tradução quase instantânea"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Les risques à surveiller Désinformation : hallucinations, fausses images crédiblesBiais : reproduit les stéréotypes de ses données",
+                      "en":  "Risks to watch out for Misinformation: hallucinations, credible false images Bias: reproduces stereotypes in its data",
+                      "es":  "Riesgos a tener en cuenta Desinformación: alucinaciones, imágenes falsas creíbles Sesgo: reproduce estereotipos en sus datos",
+                      "ar":  "المخاطر التي يجب الانتباه إليها من المعلومات الخاطئة: الهلوسة والصور الكاذبة ذات المصداقية التحيز: إعادة إنتاج الصور النمطية في بياناتها",
+                      "pt":  "Riscos a ter em conta Desinformação: alucinações, imagens falsas credíveis Preconceito: reproduz estereótipos nos seus dados"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Dépendance cognitive : affaiblit mémoire et esprit critiqueVie privée : données saisies parfois conservées",
+                      "en":  "Cognitive dependence: weakens memory and critical thinkingPrivacy: data entered sometimes kept",
+                      "es":  "Dependencia cognitiva: debilita la memoria y el pensamiento críticoPrivacidad: los datos ingresados a veces se conservan",
+                      "ar":  "الاعتماد المعرفي: يضعف الذاكرة والتفكير النقدي. الخصوصية: يتم الاحتفاظ بالبيانات المدخلة أحياناً",
+                      "pt":  "Dependência cognitiva: enfraquece a memória e o pensamento críticoPrivacidade: os dados inseridos às vezes são mantidos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Emploi : automatisation de certaines tâches répétitivesImpact environnemental : ~415 TWh consommés en 2024",
+                      "en":  "Employment: automation of certain repetitive tasksEnvironmental impact: ~415 TWh consumed in 2024",
+                      "es":  "Empleo: automatización de determinadas tareas repetitivasImpacto ambiental: ~415 TWh consumidos en 2024",
+                      "ar":  "التوظيف: أتمتة بعض المهام المتكررة التأثير البيئي: استهلاك حوالي 415 تيراواط ساعة في عام 2024",
+                      "pt":  "Emprego: automatização de certas tarefas repetitivasImpacto ambiental: ~415 TWh consumidos em 2024"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.",
+                      "en":  "AI is a tool — not a truth. To be used with curiosity, method and critical thinking.",
+                      "es":  "La IA es una herramienta, no una verdad. Para utilizar con curiosidad, método y pensamiento crítico.",
+                      "ar":  "الذكاء الاصطناعي هو أداة - وليس حقيقة. لاستخدامها مع الفضول والأسلوب والتفكير النقدي.",
+                      "pt":  "A IA é uma ferramenta – não uma verdade. Para ser utilizado com curiosidade, método e pensamento crítico."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027Intelligence Artificielle Yggdrasil Médiation Numérique Panorama des outils, cadre légal, bon usage 2/2",
+                      "en":  "Artificial Intelligence Yggdrasil Digital Mediation Overview of tools, legal framework, proper use 2/2",
+                      "es":  "Inteligencia Artificial Yggdrasil Mediación Digital Descripción general de herramientas, marco legal, uso adecuado 2/2",
+                      "ar":  "الذكاء الاصطناعي يغدراسيل الوساطة الرقمية نظرة عامة على الأدوات والإطار القانوني والاستخدام السليم 2/2",
+                      "pt":  "Inteligência Artificial Yggdrasil Mediação Digital Visão geral das ferramentas, enquadramento legal, uso adequado 2/2"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Panorama des IA par usage",
+                      "en":  "Panorama of AI by use",
+                      "es":  "Panorama de la IA por uso",
+                      "ar":  "بانوراما الذكاء الاصطناعي عن طريق الاستخدام",
+                      "pt":  "Panorama da IA por uso"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Texte Image Vidéo Musique / Voix ChatGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT",
+                      "en":  "Text Image Video Music / Voice ChatGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT",
+                      "es":  "Texto Imagen Vídeo Música/Chat de vozGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT",
+                      "ar":  "صورة نصية، موسيقى فيديو / دردشة صوتيةGPT، Claude، Gemini، Mistral، Midjourney، DALL·E 3، Stable Sora، Runway، Kling، Veo، Pika Suno، Udio، ElevenLabs، Murf، Perplexity Diffusion، Firefly PlayHT",
+                      "pt":  "Text Image Vídeo Música / Voice ChatGPT, Claude, Gemini, Mistral, Midjourney, DALL·E 3, Stable Sora, Runway, Kling, Veo, Pika Suno, Udio, ElevenLabs, Murf, Perplexity Diffusion, Firefly PlayHT"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Légende : Gratuit / Freemium / Payant — vérifiez toujours avant de recommander un outil. Liste non exhaustive.",
+                      "en":  "Legend: Free / Freemium / Paid — always check before recommending a tool. Non-exhaustive list.",
+                      "es":  "Leyenda: Gratis / Freemium / Pagado: verifique siempre antes de recomendar una herramienta. Lista no exhaustiva.",
+                      "ar":  "وسيلة الإيضاح: مجانية / فريميوم / مدفوعة - تحقق دائمًا قبل التوصية بأي أداة. قائمة غير شاملة.",
+                      "pt":  "Legenda: Gratuito/Freemium/Pago — sempre verifique antes de recomendar uma ferramenta. Lista não exaustiva."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Cadre légal — à connaître",
+                      "en":  "Legal framework – to know",
+                      "es":  "Marco legal – saber",
+                      "ar":  "الإطار القانوني – للمعرفة",
+                      "pt":  "Quadro jurídico – saber"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Droit d\u0027auteur RGPD Dark IA Un contenu 100% généré par IA n\u0027est pas Jamais de données de santé ou sensibles WormGPT, FraudGPT : usage illégal — même protégeable en l\u0027état actuel du droit. dans un chatbot sans consentement explicite. la recherche expose à des arnaques.",
+                      "en":  "Copyright GDPR Dark IA Content 100% generated by AI is never health or sensitive data WormGPT, FraudGPT: illegal use — even protectable under the current state of the law. in a chatbot without explicit consent. research exposes you to scams.",
+                      "es":  "Copyright GDPR Dark IA El contenido 100% generado por IA nunca es información confidencial o de salud WormGPT, FraudGPT: uso ilegal, incluso protegible según el estado actual de la ley. en un chatbot sin consentimiento explícito. La investigación lo expone a estafas.",
+                      "ar":  "حقوق الطبع والنشر بموجب اللائحة العامة لحماية البيانات (GDPR)، محتوى IA المظلم بنسبة 100% الذي تم إنشاؤه بواسطة الذكاء الاصطناعي لا يعتبر بيانات صحية أو حساسة على الإطلاق، WormGPT، FraudGPT: الاستخدام غير القانوني - حتى أنه قابل للحماية بموجب الوضع الحالي للقانون. في chatbot دون موافقة صريحة. البحث يعرضك لعمليات الاحتيال.",
+                      "pt":  "Copyright GDPR Dark IA Conteúdo 100% gerado por IA nunca é saúde ou dados confidenciais WormGPT, FraudGPT: uso ilegal - até mesmo protegido pelo estado atual da lei. em um chatbot sem consentimento explícito. a pesquisa expõe você a fraudes."
+                  },
+                  {
+                      "type":  "hr"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour un bon usage : 4 réflexes",
+                      "en":  "For proper use: 4 reflexes",
+                      "es":  "Para un uso adecuado: 4 reflejos",
+                      "ar":  "للاستخدام السليم: 4 ردود الفعل",
+                      "pt":  "Para uso adequado: 4 reflexos"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Toujours vérifier Protéger ses données Garder l\u0027esprit critique Lire les CGU Recoupez les informations Jamais de mot de passe, n° sécu, ou Un assistant, pas une vérité absolue. Savoir si vos données servent à importantes avec une autre source. données bancaires. entraîner le modèle.",
+                      "en":  "Always check Protect your data Keep a critical mind Read the T\u0026Cs Cross-check information Never a password, security number, or An assistant, not an absolute truth. Know if your data is used with another source. banking data. train the model.",
+                      "es":  "Verifique siempre Proteja sus datos Mantenga una mente crítica Lea los términos y condiciones Verifique la información Nunca una contraseña, un número de seguridad o Un asistente, no es una verdad absoluta. Sepa si sus datos se utilizan con otra fuente. datos bancarios. entrenar el modelo.",
+                      "ar":  "تحقق دائمًا من حماية بياناتك كن حذرًا ناقدًا اقرأ الشروط والأحكام تحقق من المعلومات أبدًا لا كلمة مرور أو رقم أمان أو مساعد، ليست حقيقة مطلقة. معرفة ما إذا كانت بياناتك تُستخدم مع مصدر آخر. البيانات المصرفية. تدريب النموذج.",
+                      "pt":  "Verifique sempre Proteja seus dados Mantenha uma mente crítica Leia os T\u0026Cs Verifique as informações Nunca uma senha, número de segurança ou Um assistente, não é uma verdade absoluta. Saiba se seus dados são usados ​​com outra fonte. dados bancários. treinar o modelo."
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "Pour aller plus loin — flashez",
+                      "en":  "To go further — flash",
+                      "es":  "Para ir más lejos: flashear",
+                      "ar":  "للمضي قدمًا — فلاش",
+                      "pt":  "Para ir mais longe - flash"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "ClaudeLe Chat (Mistral)CNIL Assistant IA — écriture etL\u0027IA française, hébergée enVos droits sur vos données",
+                      "en":  "ClaudeLe Chat (Mistral)CNIL AI Assistant — writing andFrench AI, hosted inYour rights over your data",
+                      "es":  "ClaudeLe Chat (Mistral)Asistente CNIL AI: redacción e IA francesa, alojada enSus derechos sobre sus datos",
+                      "ar":  "ClaudeLe Chat (Mistral)مساعد الذكاء الاصطناعي التابع لـCNIL - الكتابة والذكاء الاصطناعي الفرنسي، مستضاف في حقوقك فيما يتعلق ببياناتك",
+                      "pt":  "ClaudeLe Chat (Mistral)CNIL AI Assistant — escrita e IA francesa, hospedada emSeus direitos sobre seus dados"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "raisonnementFrance/UEpersonnelles",
+                      "en":  "reasoningFrance/EUpersonal",
+                      "es":  "razonamientoFrancia/UEpersonal",
+                      "ar":  "التفكيرفرنسا/الاتحاد الأوروبيشخصي",
+                      "pt":  "raciocínioFrança/UEpessoal"
+                  },
+                  {
+                      "type":  "p",
+                      "cls":  "",
+                      "text":  "L\u0027IA est un outil — pas une vérité. À utiliser avec curiosité, méthode et esprit critique.",
+                      "en":  "AI is a tool — not a truth. To be used with curiosity, method and critical thinking.",
+                      "es":  "La IA es una herramienta, no una verdad. Para utilizar con curiosidad, método y pensamiento crítico.",
+                      "ar":  "الذكاء الاصطناعي هو أداة - وليس حقيقة. لاستخدامها مع الفضول والأسلوب والتفكير النقدي.",
+                      "pt":  "A IA é uma ferramenta – não uma verdade. Para ser utilizado com curiosidade, método e pensamento crítico."
+                  }
+              ]
+};
+  const UI_I18N = {
+  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
+  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
+  "toggle": {"fr":"📄 Texte de la page (traduisible — les images ci-dessus restent en français)","en":"📄 Page text (translatable — the images above remain in French)","es":"📄 Texto de la página (traducible — las imágenes de arriba permanecen en francés)","ar":"📄 نص الصفحة (قابل للترجمة — تبقى الصور أعلاه باللغة الفرنسية)","pt":"📄 Texto da página (traduzível — as imagens acima permanecem em francês)"},
+  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
+  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"}
+};
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI_I18N.back[lang] || UI_I18N.back.fr;
+    document.getElementById('eyebrowEl').textContent = PAGE_I18N.eyebrow[lang] || PAGE_I18N.eyebrow.fr;
+    document.getElementById('h1El').textContent = PAGE_I18N.h1[lang] || PAGE_I18N.h1.fr;
+    document.getElementById('subEl').textContent = UI_I18N.sub[lang] || UI_I18N.sub.fr;
+    document.getElementById('toggleEl').textContent = UI_I18N.toggle[lang] || UI_I18N.toggle.fr;
+    document.getElementById('footerCopyEl').textContent = UI_I18N.footerCopy[lang] || UI_I18N.footerCopy.fr;
+    document.getElementById('footerLinkEl').textContent = UI_I18N.footerBack[lang] || UI_I18N.footerBack.fr;
+    const card = document.getElementById('textCardEl');
+    card.innerHTML = PAGE_I18N.nodes.map(function(n) {
+      if (n.type === 'hr') return '<hr class="divider">';
+      const cls = n.cls ? ' class="' + n.cls + '"' : '';
+      const t = n[lang] || n.text;
+      return '<p' + cls + '>' + esc(t) + '</p>';
+    }).join('\n');
+    document.querySelectorAll('#langSwitch button').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
   }
+  document.querySelectorAll('#langSwitch button').forEach(function(b) {
+    b.addEventListener('click', function() { applyLang(b.dataset.lang); });
+  });
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  applyLang(__savedLang);
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
