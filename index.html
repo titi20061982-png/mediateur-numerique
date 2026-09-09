@@ -122,6 +122,10 @@
 
   .catnav a.active { color: #fff; background: var(--accent); border-color: var(--accent); }
 
+  .site-intro { max-width: 720px; margin: 0.4rem auto 2.4rem; padding: 0 1.5rem; text-align: center; }
+  .site-intro p { color: var(--muted); font-size: 0.96rem; line-height: 1.75; margin: 0; }
+  .site-intro strong { color: var(--text); }
+
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) {
@@ -844,6 +848,10 @@
 
 <main>
 
+  <section class="site-intro">
+    <p>Chaque atelier propose une ou plusieurs <strong>fiches</strong> (PDF à consulter, imprimer ou télécharger) pour apprendre à votre rythme, et un <strong>quiz</strong> interactif pour vérifier ce que vous avez retenu — avec 3 niveaux de difficulté et une traduction en plusieurs langues. Parcourez les catégories ci-dessus, utilisez la recherche, ou laissez le hasard 🎲 choisir pour vous.</p>
+  </section>
+
   <section class="category" id="premiers-pas">
     <div class="category-head">
       <span class="icon">🖥️</span>
@@ -1236,7 +1244,7 @@
 
   // Apparition au defilement (cartes + entetes de categorie)
   (function () {
-    var targets = document.querySelectorAll('.card, .category-head');
+    var targets = document.querySelectorAll('.card, .category-head, .site-intro');
     if (!('IntersectionObserver' in window) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
       targets.forEach(function (el) { el.classList.add('reveal', 'in-view'); });
       return;
