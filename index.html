@@ -878,7 +878,7 @@
   // Affiche le nombre de visites de chaque quiz (sans incrementer le compteur)
   document.querySelectorAll('.quiz-count').forEach(function (el) {
     var key = el.dataset.key;
-    fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique/' + key)
+    fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + key)
       .then(function (r) { return r.json(); })
       .then(function (d) { el.textContent = '👥 ' + (typeof d.value === 'number' ? d.value : 0); })
       .catch(function () { el.remove(); });
