@@ -607,7 +607,7 @@
 
   resetBtn.addEventListener('click', function() { renderQuiz(currentLevel, currentLang); });
 
-  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/vie-privee-quiz')
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/vie-privee-quiz-v2')
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;

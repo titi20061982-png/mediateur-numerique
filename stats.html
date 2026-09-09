@@ -58,7 +58,7 @@
   ];
 
   Promise.all(QUIZZES.map(function(q) {
-    return fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + q.slug + '-quiz')
+    return fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + q.slug + '-quiz-v2')
       .then(function(r) { return r.json(); })
       .then(function(d) { return { q: q, count: (typeof d.value === 'number' ? d.value : 0) }; })
       .catch(function() { return { q: q, count: 0 }; });
