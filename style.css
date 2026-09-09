@@ -605,6 +605,29 @@ button.secondary:hover { border-color: var(--accent); color: var(--accent); }
 .a11y-controls button { font-family: "Inter", sans-serif; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); width: 2.1rem; height: 2.1rem; border-radius: 999px; cursor: pointer; }
 .a11y-controls button:hover { border-color: var(--accent); color: var(--accent); }
 
+/* ---------- Fiche d'inscription ---------- */
+.reg-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.reg-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.reg-field label { font-weight: 600; font-size: 0.92rem; color: var(--text); }
+.reg-field .req { color: var(--accent-2); }
+.reg-field input, .reg-field select, .reg-field textarea {
+  font-family: "Inter", sans-serif; font-size: 0.95rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.7rem 0.9rem; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.reg-field input:focus, .reg-field select:focus, .reg-field textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.reg-field textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+.reg-hint { font-size: 0.82rem; color: var(--muted); margin: -0.4rem 0 0.6rem; }
+.reg-success {
+  display: none; background: color-mix(in srgb, var(--good) 12%, var(--card));
+  border: 1.5px solid var(--good); border-radius: 14px; padding: 1.1rem 1.3rem;
+  color: var(--text); font-size: 0.95rem; margin-top: 1.2rem;
+}
+.reg-success.show { display: block; }
+
 @media print {
   body { background: #fff !important; color: #000 !important; }
   .lang-switch, .a11y-controls, .text-toggle, footer, .back { display: none !important; }

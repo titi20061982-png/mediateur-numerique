@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription à un atelier — Ateliers Médiation Numérique</title>
+<meta name="description" content="Inscrivez-vous à un atelier de médiation numérique : indiquez vos coordonnées, l'atelier souhaité et votre message.">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#35604f">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="icon-btn icon-btn-floating" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">← Retour aux ateliers</a>
+    <div class="eyebrow">📝 Inscription</div>
+    <h1>S'inscrire à un atelier</h1>
+    <p class="sub">Indiquez vos coordonnées et l'atelier qui vous intéresse — votre demande sera envoyée directement par e-mail.</p>
+    <nav class="toplinks">
+      <a href="index.html">🏠 Accueil</a>
+      <a href="a-propos.html">🌳 À propos</a>
+      <a href="prestations.html">💼 Prestations</a>
+      <a href="inscription.html" class="current">📝 Inscription</a>
+    </nav>
+  </div>
+</header>
+
+<main class="narrow">
+  <div class="card reveal">
+    <form class="reg-form" id="regForm">
+      <div class="reg-field">
+        <label for="regNom">Nom <span class="req">*</span></label>
+        <input type="text" id="regNom" name="nom" required autocomplete="family-name">
+      </div>
+      <div class="reg-field">
+        <label for="regPrenom">Prénom <span class="req">*</span></label>
+        <input type="text" id="regPrenom" name="prenom" required autocomplete="given-name">
+      </div>
+      <div class="reg-field">
+        <label for="regEmail">Adresse e-mail <span class="req">*</span></label>
+        <input type="email" id="regEmail" name="email" required autocomplete="email">
+      </div>
+      <div class="reg-field">
+        <label for="regAtelier">Atelier souhaité <span class="req">*</span></label>
+        <select id="regAtelier" name="atelier" required>
+          <option value="" disabled selected>— Choisir un atelier —</option>
+          <optgroup label="🖥️ Premiers pas avec son matériel">
+            <option>Smartphone et tablette</option>
+            <option>Battle OS (Windows / Linux / macOS)</option>
+            <option>Base ADRN (montage / diagnostic PC)</option>
+          </optgroup>
+          <optgroup label="🔒 Sécurité, vie privée &amp; bien-être en ligne">
+            <option>Phishing (hameçonnage)</option>
+            <option>Cyberharcèlement</option>
+            <option>Identité numérique et e-réputation</option>
+            <option>Protéger sa vie privée en ligne</option>
+            <option>Accompagner un enfant sur Internet</option>
+          </optgroup>
+          <optgroup label="🏛️ Démarches administratives en ligne">
+            <option>Mon compte CAF</option>
+            <option>France Titres (CNI, passeport, permis, carte grise)</option>
+            <option>Mes impôts en ligne</option>
+            <option>Mon espace santé Ameli</option>
+            <option>Ma retraite en ligne</option>
+          </optgroup>
+          <optgroup label="💼 Insertion professionnelle">
+            <option>CV et lettre de motivation</option>
+            <option>Trouver une formation en ligne</option>
+          </optgroup>
+          <optgroup label="🌐 Culture numérique">
+            <option>Intelligence artificielle : panorama</option>
+            <option>Comprendre sa facture téléphonique</option>
+          </optgroup>
+          <option>Je ne sais pas encore / autre demande</option>
+        </select>
+      </div>
+      <div class="reg-field">
+        <label for="regMessage">Message</label>
+        <textarea id="regMessage" name="message" placeholder="Précisez votre demande, vos disponibilités, ou toute question…"></textarea>
+      </div>
+      <p class="reg-hint">En validant, votre messagerie s'ouvrira avec le message déjà rempli : il ne restera plus qu'à cliquer sur « Envoyer ».</p>
+      <div class="actions">
+        <button type="submit" class="primary">📩 Envoyer ma demande</button>
+      </div>
+    </form>
+    <div class="reg-success" id="regSuccess">
+      ✅ Votre messagerie s'est ouverte avec votre demande pré-remplie. Il ne reste plus qu'à cliquer sur <strong>Envoyer</strong> pour qu'elle me parvienne. Si rien ne s'est ouvert, écrivez-moi directement à <strong>waltenercedric@proton.me</strong>.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footlinks">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="a-propos.html">🌳 À propos</a>
+    <a href="prestations.html">💼 Prestations</a>
+  </div>
+  © 2026 titi_23 — Tous droits réservés. Voir la <a href="LICENSE">licence</a>.
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+    icon(saved);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      icon(next);
+    });
+  })();
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+  (function () {
+    var targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      targets.forEach(function (s) { s.classList.add('in-view'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+    targets.forEach(function (s) { obs.observe(s); });
+  })();
+
+  document.getElementById('regForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nom = document.getElementById('regNom').value.trim();
+    var prenom = document.getElementById('regPrenom').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var atelier = document.getElementById('regAtelier').value;
+    var message = document.getElementById('regMessage').value.trim();
+
+    var subject = 'Inscription atelier — ' + atelier;
+    var body =
+      'Nom : ' + nom + '\n' +
+      'Prénom : ' + prenom + '\n' +
+      'E-mail : ' + email + '\n' +
+      'Atelier souhaité : ' + atelier + '\n\n' +
+      'Message :\n' + (message || '(aucun message)');
+
+    var mailto = 'mailto:waltenercedric@proton.me'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
+    var successBox = document.getElementById('regSuccess');
+    successBox.classList.add('show');
+    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+</body>
+</html>
