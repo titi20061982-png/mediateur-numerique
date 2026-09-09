@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de connaissances Cyberharcèlement — Ateliers Médiation Numérique</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
+    --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --good: #2f7d4f; --bad: #b3432f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --good: #6fcf97; --bad: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
+  h1, h2 { font-family: "Fraunces", Georgia, serif; }
+  header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .back:hover { text-decoration: underline; }
+  .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
+  #scoreBanner.show { display: block; }
+  #scoreBanner.tier-low { background: color-mix(in srgb, var(--bad) 16%, var(--card)); color: var(--bad); border: 1px solid var(--bad); }
+  #scoreBanner.tier-mid { background: color-mix(in srgb, var(--accent-2) 16%, var(--card)); color: var(--accent-2); border: 1px solid var(--accent-2); }
+  #scoreBanner.tier-high { background: color-mix(in srgb, var(--good) 16%, var(--card)); color: var(--good); border: 1px solid var(--good); }
+  #scoreBanner p { margin: 0.4rem 0 0; font-size: 0.92rem; font-weight: 400; color: var(--text); font-family: "Inter", sans-serif; }
+
+  .qcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1.7rem; margin-bottom: 1.1rem; box-shadow: var(--shadow); }
+  .qcard .qnum { color: var(--accent); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+  .qcard .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 1rem; }
+  .opt { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.65rem 0.8rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 0.55rem; cursor: pointer; transition: border-color .15s; }
+  .opt:hover { border-color: var(--accent); }
+  .opt input { margin-top: 0.2rem; accent-color: var(--accent); }
+  .opt span { font-size: 0.95rem; }
+  .opt.correct { border-color: var(--good); background: color-mix(in srgb, var(--good) 12%, var(--card)); }
+  .opt.incorrect { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--card)); }
+  .explain { display: none; margin-top: 0.8rem; padding: 0.8rem 1rem; border-radius: 10px; background: var(--bg-soft); font-size: 0.88rem; color: var(--muted); border-left: 3px solid var(--accent); }
+  .explain.show { display: block; }
+
+  .actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  button.primary { font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.95rem; background: var(--accent); color: #fff; border: none; border-radius: 999px; padding: 0.75rem 1.6rem; cursor: pointer; }
+  button.primary:hover { opacity: 0.9; }
+  button.secondary { font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.95rem; background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 0.75rem 1.6rem; cursor: pointer; }
+  button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html#securite">← Retour aux ateliers</a>
+    <div class="eyebrow">🔒 Cyberharcèlement</div>
+    <h1>Test de connaissances</h1>
+    <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+  </div>
+</header>
+<main>
+  <div id="scoreBanner"></div>
+  <form id="quizForm">
+    <div class="qcard">
+      <div class="qnum">Question 1 / 6</div>
+      <p class="qtext">Pour qu'on parle de cyberharcèlement, les actes doivent être :</p>
+      <div id="opts0">
+      <label class="opt"><input type="radio" name="q0" value="0" required><span>Un seul message choquant</span></label>
+      <label class="opt"><input type="radio" name="q0" value="1" required><span>Répétés et intentionnels</span></label>
+      <label class="opt"><input type="radio" name="q0" value="2" required><span>Envoyés par un inconnu uniquement</span></label>
+      <label class="opt"><input type="radio" name="q0" value="3" required><span>Toujours publics</span></label>
+      </div>
+      <div class="explain" id="explain0">💡 Le cyberharcèlement se définit par la répétition et l'intention de nuire, pas par un simple dérapage isolé.</div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Question 2 / 6</div>
+      <p class="qtext">Quel est le numéro gratuit et anonyme pour signaler des violences numériques en France ?</p>
+      <div id="opts1">
+      <label class="opt"><input type="radio" name="q1" value="0" required><span>Le 15</span></label>
+      <label class="opt"><input type="radio" name="q1" value="1" required><span>Le 3018</span></label>
+      <label class="opt"><input type="radio" name="q1" value="2" required><span>Le 3919</span></label>
+      <label class="opt"><input type="radio" name="q1" value="3" required><span>Le 17</span></label>
+      </div>
+      <div class="explain" id="explain1">💡 Le 3018 est le numéro national dédié aux violences numériques, gratuit et anonyme, 7j/7.</div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Question 3 / 6</div>
+      <p class="qtext">Si je suis victime, le premier réflexe recommandé est :</p>
+      <div id="opts2">
+      <label class="opt"><input type="radio" name="q2" value="0" required><span>Répondre fermement à l'auteur</span></label>
+      <label class="opt"><input type="radio" name="q2" value="1" required><span>Ne pas répondre et garder son calme</span></label>
+      <label class="opt"><input type="radio" name="q2" value="2" required><span>Supprimer immédiatement toutes les preuves</span></label>
+      <label class="opt"><input type="radio" name="q2" value="3" required><span>Changer de numéro de téléphone</span></label>
+      </div>
+      <div class="explain" id="explain2">💡 Répondre peut aggraver la situation ; le calme et le silence face à l'auteur sont recommandés en premier lieu.</div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Question 4 / 6</div>
+      <p class="qtext">Avant de bloquer un harceleur, il faut d'abord :</p>
+      <div id="opts3">
+      <label class="opt"><input type="radio" name="q3" value="0" required><span>Rien, bloquer suffit</span></label>
+      <label class="opt"><input type="radio" name="q3" value="1" required><span>Conserver les preuves (captures d'écran datées)</span></label>
+      <label class="opt"><input type="radio" name="q3" value="2" required><span>Le signaler à la police uniquement</span></label>
+      <label class="opt"><input type="radio" name="q3" value="3" required><span>Attendre une semaine</span></label>
+      </div>
+      <div class="explain" id="explain3">💡 Les captures d'écran datées sont essentielles pour un signalement ou une plainte ultérieure.</div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Question 5 / 6</div>
+      <p class="qtext">Si je suis simplement témoin de cyberharcèlement, je dois :</p>
+      <div id="opts4">
+      <label class="opt"><input type="radio" name="q4" value="0" required><span>Partager le message pour alerter tout le monde</span></label>
+      <label class="opt"><input type="radio" name="q4" value="1" required><span>Ne pas relayer, et soutenir la victime en privé</span></label>
+      <label class="opt"><input type="radio" name="q4" value="2" required><span>Ne rien faire, ça ne me regarde pas</span></label>
+      <label class="opt"><input type="radio" name="q4" value="3" required><span>Répondre à l'auteur pour le défendre</span></label>
+      </div>
+      <div class="explain" id="explain4">💡 Relayer amplifie le harcèlement ; le bon réflexe est de soutenir la victime et de signaler.</div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Question 6 / 6</div>
+      <p class="qtext">Le cyberharcèlement d'une victime de moins de 15 ans est puni jusqu'à :</p>
+      <div id="opts5">
+      <label class="opt"><input type="radio" name="q5" value="0" required><span>6 mois de prison</span></label>
+      <label class="opt"><input type="radio" name="q5" value="1" required><span>1 an de prison</span></label>
+      <label class="opt"><input type="radio" name="q5" value="2" required><span>3 ans de prison et 45 000 euros d'amende</span></label>
+      <label class="opt"><input type="radio" name="q5" value="3" required><span>Aucune peine prévue</span></label>
+      </div>
+      <div class="explain" id="explain5">💡 La loi prévoit des peines aggravées (jusqu'à 3 ans et 45 000 euros, voire plus selon les circonstances) quand la victime a moins de 15 ans.</div>
+    </div>
+    <div class="actions">
+      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+    </div>
+  </form>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+</footer>
+<script>
+  const QUIZ = [{"q":"Pour qu\u0027on parle de cyberharcèlement, les actes doivent être :","options":["Un seul message choquant","Répétés et intentionnels","Envoyés par un inconnu uniquement","Toujours publics"],"correct":1,"explain":"Le cyberharcèlement se définit par la répétition et l\u0027intention de nuire, pas par un simple dérapage isolé."},{"q":"Quel est le numéro gratuit et anonyme pour signaler des violences numériques en France ?","options":["Le 15","Le 3018","Le 3919","Le 17"],"correct":1,"explain":"Le 3018 est le numéro national dédié aux violences numériques, gratuit et anonyme, 7j/7."},{"q":"Si je suis victime, le premier réflexe recommandé est :","options":["Répondre fermement à l\u0027auteur","Ne pas répondre et garder son calme","Supprimer immédiatement toutes les preuves","Changer de numéro de téléphone"],"correct":1,"explain":"Répondre peut aggraver la situation ; le calme et le silence face à l\u0027auteur sont recommandés en premier lieu."},{"q":"Avant de bloquer un harceleur, il faut d\u0027abord :","options":["Rien, bloquer suffit","Conserver les preuves (captures d\u0027écran datées)","Le signaler à la police uniquement","Attendre une semaine"],"correct":1,"explain":"Les captures d\u0027écran datées sont essentielles pour un signalement ou une plainte ultérieure."},{"q":"Si je suis simplement témoin de cyberharcèlement, je dois :","options":["Partager le message pour alerter tout le monde","Ne pas relayer, et soutenir la victime en privé","Ne rien faire, ça ne me regarde pas","Répondre à l\u0027auteur pour le défendre"],"correct":1,"explain":"Relayer amplifie le harcèlement ; le bon réflexe est de soutenir la victime et de signaler."},{"q":"Le cyberharcèlement d\u0027une victime de moins de 15 ans est puni jusqu\u0027à :","options":["6 mois de prison","1 an de prison","3 ans de prison et 45 000 euros d\u0027amende","Aucune peine prévue"],"correct":2,"explain":"La loi prévoit des peines aggravées (jusqu\u0027à 3 ans et 45 000 euros, voire plus selon les circonstances) quand la victime a moins de 15 ans."}];
+  const form = document.getElementById('quizForm');
+  const banner = document.getElementById('scoreBanner');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    QUIZ.forEach(function(q, i) {
+      const chosen = form.querySelector('input[name="q' + i + '"]:checked');
+      const opts = document.querySelectorAll('#opts' + i + ' .opt');
+      opts.forEach(function(el, j) {
+        el.classList.remove('correct', 'incorrect');
+        if (j === q.correct) el.classList.add('correct');
+        else if (chosen && parseInt(chosen.value) === j) el.classList.add('incorrect');
+      });
+      document.getElementById('explain' + i).classList.add('show');
+      if (chosen && parseInt(chosen.value) === q.correct) score++;
+      form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
+    });
+    const pct = Math.round((score / QUIZ.length) * 100);
+    let tier = 'tier-low', msg = 'À revoir ! Relisez la fiche de l\'atelier et retentez le test.';
+    if (pct >= 80) { tier = 'tier-high'; msg = 'Excellent ! Vous maîtrisez bien le sujet.'; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = 'Pas mal ! Encore quelques points à consolider.'; }
+    banner.className = 'show ' + tier;
+    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    submitBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+  });
+
+  resetBtn.addEventListener('click', function() { window.location.reload(); });
+</script>
+</body>
+</html>
