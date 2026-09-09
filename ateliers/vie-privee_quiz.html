@@ -15,7 +15,7 @@
 <header>
   <div class="wrap">
     <a class="back" href="../index.html#securite" id="backLink">← <span id="backText">Retour aux ateliers</span></a>
-    <div class="eyebrow">🔒 Protéger sa vie privée en ligne</div>
+    <div class="eyebrow" id="eyebrowEl">🔒 Protéger sa vie privée en ligne</div>
     <h1 id="h1El">Test de connaissances</h1>
     <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
     <div><span class="visits" id="visitsCounter">👥 …</span></div>
@@ -326,7 +326,13 @@
     recapColQuestion:"Question", recapColYourAnswer:"Réponse donnée",
     recapColCorrectAnswer:"Bonne réponse", recapColResult:"Résultat",
     recapNoAnswer:"(pas de réponse)",
-    recapRestart:"Recommencer le quiz", recapHome:"Retour au site"
+    recapRestart:"Recommencer le quiz", recapHome:"Retour au site",
+    recapAdviceLabel:"Conseil",
+    recapAdviceLow:"Reprenez la fiche de l'atelier avant de retenter le quiz, en particulier les points ci-dessus. Il n'y a pas de mauvaise question, seulement des essais qui font progresser.",
+    recapAdviceMid:"Vous avez les bases ! Relisez les explications des questions ratées pour bien les fixer, puis retentez le quiz quand vous êtes prêt.",
+    recapAdviceHigh:"Niveau maîtrisé, bravo ! Vous pouvez passer au niveau supérieur ou explorer un autre atelier.",
+    recapCopyBtn:"📋 Copier le compte rendu", recapCopied:"✅ Copié !",
+    recapReportTitle:"Compte rendu", recapDetailLabel:"Détail des réponses"
   };
 
   const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
@@ -370,8 +376,29 @@
     return UI.levelAvaTitle;
   }
 
+  // Construit le compte rendu en texte brut (pour copie / envoi a distance).
+  function buildReportText(level, lang, answers, score, total, pct, adviceText) {
+    const UI = cache[lang].ui;
+    const wrong = answers.filter(function(a) { return !a.isCorrect; }).map(function(a) { return a.question; });
+    const workshopName = document.getElementById('eyebrowEl').textContent + ' — ' + document.getElementById('h1El').textContent;
+    let out = UI.recapReportTitle + ' — ' + workshopName + '\n';
+    out += UI.recapLevelLabel + ' : ' + levelLabel(level, UI) + '\n';
+    out += UI.scoreLabel + ' : ' + score + ' / ' + total + ' (' + pct + ' %)\n\n';
+    out += UI.recapDetailLabel + ' :\n';
+    answers.forEach(function(a, i) {
+      out += (i + 1) + '. [' + (a.isCorrect ? '✔' : '✖') + '] ' + a.question + '\n';
+      out += '   ' + UI.recapColYourAnswer + ' : ' + a.chosenText + '\n';
+      if (!a.isCorrect) out += '   ' + UI.recapColCorrectAnswer + ' : ' + a.correctText + '\n';
+    });
+    out += '\n' + UI.recapImproveLabel + ' :\n';
+    out += wrong.length ? wrong.map(function(q) { return '- ' + q; }).join('\n') : UI.recapNoImprove;
+    out += '\n\n' + UI.recapAdviceLabel + ' : ' + adviceText + '\n';
+    out += '\n— Ateliers Médiation Numérique, Cédric Waltener';
+    return out;
+  }
+
   // Compte rendu visuel : tableau recapitulatif + synthese, affiches apres validation.
-  function renderRecap(level, lang, answers) {
+  function renderRecap(level, lang, answers, score, total, pct) {
     const UI = cache[lang].ui;
     const rows = answers.map(function(a) {
       const mark = a.isCorrect
@@ -390,11 +417,14 @@
       ? '<ul>' + wrong.map(function(q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul>'
       : '<p>' + esc(UI.recapNoImprove) + '</p>';
 
+    const adviceText = pct >= 80 ? UI.recapAdviceHigh : (pct >= 50 ? UI.recapAdviceMid : UI.recapAdviceLow);
+
     recapWrap.innerHTML =
       '<div id="recapSynthesis">' +
         '<p><strong>' + esc(UI.recapLevelLabel) + ' :</strong> ' + esc(levelLabel(level, UI)) + '</p>' +
         '<p><strong>' + esc(UI.recapImproveLabel) + ' :</strong></p>' +
         improveHtml +
+        '<p><strong>' + esc(UI.recapAdviceLabel) + ' :</strong> ' + esc(adviceText) + '</p>' +
       '</div>' +
       '<div id="recapTableWrap">' +
         '<table id="recapTable">' +
@@ -409,6 +439,7 @@
       '</div>' +
       '<div class="actions">' +
         '<button type="button" class="primary" id="recapRestartBtn">' + esc(UI.recapRestart) + '</button>' +
+        '<button type="button" class="secondary" id="recapCopyBtn">' + esc(UI.recapCopyBtn) + '</button>' +
         '<button type="button" class="secondary" id="recapHomeBtn">' + esc(UI.recapHome) + '</button>' +
       '</div>';
     recapWrap.style.display = 'block';
@@ -419,6 +450,32 @@
     document.getElementById('recapHomeBtn').addEventListener('click', function() {
       window.location.href = '../index.html';
     });
+    document.getElementById('recapCopyBtn').addEventListener('click', function() {
+      const text = buildReportText(level, lang, answers, score, total, pct, adviceText);
+      const copyBtn = document.getElementById('recapCopyBtn');
+      const original = UI.recapCopyBtn;
+      function showCopied() {
+        copyBtn.textContent = UI.recapCopied;
+        setTimeout(function() { copyBtn.textContent = original; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showCopied).catch(function() { fallbackCopy(text, showCopied); });
+      } else {
+        fallbackCopy(text, showCopied);
+      }
+    });
+  }
+
+  function fallbackCopy(text, onDone) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    if (onDone) onDone();
   }
 
   function renderQuiz(level, lang) {
@@ -536,7 +593,7 @@
     else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
     banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
-    renderRecap(currentLevel, currentLang, answers);
+    renderRecap(currentLevel, currentLang, answers, score, QUIZ.length, pct);
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (tier === 'tier-high') { launchConfetti(); }
     submitBtn.style.display = 'none';
