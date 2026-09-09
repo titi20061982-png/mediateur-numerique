@@ -30,10 +30,10 @@
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
   .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
-  .lang-switch { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
-  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
-  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
-  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .lang-select-wrap select { font-family: "Inter", sans-serif; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 0.4rem 0.7rem; border-radius: 999px; max-width: 220px; }
+  .lang-loading { font-size: 0.8rem; color: var(--muted); display: none; }
+  .lang-loading.show { display: inline; }
   html[dir="rtl"] .text-card, html[dir="rtl"] .qcard { text-align: right; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
@@ -81,12 +81,259 @@
     <h1 id="h1El">Test de connaissances</h1>
     <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
     <div><span class="visits" id="visitsCounter">👥 …</span></div>
-    <div class="lang-switch" id="langSwitch">
-      <button type="button" data-lang="fr">FR</button>
-      <button type="button" data-lang="en">EN</button>
-      <button type="button" data-lang="es">ES</button>
-      <button type="button" data-lang="ar">AR</button>
-      <button type="button" data-lang="pt">PT</button>
+    <div class="lang-select-wrap">
+      <select id="langSelect">
+      <option value="fr">Français</option>
+      <option value="ab">Abkhaze</option>
+      <option value="ace">Aceh</option>
+      <option value="ach">Acholi</option>
+      <option value="aa">Afar</option>
+      <option value="af">Afrikaans</option>
+      <option value="sq">Albanais</option>
+      <option value="de">Allemand</option>
+      <option value="alz">Alur</option>
+      <option value="am">Amharique</option>
+      <option value="en">Anglais</option>
+      <option value="ar">Arabe</option>
+      <option value="hy">Arménien</option>
+      <option value="as">Assamais</option>
+      <option value="av">Avar</option>
+      <option value="awa">Awadhi</option>
+      <option value="ay">Aymara</option>
+      <option value="az">Azéri</option>
+      <option value="ba">Bachkir</option>
+      <option value="ban">Balinais</option>
+      <option value="bal">Baloutchi</option>
+      <option value="bm">Bambara</option>
+      <option value="bci">Baoulé</option>
+      <option value="eu">Basque</option>
+      <option value="btx">Batak Karo</option>
+      <option value="bts">Batak Simalungun</option>
+      <option value="bbc">Batak Toba</option>
+      <option value="bem">Bemba</option>
+      <option value="bn">Bengali</option>
+      <option value="bew">Betawi</option>
+      <option value="bho">Bhodjpouri</option>
+      <option value="bik">Bicol</option>
+      <option value="be">Biélorusse</option>
+      <option value="bs">Bosniaque</option>
+      <option value="bua">Bouriate</option>
+      <option value="br">Breton</option>
+      <option value="bg">Bulgare</option>
+      <option value="yue">Cantonais</option>
+      <option value="ca">Catalan</option>
+      <option value="ceb">Cebuano</option>
+      <option value="ch">Chamorro</option>
+      <option value="ny">Chichewa</option>
+      <option value="zh-CN">Chinois (simplifié)</option>
+      <option value="zh-TW">Chinois (traditionnel)</option>
+      <option value="chk">Chuuk</option>
+      <option value="si">Cinghalais</option>
+      <option value="ko">Coréen</option>
+      <option value="co">Corse</option>
+      <option value="ht">Créole haïtien</option>
+      <option value="mfe">Créole mauricien</option>
+      <option value="crs">Créole seychellois</option>
+      <option value="hr">Croate</option>
+      <option value="da">Danois</option>
+      <option value="fa-AF">Dari</option>
+      <option value="din">Dinka</option>
+      <option value="dyu">Dioula</option>
+      <option value="dv">Divéhi</option>
+      <option value="doi">Dogri</option>
+      <option value="dov">Dombe</option>
+      <option value="dz">Dzongkha</option>
+      <option value="es">Espagnol</option>
+      <option value="eo">Espéranto</option>
+      <option value="et">Estonien</option>
+      <option value="ee">Ewe</option>
+      <option value="fo">Féroïen</option>
+      <option value="fj">Fidjien</option>
+      <option value="fi">Finnois</option>
+      <option value="fon">Fon</option>
+      <option value="fr-CA">Français (Canada)</option>
+      <option value="fur">Frioulan</option>
+      <option value="fy">Frison</option>
+      <option value="gaa">Ga</option>
+      <option value="gd">Gaélique (Écosse)</option>
+      <option value="gl">Galicien</option>
+      <option value="cy">Gallois</option>
+      <option value="ka">Géorgien</option>
+      <option value="el">Grec</option>
+      <option value="gn">Guarani</option>
+      <option value="gu">Gujarati</option>
+      <option value="cnh">Hakha Chin</option>
+      <option value="ha">Haoussa</option>
+      <option value="haw">Hawaïen</option>
+      <option value="iw">Hébreu</option>
+      <option value="hil">Hiligaïnon</option>
+      <option value="hi">Hindi</option>
+      <option value="hmn">Hmong</option>
+      <option value="hu">Hongrois</option>
+      <option value="hrx">Hunsrik</option>
+      <option value="iba">Iban</option>
+      <option value="ig">Igbo</option>
+      <option value="ilo">Ilocano</option>
+      <option value="id">Indonésien</option>
+      <option value="iu-Latn">Inuktut (latin)</option>
+      <option value="iu">Inuktut (syllabique)</option>
+      <option value="ga">Irlandais</option>
+      <option value="is">Islandais</option>
+      <option value="it">Italien</option>
+      <option value="ja">Japonais</option>
+      <option value="jw">Javanais</option>
+      <option value="kac">Jingpo</option>
+      <option value="kl">Kalaallisut</option>
+      <option value="kn">Kannada</option>
+      <option value="kr">Kanuri</option>
+      <option value="kk">Kazakh</option>
+      <option value="kha">Khasi</option>
+      <option value="km">Khmer</option>
+      <option value="cgg">Kiga</option>
+      <option value="kg">Kikongo</option>
+      <option value="rw">Kinyarwanda</option>
+      <option value="ky">Kirghiz</option>
+      <option value="ktu">Kituba</option>
+      <option value="trp">Kok Borok</option>
+      <option value="kv">Komi</option>
+      <option value="gom">Konkani</option>
+      <option value="kri">Krio</option>
+      <option value="ku">Kurde (Kurmandji)</option>
+      <option value="ckb">Kurde (Sorani)</option>
+      <option value="lo">Laotien</option>
+      <option value="ltg">Latgalien</option>
+      <option value="la">Latin</option>
+      <option value="lv">Letton</option>
+      <option value="lij">Ligure</option>
+      <option value="li">Limbourgeois</option>
+      <option value="ln">Lingala</option>
+      <option value="lt">Lituanien</option>
+      <option value="lmo">Lombard</option>
+      <option value="lg">Luganda</option>
+      <option value="luo">Luo</option>
+      <option value="lb">Luxembourgeois</option>
+      <option value="mak">Macassar</option>
+      <option value="mk">Macédonien</option>
+      <option value="mad">Madurais</option>
+      <option value="mai">Maïthili</option>
+      <option value="ms-Arab">Malais (Jawi)</option>
+      <option value="ms">Malaisien</option>
+      <option value="ml">Malayalam</option>
+      <option value="mg">Malgache</option>
+      <option value="mt">Maltais</option>
+      <option value="mam">Mam</option>
+      <option value="gv">Manx</option>
+      <option value="mi">Maori</option>
+      <option value="mr">Marathi</option>
+      <option value="chm">Mari des prairies</option>
+      <option value="mh">Marshallais</option>
+      <option value="mwr">Marwari</option>
+      <option value="yua">Maya yucatèque</option>
+      <option value="mni-Mtei">Meitei (Manipuri)</option>
+      <option value="min">Minangkabau</option>
+      <option value="lus">Mizo</option>
+      <option value="mn">Mongol</option>
+      <option value="my">Myanmar (Birman)</option>
+      <option value="nhe">Nahuatl (Huasteca oriental)</option>
+      <option value="ndc-ZW">Ndau</option>
+      <option value="nr">Ndébélé (Sud)</option>
+      <option value="nl">Néerlandais</option>
+      <option value="ne">Népalais</option>
+      <option value="new">Nepalbhasa (Newari)</option>
+      <option value="bm-Nkoo">NKo</option>
+      <option value="no">Norvégien</option>
+      <option value="nus">Nuer</option>
+      <option value="oc">Occitan</option>
+      <option value="or">Odia (Oriya)</option>
+      <option value="om">Oromo</option>
+      <option value="os">Ossète</option>
+      <option value="udm">Oudmourte</option>
+      <option value="ug">Ouïgour</option>
+      <option value="uz">Ouzbek</option>
+      <option value="ps">Pachtô</option>
+      <option value="pam">Pampangan</option>
+      <option value="pag">Pangasinan</option>
+      <option value="pa">Panjabi (Gurmukhi)</option>
+      <option value="pa-Arab">Panjabi (Shahmukhi)</option>
+      <option value="pap">Papiamento</option>
+      <option value="jam">Patois jamaïcain</option>
+      <option value="fa">Persan</option>
+      <option value="ff">Peul</option>
+      <option value="tl">Philippin</option>
+      <option value="pl">Polonais</option>
+      <option value="pt">Portugais (Brésil)</option>
+      <option value="pt-PT">Portugais (Portugal)</option>
+      <option value="kek">Q'eqchi'</option>
+      <option value="qu">Quechua</option>
+      <option value="rom">Romani</option>
+      <option value="ro">Roumain</option>
+      <option value="rn">Roundi</option>
+      <option value="ru">Russe</option>
+      <option value="se">Same (Nord)</option>
+      <option value="sm">Samoan</option>
+      <option value="sg">Sango</option>
+      <option value="sa">Sanskrit</option>
+      <option value="sat-Latn">Santali (latin)</option>
+      <option value="sat">Santali (ol chiki)</option>
+      <option value="nso">Sepedi</option>
+      <option value="sr">Serbe</option>
+      <option value="st">Sesotho</option>
+      <option value="shn">Shan</option>
+      <option value="sn">Shona</option>
+      <option value="scn">Sicilien</option>
+      <option value="szl">Silésien</option>
+      <option value="sd">Sindhî</option>
+      <option value="sk">Slovaque</option>
+      <option value="sl">Slovène</option>
+      <option value="so">Somali</option>
+      <option value="su">Soundanais</option>
+      <option value="sus">Soussou</option>
+      <option value="sv">Suédois</option>
+      <option value="sw">Swahili</option>
+      <option value="ss">Swati</option>
+      <option value="tg">Tadjik</option>
+      <option value="ty">Tahitien</option>
+      <option value="ber-Latn">Tamazight</option>
+      <option value="ber">Tamazight (Tifinagh)</option>
+      <option value="ta">Tamoul</option>
+      <option value="tt">Tatar</option>
+      <option value="crh">Tatar de Crimée (cyrillique)</option>
+      <option value="crh-Latn">Tatar de Crimée (latin)</option>
+      <option value="cs">Tchèque</option>
+      <option value="ce">Tchétchène</option>
+      <option value="cv">Tchouvache</option>
+      <option value="te">Telugu</option>
+      <option value="tet">Tétoum</option>
+      <option value="th">Thaï</option>
+      <option value="bo">Tibétain</option>
+      <option value="ti">Tigrigna</option>
+      <option value="tiv">Tiv</option>
+      <option value="tpi">Tok pisin</option>
+      <option value="to">Tongien</option>
+      <option value="tcy">Toulou</option>
+      <option value="tyv">Touvain</option>
+      <option value="lua">Tshiluba</option>
+      <option value="ts">Tsonga</option>
+      <option value="tn">Tswana</option>
+      <option value="tum">Tumbuka</option>
+      <option value="tr">Turc</option>
+      <option value="tk">Turkmène</option>
+      <option value="ak">Twi</option>
+      <option value="uk">Ukrainien</option>
+      <option value="ur">Urdu</option>
+      <option value="ve">Venda</option>
+      <option value="vec">Vénitien</option>
+      <option value="vi">Vietnamien</option>
+      <option value="war">Waray-waray</option>
+      <option value="wo">Wolof</option>
+      <option value="xh">Xhosa</option>
+      <option value="sah">Yakoute</option>
+      <option value="yi">Yiddish</option>
+      <option value="yo">Yoruba</option>
+      <option value="zap">Zapotèque</option>
+      <option value="zu">Zoulou</option>
+      </select>
+      <span class="lang-loading" id="langLoading">⏳</span>
     </div>
   </div>
 </header>
@@ -120,29 +367,24 @@
   © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  const LEVELS = {"debutant":[{"q":{"fr":"L\u0027identité numérique, c\u0027est :","en":"Digital identity is:","es":"La identidad digital es:","ar":"الهوية الرقمية هي:","pt":"Identidade digital é:"},"options":{"fr":["Seulement votre carte d\u0027identité","L\u0027ensemble des traces que vous laissez sur Internet","Votre mot de passe","Votre adresse postale"],"en":["Only your ID card","All the traces you leave on the Internet","Your password","Your postal address"],"es":["Sólo tu DNI","Todas las huellas que dejas en Internet","Tu contraseña","Tu dirección postal"],"ar":["فقط بطاقتك الشخصية","كل الآثار التي تتركها على الإنترنت","كلمة المرور الخاصة بك","عنوانك البريدي"],"pt":["Somente seu cartão de identificação","Todos os rastros que você deixa na Internet","Sua senha","Seu endereço postal"]},"explain":{"fr":"L\u0027identité numérique regroupe l\u0027ensemble des traces, données et représentations laissées sur Internet.","en":"Digital identity brings together all the traces, data and representations left on the Internet.","es":"La identidad digital reúne todas las huellas, datos y representaciones que quedan en Internet.","ar":"تجمع الهوية الرقمية كل الآثار والبيانات والتمثيلات المتبقية على الإنترنت.","pt":"A identidade digital reúne todos os rastros, dados e representações deixadas na Internet."},"correct":1},{"q":{"fr":"Se \"googler\" veut dire :","en":"“Googling” means:","es":"\"Buscar en Google\" significa:","ar":"\"البحث في Google\" يعني:","pt":"“Pesquisar no Google” significa:"},"options":{"fr":["Créer un compte Google","Taper son propre nom dans un moteur de recherche","Payer pour de la publicité","Supprimer son compte"],"en":["Create a Google account","Typing your own name into a search engine","Pay for advertising","Delete your account"],"es":["Crea una cuenta de Google","Escribir su propio nombre en un motor de búsqueda","pagar por publicidad","Elimina tu cuenta"],"ar":["إنشاء حساب جوجل","كتابة اسمك في محرك البحث","دفع ثمن الإعلان","احذف حسابك"],"pt":["Crie uma conta Google","Digitando seu próprio nome em um mecanismo de pesquisa","Pague pela publicidade","Exclua sua conta"]},"explain":{"fr":"Se googler, c\u0027est rechercher son propre nom pour voir ce qui apparaît en ligne à son sujet.","en":"Googling means searching for your own name to see what appears online about you.","es":"Buscar en Google significa buscar tu propio nombre para ver qué aparece en línea sobre ti.","ar":"يعني البحث عبر Google البحث عن اسمك لمعرفة ما يظهر عنك عبر الإنترنت.","pt":"Pesquisar no Google significa pesquisar seu próprio nome para ver o que aparece online sobre você."},"correct":1},{"q":{"fr":"L\u0027e-réputation est importante notamment pour :","en":"E-reputation is important in particular for:","es":"La reputación electrónica es importante en particular para:","ar":"السمعة الإلكترونية مهمة بشكل خاص لـ:","pt":"A reputação eletrônica é importante especialmente para:"},"options":{"fr":["Personne en particulier","Votre image auprès des recruteurs et de vos proches","Seulement les célébrités","Seulement les entreprises"],"en":["No one in particular","Your image among recruiters and your loved ones","Only celebrities","Only businesses"],"es":["nadie en particular","Tu imagen entre los reclutadores y tus seres queridos","Sólo celebridades","Sólo empresas"],"ar":["لا أحد على وجه الخصوص","صورتك بين مسؤولي التوظيف وأحبائك","المشاهير فقط","الشركات فقط"],"pt":["Ninguém em particular","Sua imagem entre os recrutadores e seus entes queridos","Apenas celebridades","Apenas empresas"]},"explain":{"fr":"92 % des recruteurs vérifient la présence en ligne : l\u0027e-réputation concerne tout le monde.","en":"92% of recruiters check online presence: e-reputation concerns everyone.","es":"El 92% de los reclutadores comprueban la presencia online: la reputación electrónica concierne a todos.","ar":"92% من مسؤولي التوظيف يتحققون من تواجدهم عبر الإنترنت: السمعة الإلكترونية تهم الجميع.","pt":"92% dos recrutadores verificam a presença online: a reputação eletrónica diz respeito a todos."},"correct":1}],"intermediaire":[{"q":{"fr":"Quel pourcentage de recruteurs vérifient la présence en ligne des candidats ?","en":"What percentage of recruiters check candidates’ online presence?","es":"¿Qué porcentaje de reclutadores comprueban la presencia online de los candidatos?","ar":"ما هي النسبة المئوية لمسؤولي التوظيف الذين يتحققون من تواجد المرشحين عبر الإنترنت؟","pt":"Qual a porcentagem de recrutadores que verificam a presença online dos candidatos?"},"options":{"fr":["30 %","50 %","92 %","100 %"],"en":["30%","50%","92%","100%"],"es":["30%","50%","92%","100%"],"ar":["30%","50%","92%","100%"],"pt":["30%","50%","92%","100%"]},"explain":{"fr":"92 % des recruteurs vérifient la présence en ligne des candidats avant de les recevoir.","en":"92% of recruiters check the online presence of candidates before receiving them.","es":"El 92% de los reclutadores comprueban la presencia online de los candidatos antes de recibirlos.","ar":"92% من القائمين على التوظيف يتحققون من وجود المرشحين عبر الإنترنت قبل استلامهم.","pt":"92% dos recrutadores verificam a presença online dos candidatos antes de recebê-los."},"correct":2},{"q":{"fr":"L\u0027identité \"calculée\", c\u0027est :","en":"The “calculated” identity is:","es":"La identidad \"calculada\" es:","ar":"الهوية \"المحسوبة\" هي:","pt":"A identidade “calculada” é:"},"options":{"fr":["Ce que vous dites de vous-même","Ce que vous faites en ligne","Ce que les algorithmes déduisent de vous","Votre photo de profil"],"en":["What you say about yourself","What you do online","What algorithms infer about you","Your profile picture"],"es":["Lo que dices sobre ti","¿Qué haces en línea?","Qué infieren los algoritmos sobre ti","Tu foto de perfil"],"ar":["ما تقوله عن نفسك","ما تفعله على الانترنت","ما تستنتجه الخوارزميات عنك","صورة ملفك الشخصي"],"pt":["O que você diz sobre você","O que você faz on-line","O que os algoritmos inferem sobre você","Sua foto de perfil"]},"explain":{"fr":"L\u0027identité calculée correspond aux déductions faites par les algorithmes à partir de votre comportement en ligne.","en":"Computed identity is the inferences made by algorithms from your online behavior.","es":"La identidad computarizada son las inferencias realizadas por algoritmos a partir de su comportamiento en línea.","ar":"الهوية المحسوبة هي الاستنتاجات التي تقوم بها الخوارزميات من سلوكك عبر الإنترنت.","pt":"Identidade computada são as inferências feitas por algoritmos a partir do seu comportamento online."},"correct":2},{"q":{"fr":"Le droit à l\u0027oubli (RGPD) permet de :","en":"The right to be forgotten (GDPR) allows you to:","es":"El derecho al olvido (GDPR) te permite:","ar":"يسمح لك الحق في النسيان (GDPR) بما يلي:","pt":"O direito ao esquecimento (RGPD) permite-lhe:"},"options":{"fr":["Supprimer tout Internet","Demander le déréférencement de contenus vous concernant","Empêcher qu\u0027on parle de vous","Effacer son casier judiciaire"],"en":["Delete All Internet","Request dereferencing of content concerning you","Prevent people from talking about you","Clear your criminal record"],"es":["Eliminar todo Internet","Solicitar la desreferenciación del contenido que le concierne","Evita que la gente hable de ti","Limpia tus antecedentes penales"],"ar":["حذف كافة الإنترنت","طلب إلغاء مرجعية المحتوى المتعلق بك","منع الناس من الحديث عنك","مسح السجل الجنائي الخاص بك"],"pt":["Excluir toda a Internet","Solicitar desreferenciação de conteúdo que lhe diz respeito","Evite que as pessoas falem sobre você","Limpe seu registro criminal"]},"explain":{"fr":"Le droit à l\u0027oubli permet de demander le déréférencement de certains contenus vous concernant auprès des moteurs de recherche.","en":"The right to be forgotten allows you to request the delisting of certain content concerning you from search engines.","es":"El derecho al olvido le permite solicitar la eliminación de determinados contenidos que le conciernen de los motores de búsqueda.","ar":"يتيح لك حق النسيان طلب إزالة محتوى معين يخصك من محركات البحث.","pt":"O direito ao esquecimento permite-lhe solicitar a remoção de determinados conteúdos que lhe dizem respeito dos motores de busca."},"correct":1},{"q":{"fr":"Face à un contenu négatif sur soi en ligne, la bonne pratique est de :","en":"When faced with negative content about yourself online, the best practice is to:","es":"Cuando te enfrentas a contenido negativo sobre ti en línea, la mejor práctica es:","ar":"عندما تواجه محتوى سلبيًا عن نفسك عبر الإنترنت، فإن أفضل الممارسات هي:","pt":"Ao se deparar com conteúdo negativo sobre você online, a prática recomendada é:"},"options":{"fr":["Le supprimer en le niant publiquement","Répondre vite, calmement et factuellement","Ignorer complètement","Créer un faux profil pour se défendre"],"en":["Delete it by denying it publicly","Respond quickly, calmly and factually","Completely ignore","Create a fake profile to defend yourself"],"es":["Bórralo negándolo públicamente.","Responda rápidamente, con calma y objetivamente.","ignorar completamente","Crea un perfil falso para defenderte"],"ar":["احذفها بإنكارها علنًا","الرد بسرعة وبهدوء وواقعية","تجاهل تماما","قم بإنشاء ملف تعريف مزيف للدفاع عن نفسك"],"pt":["Exclua-o negando-o publicamente","Responda de forma rápida, calma e factual","Ignorar completamente","Crie um perfil falso para se defender"]},"explain":{"fr":"Une réponse rapide, calme et factuelle est la meilleure gestion de crise en e-réputation.","en":"A quick, calm and factual response is the best crisis management in e-reputation.","es":"Una respuesta rápida, tranquila y objetiva es la mejor gestión de crisis en reputación electrónica.","ar":"إن الاستجابة السريعة والهادئة والواقعية هي أفضل إدارة للأزمات في مجال السمعة الإلكترونية.","pt":"Uma resposta rápida, calma e factual é a melhor gestão de crises em reputação eletrónica."},"correct":1},{"q":{"fr":"Un outil comme Google Alerts sert à :","en":"A tool like Google Alerts is used to:","es":"Una herramienta como Google Alerts sirve para:","ar":"يتم استخدام أداة مثل تنبيهات Google من أجل:","pt":"Uma ferramenta como o Google Alerts é usada para:"},"options":{"fr":["Créer un CV","Être prévenu quand on parle de vous en ligne","Bloquer les publicités","Chiffrer ses emails"],"en":["Create a CV","Be notified when people talk about you online","Block ads","Encrypt your emails"],"es":["Crear un currículum","Recibir notificaciones cuando la gente hable de ti en línea","Bloquear anuncios","Cifre sus correos electrónicos"],"ar":["إنشاء السيرة الذاتية","احصل على إشعار عندما يتحدث الناس عنك عبر الإنترنت","منع الإعلانات","تشفير رسائل البريد الإلكتروني الخاصة بك"],"pt":["Crie um currículo","Seja notificado quando as pessoas falarem sobre você online","Bloquear anúncios","Criptografe seus e-mails"]},"explain":{"fr":"Google Alerts envoie une alerte dès que votre nom (ou un mot choisi) apparaît en ligne.","en":"Google Alerts sends an alert whenever your name (or a chosen word) appears online.","es":"Google Alerts envía una alerta cada vez que su nombre (o una palabra elegida) aparece en línea.","ar":"ترسل تنبيهات Google تنبيهًا عندما يظهر اسمك (أو الكلمة المختارة) عبر الإنترنت.","pt":"Os Alertas do Google enviam um alerta sempre que seu nome (ou uma palavra escolhida) aparece online."},"correct":1},{"q":{"fr":"Que faut-il faire en premier pour auditer sa présence en ligne ?","en":"What should you do first to audit your online presence?","es":"¿Qué debería hacer primero para auditar su presencia en línea?","ar":"ما الذي يجب عليك فعله أولاً لتدقيق تواجدك على الإنترنت؟","pt":"O que você deve fazer primeiro para auditar sua presença online?"},"options":{"fr":["Supprimer tous ses comptes","Se \"googler\" soi-même","Changer de nom","Contacter un avocat"],"en":["Delete all your accounts","Googling yourself","Change name","Contact a lawyer"],"es":["Eliminar todas tus cuentas","Googleate a ti mismo","Cambiar nombre","contacte a un abogado"],"ar":["احذف جميع حساباتك","البحث عن نفسك على جوجل","تغيير الاسم","اتصل بمحامي"],"pt":["Exclua todas as suas contas","Pesquisando você mesmo no Google","Alterar nome","Entre em contato com um advogado"]},"explain":{"fr":"Se rechercher soi-même sur Google est la première étape pour savoir ce qui est visible vous concernant.","en":"Googling yourself is the first step to knowing what is visible about you.","es":"Buscarse en Google es el primer paso para saber qué es visible sobre usted.","ar":"إن البحث عن نفسك على Google هو الخطوة الأولى لمعرفة ما هو مرئي عنك.","pt":"Pesquisar-se no Google é o primeiro passo para saber o que é visível sobre você."},"correct":1}],"avance":[{"q":{"fr":"L\u0027identité \"déclarative\" correspond à :","en":"The “declarative” identity corresponds to:","es":"La identidad “declarativa” corresponde a:","ar":"الهوية \"التصريحية\" تتوافق مع:","pt":"A identidade “declarativa” corresponde a:"},"options":{"fr":["Ce que les algorithmes déduisent de vous","Ce que vous dites vous-même de vous (profils, publications)","Ce que vous faites en ligne","Vos données bancaires"],"en":["What algorithms infer about you","What you say about yourself (profiles, publications)","What you do online","Your banking details"],"es":["Qué infieren los algoritmos sobre ti","Lo que dices sobre ti (perfiles, publicaciones)","¿Qué haces en línea?","Tus datos bancarios"],"ar":["ما تستنتجه الخوارزميات عنك","ماذا تقول عن نفسك (الملفات الشخصية والمنشورات)","ما تفعله على الانترنت","التفاصيل المصرفية الخاصة بك"],"pt":["O que os algoritmos inferem sobre você","O que você diz sobre você (perfis, publicações)","O que você faz on-line","Seus dados bancários"]},"explain":{"fr":"L\u0027identité déclarative est ce que vous dites vous-même de vous, via vos profils et publications.","en":"Declarative identity is what you yourself say about yourself, via your profiles and publications.","es":"La identidad declarativa es lo que tú mismo dices sobre ti mismo, a través de tus perfiles y publicaciones.","ar":"الهوية التصريحية هي ما تقوله بنفسك عن نفسك، عبر ملفاتك الشخصية ومنشوراتك.","pt":"Identidade declarativa é o que você mesmo diz sobre si mesmo, por meio de seus perfis e publicações."},"correct":1},{"q":{"fr":"LinkedIn, About.me et Namechk sont cités dans la fiche comme des outils pour :","en":"LinkedIn, About.me and Namechk are cited in the sheet as tools for:","es":"LinkedIn, About.me y Namechk se citan en la hoja como herramientas para:","ar":"تم الاستشهاد بـ LinkedIn وAbout.me وNamechk في الورقة كأدوات من أجل:","pt":"LinkedIn, About.me e Namechk são citados na planilha como ferramentas para:"},"options":{"fr":["La suppression de contenu","Le \"personal branding\" (construire son image professionnelle)","La cybersécurité","La messagerie chiffrée"],"en":["Removal of content","“Personal branding” (building your professional image)","Cybersecurity","Encrypted messaging"],"es":["Eliminación de contenido","“Marca personal” (construyendo tu imagen profesional)","Ciberseguridad","Mensajería cifrada"],"ar":["إزالة المحتوى","\"العلامة التجارية الشخصية\" (بناء صورتك المهنية)","الأمن السيبراني","الرسائل المشفرة"],"pt":["Remoção de conteúdo","“Marca pessoal” (construindo sua imagem profissional)","Cibersegurança","Mensagens criptografadas"]},"explain":{"fr":"Ces outils sont cités dans la catégorie \"personal branding\" pour construire son image en ligne.","en":"These tools are cited in the “personal branding” category to build your online image.","es":"Estas herramientas se citan en la categoría de “marca personal” para construir su imagen en línea.","ar":"تم الاستشهاد بهذه الأدوات في فئة \"العلامة التجارية الشخصية\" لبناء صورتك على الإنترنت.","pt":"Essas ferramentas são citadas na categoria “branding pessoal” para construir sua imagem online."},"correct":1},{"q":{"fr":"Parmi les 4 étapes pour construire une e-réputation positive citées, laquelle vient en 3e position ?","en":"Among the 4 steps to building a positive e-reputation cited, which comes in 3rd position?","es":"Entre los cuatro pasos citados para construir una reputación electrónica positiva, ¿cuál ocupa la tercera posición?","ar":"من بين الخطوات الأربع لبناء سمعة إلكترونية إيجابية، ما الذي يأتي في المركز الثالث؟","pt":"Dentre os 4 passos para a construção de uma reputação eletrônica positiva citados, qual fica na 3ª posição?"},"options":{"fr":["Auditer sa situation actuelle","Optimiser ses profils existants","Produire du contenu de valeur","Engager la conversation"],"en":["Audit your current situation","Optimize your existing profiles","Produce valuable content","Start the conversation"],"es":["Audita tu situación actual","Optimice sus perfiles existentes","Producir contenido valioso","Iniciar la conversación"],"ar":["قم بمراجعة وضعك الحالي","تحسين ملفات التعريف الموجودة لديك","إنتاج محتوى قيم","ابدأ المحادثة"],"pt":["Audite sua situação atual","Otimize seus perfis existentes","Produza conteúdo valioso","Inicie a conversa"]},"explain":{"fr":"L\u0027ordre donné est : auditer, optimiser ses profils, produire du contenu de valeur, puis engager la conversation.","en":"The order given is: audit, optimize your profiles, produce valuable content, then start the conversation.","es":"El orden dado es: auditar, optimizar sus perfiles, producir contenido valioso y luego iniciar la conversación.","ar":"الترتيب الموضح هو: التدقيق، وتحسين ملفات التعريف الخاصة بك، وإنتاج محتوى قيم، ثم بدء المحادثة.","pt":"A ordem dada é: auditar, otimizar seus perfis, produzir conteúdo de valor e depois iniciar a conversa."},"correct":2}]};
-  const UI = {
-  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
-  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
-  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
-  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"},
-  "h1": {"fr":"Test de connaissances","en":"Knowledge test","es":"Test de conocimientos","ar":"اختبار المعرفة","pt":"Teste de conhecimento"},
-  "levelDebTitle": {"fr":"🌱 Débutant","en":"🌱 Beginner","es":"🌱 Principiante","ar":"🌱 مبتدئ","pt":"🌱 Iniciante"},
-  "levelDebDesc": {"fr":"Questions simples pour commencer en douceur.","en":"Simple questions to ease into it.","es":"Preguntas simples para empezar suavemente.","ar":"أسئلة بسيطة للبدء بسهولة.","pt":"Perguntas simples para começar com calma."},
-  "levelIntTitle": {"fr":"🌿 Intermédiaire","en":"🌿 Intermediate","es":"🌿 Intermedio","ar":"🌿 متوسط","pt":"🌿 Intermediário"},
-  "levelIntDesc": {"fr":"Le niveau standard, pour vérifier ses acquis.","en":"The standard level, to check what you've learned.","es":"El nivel estándar, para comprobar lo aprendido.","ar":"المستوى القياسي، للتحقق من معارفك.","pt":"O nível padrão, para verificar o que você aprendeu."},
-  "levelAvaTitle": {"fr":"🌳 Avancé","en":"🌳 Advanced","es":"🌳 Avanzado","ar":"🌳 متقدم","pt":"🌳 Avançado"},
-  "levelAvaDesc": {"fr":"Questions plus précises, pour aller plus loin.","en":"More precise questions, to go further.","es":"Preguntas más precisas, para ir más lejos.","ar":"أسئلة أكثر دقة، للمضي قدمًا.","pt":"Perguntas mais precisas, para ir mais longe."},
-  "seeScore": {"fr":"Voir mon score","en":"See my score","es":"Ver mi puntuación","ar":"عرض نتيجتي","pt":"Ver minha pontuação"},
-  "restart": {"fr":"Recommencer","en":"Start over","es":"Reiniciar","ar":"إعادة المحاولة","pt":"Recomeçar"},
-  "changeLevel": {"fr":"Changer de niveau","en":"Change level","es":"Cambiar de nivel","ar":"تغيير المستوى","pt":"Mudar de nível"},
-  "questionLabel": {"fr":"Question","en":"Question","es":"Pregunta","ar":"سؤال","pt":"Pergunta"},
-  "scoreLabel": {"fr":"Score","en":"Score","es":"Puntuación","ar":"النتيجة","pt":"Pontuação"},
-  "tierLow": {"fr":"À revoir ! Relisez la fiche de l'atelier et retentez le test.","en":"Needs work! Reread the workshop sheet and try again.","es":"¡A repasar! Vuelve a leer la ficha del taller e inténtalo de nuevo.","ar":"يحتاج إلى مراجعة! أعد قراءة ورقة الورشة وحاول مرة أخرى.","pt":"Precisa melhorar! Releia a ficha da oficina e tente novamente."},
-  "tierMid": {"fr":"Pas mal ! Encore quelques points à consolider.","en":"Not bad! A few points still to work on.","es":"¡No está mal! Todavía hay algunos puntos por reforzar.","ar":"لا بأس! لا تزال هناك بعض النقاط التي يجب تعزيزها.","pt":"Nada mal! Ainda há alguns pontos a consolidar."},
-  "tierHigh": {"fr":"Excellent ! Vous maîtrisez bien le sujet.","en":"Excellent! You have a solid grasp of the topic.","es":"¡Excelente! Dominas bien el tema.","ar":"ممتاز! أنت تتقن الموضوع جيدًا.","pt":"Excelente! Você domina bem o assunto."},
-  "visits": {"fr":"visite(s) sur ce test","en":"visit(s) on this test","es":"visita(s) en este test","ar":"زيارة لهذا الاختبار","pt":"visita(s) neste teste"}
-};
+  const SLUG = "identite-numerique";
+  const FR_LEVELS = {"debutant":[{"q":"L\u0027identité numérique, c\u0027est :","options":["Seulement votre carte d\u0027identité","L\u0027ensemble des traces que vous laissez sur Internet","Votre mot de passe","Votre adresse postale"],"explain":"L\u0027identité numérique regroupe l\u0027ensemble des traces, données et représentations laissées sur Internet.","correct":1},{"q":"Se \"googler\" veut dire :","options":["Créer un compte Google","Taper son propre nom dans un moteur de recherche","Payer pour de la publicité","Supprimer son compte"],"explain":"Se googler, c\u0027est rechercher son propre nom pour voir ce qui apparaît en ligne à son sujet.","correct":1},{"q":"L\u0027e-réputation est importante notamment pour :","options":["Personne en particulier","Votre image auprès des recruteurs et de vos proches","Seulement les célébrités","Seulement les entreprises"],"explain":"92 % des recruteurs vérifient la présence en ligne : l\u0027e-réputation concerne tout le monde.","correct":1}],"intermediaire":[{"q":"Quel pourcentage de recruteurs vérifient la présence en ligne des candidats ?","options":["30 %","50 %","92 %","100 %"],"explain":"92 % des recruteurs vérifient la présence en ligne des candidats avant de les recevoir.","correct":2},{"q":"L\u0027identité \"calculée\", c\u0027est :","options":["Ce que vous dites de vous-même","Ce que vous faites en ligne","Ce que les algorithmes déduisent de vous","Votre photo de profil"],"explain":"L\u0027identité calculée correspond aux déductions faites par les algorithmes à partir de votre comportement en ligne.","correct":2},{"q":"Le droit à l\u0027oubli (RGPD) permet de :","options":["Supprimer tout Internet","Demander le déréférencement de contenus vous concernant","Empêcher qu\u0027on parle de vous","Effacer son casier judiciaire"],"explain":"Le droit à l\u0027oubli permet de demander le déréférencement de certains contenus vous concernant auprès des moteurs de recherche.","correct":1},{"q":"Face à un contenu négatif sur soi en ligne, la bonne pratique est de :","options":["Le supprimer en le niant publiquement","Répondre vite, calmement et factuellement","Ignorer complètement","Créer un faux profil pour se défendre"],"explain":"Une réponse rapide, calme et factuelle est la meilleure gestion de crise en e-réputation.","correct":1},{"q":"Un outil comme Google Alerts sert à :","options":["Créer un CV","Être prévenu quand on parle de vous en ligne","Bloquer les publicités","Chiffrer ses emails"],"explain":"Google Alerts envoie une alerte dès que votre nom (ou un mot choisi) apparaît en ligne.","correct":1},{"q":"Que faut-il faire en premier pour auditer sa présence en ligne ?","options":["Supprimer tous ses comptes","Se \"googler\" soi-même","Changer de nom","Contacter un avocat"],"explain":"Se rechercher soi-même sur Google est la première étape pour savoir ce qui est visible vous concernant.","correct":1}],"avance":[{"q":"L\u0027identité \"déclarative\" correspond à :","options":["Ce que les algorithmes déduisent de vous","Ce que vous dites vous-même de vous (profils, publications)","Ce que vous faites en ligne","Vos données bancaires"],"explain":"L\u0027identité déclarative est ce que vous dites vous-même de vous, via vos profils et publications.","correct":1},{"q":"LinkedIn, About.me et Namechk sont cités dans la fiche comme des outils pour :","options":["La suppression de contenu","Le \"personal branding\" (construire son image professionnelle)","La cybersécurité","La messagerie chiffrée"],"explain":"Ces outils sont cités dans la catégorie \"personal branding\" pour construire son image en ligne.","correct":1},{"q":"Parmi les 4 étapes pour construire une e-réputation positive citées, laquelle vient en 3e position ?","options":["Auditer sa situation actuelle","Optimiser ses profils existants","Produire du contenu de valeur","Engager la conversation"],"explain":"L\u0027ordre donné est : auditer, optimiser ses profils, produire du contenu de valeur, puis engager la conversation.","correct":2}]};
+  const FR_UI = {
+    back:"Retour aux ateliers", sub:"Ateliers Médiation Numérique — Cédric Waltener",
+    footerCopy:"Reproduction interdite sans autorisation.", footerBack:"Retour au site",
+    h1:"Test de connaissances",
+    levelDebTitle:"🌱 Débutant", levelDebDesc:"Questions simples pour commencer en douceur.",
+    levelIntTitle:"🌿 Intermédiaire", levelIntDesc:"Le niveau standard, pour vérifier ses acquis.",
+    levelAvaTitle:"🌳 Avancé", levelAvaDesc:"Questions plus précises, pour aller plus loin.",
+    seeScore:"Voir mon score", restart:"Recommencer", changeLevel:"Changer de niveau",
+    questionLabel:"Question", scoreLabel:"Score",
+    tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
+    tierMid:"Pas mal ! Encore quelques points à consolider.",
+    tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
+    visits:"visite(s) sur ce test"
+  };
+
+  const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
   const levelScreen = document.getElementById('levelScreen');
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
@@ -150,23 +392,24 @@
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
+  const langSelect = document.getElementById('langSelect');
+  const langLoading = document.getElementById('langLoading');
   let currentLevel = null;
   let currentLang = 'fr';
   let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function tr(dict, lang) { return dict[lang] || dict.fr; }
 
   function renderQuiz(level, lang) {
     currentLevel = level;
-    const QUIZ = LEVELS[level];
+    const QUIZ = cache[lang].levels[level];
     form.innerHTML = QUIZ.map(function(q, i) {
-      const opts = tr(q.options, lang).map(function(o, j) {
+      const opts = q.options.map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
-      return '<div class="qcard"><div class="qnum">' + esc(UI.questionLabel[lang] || UI.questionLabel.fr) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(tr(q.q, lang)) + '</p><div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(tr(q.explain, lang)) + '</div></div>';
+      return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
@@ -178,43 +421,60 @@
   }
 
   function applyStaticUI(lang) {
+    const UI = cache[lang].ui;
     document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.getElementById('backText').textContent = tr(UI.back, lang);
-    document.getElementById('h1El').textContent = tr(UI.h1, lang);
-    document.getElementById('subEl').textContent = tr(UI.sub, lang);
-    document.getElementById('footerCopyEl').textContent = tr(UI.footerCopy, lang);
-    document.getElementById('footerLinkEl').textContent = tr(UI.footerBack, lang);
-    document.getElementById('levelDebTitle').textContent = tr(UI.levelDebTitle, lang);
-    document.getElementById('levelDebDesc').textContent = tr(UI.levelDebDesc, lang);
-    document.getElementById('levelIntTitle').textContent = tr(UI.levelIntTitle, lang);
-    document.getElementById('levelIntDesc').textContent = tr(UI.levelIntDesc, lang);
-    document.getElementById('levelAvaTitle').textContent = tr(UI.levelAvaTitle, lang);
-    document.getElementById('levelAvaDesc').textContent = tr(UI.levelAvaDesc, lang);
-    submitBtn.textContent = tr(UI.seeScore, lang);
-    resetBtn.textContent = tr(UI.restart, lang);
-    levelBtn.textContent = tr(UI.changeLevel, lang);
+    document.documentElement.dir = (lang === 'ar' || lang === 'iw' || lang === 'ur' || lang === 'fa' || lang === 'ps' || lang === 'ckb' || lang === 'sd') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI.back;
+    document.getElementById('h1El').textContent = UI.h1;
+    document.getElementById('subEl').textContent = UI.sub;
+    document.getElementById('footerCopyEl').textContent = UI.footerCopy;
+    document.getElementById('footerLinkEl').textContent = UI.footerBack;
+    document.getElementById('levelDebTitle').textContent = UI.levelDebTitle;
+    document.getElementById('levelDebDesc').textContent = UI.levelDebDesc;
+    document.getElementById('levelIntTitle').textContent = UI.levelIntTitle;
+    document.getElementById('levelIntDesc').textContent = UI.levelIntDesc;
+    document.getElementById('levelAvaTitle').textContent = UI.levelAvaTitle;
+    document.getElementById('levelAvaDesc').textContent = UI.levelAvaDesc;
+    submitBtn.textContent = UI.seeScore;
+    resetBtn.textContent = UI.restart;
+    levelBtn.textContent = UI.changeLevel;
     if (visitCount !== null) {
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + (tr(UI.visits, lang));
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + UI.visits;
     }
-    document.querySelectorAll('#langSwitch button').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
   }
 
-  function setLang(lang) {
+  function finishSetLang(lang) {
     currentLang = lang;
     applyStaticUI(lang);
     if (currentLevel && quizScreen.style.display !== 'none') {
       renderQuiz(currentLevel, lang);
     }
     try { localStorage.setItem('site_lang', lang); } catch (e) {}
+    langLoading.classList.remove('show');
+  }
+
+  function setLang(lang) {
+    if (cache[lang]) { finishSetLang(lang); return; }
+    langLoading.classList.add('show');
+    fetch('i18n/quiz-' + lang + '.json')
+      .then(function(r) { if (!r.ok) throw new Error('missing'); return r.json(); })
+      .then(function(data) {
+        const entry = data.quizzes[SLUG];
+        if (!entry) throw new Error('no slug');
+        cache[lang] = { ui: data.ui, levels: entry };
+        finishSetLang(lang);
+      })
+      .catch(function() {
+        // langue pas encore disponible : on reste sur la langue actuelle
+        langLoading.classList.remove('show');
+        langSelect.value = currentLang;
+      });
   }
 
   document.querySelectorAll('.level-btn').forEach(function(b) {
     b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
   });
-  document.querySelectorAll('#langSwitch button').forEach(function(b) {
-    b.addEventListener('click', function() { setLang(b.dataset.lang); });
-  });
+  langSelect.addEventListener('change', function() { setLang(langSelect.value); });
 
   levelBtn.addEventListener('click', function() {
     quizScreen.style.display = 'none';
@@ -224,7 +484,8 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const QUIZ = LEVELS[currentLevel];
+    const QUIZ = cache[currentLang].levels[currentLevel];
+    const UI = cache[currentLang].ui;
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -239,11 +500,11 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = tr(UI.tierLow, currentLang);
-    if (pct >= 80) { tier = 'tier-high'; msg = tr(UI.tierHigh, currentLang); }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = tr(UI.tierMid, currentLang); }
+    let tier = 'tier-low', msg = UI.tierLow;
+    if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = esc(tr(UI.scoreLabel, currentLang)) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
@@ -255,12 +516,14 @@
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + tr(UI.visits, currentLang);
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + cache[currentLang].ui.visits;
     })
     .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 
   let __savedLang = 'fr';
   try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  langSelect.value = __savedLang;
+  if (langSelect.value !== __savedLang) { langSelect.value = 'fr'; __savedLang = 'fr'; }
   setLang(__savedLang);
 </script>
 </body>

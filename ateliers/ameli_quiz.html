@@ -30,10 +30,10 @@
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
   .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
-  .lang-switch { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
-  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
-  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
-  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .lang-select-wrap select { font-family: "Inter", sans-serif; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 0.4rem 0.7rem; border-radius: 999px; max-width: 220px; }
+  .lang-loading { font-size: 0.8rem; color: var(--muted); display: none; }
+  .lang-loading.show { display: inline; }
   html[dir="rtl"] .text-card, html[dir="rtl"] .qcard { text-align: right; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
@@ -81,12 +81,259 @@
     <h1 id="h1El">Test de connaissances</h1>
     <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
     <div><span class="visits" id="visitsCounter">👥 …</span></div>
-    <div class="lang-switch" id="langSwitch">
-      <button type="button" data-lang="fr">FR</button>
-      <button type="button" data-lang="en">EN</button>
-      <button type="button" data-lang="es">ES</button>
-      <button type="button" data-lang="ar">AR</button>
-      <button type="button" data-lang="pt">PT</button>
+    <div class="lang-select-wrap">
+      <select id="langSelect">
+      <option value="fr">Français</option>
+      <option value="ab">Abkhaze</option>
+      <option value="ace">Aceh</option>
+      <option value="ach">Acholi</option>
+      <option value="aa">Afar</option>
+      <option value="af">Afrikaans</option>
+      <option value="sq">Albanais</option>
+      <option value="de">Allemand</option>
+      <option value="alz">Alur</option>
+      <option value="am">Amharique</option>
+      <option value="en">Anglais</option>
+      <option value="ar">Arabe</option>
+      <option value="hy">Arménien</option>
+      <option value="as">Assamais</option>
+      <option value="av">Avar</option>
+      <option value="awa">Awadhi</option>
+      <option value="ay">Aymara</option>
+      <option value="az">Azéri</option>
+      <option value="ba">Bachkir</option>
+      <option value="ban">Balinais</option>
+      <option value="bal">Baloutchi</option>
+      <option value="bm">Bambara</option>
+      <option value="bci">Baoulé</option>
+      <option value="eu">Basque</option>
+      <option value="btx">Batak Karo</option>
+      <option value="bts">Batak Simalungun</option>
+      <option value="bbc">Batak Toba</option>
+      <option value="bem">Bemba</option>
+      <option value="bn">Bengali</option>
+      <option value="bew">Betawi</option>
+      <option value="bho">Bhodjpouri</option>
+      <option value="bik">Bicol</option>
+      <option value="be">Biélorusse</option>
+      <option value="bs">Bosniaque</option>
+      <option value="bua">Bouriate</option>
+      <option value="br">Breton</option>
+      <option value="bg">Bulgare</option>
+      <option value="yue">Cantonais</option>
+      <option value="ca">Catalan</option>
+      <option value="ceb">Cebuano</option>
+      <option value="ch">Chamorro</option>
+      <option value="ny">Chichewa</option>
+      <option value="zh-CN">Chinois (simplifié)</option>
+      <option value="zh-TW">Chinois (traditionnel)</option>
+      <option value="chk">Chuuk</option>
+      <option value="si">Cinghalais</option>
+      <option value="ko">Coréen</option>
+      <option value="co">Corse</option>
+      <option value="ht">Créole haïtien</option>
+      <option value="mfe">Créole mauricien</option>
+      <option value="crs">Créole seychellois</option>
+      <option value="hr">Croate</option>
+      <option value="da">Danois</option>
+      <option value="fa-AF">Dari</option>
+      <option value="din">Dinka</option>
+      <option value="dyu">Dioula</option>
+      <option value="dv">Divéhi</option>
+      <option value="doi">Dogri</option>
+      <option value="dov">Dombe</option>
+      <option value="dz">Dzongkha</option>
+      <option value="es">Espagnol</option>
+      <option value="eo">Espéranto</option>
+      <option value="et">Estonien</option>
+      <option value="ee">Ewe</option>
+      <option value="fo">Féroïen</option>
+      <option value="fj">Fidjien</option>
+      <option value="fi">Finnois</option>
+      <option value="fon">Fon</option>
+      <option value="fr-CA">Français (Canada)</option>
+      <option value="fur">Frioulan</option>
+      <option value="fy">Frison</option>
+      <option value="gaa">Ga</option>
+      <option value="gd">Gaélique (Écosse)</option>
+      <option value="gl">Galicien</option>
+      <option value="cy">Gallois</option>
+      <option value="ka">Géorgien</option>
+      <option value="el">Grec</option>
+      <option value="gn">Guarani</option>
+      <option value="gu">Gujarati</option>
+      <option value="cnh">Hakha Chin</option>
+      <option value="ha">Haoussa</option>
+      <option value="haw">Hawaïen</option>
+      <option value="iw">Hébreu</option>
+      <option value="hil">Hiligaïnon</option>
+      <option value="hi">Hindi</option>
+      <option value="hmn">Hmong</option>
+      <option value="hu">Hongrois</option>
+      <option value="hrx">Hunsrik</option>
+      <option value="iba">Iban</option>
+      <option value="ig">Igbo</option>
+      <option value="ilo">Ilocano</option>
+      <option value="id">Indonésien</option>
+      <option value="iu-Latn">Inuktut (latin)</option>
+      <option value="iu">Inuktut (syllabique)</option>
+      <option value="ga">Irlandais</option>
+      <option value="is">Islandais</option>
+      <option value="it">Italien</option>
+      <option value="ja">Japonais</option>
+      <option value="jw">Javanais</option>
+      <option value="kac">Jingpo</option>
+      <option value="kl">Kalaallisut</option>
+      <option value="kn">Kannada</option>
+      <option value="kr">Kanuri</option>
+      <option value="kk">Kazakh</option>
+      <option value="kha">Khasi</option>
+      <option value="km">Khmer</option>
+      <option value="cgg">Kiga</option>
+      <option value="kg">Kikongo</option>
+      <option value="rw">Kinyarwanda</option>
+      <option value="ky">Kirghiz</option>
+      <option value="ktu">Kituba</option>
+      <option value="trp">Kok Borok</option>
+      <option value="kv">Komi</option>
+      <option value="gom">Konkani</option>
+      <option value="kri">Krio</option>
+      <option value="ku">Kurde (Kurmandji)</option>
+      <option value="ckb">Kurde (Sorani)</option>
+      <option value="lo">Laotien</option>
+      <option value="ltg">Latgalien</option>
+      <option value="la">Latin</option>
+      <option value="lv">Letton</option>
+      <option value="lij">Ligure</option>
+      <option value="li">Limbourgeois</option>
+      <option value="ln">Lingala</option>
+      <option value="lt">Lituanien</option>
+      <option value="lmo">Lombard</option>
+      <option value="lg">Luganda</option>
+      <option value="luo">Luo</option>
+      <option value="lb">Luxembourgeois</option>
+      <option value="mak">Macassar</option>
+      <option value="mk">Macédonien</option>
+      <option value="mad">Madurais</option>
+      <option value="mai">Maïthili</option>
+      <option value="ms-Arab">Malais (Jawi)</option>
+      <option value="ms">Malaisien</option>
+      <option value="ml">Malayalam</option>
+      <option value="mg">Malgache</option>
+      <option value="mt">Maltais</option>
+      <option value="mam">Mam</option>
+      <option value="gv">Manx</option>
+      <option value="mi">Maori</option>
+      <option value="mr">Marathi</option>
+      <option value="chm">Mari des prairies</option>
+      <option value="mh">Marshallais</option>
+      <option value="mwr">Marwari</option>
+      <option value="yua">Maya yucatèque</option>
+      <option value="mni-Mtei">Meitei (Manipuri)</option>
+      <option value="min">Minangkabau</option>
+      <option value="lus">Mizo</option>
+      <option value="mn">Mongol</option>
+      <option value="my">Myanmar (Birman)</option>
+      <option value="nhe">Nahuatl (Huasteca oriental)</option>
+      <option value="ndc-ZW">Ndau</option>
+      <option value="nr">Ndébélé (Sud)</option>
+      <option value="nl">Néerlandais</option>
+      <option value="ne">Népalais</option>
+      <option value="new">Nepalbhasa (Newari)</option>
+      <option value="bm-Nkoo">NKo</option>
+      <option value="no">Norvégien</option>
+      <option value="nus">Nuer</option>
+      <option value="oc">Occitan</option>
+      <option value="or">Odia (Oriya)</option>
+      <option value="om">Oromo</option>
+      <option value="os">Ossète</option>
+      <option value="udm">Oudmourte</option>
+      <option value="ug">Ouïgour</option>
+      <option value="uz">Ouzbek</option>
+      <option value="ps">Pachtô</option>
+      <option value="pam">Pampangan</option>
+      <option value="pag">Pangasinan</option>
+      <option value="pa">Panjabi (Gurmukhi)</option>
+      <option value="pa-Arab">Panjabi (Shahmukhi)</option>
+      <option value="pap">Papiamento</option>
+      <option value="jam">Patois jamaïcain</option>
+      <option value="fa">Persan</option>
+      <option value="ff">Peul</option>
+      <option value="tl">Philippin</option>
+      <option value="pl">Polonais</option>
+      <option value="pt">Portugais (Brésil)</option>
+      <option value="pt-PT">Portugais (Portugal)</option>
+      <option value="kek">Q'eqchi'</option>
+      <option value="qu">Quechua</option>
+      <option value="rom">Romani</option>
+      <option value="ro">Roumain</option>
+      <option value="rn">Roundi</option>
+      <option value="ru">Russe</option>
+      <option value="se">Same (Nord)</option>
+      <option value="sm">Samoan</option>
+      <option value="sg">Sango</option>
+      <option value="sa">Sanskrit</option>
+      <option value="sat-Latn">Santali (latin)</option>
+      <option value="sat">Santali (ol chiki)</option>
+      <option value="nso">Sepedi</option>
+      <option value="sr">Serbe</option>
+      <option value="st">Sesotho</option>
+      <option value="shn">Shan</option>
+      <option value="sn">Shona</option>
+      <option value="scn">Sicilien</option>
+      <option value="szl">Silésien</option>
+      <option value="sd">Sindhî</option>
+      <option value="sk">Slovaque</option>
+      <option value="sl">Slovène</option>
+      <option value="so">Somali</option>
+      <option value="su">Soundanais</option>
+      <option value="sus">Soussou</option>
+      <option value="sv">Suédois</option>
+      <option value="sw">Swahili</option>
+      <option value="ss">Swati</option>
+      <option value="tg">Tadjik</option>
+      <option value="ty">Tahitien</option>
+      <option value="ber-Latn">Tamazight</option>
+      <option value="ber">Tamazight (Tifinagh)</option>
+      <option value="ta">Tamoul</option>
+      <option value="tt">Tatar</option>
+      <option value="crh">Tatar de Crimée (cyrillique)</option>
+      <option value="crh-Latn">Tatar de Crimée (latin)</option>
+      <option value="cs">Tchèque</option>
+      <option value="ce">Tchétchène</option>
+      <option value="cv">Tchouvache</option>
+      <option value="te">Telugu</option>
+      <option value="tet">Tétoum</option>
+      <option value="th">Thaï</option>
+      <option value="bo">Tibétain</option>
+      <option value="ti">Tigrigna</option>
+      <option value="tiv">Tiv</option>
+      <option value="tpi">Tok pisin</option>
+      <option value="to">Tongien</option>
+      <option value="tcy">Toulou</option>
+      <option value="tyv">Touvain</option>
+      <option value="lua">Tshiluba</option>
+      <option value="ts">Tsonga</option>
+      <option value="tn">Tswana</option>
+      <option value="tum">Tumbuka</option>
+      <option value="tr">Turc</option>
+      <option value="tk">Turkmène</option>
+      <option value="ak">Twi</option>
+      <option value="uk">Ukrainien</option>
+      <option value="ur">Urdu</option>
+      <option value="ve">Venda</option>
+      <option value="vec">Vénitien</option>
+      <option value="vi">Vietnamien</option>
+      <option value="war">Waray-waray</option>
+      <option value="wo">Wolof</option>
+      <option value="xh">Xhosa</option>
+      <option value="sah">Yakoute</option>
+      <option value="yi">Yiddish</option>
+      <option value="yo">Yoruba</option>
+      <option value="zap">Zapotèque</option>
+      <option value="zu">Zoulou</option>
+      </select>
+      <span class="lang-loading" id="langLoading">⏳</span>
     </div>
   </div>
 </header>
@@ -120,29 +367,24 @@
   © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  const LEVELS = {"debutant":[{"q":{"fr":"La carte Vitale sert à :","en":"The Vitale card is used to:","es":"La tarjeta Vitale se utiliza para:","ar":"تُستخدم بطاقة Vitale في:","pt":"O cartão Vitale é usado para:"},"options":{"fr":["Payer ses impôts","Attester de ses droits à l\u0027Assurance Maladie","Voter","Conduire"],"en":["Pay your taxes","Certify your rights to Health Insurance","Vote","Drive"],"es":["Paga tus impuestos","Certifica tus derechos al Seguro de Salud","votar","conducir"],"ar":["دفع الضرائب الخاصة بك","تأكيد حقوقك في التأمين الصحي","التصويت","قيادة"],"pt":["Pague seus impostos","Certifique os seus direitos ao Seguro de Saúde","Votar","Dirigir"]},"explain":{"fr":"La carte Vitale atteste de vos droits à l\u0027Assurance Maladie et facilite le remboursement des soins.","en":"The Vitale card certifies your rights to Health Insurance and facilitates reimbursement of care.","es":"La tarjeta Vitale certifica tus derechos al Seguro de Salud y facilita el reembolso de la asistencia.","ar":"تشهد بطاقة Vitale على حقوقك في التأمين الصحي وتسهل سداد تكاليف الرعاية.","pt":"O cartão Vitale certifica os seus direitos ao Seguro de Saúde e facilita o reembolso dos cuidados."},"correct":1},{"q":{"fr":"Le compte Ameli permet notamment de voir :","en":"The Ameli account allows you to see:","es":"La cuenta Ameli te permite ver:","ar":"يتيح لك حساب Ameli رؤية:","pt":"A conta Ameli permite que você veja:"},"options":{"fr":["Ses notes scolaires","Ses remboursements de santé","Sa déclaration d\u0027impôts","Sa carte grise"],"en":["His school grades","His health reimbursements","His tax return","His registration document"],"es":["Sus calificaciones escolares","Sus reembolsos de salud.","Su declaración de impuestos","Su documento de registro"],"ar":["درجاته المدرسية","تعويضاته الصحية","إقراره الضريبي","وثيقة تسجيله"],"pt":["Suas notas escolares","Seus reembolsos de saúde","Sua declaração de imposto","Seu documento de registro"]},"explain":{"fr":"Le compte Ameli permet de voir ce que la Sécurité sociale a remboursé, et quand.","en":"The Ameli account allows you to see what Social Security has reimbursed, and when.","es":"La cuenta Ameli le permite ver qué ha reembolsado el Seguro Social y cuándo.","ar":"يتيح لك حساب Ameli معرفة ما قام الضمان الاجتماعي بسداده ومتى.","pt":"A conta Ameli permite ver o que a Segurança Social reembolsou e quando."},"correct":1}],"intermediaire":[{"q":{"fr":"Le compte Ameli et \"Mon espace santé\" sont :","en":"The Ameli account and “My health space” are:","es":"La cuenta Ameli y “Mi espacio de salud” son:","ar":"حساب أملي و\"مساحة صحتي\" هما:","pt":"A conta Ameli e “Meu espaço de saúde” são:"},"options":{"fr":["Le même site","Deux sites différents, avec des rôles différents","Réservés aux médecins","Payants"],"en":["The same site","Two different sites, with different roles","Reserved for doctors","Paid"],"es":["el mismo sitio","Dos sitios diferentes, con roles diferentes","Reservado para médicos","Pagado"],"ar":["نفس الموقع","موقعان مختلفان، بأدوار مختلفة","محفوظة للأطباء","مدفوعة"],"pt":["O mesmo site","Dois sites diferentes, com funções diferentes","Reservado para médicos","Pago"]},"explain":{"fr":"assure.ameli.fr (administratif) et monespacesante.fr (médical) sont deux sites bien distincts.","en":"assure.ameli.fr (administrative) and monespacesante.fr (medical) are two very distinct sites.","es":"sure.ameli.fr (administrativo) y monespacesante.fr (médico) son dos sitios muy distintos.","ar":"assurer.ameli.fr (الإداري) وmonespacesante.fr (الطبي) هما موقعان متميزان للغاية.","pt":"assegura.ameli.fr (administrativo) e monespacesante.fr (médico) são dois sites muito distintos."},"correct":1},{"q":{"fr":"assure.ameli.fr concerne surtout :","en":"assure.ameli.fr mainly concerns:","es":"sure.ameli.fr se refiere principalmente a:","ar":"Asure.ameli.fr يتعلق بشكل رئيسي بما يلي:","pt":"Assegure.ameli.fr diz respeito principalmente a:"},"options":{"fr":["Le dossier médical","Les remboursements et l\u0027administratif","Les ordonnances","La vaccination"],"en":["The medical file","Reimbursements and administration","Prescriptions","Vaccination"],"es":["el expediente medico","Reembolsos y administración","Recetas","Vacunación"],"ar":["الملف الطبي","السداد والإدارة","الوصفات الطبية","التطعيم"],"pt":["O arquivo médico","Reembolsos e administração","Prescrições","Vacinação"]},"explain":{"fr":"Le compte Ameli gère le côté administratif : remboursements, attestations, carte Vitale.","en":"The Ameli account manages the administrative side: reimbursements, certificates, Vitale card.","es":"La cuenta Ameli gestiona la parte administrativa: reembolsos, certificados, tarjeta Vitale.","ar":"يدير حساب عاملي الجانب الإداري: المرتجعات، الشهادات، بطاقة فيتالي.","pt":"A conta Ameli gerencia a parte administrativa: reembolsos, certidões, cartão Vitale."},"correct":1},{"q":{"fr":"Le numéro de Sécurité sociale comporte :","en":"The Social Security number includes:","es":"El número de Seguro Social incluye:","ar":"رقم الضمان الاجتماعي يشمل:","pt":"O número da Segurança Social inclui:"},"options":{"fr":["10 chiffres","15 chiffres, et commence par 1 ou 2","5 chiffres","Des lettres uniquement"],"en":["10 digits","15 digits, and starts with 1 or 2","5 digits","Letters only"],"es":["10 dígitos","15 dígitos y comienza con 1 o 2","5 dígitos","Solo letras"],"ar":["10 أرقام","15 رقمًا، وتبدأ بالرقم 1 أو 2","5 أرقام","الحروف فقط"],"pt":["10 dígitos","15 dígitos e começa com 1 ou 2","5 dígitos","Somente letras"]},"explain":{"fr":"Le numéro de Sécurité sociale comporte 15 chiffres et commence par 1 (homme) ou 2 (femme).","en":"The Social Security number has 15 digits and begins with 1 (man) or 2 (woman).","es":"El número de Seguro Social tiene 15 dígitos y comienza con 1 (hombre) o 2 (mujer).","ar":"يتكون رقم الضمان الاجتماعي من 15 رقمًا ويبدأ بالرقم 1 (رجل) أو 2 (امرأة).","pt":"O número da Segurança Social tem 15 dígitos e começa com 1 (homem) ou 2 (mulher)."},"correct":1},{"q":{"fr":"monespacesante.fr permet notamment de consulter :","en":"monespacesante.fr allows you to consult:","es":"monespacesante.fr le permite consultar:","ar":"يسمح لك موقع moneyspacesante.fr بالتشاور مع:","pt":"monespacesante.fr permite consultar:"},"options":{"fr":["Ses remboursements CAF","Son carnet de vaccination et ses ordonnances","Sa déclaration d\u0027impôts","Sa carte grise"],"en":["Its CAF reimbursements","His vaccination record and prescriptions","His tax return","His registration document"],"es":["Sus reembolsos de CAF","Su cartilla de vacunación y recetas.","Su declaración de impuestos","Su documento de registro"],"ar":["تسديدات CAF لها","سجل التطعيمات والوصفات الطبية الخاصة به","إقراره الضريبي","وثيقة تسجيله"],"pt":["Seus reembolsos CAF","Seu registro de vacinação e prescrições","Sua declaração de imposto","Seu documento de registro"]},"explain":{"fr":"Mon espace santé regroupe le dossier médical : ordonnances, résultats d\u0027analyses, carnet de vaccination.","en":"My health space brings together the medical file: prescriptions, analysis results, vaccination record.","es":"Mi espacio de salud reúne el expediente médico: recetas, resultados de análisis, cartilla de vacunación.","ar":"مساحة صحتي تجمع الملف الطبي: الوصفات الطبية، نتائج التحاليل، سجل التطعيمات.","pt":"Meu espaço de saúde reúne o prontuário médico: receitas, resultados de análises, caderneta de vacinação."},"correct":1},{"q":{"fr":"Sur le compte Ameli, on peut télécharger :","en":"On the Ameli account, you can download:","es":"En la cuenta Ameli, puedes descargar:","ar":"على حساب عاملي يمكنك تحميل:","pt":"Na conta Ameli você pode baixar:"},"options":{"fr":["Sa carte grise","Son attestation de droits","Son passeport","Son permis de conduire"],"en":["His registration document","His certificate of rights","His passport","His driving license"],"es":["Su documento de registro","Su certificado de derechos.","Su pasaporte","Su licencia de conducir"],"ar":["وثيقة تسجيله","شهادة حقوقه","جواز سفره","رخصة قيادته"],"pt":["Seu documento de registro","Seu certificado de direitos","Seu passaporte","Sua carteira de motorista"]},"explain":{"fr":"L\u0027attestation de droits, prouvant vos droits à l\u0027Assurance Maladie, se télécharge en 2 clics sur le compte Ameli.","en":"The certificate of rights, proving your rights to Health Insurance, can be downloaded in 2 clicks on the Ameli account.","es":"El certificado de derechos, que acredita sus derechos al Seguro Médico, se puede descargar en 2 clics en la cuenta Ameli.","ar":"يمكن تنزيل شهادة الحقوق، التي تثبت حقوقك في التأمين الصحي، بنقرتين على حساب عاملي.","pt":"O certificado de direitos, comprovando seus direitos ao Seguro Saúde, pode ser baixado em 2 cliques na conta Ameli."},"correct":1}],"avance":[{"q":{"fr":"Combien de façons différentes d\u0027accéder à son compte Ameli sont présentées dans l\u0027atelier ?","en":"How many different ways to access your Ameli account are presented in the workshop?","es":"¿Cuántas formas diferentes de acceder a tu cuenta Ameli se presentan en el taller?","ar":"ما عدد الطرق المختلفة للوصول إلى حساب Ameli الخاص بك المعروضة في ورشة العمل؟","pt":"Quantas formas diferentes de acessar sua conta Ameli são apresentadas no workshop?"},"options":{"fr":["1","2","3","5"],"en":["1","2","3","5"],"es":["1","2","3","5"],"ar":["1","2","3","5"],"pt":["1","2","3","5"]},"explain":{"fr":"L\u0027atelier présente 3 façons d\u0027accéder à son compte Ameli.","en":"The workshop presents 3 ways to access your Ameli account.","es":"El taller presenta 3 formas de acceder a su cuenta Ameli.","ar":"تقدم ورشة العمل 3 طرق للوصول إلى حساب عاملي الخاص بك.","pt":"O workshop apresenta 3 formas de acessar sua conta Ameli."},"correct":2}]};
-  const UI = {
-  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
-  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
-  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
-  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"},
-  "h1": {"fr":"Test de connaissances","en":"Knowledge test","es":"Test de conocimientos","ar":"اختبار المعرفة","pt":"Teste de conhecimento"},
-  "levelDebTitle": {"fr":"🌱 Débutant","en":"🌱 Beginner","es":"🌱 Principiante","ar":"🌱 مبتدئ","pt":"🌱 Iniciante"},
-  "levelDebDesc": {"fr":"Questions simples pour commencer en douceur.","en":"Simple questions to ease into it.","es":"Preguntas simples para empezar suavemente.","ar":"أسئلة بسيطة للبدء بسهولة.","pt":"Perguntas simples para começar com calma."},
-  "levelIntTitle": {"fr":"🌿 Intermédiaire","en":"🌿 Intermediate","es":"🌿 Intermedio","ar":"🌿 متوسط","pt":"🌿 Intermediário"},
-  "levelIntDesc": {"fr":"Le niveau standard, pour vérifier ses acquis.","en":"The standard level, to check what you've learned.","es":"El nivel estándar, para comprobar lo aprendido.","ar":"المستوى القياسي، للتحقق من معارفك.","pt":"O nível padrão, para verificar o que você aprendeu."},
-  "levelAvaTitle": {"fr":"🌳 Avancé","en":"🌳 Advanced","es":"🌳 Avanzado","ar":"🌳 متقدم","pt":"🌳 Avançado"},
-  "levelAvaDesc": {"fr":"Questions plus précises, pour aller plus loin.","en":"More precise questions, to go further.","es":"Preguntas más precisas, para ir más lejos.","ar":"أسئلة أكثر دقة، للمضي قدمًا.","pt":"Perguntas mais precisas, para ir mais longe."},
-  "seeScore": {"fr":"Voir mon score","en":"See my score","es":"Ver mi puntuación","ar":"عرض نتيجتي","pt":"Ver minha pontuação"},
-  "restart": {"fr":"Recommencer","en":"Start over","es":"Reiniciar","ar":"إعادة المحاولة","pt":"Recomeçar"},
-  "changeLevel": {"fr":"Changer de niveau","en":"Change level","es":"Cambiar de nivel","ar":"تغيير المستوى","pt":"Mudar de nível"},
-  "questionLabel": {"fr":"Question","en":"Question","es":"Pregunta","ar":"سؤال","pt":"Pergunta"},
-  "scoreLabel": {"fr":"Score","en":"Score","es":"Puntuación","ar":"النتيجة","pt":"Pontuação"},
-  "tierLow": {"fr":"À revoir ! Relisez la fiche de l'atelier et retentez le test.","en":"Needs work! Reread the workshop sheet and try again.","es":"¡A repasar! Vuelve a leer la ficha del taller e inténtalo de nuevo.","ar":"يحتاج إلى مراجعة! أعد قراءة ورقة الورشة وحاول مرة أخرى.","pt":"Precisa melhorar! Releia a ficha da oficina e tente novamente."},
-  "tierMid": {"fr":"Pas mal ! Encore quelques points à consolider.","en":"Not bad! A few points still to work on.","es":"¡No está mal! Todavía hay algunos puntos por reforzar.","ar":"لا بأس! لا تزال هناك بعض النقاط التي يجب تعزيزها.","pt":"Nada mal! Ainda há alguns pontos a consolidar."},
-  "tierHigh": {"fr":"Excellent ! Vous maîtrisez bien le sujet.","en":"Excellent! You have a solid grasp of the topic.","es":"¡Excelente! Dominas bien el tema.","ar":"ممتاز! أنت تتقن الموضوع جيدًا.","pt":"Excelente! Você domina bem o assunto."},
-  "visits": {"fr":"visite(s) sur ce test","en":"visit(s) on this test","es":"visita(s) en este test","ar":"زيارة لهذا الاختبار","pt":"visita(s) neste teste"}
-};
+  const SLUG = "ameli";
+  const FR_LEVELS = {"debutant":[{"q":"La carte Vitale sert à :","options":["Payer ses impôts","Attester de ses droits à l\u0027Assurance Maladie","Voter","Conduire"],"explain":"La carte Vitale atteste de vos droits à l\u0027Assurance Maladie et facilite le remboursement des soins.","correct":1},{"q":"Le compte Ameli permet notamment de voir :","options":["Ses notes scolaires","Ses remboursements de santé","Sa déclaration d\u0027impôts","Sa carte grise"],"explain":"Le compte Ameli permet de voir ce que la Sécurité sociale a remboursé, et quand.","correct":1}],"intermediaire":[{"q":"Le compte Ameli et \"Mon espace santé\" sont :","options":["Le même site","Deux sites différents, avec des rôles différents","Réservés aux médecins","Payants"],"explain":"assure.ameli.fr (administratif) et monespacesante.fr (médical) sont deux sites bien distincts.","correct":1},{"q":"assure.ameli.fr concerne surtout :","options":["Le dossier médical","Les remboursements et l\u0027administratif","Les ordonnances","La vaccination"],"explain":"Le compte Ameli gère le côté administratif : remboursements, attestations, carte Vitale.","correct":1},{"q":"Le numéro de Sécurité sociale comporte :","options":["10 chiffres","15 chiffres, et commence par 1 ou 2","5 chiffres","Des lettres uniquement"],"explain":"Le numéro de Sécurité sociale comporte 15 chiffres et commence par 1 (homme) ou 2 (femme).","correct":1},{"q":"monespacesante.fr permet notamment de consulter :","options":["Ses remboursements CAF","Son carnet de vaccination et ses ordonnances","Sa déclaration d\u0027impôts","Sa carte grise"],"explain":"Mon espace santé regroupe le dossier médical : ordonnances, résultats d\u0027analyses, carnet de vaccination.","correct":1},{"q":"Sur le compte Ameli, on peut télécharger :","options":["Sa carte grise","Son attestation de droits","Son passeport","Son permis de conduire"],"explain":"L\u0027attestation de droits, prouvant vos droits à l\u0027Assurance Maladie, se télécharge en 2 clics sur le compte Ameli.","correct":1}],"avance":[{"q":"Combien de façons différentes d\u0027accéder à son compte Ameli sont présentées dans l\u0027atelier ?","options":["1","2","3","5"],"explain":"L\u0027atelier présente 3 façons d\u0027accéder à son compte Ameli.","correct":2}]};
+  const FR_UI = {
+    back:"Retour aux ateliers", sub:"Ateliers Médiation Numérique — Cédric Waltener",
+    footerCopy:"Reproduction interdite sans autorisation.", footerBack:"Retour au site",
+    h1:"Test de connaissances",
+    levelDebTitle:"🌱 Débutant", levelDebDesc:"Questions simples pour commencer en douceur.",
+    levelIntTitle:"🌿 Intermédiaire", levelIntDesc:"Le niveau standard, pour vérifier ses acquis.",
+    levelAvaTitle:"🌳 Avancé", levelAvaDesc:"Questions plus précises, pour aller plus loin.",
+    seeScore:"Voir mon score", restart:"Recommencer", changeLevel:"Changer de niveau",
+    questionLabel:"Question", scoreLabel:"Score",
+    tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
+    tierMid:"Pas mal ! Encore quelques points à consolider.",
+    tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
+    visits:"visite(s) sur ce test"
+  };
+
+  const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
   const levelScreen = document.getElementById('levelScreen');
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
@@ -150,23 +392,24 @@
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
+  const langSelect = document.getElementById('langSelect');
+  const langLoading = document.getElementById('langLoading');
   let currentLevel = null;
   let currentLang = 'fr';
   let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function tr(dict, lang) { return dict[lang] || dict.fr; }
 
   function renderQuiz(level, lang) {
     currentLevel = level;
-    const QUIZ = LEVELS[level];
+    const QUIZ = cache[lang].levels[level];
     form.innerHTML = QUIZ.map(function(q, i) {
-      const opts = tr(q.options, lang).map(function(o, j) {
+      const opts = q.options.map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
-      return '<div class="qcard"><div class="qnum">' + esc(UI.questionLabel[lang] || UI.questionLabel.fr) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(tr(q.q, lang)) + '</p><div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(tr(q.explain, lang)) + '</div></div>';
+      return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
@@ -178,43 +421,60 @@
   }
 
   function applyStaticUI(lang) {
+    const UI = cache[lang].ui;
     document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.getElementById('backText').textContent = tr(UI.back, lang);
-    document.getElementById('h1El').textContent = tr(UI.h1, lang);
-    document.getElementById('subEl').textContent = tr(UI.sub, lang);
-    document.getElementById('footerCopyEl').textContent = tr(UI.footerCopy, lang);
-    document.getElementById('footerLinkEl').textContent = tr(UI.footerBack, lang);
-    document.getElementById('levelDebTitle').textContent = tr(UI.levelDebTitle, lang);
-    document.getElementById('levelDebDesc').textContent = tr(UI.levelDebDesc, lang);
-    document.getElementById('levelIntTitle').textContent = tr(UI.levelIntTitle, lang);
-    document.getElementById('levelIntDesc').textContent = tr(UI.levelIntDesc, lang);
-    document.getElementById('levelAvaTitle').textContent = tr(UI.levelAvaTitle, lang);
-    document.getElementById('levelAvaDesc').textContent = tr(UI.levelAvaDesc, lang);
-    submitBtn.textContent = tr(UI.seeScore, lang);
-    resetBtn.textContent = tr(UI.restart, lang);
-    levelBtn.textContent = tr(UI.changeLevel, lang);
+    document.documentElement.dir = (lang === 'ar' || lang === 'iw' || lang === 'ur' || lang === 'fa' || lang === 'ps' || lang === 'ckb' || lang === 'sd') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI.back;
+    document.getElementById('h1El').textContent = UI.h1;
+    document.getElementById('subEl').textContent = UI.sub;
+    document.getElementById('footerCopyEl').textContent = UI.footerCopy;
+    document.getElementById('footerLinkEl').textContent = UI.footerBack;
+    document.getElementById('levelDebTitle').textContent = UI.levelDebTitle;
+    document.getElementById('levelDebDesc').textContent = UI.levelDebDesc;
+    document.getElementById('levelIntTitle').textContent = UI.levelIntTitle;
+    document.getElementById('levelIntDesc').textContent = UI.levelIntDesc;
+    document.getElementById('levelAvaTitle').textContent = UI.levelAvaTitle;
+    document.getElementById('levelAvaDesc').textContent = UI.levelAvaDesc;
+    submitBtn.textContent = UI.seeScore;
+    resetBtn.textContent = UI.restart;
+    levelBtn.textContent = UI.changeLevel;
     if (visitCount !== null) {
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + (tr(UI.visits, lang));
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + UI.visits;
     }
-    document.querySelectorAll('#langSwitch button').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
   }
 
-  function setLang(lang) {
+  function finishSetLang(lang) {
     currentLang = lang;
     applyStaticUI(lang);
     if (currentLevel && quizScreen.style.display !== 'none') {
       renderQuiz(currentLevel, lang);
     }
     try { localStorage.setItem('site_lang', lang); } catch (e) {}
+    langLoading.classList.remove('show');
+  }
+
+  function setLang(lang) {
+    if (cache[lang]) { finishSetLang(lang); return; }
+    langLoading.classList.add('show');
+    fetch('i18n/quiz-' + lang + '.json')
+      .then(function(r) { if (!r.ok) throw new Error('missing'); return r.json(); })
+      .then(function(data) {
+        const entry = data.quizzes[SLUG];
+        if (!entry) throw new Error('no slug');
+        cache[lang] = { ui: data.ui, levels: entry };
+        finishSetLang(lang);
+      })
+      .catch(function() {
+        // langue pas encore disponible : on reste sur la langue actuelle
+        langLoading.classList.remove('show');
+        langSelect.value = currentLang;
+      });
   }
 
   document.querySelectorAll('.level-btn').forEach(function(b) {
     b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
   });
-  document.querySelectorAll('#langSwitch button').forEach(function(b) {
-    b.addEventListener('click', function() { setLang(b.dataset.lang); });
-  });
+  langSelect.addEventListener('change', function() { setLang(langSelect.value); });
 
   levelBtn.addEventListener('click', function() {
     quizScreen.style.display = 'none';
@@ -224,7 +484,8 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const QUIZ = LEVELS[currentLevel];
+    const QUIZ = cache[currentLang].levels[currentLevel];
+    const UI = cache[currentLang].ui;
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -239,11 +500,11 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = tr(UI.tierLow, currentLang);
-    if (pct >= 80) { tier = 'tier-high'; msg = tr(UI.tierHigh, currentLang); }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = tr(UI.tierMid, currentLang); }
+    let tier = 'tier-low', msg = UI.tierLow;
+    if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = esc(tr(UI.scoreLabel, currentLang)) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
@@ -255,12 +516,14 @@
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + tr(UI.visits, currentLang);
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + cache[currentLang].ui.visits;
     })
     .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 
   let __savedLang = 'fr';
   try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  langSelect.value = __savedLang;
+  if (langSelect.value !== __savedLang) { langSelect.value = 'fr'; __savedLang = 'fr'; }
   setLang(__savedLang);
 </script>
 </body>

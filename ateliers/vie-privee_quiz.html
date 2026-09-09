@@ -30,10 +30,10 @@
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
   .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
-  .lang-switch { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
-  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
-  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
-  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .lang-select-wrap select { font-family: "Inter", sans-serif; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 0.4rem 0.7rem; border-radius: 999px; max-width: 220px; }
+  .lang-loading { font-size: 0.8rem; color: var(--muted); display: none; }
+  .lang-loading.show { display: inline; }
   html[dir="rtl"] .text-card, html[dir="rtl"] .qcard { text-align: right; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
@@ -81,12 +81,259 @@
     <h1 id="h1El">Test de connaissances</h1>
     <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
     <div><span class="visits" id="visitsCounter">👥 …</span></div>
-    <div class="lang-switch" id="langSwitch">
-      <button type="button" data-lang="fr">FR</button>
-      <button type="button" data-lang="en">EN</button>
-      <button type="button" data-lang="es">ES</button>
-      <button type="button" data-lang="ar">AR</button>
-      <button type="button" data-lang="pt">PT</button>
+    <div class="lang-select-wrap">
+      <select id="langSelect">
+      <option value="fr">Français</option>
+      <option value="ab">Abkhaze</option>
+      <option value="ace">Aceh</option>
+      <option value="ach">Acholi</option>
+      <option value="aa">Afar</option>
+      <option value="af">Afrikaans</option>
+      <option value="sq">Albanais</option>
+      <option value="de">Allemand</option>
+      <option value="alz">Alur</option>
+      <option value="am">Amharique</option>
+      <option value="en">Anglais</option>
+      <option value="ar">Arabe</option>
+      <option value="hy">Arménien</option>
+      <option value="as">Assamais</option>
+      <option value="av">Avar</option>
+      <option value="awa">Awadhi</option>
+      <option value="ay">Aymara</option>
+      <option value="az">Azéri</option>
+      <option value="ba">Bachkir</option>
+      <option value="ban">Balinais</option>
+      <option value="bal">Baloutchi</option>
+      <option value="bm">Bambara</option>
+      <option value="bci">Baoulé</option>
+      <option value="eu">Basque</option>
+      <option value="btx">Batak Karo</option>
+      <option value="bts">Batak Simalungun</option>
+      <option value="bbc">Batak Toba</option>
+      <option value="bem">Bemba</option>
+      <option value="bn">Bengali</option>
+      <option value="bew">Betawi</option>
+      <option value="bho">Bhodjpouri</option>
+      <option value="bik">Bicol</option>
+      <option value="be">Biélorusse</option>
+      <option value="bs">Bosniaque</option>
+      <option value="bua">Bouriate</option>
+      <option value="br">Breton</option>
+      <option value="bg">Bulgare</option>
+      <option value="yue">Cantonais</option>
+      <option value="ca">Catalan</option>
+      <option value="ceb">Cebuano</option>
+      <option value="ch">Chamorro</option>
+      <option value="ny">Chichewa</option>
+      <option value="zh-CN">Chinois (simplifié)</option>
+      <option value="zh-TW">Chinois (traditionnel)</option>
+      <option value="chk">Chuuk</option>
+      <option value="si">Cinghalais</option>
+      <option value="ko">Coréen</option>
+      <option value="co">Corse</option>
+      <option value="ht">Créole haïtien</option>
+      <option value="mfe">Créole mauricien</option>
+      <option value="crs">Créole seychellois</option>
+      <option value="hr">Croate</option>
+      <option value="da">Danois</option>
+      <option value="fa-AF">Dari</option>
+      <option value="din">Dinka</option>
+      <option value="dyu">Dioula</option>
+      <option value="dv">Divéhi</option>
+      <option value="doi">Dogri</option>
+      <option value="dov">Dombe</option>
+      <option value="dz">Dzongkha</option>
+      <option value="es">Espagnol</option>
+      <option value="eo">Espéranto</option>
+      <option value="et">Estonien</option>
+      <option value="ee">Ewe</option>
+      <option value="fo">Féroïen</option>
+      <option value="fj">Fidjien</option>
+      <option value="fi">Finnois</option>
+      <option value="fon">Fon</option>
+      <option value="fr-CA">Français (Canada)</option>
+      <option value="fur">Frioulan</option>
+      <option value="fy">Frison</option>
+      <option value="gaa">Ga</option>
+      <option value="gd">Gaélique (Écosse)</option>
+      <option value="gl">Galicien</option>
+      <option value="cy">Gallois</option>
+      <option value="ka">Géorgien</option>
+      <option value="el">Grec</option>
+      <option value="gn">Guarani</option>
+      <option value="gu">Gujarati</option>
+      <option value="cnh">Hakha Chin</option>
+      <option value="ha">Haoussa</option>
+      <option value="haw">Hawaïen</option>
+      <option value="iw">Hébreu</option>
+      <option value="hil">Hiligaïnon</option>
+      <option value="hi">Hindi</option>
+      <option value="hmn">Hmong</option>
+      <option value="hu">Hongrois</option>
+      <option value="hrx">Hunsrik</option>
+      <option value="iba">Iban</option>
+      <option value="ig">Igbo</option>
+      <option value="ilo">Ilocano</option>
+      <option value="id">Indonésien</option>
+      <option value="iu-Latn">Inuktut (latin)</option>
+      <option value="iu">Inuktut (syllabique)</option>
+      <option value="ga">Irlandais</option>
+      <option value="is">Islandais</option>
+      <option value="it">Italien</option>
+      <option value="ja">Japonais</option>
+      <option value="jw">Javanais</option>
+      <option value="kac">Jingpo</option>
+      <option value="kl">Kalaallisut</option>
+      <option value="kn">Kannada</option>
+      <option value="kr">Kanuri</option>
+      <option value="kk">Kazakh</option>
+      <option value="kha">Khasi</option>
+      <option value="km">Khmer</option>
+      <option value="cgg">Kiga</option>
+      <option value="kg">Kikongo</option>
+      <option value="rw">Kinyarwanda</option>
+      <option value="ky">Kirghiz</option>
+      <option value="ktu">Kituba</option>
+      <option value="trp">Kok Borok</option>
+      <option value="kv">Komi</option>
+      <option value="gom">Konkani</option>
+      <option value="kri">Krio</option>
+      <option value="ku">Kurde (Kurmandji)</option>
+      <option value="ckb">Kurde (Sorani)</option>
+      <option value="lo">Laotien</option>
+      <option value="ltg">Latgalien</option>
+      <option value="la">Latin</option>
+      <option value="lv">Letton</option>
+      <option value="lij">Ligure</option>
+      <option value="li">Limbourgeois</option>
+      <option value="ln">Lingala</option>
+      <option value="lt">Lituanien</option>
+      <option value="lmo">Lombard</option>
+      <option value="lg">Luganda</option>
+      <option value="luo">Luo</option>
+      <option value="lb">Luxembourgeois</option>
+      <option value="mak">Macassar</option>
+      <option value="mk">Macédonien</option>
+      <option value="mad">Madurais</option>
+      <option value="mai">Maïthili</option>
+      <option value="ms-Arab">Malais (Jawi)</option>
+      <option value="ms">Malaisien</option>
+      <option value="ml">Malayalam</option>
+      <option value="mg">Malgache</option>
+      <option value="mt">Maltais</option>
+      <option value="mam">Mam</option>
+      <option value="gv">Manx</option>
+      <option value="mi">Maori</option>
+      <option value="mr">Marathi</option>
+      <option value="chm">Mari des prairies</option>
+      <option value="mh">Marshallais</option>
+      <option value="mwr">Marwari</option>
+      <option value="yua">Maya yucatèque</option>
+      <option value="mni-Mtei">Meitei (Manipuri)</option>
+      <option value="min">Minangkabau</option>
+      <option value="lus">Mizo</option>
+      <option value="mn">Mongol</option>
+      <option value="my">Myanmar (Birman)</option>
+      <option value="nhe">Nahuatl (Huasteca oriental)</option>
+      <option value="ndc-ZW">Ndau</option>
+      <option value="nr">Ndébélé (Sud)</option>
+      <option value="nl">Néerlandais</option>
+      <option value="ne">Népalais</option>
+      <option value="new">Nepalbhasa (Newari)</option>
+      <option value="bm-Nkoo">NKo</option>
+      <option value="no">Norvégien</option>
+      <option value="nus">Nuer</option>
+      <option value="oc">Occitan</option>
+      <option value="or">Odia (Oriya)</option>
+      <option value="om">Oromo</option>
+      <option value="os">Ossète</option>
+      <option value="udm">Oudmourte</option>
+      <option value="ug">Ouïgour</option>
+      <option value="uz">Ouzbek</option>
+      <option value="ps">Pachtô</option>
+      <option value="pam">Pampangan</option>
+      <option value="pag">Pangasinan</option>
+      <option value="pa">Panjabi (Gurmukhi)</option>
+      <option value="pa-Arab">Panjabi (Shahmukhi)</option>
+      <option value="pap">Papiamento</option>
+      <option value="jam">Patois jamaïcain</option>
+      <option value="fa">Persan</option>
+      <option value="ff">Peul</option>
+      <option value="tl">Philippin</option>
+      <option value="pl">Polonais</option>
+      <option value="pt">Portugais (Brésil)</option>
+      <option value="pt-PT">Portugais (Portugal)</option>
+      <option value="kek">Q'eqchi'</option>
+      <option value="qu">Quechua</option>
+      <option value="rom">Romani</option>
+      <option value="ro">Roumain</option>
+      <option value="rn">Roundi</option>
+      <option value="ru">Russe</option>
+      <option value="se">Same (Nord)</option>
+      <option value="sm">Samoan</option>
+      <option value="sg">Sango</option>
+      <option value="sa">Sanskrit</option>
+      <option value="sat-Latn">Santali (latin)</option>
+      <option value="sat">Santali (ol chiki)</option>
+      <option value="nso">Sepedi</option>
+      <option value="sr">Serbe</option>
+      <option value="st">Sesotho</option>
+      <option value="shn">Shan</option>
+      <option value="sn">Shona</option>
+      <option value="scn">Sicilien</option>
+      <option value="szl">Silésien</option>
+      <option value="sd">Sindhî</option>
+      <option value="sk">Slovaque</option>
+      <option value="sl">Slovène</option>
+      <option value="so">Somali</option>
+      <option value="su">Soundanais</option>
+      <option value="sus">Soussou</option>
+      <option value="sv">Suédois</option>
+      <option value="sw">Swahili</option>
+      <option value="ss">Swati</option>
+      <option value="tg">Tadjik</option>
+      <option value="ty">Tahitien</option>
+      <option value="ber-Latn">Tamazight</option>
+      <option value="ber">Tamazight (Tifinagh)</option>
+      <option value="ta">Tamoul</option>
+      <option value="tt">Tatar</option>
+      <option value="crh">Tatar de Crimée (cyrillique)</option>
+      <option value="crh-Latn">Tatar de Crimée (latin)</option>
+      <option value="cs">Tchèque</option>
+      <option value="ce">Tchétchène</option>
+      <option value="cv">Tchouvache</option>
+      <option value="te">Telugu</option>
+      <option value="tet">Tétoum</option>
+      <option value="th">Thaï</option>
+      <option value="bo">Tibétain</option>
+      <option value="ti">Tigrigna</option>
+      <option value="tiv">Tiv</option>
+      <option value="tpi">Tok pisin</option>
+      <option value="to">Tongien</option>
+      <option value="tcy">Toulou</option>
+      <option value="tyv">Touvain</option>
+      <option value="lua">Tshiluba</option>
+      <option value="ts">Tsonga</option>
+      <option value="tn">Tswana</option>
+      <option value="tum">Tumbuka</option>
+      <option value="tr">Turc</option>
+      <option value="tk">Turkmène</option>
+      <option value="ak">Twi</option>
+      <option value="uk">Ukrainien</option>
+      <option value="ur">Urdu</option>
+      <option value="ve">Venda</option>
+      <option value="vec">Vénitien</option>
+      <option value="vi">Vietnamien</option>
+      <option value="war">Waray-waray</option>
+      <option value="wo">Wolof</option>
+      <option value="xh">Xhosa</option>
+      <option value="sah">Yakoute</option>
+      <option value="yi">Yiddish</option>
+      <option value="yo">Yoruba</option>
+      <option value="zap">Zapotèque</option>
+      <option value="zu">Zoulou</option>
+      </select>
+      <span class="lang-loading" id="langLoading">⏳</span>
     </div>
   </div>
 </header>
@@ -120,29 +367,24 @@
   © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  const LEVELS = {"debutant":[{"q":{"fr":"Firefox et Brave sont des exemples de :","en":"Firefox and Brave are examples of:","es":"Firefox y Brave son ejemplos de:","ar":"يعد Firefox وBrave أمثلة على:","pt":"Firefox e Brave são exemplos de:"},"options":{"fr":["Antivirus","Navigateurs web","Réseaux sociaux","Messageries"],"en":["Antivirus","Web browsers","Social networks","Messaging"],"es":["antivirus","Navegadores web","Redes sociales","Mensajería"],"ar":["مكافحة الفيروسات","متصفحات الويب","الشبكات الاجتماعية","المراسلة"],"pt":["Antivírus","Navegadores da web","Redes sociais","Mensagens"]},"explain":{"fr":"Firefox et Brave sont des navigateurs web respectueux de la vie privée.","en":"Firefox and Brave are privacy-friendly web browsers.","es":"Firefox y Brave son navegadores web que respetan la privacidad.","ar":"يعد Firefox وBrave من متصفحات الويب الصديقة للخصوصية.","pt":"Firefox e Brave são navegadores que respeitam a privacidade."},"correct":1},{"q":{"fr":"Sur un site inconnu, avant de saisir un mot de passe, il faut vérifier :","en":"On an unknown site, before entering a password, you must check:","es":"En un sitio desconocido, antes de ingresar una contraseña, debe verificar:","ar":"في موقع غير معروف، قبل إدخال كلمة المرور، يجب عليك التحقق مما يلي:","pt":"Em um site desconhecido, antes de inserir uma senha, você deve verificar:"},"options":{"fr":["Rien de particulier","Que l\u0027adresse est bien la bonne et le site sécurisé","La couleur du site","La taille de la police"],"en":["Nothing special","That the address is the correct one and the site is secure","The color of the site","Font size"],"es":["Nada especial","Que la dirección sea la correcta y el sitio sea seguro","El color del sitio.","Tamaño de fuente"],"ar":["لا شيء خاص","أن العنوان هو الصحيح وأن الموقع آمن","لون الموقع","حجم الخط"],"pt":["Nada de especial","Que o endereço é o correto e o site é seguro","A cor do site","Tamanho da fonte"]},"explain":{"fr":"Toujours vérifier l\u0027adresse du site et sa sécurité avant de saisir des identifiants.","en":"Always check the site address and security before entering any credentials.","es":"Siempre verifique la dirección del sitio y la seguridad antes de ingresar cualquier credencial.","ar":"تحقق دائمًا من عنوان الموقع وأمانه قبل إدخال أي بيانات اعتماد.","pt":"Sempre verifique o endereço do site e a segurança antes de inserir qualquer credencial."},"correct":1},{"q":{"fr":"DuckDuckGo sert principalement à :","en":"DuckDuckGo is mainly used to:","es":"DuckDuckGo se utiliza principalmente para:","ar":"يستخدم DuckDuckGo بشكل أساسي من أجل:","pt":"DuckDuckGo é usado principalmente para:"},"options":{"fr":["Envoyer des emails","Faire des recherches sans être tracé","Stocker des mots de passe","Regarder des vidéos"],"en":["Send emails","Do research without being tracked","Store passwords","Watch videos"],"es":["enviar correos electrónicos","Investiga sin ser rastreado","Almacenar contraseñas","Ver vídeos"],"ar":["إرسال رسائل البريد الإلكتروني","قم بالبحث دون أن يتم تعقبك","تخزين كلمات المرور","شاهد الفيديوهات"],"pt":["Enviar e-mails","Faça pesquisas sem ser rastreado","Armazenar senhas","Assistir vídeos"]},"explain":{"fr":"DuckDuckGo est un moteur de recherche qui ne trace pas ses utilisateurs.","en":"DuckDuckGo is a search engine that does not track its users.","es":"DuckDuckGo es un motor de búsqueda que no rastrea a sus usuarios.","ar":"DuckDuckGo هو محرك بحث لا يتتبع مستخدميه.","pt":"DuckDuckGo é um mecanismo de busca que não rastreia seus usuários."},"correct":1}],"intermediaire":[{"q":{"fr":"Un bon mot de passe doit être :","en":"A good password should be:","es":"Una buena contraseña debería ser:","ar":"كلمة المرور الجيدة يجب أن تكون:","pt":"Uma boa senha deve ser:"},"options":{"fr":["Le même partout pour s\u0027en souvenir","Unique par site et généré aléatoirement","Une date de naissance","Court et simple"],"en":["The same everywhere to remember it","Unique per site and randomly generated","A date of birth","Short and simple"],"es":["Lo mismo en todas partes para recordarlo.","Único por sitio y generado aleatoriamente","una fecha de nacimiento","Corto y sencillo"],"ar":["نفس الشيء في كل مكان لتذكره","فريدة لكل موقع ويتم إنشاؤها بشكل عشوائي","تاريخ الميلاد","قصيرة وبسيطة"],"pt":["O mesmo em todos os lugares para lembrar","Único por site e gerado aleatoriamente","Uma data de nascimento","Curto e simples"]},"explain":{"fr":"Un mot de passe unique et aléatoire par site limite les dégâts en cas de fuite de données sur un seul service.","en":"A unique, random password per site limits damage in the event of a data leak on a single service.","es":"Una contraseña única y aleatoria por sitio limita los daños en caso de fuga de datos en un único servicio.","ar":"إن كلمة المرور الفريدة والعشوائية لكل موقع تحد من الضرر في حالة تسرب البيانات في خدمة واحدة.","pt":"Uma senha única e aleatória por site limita os danos no caso de vazamento de dados em um único serviço."},"correct":1},{"q":{"fr":"Parmi les méthodes de double authentification (2FA), la plus vulnérable est :","en":"Among the double authentication (2FA) methods, the most vulnerable is:","es":"Entre los métodos de doble autenticación (2FA), el más vulnerable es:","ar":"من بين طرق المصادقة المزدوجة (2FA)، الأكثر عرضة للخطر هي:","pt":"Entre os métodos de dupla autenticação (2FA), os mais vulneráveis são:"},"options":{"fr":["Une clé physique (YubiKey)","Une application d\u0027authentification (TOTP)","Le SMS","Une empreinte digitale"],"en":["A physical key (YubiKey)","An authentication application (TOTP)","SMS","A fingerprint"],"es":["Una clave física (YubiKey)","Una aplicación de autenticación (TOTP)","SMS","una huella digital"],"ar":["مفتاح فعلي (YubiKey)","تطبيق المصادقة (TOTP)","الرسائل القصيرة","بصمة"],"pt":["Uma chave física (YubiKey)","Um aplicativo de autenticação (TOTP)","SMS","Uma impressão digital"]},"explain":{"fr":"Le SMS est vulnérable au \"SIM swap\" (usurpation de la carte SIM), contrairement à une appli TOTP ou une clé physique.","en":"SMS is vulnerable to “SIM swap” (sim card theft), unlike a TOTP app or a physical key.","es":"Los SMS son vulnerables al “intercambio de SIM” (robo de tarjeta SIM), a diferencia de una aplicación TOTP o una clave física.","ar":"الرسائل النصية القصيرة عرضة لـ \"تبديل بطاقة SIM\" (سرقة بطاقة sim)، على عكس تطبيق TOTP أو المفتاح الفعلي.","pt":"O SMS é vulnerável à “troca de SIM” (roubo de cartão SIM), ao contrário de um aplicativo TOTP ou de uma chave física."},"correct":2},{"q":{"fr":"Sur un Wi-Fi public, il est recommandé d\u0027utiliser :","en":"On public Wi-Fi, it is recommended to use:","es":"En redes Wi-Fi públicas se recomienda utilizar:","ar":"على شبكة Wi-Fi العامة، يوصى باستخدام:","pt":"Em Wi-Fi público, é recomendado usar:"},"options":{"fr":["Rien de spécial","Un VPN de confiance","Le Bluetooth activé en permanence","Le mode avion"],"en":["Nothing special","A VPN you can trust","Bluetooth permanently activated","Airplane mode"],"es":["Nada especial","Una VPN en la que puedes confiar","Bluetooth activado permanentemente","Modo avión"],"ar":["لا شيء خاص","شبكة VPN يمكنك الوثوق بها","البلوتوث مفعل بشكل دائم","وضع الطائرة"],"pt":["Nada de especial","Uma VPN em que você pode confiar","Bluetooth permanentemente ativado","Modo avião"]},"explain":{"fr":"Un VPN de confiance chiffre votre connexion, essentiel sur un Wi-Fi public non sécurisé.","en":"A trusted VPN encrypts your connection, essential on unsecured public Wi-Fi.","es":"Una VPN confiable cifra su conexión, algo esencial en redes Wi-Fi públicas no seguras.","ar":"تعمل شبكة VPN الموثوقة على تشفير اتصالك، وهو أمر ضروري على شبكة Wi-Fi عامة غير آمنة.","pt":"Uma VPN confiável criptografa sua conexão, essencial em redes Wi-Fi públicas inseguras."},"correct":1},{"q":{"fr":"Un exemple typique de domaine de phishing (faux site) est :","en":"A typical example of a phishing domain (fake site) is:","es":"Un ejemplo típico de dominio de phishing (sitio falso) es:","ar":"من الأمثلة النموذجية لمجال التصيد (الموقع المزيف) ما يلي:","pt":"Um exemplo típico de domínio de phishing (site falso) é:"},"options":{"fr":["google.com","amaz0n.fr (avec un zéro à la place du o)","wikipedia.org","gouv.fr"],"en":["google.com","amaz0n.fr (with a zero in place of the o)","wikipedia.org","gouv.fr"],"es":["google.com","amaz0n.fr (con un cero en lugar de la o)","wikipedia.org","gouv.fr"],"ar":["google.com","amaz0n.fr (مع وجود صفر بدلاً من o)","wikipedia.org","gouv.fr"],"pt":["google.com","amaz0n.fr (com um zero no lugar do o)","wikipedia.org","gouv.fr"]},"explain":{"fr":"Les faux sites imitent souvent l\u0027adresse officielle avec de petites variations (lettres remplacées par des chiffres, etc.).","en":"Fake sites often imitate the official address with small variations (letters replaced by numbers, etc.).","es":"Los sitios falsos suelen imitar la dirección oficial con pequeñas variaciones (letras reemplazadas por números, etc.).","ar":"غالبًا ما تقلد المواقع المزيفة العنوان الرسمي مع اختلافات صغيرة (يتم استبدال الحروف بالأرقام، وما إلى ذلك).","pt":"Sites falsos muitas vezes imitam o endereço oficial com pequenas variações (letras substituídas por números, etc.)."},"correct":1},{"q":{"fr":"Pour ranger ses mots de passe en sécurité, on utilise :","en":"To store your passwords securely, you use:","es":"Para almacenar sus contraseñas de forma segura, utiliza:","ar":"لتخزين كلمات المرور الخاصة بك بشكل آمن، يمكنك استخدام:","pt":"Para armazenar suas senhas com segurança, você usa:"},"options":{"fr":["Un fichier Excel","Un gestionnaire de mots de passe (Bitwarden, KeePassXC...)","Un post-it","Le même mot de passe partout"],"en":["An Excel file","A password manager (Bitwarden, KeePassXC...)","A post-it","The same password everywhere"],"es":["Un archivo de Excel","Un gestor de contraseñas (Bitwarden, KeePassXC...)","un post-it","La misma contraseña en todas partes"],"ar":["ملف اكسل","مدير كلمات المرور (Bitwarden، KeePassXC...)","بعد ذلك","نفس كلمة المرور في كل مكان"],"pt":["Um arquivo Excel","Um gerenciador de senhas (Bitwarden, KeePassXC...)","Um post-it","A mesma senha em todos os lugares"]},"explain":{"fr":"Un gestionnaire de mots de passe chiffré stocke et génère des mots de passe uniques et solides pour chaque site.","en":"An encrypted password manager stores and generates unique, strong passwords for each site.","es":"Un administrador de contraseñas cifrado almacena y genera contraseñas únicas y seguras para cada sitio.","ar":"يقوم مدير كلمات المرور المشفرة بتخزين وإنشاء كلمات مرور فريدة وقوية لكل موقع.","pt":"Um gerenciador de senhas criptografadas armazena e gera senhas fortes e exclusivas para cada site."},"correct":1},{"q":{"fr":"DuckDuckGo est un exemple de :","en":"DuckDuckGo is an example of:","es":"DuckDuckGo es un ejemplo de:","ar":"DuckDuckGo هو مثال على:","pt":"DuckDuckGo é um exemplo de:"},"options":{"fr":["Réseau social","Moteur de recherche respectueux de la vie privée","Antivirus","Gestionnaire de mots de passe"],"en":["Social network","Privacy-friendly search engine","Antivirus","Password manager"],"es":["red social","Motor de búsqueda respetuoso con la privacidad","antivirus","Administrador de contraseñas"],"ar":["الشبكة الاجتماعية","محرك بحث صديق للخصوصية","مكافحة الفيروسات","مدير كلمة المرور"],"pt":["Rede social","Mecanismo de pesquisa amigável à privacidade","Antivírus","Gerenciador de senhas"]},"explain":{"fr":"DuckDuckGo, comme Startpage ou Brave Search, ne trace pas vos recherches contrairement à Google.","en":"DuckDuckGo, like Startpage or Brave Search, does not track your searches unlike Google.","es":"DuckDuckGo, al igual que Startpage o Brave Search, no realiza un seguimiento de sus búsquedas a diferencia de Google.","ar":"لا يقوم DuckDuckGo، مثل Startpage أو Brave Search، بتتبع عمليات البحث التي تجريها على عكس Google.","pt":"DuckDuckGo, como Startpage ou Brave Search, não rastreia suas pesquisas, ao contrário do Google."},"correct":1}],"avance":[{"q":{"fr":"Quel réglage protège les données d\u0027un ordinateur même s\u0027il est volé ?","en":"What setting protects data on a computer even if it is stolen?","es":"¿Qué configuración protege los datos de una computadora incluso si son robados?","ar":"ما هو الإعداد الذي يحمي البيانات الموجودة على جهاز الكمبيوتر حتى لو تمت سرقتها؟","pt":"Qual configuração protege os dados em um computador mesmo se ele for roubado?"},"options":{"fr":["Le pare-feu","Le chiffrement du disque (BitLocker / FileVault)","L\u0027antivirus","Le VPN"],"en":["The firewall","Disk encryption (BitLocker / FileVault)","Antivirus","The VPN"],"es":["El cortafuegos","Cifrado de disco (BitLocker/FileVault)","antivirus","La VPN"],"ar":["جدار الحماية","تشفير القرص (BitLocker / FileVault)","مكافحة الفيروسات","VPN"],"pt":["O firewall","Criptografia de disco (BitLocker/FileVault)","Antivírus","A VPN"]},"explain":{"fr":"Le chiffrement complet du disque (BitLocker sous Windows, FileVault sous macOS) protège les données en cas de vol.","en":"Full disk encryption (BitLocker on Windows, FileVault on macOS) protects data in the event of theft.","es":"El cifrado completo del disco (BitLocker en Windows, FileVault en macOS) protege los datos en caso de robo.","ar":"يعمل التشفير الكامل للقرص (BitLocker على Windows، وFileVault على macOS) على حماية البيانات في حالة السرقة.","pt":"A criptografia completa do disco (BitLocker no Windows, FileVault no macOS) protege os dados em caso de roubo."},"correct":1},{"q":{"fr":"NextDNS et Cloudflare 1.1.1.1, cités dans la fiche, sont des exemples de :","en":"NextDNS and Cloudflare 1.1.1.1, cited in the sheet, are examples of:","es":"NextDNS y Cloudflare 1.1.1.1, citados en la hoja, son ejemplos de:","ar":"يعد NextDNS وCloudflare 1.1.1.1، المذكورين في الورقة، أمثلة على ما يلي:","pt":"NextDNS e Cloudflare 1.1.1.1, citados na planilha, são exemplos de:"},"options":{"fr":["VPN","DNS chiffrés","Antivirus","Réseaux sociaux"],"en":["VPN","Encrypted DNS","Antivirus","Social networks"],"es":["vpn","DNS cifrado","antivirus","Redes sociales"],"ar":["VPN","DNS المشفر","مكافحة الفيروسات","الشبكات الاجتماعية"],"pt":["VPN","DNS criptografado","Antivírus","Redes sociais"]},"explain":{"fr":"NextDNS et Cloudflare 1.1.1.1 sont des services de DNS chiffré, recommandés dans le plan d\u0027action avancé.","en":"NextDNS and Cloudflare 1.1.1.1 are encrypted DNS services recommended in the Advanced Action Plan.","es":"NextDNS y Cloudflare 1.1.1.1 son servicios DNS cifrados recomendados en el Plan de acción avanzado.","ar":"NextDNS وCloudflare 1.1.1.1 هما خدمات DNS مشفرة موصى بها في خطة العمل المتقدمة.","pt":"NextDNS e Cloudflare 1.1.1.1 são serviços DNS criptografados recomendados no Plano de Ação Avançado."},"correct":1},{"q":{"fr":"Dans le plan d\u0027action \"avancé\" de la fiche, quel outil est recommandé pour la navigation la plus sensible ?","en":"In the \"advanced\" action plan of the sheet, which tool is recommended for the most sensitive navigation?","es":"En el plan de acción \"avanzado\" de la ficha, ¿qué herramienta se recomienda para la navegación más sensible?","ar":"في خطة العمل \"المتقدمة\" للورقة، ما هي الأداة الموصى بها للتنقل الأكثر حساسية؟","pt":"No plano de ação “avançado” da planilha, qual ferramenta é recomendada para uma navegação mais sensível?"},"options":{"fr":["Chrome en navigation privée","Tor","Internet Explorer","Bing"],"en":["Chrome in private browsing","Tor","Internet Explorer","Bing"],"es":["Chrome en navegación privada","Tor","Explorador de Internet","Bing"],"ar":["Chrome في التصفح الخاص","تور","إنترنت إكسبلورر","بنج"],"pt":["Chrome na navegação privada","Tor","Internet Explorer","Google"]},"explain":{"fr":"Tor est recommandé dans le plan d\u0027action avancé pour la navigation la plus sensible.","en":"Tor is recommended in the Advanced Action Plan for the most sensitive browsing.","es":"Tor se recomienda en el Plan de acción avanzado para la navegación más sensible.","ar":"يوصى باستخدام Tor في خطة العمل المتقدمة للتصفح الأكثر حساسية.","pt":"Tor é recomendado no Plano de Ação Avançado para a navegação mais sensível."},"correct":1}]};
-  const UI = {
-  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
-  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
-  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
-  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"},
-  "h1": {"fr":"Test de connaissances","en":"Knowledge test","es":"Test de conocimientos","ar":"اختبار المعرفة","pt":"Teste de conhecimento"},
-  "levelDebTitle": {"fr":"🌱 Débutant","en":"🌱 Beginner","es":"🌱 Principiante","ar":"🌱 مبتدئ","pt":"🌱 Iniciante"},
-  "levelDebDesc": {"fr":"Questions simples pour commencer en douceur.","en":"Simple questions to ease into it.","es":"Preguntas simples para empezar suavemente.","ar":"أسئلة بسيطة للبدء بسهولة.","pt":"Perguntas simples para começar com calma."},
-  "levelIntTitle": {"fr":"🌿 Intermédiaire","en":"🌿 Intermediate","es":"🌿 Intermedio","ar":"🌿 متوسط","pt":"🌿 Intermediário"},
-  "levelIntDesc": {"fr":"Le niveau standard, pour vérifier ses acquis.","en":"The standard level, to check what you've learned.","es":"El nivel estándar, para comprobar lo aprendido.","ar":"المستوى القياسي، للتحقق من معارفك.","pt":"O nível padrão, para verificar o que você aprendeu."},
-  "levelAvaTitle": {"fr":"🌳 Avancé","en":"🌳 Advanced","es":"🌳 Avanzado","ar":"🌳 متقدم","pt":"🌳 Avançado"},
-  "levelAvaDesc": {"fr":"Questions plus précises, pour aller plus loin.","en":"More precise questions, to go further.","es":"Preguntas más precisas, para ir más lejos.","ar":"أسئلة أكثر دقة، للمضي قدمًا.","pt":"Perguntas mais precisas, para ir mais longe."},
-  "seeScore": {"fr":"Voir mon score","en":"See my score","es":"Ver mi puntuación","ar":"عرض نتيجتي","pt":"Ver minha pontuação"},
-  "restart": {"fr":"Recommencer","en":"Start over","es":"Reiniciar","ar":"إعادة المحاولة","pt":"Recomeçar"},
-  "changeLevel": {"fr":"Changer de niveau","en":"Change level","es":"Cambiar de nivel","ar":"تغيير المستوى","pt":"Mudar de nível"},
-  "questionLabel": {"fr":"Question","en":"Question","es":"Pregunta","ar":"سؤال","pt":"Pergunta"},
-  "scoreLabel": {"fr":"Score","en":"Score","es":"Puntuación","ar":"النتيجة","pt":"Pontuação"},
-  "tierLow": {"fr":"À revoir ! Relisez la fiche de l'atelier et retentez le test.","en":"Needs work! Reread the workshop sheet and try again.","es":"¡A repasar! Vuelve a leer la ficha del taller e inténtalo de nuevo.","ar":"يحتاج إلى مراجعة! أعد قراءة ورقة الورشة وحاول مرة أخرى.","pt":"Precisa melhorar! Releia a ficha da oficina e tente novamente."},
-  "tierMid": {"fr":"Pas mal ! Encore quelques points à consolider.","en":"Not bad! A few points still to work on.","es":"¡No está mal! Todavía hay algunos puntos por reforzar.","ar":"لا بأس! لا تزال هناك بعض النقاط التي يجب تعزيزها.","pt":"Nada mal! Ainda há alguns pontos a consolidar."},
-  "tierHigh": {"fr":"Excellent ! Vous maîtrisez bien le sujet.","en":"Excellent! You have a solid grasp of the topic.","es":"¡Excelente! Dominas bien el tema.","ar":"ممتاز! أنت تتقن الموضوع جيدًا.","pt":"Excelente! Você domina bem o assunto."},
-  "visits": {"fr":"visite(s) sur ce test","en":"visit(s) on this test","es":"visita(s) en este test","ar":"زيارة لهذا الاختبار","pt":"visita(s) neste teste"}
-};
+  const SLUG = "vie-privee";
+  const FR_LEVELS = {"debutant":[{"q":"Firefox et Brave sont des exemples de :","options":["Antivirus","Navigateurs web","Réseaux sociaux","Messageries"],"explain":"Firefox et Brave sont des navigateurs web respectueux de la vie privée.","correct":1},{"q":"Sur un site inconnu, avant de saisir un mot de passe, il faut vérifier :","options":["Rien de particulier","Que l\u0027adresse est bien la bonne et le site sécurisé","La couleur du site","La taille de la police"],"explain":"Toujours vérifier l\u0027adresse du site et sa sécurité avant de saisir des identifiants.","correct":1},{"q":"DuckDuckGo sert principalement à :","options":["Envoyer des emails","Faire des recherches sans être tracé","Stocker des mots de passe","Regarder des vidéos"],"explain":"DuckDuckGo est un moteur de recherche qui ne trace pas ses utilisateurs.","correct":1}],"intermediaire":[{"q":"Un bon mot de passe doit être :","options":["Le même partout pour s\u0027en souvenir","Unique par site et généré aléatoirement","Une date de naissance","Court et simple"],"explain":"Un mot de passe unique et aléatoire par site limite les dégâts en cas de fuite de données sur un seul service.","correct":1},{"q":"Parmi les méthodes de double authentification (2FA), la plus vulnérable est :","options":["Une clé physique (YubiKey)","Une application d\u0027authentification (TOTP)","Le SMS","Une empreinte digitale"],"explain":"Le SMS est vulnérable au \"SIM swap\" (usurpation de la carte SIM), contrairement à une appli TOTP ou une clé physique.","correct":2},{"q":"Sur un Wi-Fi public, il est recommandé d\u0027utiliser :","options":["Rien de spécial","Un VPN de confiance","Le Bluetooth activé en permanence","Le mode avion"],"explain":"Un VPN de confiance chiffre votre connexion, essentiel sur un Wi-Fi public non sécurisé.","correct":1},{"q":"Un exemple typique de domaine de phishing (faux site) est :","options":["google.com","amaz0n.fr (avec un zéro à la place du o)","wikipedia.org","gouv.fr"],"explain":"Les faux sites imitent souvent l\u0027adresse officielle avec de petites variations (lettres remplacées par des chiffres, etc.).","correct":1},{"q":"Pour ranger ses mots de passe en sécurité, on utilise :","options":["Un fichier Excel","Un gestionnaire de mots de passe (Bitwarden, KeePassXC...)","Un post-it","Le même mot de passe partout"],"explain":"Un gestionnaire de mots de passe chiffré stocke et génère des mots de passe uniques et solides pour chaque site.","correct":1},{"q":"DuckDuckGo est un exemple de :","options":["Réseau social","Moteur de recherche respectueux de la vie privée","Antivirus","Gestionnaire de mots de passe"],"explain":"DuckDuckGo, comme Startpage ou Brave Search, ne trace pas vos recherches contrairement à Google.","correct":1}],"avance":[{"q":"Quel réglage protège les données d\u0027un ordinateur même s\u0027il est volé ?","options":["Le pare-feu","Le chiffrement du disque (BitLocker / FileVault)","L\u0027antivirus","Le VPN"],"explain":"Le chiffrement complet du disque (BitLocker sous Windows, FileVault sous macOS) protège les données en cas de vol.","correct":1},{"q":"NextDNS et Cloudflare 1.1.1.1, cités dans la fiche, sont des exemples de :","options":["VPN","DNS chiffrés","Antivirus","Réseaux sociaux"],"explain":"NextDNS et Cloudflare 1.1.1.1 sont des services de DNS chiffré, recommandés dans le plan d\u0027action avancé.","correct":1},{"q":"Dans le plan d\u0027action \"avancé\" de la fiche, quel outil est recommandé pour la navigation la plus sensible ?","options":["Chrome en navigation privée","Tor","Internet Explorer","Bing"],"explain":"Tor est recommandé dans le plan d\u0027action avancé pour la navigation la plus sensible.","correct":1}]};
+  const FR_UI = {
+    back:"Retour aux ateliers", sub:"Ateliers Médiation Numérique — Cédric Waltener",
+    footerCopy:"Reproduction interdite sans autorisation.", footerBack:"Retour au site",
+    h1:"Test de connaissances",
+    levelDebTitle:"🌱 Débutant", levelDebDesc:"Questions simples pour commencer en douceur.",
+    levelIntTitle:"🌿 Intermédiaire", levelIntDesc:"Le niveau standard, pour vérifier ses acquis.",
+    levelAvaTitle:"🌳 Avancé", levelAvaDesc:"Questions plus précises, pour aller plus loin.",
+    seeScore:"Voir mon score", restart:"Recommencer", changeLevel:"Changer de niveau",
+    questionLabel:"Question", scoreLabel:"Score",
+    tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
+    tierMid:"Pas mal ! Encore quelques points à consolider.",
+    tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
+    visits:"visite(s) sur ce test"
+  };
+
+  const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
   const levelScreen = document.getElementById('levelScreen');
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
@@ -150,23 +392,24 @@
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
+  const langSelect = document.getElementById('langSelect');
+  const langLoading = document.getElementById('langLoading');
   let currentLevel = null;
   let currentLang = 'fr';
   let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function tr(dict, lang) { return dict[lang] || dict.fr; }
 
   function renderQuiz(level, lang) {
     currentLevel = level;
-    const QUIZ = LEVELS[level];
+    const QUIZ = cache[lang].levels[level];
     form.innerHTML = QUIZ.map(function(q, i) {
-      const opts = tr(q.options, lang).map(function(o, j) {
+      const opts = q.options.map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
-      return '<div class="qcard"><div class="qnum">' + esc(UI.questionLabel[lang] || UI.questionLabel.fr) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(tr(q.q, lang)) + '</p><div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(tr(q.explain, lang)) + '</div></div>';
+      return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
@@ -178,43 +421,60 @@
   }
 
   function applyStaticUI(lang) {
+    const UI = cache[lang].ui;
     document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.getElementById('backText').textContent = tr(UI.back, lang);
-    document.getElementById('h1El').textContent = tr(UI.h1, lang);
-    document.getElementById('subEl').textContent = tr(UI.sub, lang);
-    document.getElementById('footerCopyEl').textContent = tr(UI.footerCopy, lang);
-    document.getElementById('footerLinkEl').textContent = tr(UI.footerBack, lang);
-    document.getElementById('levelDebTitle').textContent = tr(UI.levelDebTitle, lang);
-    document.getElementById('levelDebDesc').textContent = tr(UI.levelDebDesc, lang);
-    document.getElementById('levelIntTitle').textContent = tr(UI.levelIntTitle, lang);
-    document.getElementById('levelIntDesc').textContent = tr(UI.levelIntDesc, lang);
-    document.getElementById('levelAvaTitle').textContent = tr(UI.levelAvaTitle, lang);
-    document.getElementById('levelAvaDesc').textContent = tr(UI.levelAvaDesc, lang);
-    submitBtn.textContent = tr(UI.seeScore, lang);
-    resetBtn.textContent = tr(UI.restart, lang);
-    levelBtn.textContent = tr(UI.changeLevel, lang);
+    document.documentElement.dir = (lang === 'ar' || lang === 'iw' || lang === 'ur' || lang === 'fa' || lang === 'ps' || lang === 'ckb' || lang === 'sd') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI.back;
+    document.getElementById('h1El').textContent = UI.h1;
+    document.getElementById('subEl').textContent = UI.sub;
+    document.getElementById('footerCopyEl').textContent = UI.footerCopy;
+    document.getElementById('footerLinkEl').textContent = UI.footerBack;
+    document.getElementById('levelDebTitle').textContent = UI.levelDebTitle;
+    document.getElementById('levelDebDesc').textContent = UI.levelDebDesc;
+    document.getElementById('levelIntTitle').textContent = UI.levelIntTitle;
+    document.getElementById('levelIntDesc').textContent = UI.levelIntDesc;
+    document.getElementById('levelAvaTitle').textContent = UI.levelAvaTitle;
+    document.getElementById('levelAvaDesc').textContent = UI.levelAvaDesc;
+    submitBtn.textContent = UI.seeScore;
+    resetBtn.textContent = UI.restart;
+    levelBtn.textContent = UI.changeLevel;
     if (visitCount !== null) {
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + (tr(UI.visits, lang));
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + UI.visits;
     }
-    document.querySelectorAll('#langSwitch button').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
   }
 
-  function setLang(lang) {
+  function finishSetLang(lang) {
     currentLang = lang;
     applyStaticUI(lang);
     if (currentLevel && quizScreen.style.display !== 'none') {
       renderQuiz(currentLevel, lang);
     }
     try { localStorage.setItem('site_lang', lang); } catch (e) {}
+    langLoading.classList.remove('show');
+  }
+
+  function setLang(lang) {
+    if (cache[lang]) { finishSetLang(lang); return; }
+    langLoading.classList.add('show');
+    fetch('i18n/quiz-' + lang + '.json')
+      .then(function(r) { if (!r.ok) throw new Error('missing'); return r.json(); })
+      .then(function(data) {
+        const entry = data.quizzes[SLUG];
+        if (!entry) throw new Error('no slug');
+        cache[lang] = { ui: data.ui, levels: entry };
+        finishSetLang(lang);
+      })
+      .catch(function() {
+        // langue pas encore disponible : on reste sur la langue actuelle
+        langLoading.classList.remove('show');
+        langSelect.value = currentLang;
+      });
   }
 
   document.querySelectorAll('.level-btn').forEach(function(b) {
     b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
   });
-  document.querySelectorAll('#langSwitch button').forEach(function(b) {
-    b.addEventListener('click', function() { setLang(b.dataset.lang); });
-  });
+  langSelect.addEventListener('change', function() { setLang(langSelect.value); });
 
   levelBtn.addEventListener('click', function() {
     quizScreen.style.display = 'none';
@@ -224,7 +484,8 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const QUIZ = LEVELS[currentLevel];
+    const QUIZ = cache[currentLang].levels[currentLevel];
+    const UI = cache[currentLang].ui;
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -239,11 +500,11 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = tr(UI.tierLow, currentLang);
-    if (pct >= 80) { tier = 'tier-high'; msg = tr(UI.tierHigh, currentLang); }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = tr(UI.tierMid, currentLang); }
+    let tier = 'tier-low', msg = UI.tierLow;
+    if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = esc(tr(UI.scoreLabel, currentLang)) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
@@ -255,12 +516,14 @@
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + tr(UI.visits, currentLang);
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + cache[currentLang].ui.visits;
     })
     .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 
   let __savedLang = 'fr';
   try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  langSelect.value = __savedLang;
+  if (langSelect.value !== __savedLang) { langSelect.value = 'fr'; __savedLang = 'fr'; }
   setLang(__savedLang);
 </script>
 </body>

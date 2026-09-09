@@ -30,10 +30,10 @@
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
   .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
   .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
-  .lang-switch { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
-  .lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
-  .lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
-  .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .lang-select-wrap select { font-family: "Inter", sans-serif; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 0.4rem 0.7rem; border-radius: 999px; max-width: 220px; }
+  .lang-loading { font-size: 0.8rem; color: var(--muted); display: none; }
+  .lang-loading.show { display: inline; }
   html[dir="rtl"] .text-card, html[dir="rtl"] .qcard { text-align: right; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
 
@@ -81,12 +81,259 @@
     <h1 id="h1El">Test de connaissances</h1>
     <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
     <div><span class="visits" id="visitsCounter">👥 …</span></div>
-    <div class="lang-switch" id="langSwitch">
-      <button type="button" data-lang="fr">FR</button>
-      <button type="button" data-lang="en">EN</button>
-      <button type="button" data-lang="es">ES</button>
-      <button type="button" data-lang="ar">AR</button>
-      <button type="button" data-lang="pt">PT</button>
+    <div class="lang-select-wrap">
+      <select id="langSelect">
+      <option value="fr">Français</option>
+      <option value="ab">Abkhaze</option>
+      <option value="ace">Aceh</option>
+      <option value="ach">Acholi</option>
+      <option value="aa">Afar</option>
+      <option value="af">Afrikaans</option>
+      <option value="sq">Albanais</option>
+      <option value="de">Allemand</option>
+      <option value="alz">Alur</option>
+      <option value="am">Amharique</option>
+      <option value="en">Anglais</option>
+      <option value="ar">Arabe</option>
+      <option value="hy">Arménien</option>
+      <option value="as">Assamais</option>
+      <option value="av">Avar</option>
+      <option value="awa">Awadhi</option>
+      <option value="ay">Aymara</option>
+      <option value="az">Azéri</option>
+      <option value="ba">Bachkir</option>
+      <option value="ban">Balinais</option>
+      <option value="bal">Baloutchi</option>
+      <option value="bm">Bambara</option>
+      <option value="bci">Baoulé</option>
+      <option value="eu">Basque</option>
+      <option value="btx">Batak Karo</option>
+      <option value="bts">Batak Simalungun</option>
+      <option value="bbc">Batak Toba</option>
+      <option value="bem">Bemba</option>
+      <option value="bn">Bengali</option>
+      <option value="bew">Betawi</option>
+      <option value="bho">Bhodjpouri</option>
+      <option value="bik">Bicol</option>
+      <option value="be">Biélorusse</option>
+      <option value="bs">Bosniaque</option>
+      <option value="bua">Bouriate</option>
+      <option value="br">Breton</option>
+      <option value="bg">Bulgare</option>
+      <option value="yue">Cantonais</option>
+      <option value="ca">Catalan</option>
+      <option value="ceb">Cebuano</option>
+      <option value="ch">Chamorro</option>
+      <option value="ny">Chichewa</option>
+      <option value="zh-CN">Chinois (simplifié)</option>
+      <option value="zh-TW">Chinois (traditionnel)</option>
+      <option value="chk">Chuuk</option>
+      <option value="si">Cinghalais</option>
+      <option value="ko">Coréen</option>
+      <option value="co">Corse</option>
+      <option value="ht">Créole haïtien</option>
+      <option value="mfe">Créole mauricien</option>
+      <option value="crs">Créole seychellois</option>
+      <option value="hr">Croate</option>
+      <option value="da">Danois</option>
+      <option value="fa-AF">Dari</option>
+      <option value="din">Dinka</option>
+      <option value="dyu">Dioula</option>
+      <option value="dv">Divéhi</option>
+      <option value="doi">Dogri</option>
+      <option value="dov">Dombe</option>
+      <option value="dz">Dzongkha</option>
+      <option value="es">Espagnol</option>
+      <option value="eo">Espéranto</option>
+      <option value="et">Estonien</option>
+      <option value="ee">Ewe</option>
+      <option value="fo">Féroïen</option>
+      <option value="fj">Fidjien</option>
+      <option value="fi">Finnois</option>
+      <option value="fon">Fon</option>
+      <option value="fr-CA">Français (Canada)</option>
+      <option value="fur">Frioulan</option>
+      <option value="fy">Frison</option>
+      <option value="gaa">Ga</option>
+      <option value="gd">Gaélique (Écosse)</option>
+      <option value="gl">Galicien</option>
+      <option value="cy">Gallois</option>
+      <option value="ka">Géorgien</option>
+      <option value="el">Grec</option>
+      <option value="gn">Guarani</option>
+      <option value="gu">Gujarati</option>
+      <option value="cnh">Hakha Chin</option>
+      <option value="ha">Haoussa</option>
+      <option value="haw">Hawaïen</option>
+      <option value="iw">Hébreu</option>
+      <option value="hil">Hiligaïnon</option>
+      <option value="hi">Hindi</option>
+      <option value="hmn">Hmong</option>
+      <option value="hu">Hongrois</option>
+      <option value="hrx">Hunsrik</option>
+      <option value="iba">Iban</option>
+      <option value="ig">Igbo</option>
+      <option value="ilo">Ilocano</option>
+      <option value="id">Indonésien</option>
+      <option value="iu-Latn">Inuktut (latin)</option>
+      <option value="iu">Inuktut (syllabique)</option>
+      <option value="ga">Irlandais</option>
+      <option value="is">Islandais</option>
+      <option value="it">Italien</option>
+      <option value="ja">Japonais</option>
+      <option value="jw">Javanais</option>
+      <option value="kac">Jingpo</option>
+      <option value="kl">Kalaallisut</option>
+      <option value="kn">Kannada</option>
+      <option value="kr">Kanuri</option>
+      <option value="kk">Kazakh</option>
+      <option value="kha">Khasi</option>
+      <option value="km">Khmer</option>
+      <option value="cgg">Kiga</option>
+      <option value="kg">Kikongo</option>
+      <option value="rw">Kinyarwanda</option>
+      <option value="ky">Kirghiz</option>
+      <option value="ktu">Kituba</option>
+      <option value="trp">Kok Borok</option>
+      <option value="kv">Komi</option>
+      <option value="gom">Konkani</option>
+      <option value="kri">Krio</option>
+      <option value="ku">Kurde (Kurmandji)</option>
+      <option value="ckb">Kurde (Sorani)</option>
+      <option value="lo">Laotien</option>
+      <option value="ltg">Latgalien</option>
+      <option value="la">Latin</option>
+      <option value="lv">Letton</option>
+      <option value="lij">Ligure</option>
+      <option value="li">Limbourgeois</option>
+      <option value="ln">Lingala</option>
+      <option value="lt">Lituanien</option>
+      <option value="lmo">Lombard</option>
+      <option value="lg">Luganda</option>
+      <option value="luo">Luo</option>
+      <option value="lb">Luxembourgeois</option>
+      <option value="mak">Macassar</option>
+      <option value="mk">Macédonien</option>
+      <option value="mad">Madurais</option>
+      <option value="mai">Maïthili</option>
+      <option value="ms-Arab">Malais (Jawi)</option>
+      <option value="ms">Malaisien</option>
+      <option value="ml">Malayalam</option>
+      <option value="mg">Malgache</option>
+      <option value="mt">Maltais</option>
+      <option value="mam">Mam</option>
+      <option value="gv">Manx</option>
+      <option value="mi">Maori</option>
+      <option value="mr">Marathi</option>
+      <option value="chm">Mari des prairies</option>
+      <option value="mh">Marshallais</option>
+      <option value="mwr">Marwari</option>
+      <option value="yua">Maya yucatèque</option>
+      <option value="mni-Mtei">Meitei (Manipuri)</option>
+      <option value="min">Minangkabau</option>
+      <option value="lus">Mizo</option>
+      <option value="mn">Mongol</option>
+      <option value="my">Myanmar (Birman)</option>
+      <option value="nhe">Nahuatl (Huasteca oriental)</option>
+      <option value="ndc-ZW">Ndau</option>
+      <option value="nr">Ndébélé (Sud)</option>
+      <option value="nl">Néerlandais</option>
+      <option value="ne">Népalais</option>
+      <option value="new">Nepalbhasa (Newari)</option>
+      <option value="bm-Nkoo">NKo</option>
+      <option value="no">Norvégien</option>
+      <option value="nus">Nuer</option>
+      <option value="oc">Occitan</option>
+      <option value="or">Odia (Oriya)</option>
+      <option value="om">Oromo</option>
+      <option value="os">Ossète</option>
+      <option value="udm">Oudmourte</option>
+      <option value="ug">Ouïgour</option>
+      <option value="uz">Ouzbek</option>
+      <option value="ps">Pachtô</option>
+      <option value="pam">Pampangan</option>
+      <option value="pag">Pangasinan</option>
+      <option value="pa">Panjabi (Gurmukhi)</option>
+      <option value="pa-Arab">Panjabi (Shahmukhi)</option>
+      <option value="pap">Papiamento</option>
+      <option value="jam">Patois jamaïcain</option>
+      <option value="fa">Persan</option>
+      <option value="ff">Peul</option>
+      <option value="tl">Philippin</option>
+      <option value="pl">Polonais</option>
+      <option value="pt">Portugais (Brésil)</option>
+      <option value="pt-PT">Portugais (Portugal)</option>
+      <option value="kek">Q'eqchi'</option>
+      <option value="qu">Quechua</option>
+      <option value="rom">Romani</option>
+      <option value="ro">Roumain</option>
+      <option value="rn">Roundi</option>
+      <option value="ru">Russe</option>
+      <option value="se">Same (Nord)</option>
+      <option value="sm">Samoan</option>
+      <option value="sg">Sango</option>
+      <option value="sa">Sanskrit</option>
+      <option value="sat-Latn">Santali (latin)</option>
+      <option value="sat">Santali (ol chiki)</option>
+      <option value="nso">Sepedi</option>
+      <option value="sr">Serbe</option>
+      <option value="st">Sesotho</option>
+      <option value="shn">Shan</option>
+      <option value="sn">Shona</option>
+      <option value="scn">Sicilien</option>
+      <option value="szl">Silésien</option>
+      <option value="sd">Sindhî</option>
+      <option value="sk">Slovaque</option>
+      <option value="sl">Slovène</option>
+      <option value="so">Somali</option>
+      <option value="su">Soundanais</option>
+      <option value="sus">Soussou</option>
+      <option value="sv">Suédois</option>
+      <option value="sw">Swahili</option>
+      <option value="ss">Swati</option>
+      <option value="tg">Tadjik</option>
+      <option value="ty">Tahitien</option>
+      <option value="ber-Latn">Tamazight</option>
+      <option value="ber">Tamazight (Tifinagh)</option>
+      <option value="ta">Tamoul</option>
+      <option value="tt">Tatar</option>
+      <option value="crh">Tatar de Crimée (cyrillique)</option>
+      <option value="crh-Latn">Tatar de Crimée (latin)</option>
+      <option value="cs">Tchèque</option>
+      <option value="ce">Tchétchène</option>
+      <option value="cv">Tchouvache</option>
+      <option value="te">Telugu</option>
+      <option value="tet">Tétoum</option>
+      <option value="th">Thaï</option>
+      <option value="bo">Tibétain</option>
+      <option value="ti">Tigrigna</option>
+      <option value="tiv">Tiv</option>
+      <option value="tpi">Tok pisin</option>
+      <option value="to">Tongien</option>
+      <option value="tcy">Toulou</option>
+      <option value="tyv">Touvain</option>
+      <option value="lua">Tshiluba</option>
+      <option value="ts">Tsonga</option>
+      <option value="tn">Tswana</option>
+      <option value="tum">Tumbuka</option>
+      <option value="tr">Turc</option>
+      <option value="tk">Turkmène</option>
+      <option value="ak">Twi</option>
+      <option value="uk">Ukrainien</option>
+      <option value="ur">Urdu</option>
+      <option value="ve">Venda</option>
+      <option value="vec">Vénitien</option>
+      <option value="vi">Vietnamien</option>
+      <option value="war">Waray-waray</option>
+      <option value="wo">Wolof</option>
+      <option value="xh">Xhosa</option>
+      <option value="sah">Yakoute</option>
+      <option value="yi">Yiddish</option>
+      <option value="yo">Yoruba</option>
+      <option value="zap">Zapotèque</option>
+      <option value="zu">Zoulou</option>
+      </select>
+      <span class="lang-loading" id="langLoading">⏳</span>
     </div>
   </div>
 </header>
@@ -120,29 +367,24 @@
   © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
 </footer>
 <script>
-  const LEVELS = {"debutant":[{"q":{"fr":"Combien de systèmes d\u0027exploitation sont comparés dans Battle OS ?","en":"How many operating systems are compared in Battle OS?","es":"¿Cuántos sistemas operativos se comparan en Battle OS?","ar":"كم عدد أنظمة التشغيل التي تتم مقارنتها في Battle OS؟","pt":"Quantos sistemas operacionais são comparados no Battle OS?"},"options":{"fr":["2","3","4","5"],"en":["2","3","4","5"],"es":["2","3","4","5"],"ar":["2","3","4","5"],"pt":["2","3","4","5"]},"explain":{"fr":"Battle OS compare Windows, Linux et macOS.","en":"Battle OS compares Windows, Linux and macOS.","es":"Battle OS compara Windows, Linux y macOS.","ar":"يقارن Battle OS بين أنظمة التشغيل Windows وLinux وmacOS.","pt":"Battle OS compara Windows, Linux e macOS."},"correct":1},{"q":{"fr":"Lequel de ces mots désigne un système d\u0027exploitation ?","en":"Which of these words refers to an operating system?","es":"¿Cuál de estas palabras se refiere a un sistema operativo?","ar":"أي من هذه الكلمات تشير إلى نظام التشغيل؟","pt":"Qual dessas palavras se refere a um sistema operacional?"},"options":{"fr":["Google","Windows","Wi-Fi","USB"],"en":["Google","Windows","Wi-Fi","USB"],"es":["google","ventanas","wifi","USB"],"ar":["جوجل","ويندوز","واي فاي","يو اس بي"],"pt":["Google","Janelas","Wi-Fi","USB"]},"explain":{"fr":"Windows, comme Linux et macOS, est un système d\u0027exploitation.","en":"Windows, like Linux and macOS, is an operating system.","es":"Windows, como Linux y macOS, es un sistema operativo.","ar":"Windows، مثل Linux وmacOS، هو نظام تشغيل.","pt":"O Windows, como o Linux e o macOS, é um sistema operacional."},"correct":1},{"q":{"fr":"Un ordinateur peut-il fonctionner sans aucun système d\u0027exploitation ?","en":"Can a computer run without any operating system?","es":"¿Puede una computadora funcionar sin ningún sistema operativo?","ar":"هل يمكن للكمبيوتر أن يعمل بدون أي نظام تشغيل؟","pt":"Um computador pode funcionar sem nenhum sistema operacional?"},"options":{"fr":["Oui, facilement","Non, c\u0027est indispensable","Seulement les Mac","Seulement avec Internet"],"en":["Yes, easily","No, it\u0027s essential","Only Macs","Only with Internet"],"es":["si, facilmente","No, es esencial","Sólo Mac","solo con internet"],"ar":["نعم بسهولة","لا، إنه ضروري","أجهزة ماكينتوش فقط","فقط مع الإنترنت"],"pt":["Sim, facilmente","Não, é essencial","Somente Macs","Somente com Internet"]},"explain":{"fr":"Le système d\u0027exploitation est indispensable pour faire fonctionner un ordinateur.","en":"The operating system is essential for running a computer.","es":"El sistema operativo es esencial para ejecutar una computadora.","ar":"نظام التشغيل ضروري لتشغيل جهاز الكمبيوتر.","pt":"O sistema operacional é essencial para o funcionamento de um computador."},"correct":1},{"q":{"fr":"Quel logiciel gratuit remplace Microsoft Office, notamment sous Linux ?","en":"What free software replaces Microsoft Office, especially on Linux?","es":"¿Qué software gratuito reemplaza a Microsoft Office, especialmente en Linux?","ar":"ما هي البرامج المجانية التي تحل محل Microsoft Office، وخاصة على Linux؟","pt":"Qual software gratuito substitui o Microsoft Office, especialmente no Linux?"},"options":{"fr":["Photoshop","LibreOffice","Zoom","Spotify"],"en":["Photoshop","LibreOffice","Zoom","Spotify"],"es":["Photoshop","LibreOffice","Ampliar","Spotify"],"ar":["فوتوشوب","ليبر أوفيس","تكبير","سبوتيفي"],"pt":["Photoshop","LibreOffice","Zoom","Spotify"]},"explain":{"fr":"LibreOffice est l\u0027alternative gratuite à Microsoft Office.","en":"LibreOffice is the free alternative to Microsoft Office.","es":"LibreOffice es la alternativa gratuita a Microsoft Office.","ar":"LibreOffice هو البديل المجاني لمايكروسوفت أوفيس.","pt":"LibreOffice é a alternativa gratuita ao Microsoft Office."},"correct":1}],"intermediaire":[{"q":{"fr":"Quel système est gratuit à 100 % et parfait pour redonner vie à un vieux PC ?","en":"Which system is 100% free and perfect for bringing an old PC back to life?","es":"¿Qué sistema es 100% gratuito y perfecto para devolverle la vida a una vieja PC?","ar":"ما هو النظام المجاني بنسبة 100% والمثالي لإعادة جهاز الكمبيوتر القديم إلى الحياة؟","pt":"Qual sistema é 100% gratuito e perfeito para dar vida a um PC antigo?"},"options":{"fr":["Windows","Linux","macOS","Android"],"en":["Windows","Linux","macOS","Android"],"es":["ventanas","linux","macos","androide"],"ar":["ويندوز","لينكس","ماك","أندرويد"],"pt":["Janelas","Linux","macOS","Android"]},"explain":{"fr":"Linux est gratuit et fait tourner sans problème des PC que Windows 11 refuse d\u0027installer.","en":"Linux is free and runs PCs that Windows 11 refuses to install without any problem.","es":"Linux es gratuito y ejecuta PC que Windows 11 se niega a instalar sin ningún problema.","ar":"Linux مجاني ويعمل على تشغيل أجهزة الكمبيوتر التي يرفض Windows 11 تثبيتها دون أي مشكلة.","pt":"O Linux é gratuito e roda PCs que o Windows 11 se recusa a instalar sem nenhum problema."},"correct":1},{"q":{"fr":"Quel système domine largement le jeu vidéo, avec 95 % des jeux disponibles ?","en":"Which system largely dominates video games, with 95% of games available?","es":"¿Qué sistema domina en gran medida los videojuegos, con el 95% de los juegos disponibles?","ar":"ما هو النظام الذي يهيمن إلى حد كبير على ألعاب الفيديو، حيث تتوفر 95% من الألعاب؟","pt":"Qual sistema domina amplamente os videogames, com 95% dos jogos disponíveis?"},"options":{"fr":["Windows","Linux","macOS","ChromeOS"],"en":["Windows","Linux","macOS","ChromeOS"],"es":["ventanas","linux","macos","ChromeOS"],"ar":["ويندوز","لينكس","ماك","نظام التشغيل Chrome"],"pt":["Janelas","Linux","macOS","Chrome OS"]},"explain":{"fr":"Windows reste la référence incontestée pour le gaming (Steam, Xbox, Ubisoft...).","en":"Windows remains the undisputed benchmark for gaming (Steam, Xbox, Ubisoft, etc.).","es":"Windows sigue siendo la referencia indiscutible en materia de juegos (Steam, Xbox, Ubisoft, etc.).","ar":"يظل Windows هو المعيار بلا منازع للألعاب (Steam وXbox وUbisoft وما إلى ذلك).","pt":"O Windows continua sendo a referência indiscutível para jogos (Steam, Xbox, Ubisoft, etc.)."},"correct":0},{"q":{"fr":"Quel système est reconnu pour ne quasiment collecter aucune donnée personnelle ?","en":"Which system is known to collect almost no personal data?","es":"¿Qué sistema se sabe que casi no recopila datos personales?","ar":"ما هو النظام المعروف بأنه لا يجمع أي بيانات شخصية تقريبًا؟","pt":"Qual sistema é conhecido por quase não coletar dados pessoais?"},"options":{"fr":["Windows","Linux","macOS","Ils se valent tous"],"en":["Windows","Linux","macOS","They are all worth"],"es":["ventanas","linux","macos","todos ellos valen la pena"],"ar":["ويندوز","لينكس","ماك","كلهم يستحقون"],"pt":["Janelas","Linux","macOS","Todos eles valem"]},"explain":{"fr":"Linux est open source, auditable par tous, avec très peu de collecte de données.","en":"Linux is open source, auditable by anyone, with very little data collection.","es":"Linux es de código abierto, auditable por cualquiera y con muy poca recopilación de datos.","ar":"نظام Linux مفتوح المصدر، ويمكن لأي شخص تدقيقه، مع جمع القليل جدًا من البيانات.","pt":"O Linux é de código aberto, auditável por qualquer pessoa, com muito pouca coleta de dados."},"correct":1},{"q":{"fr":"macOS peut-il s\u0027installer légalement sur un PC classique (hors Mac) ?","en":"Can macOS be legally installed on a classic PC (except Mac)?","es":"¿Se puede instalar macOS legalmente en una PC clásica (excepto Mac)?","ar":"هل يمكن تثبيت نظام التشغيل macOS بشكل قانوني على جهاز كمبيوتر شخصي كلاسيكي (باستثناء نظام Mac)؟","pt":"O macOS pode ser instalado legalmente em um PC clássico (exceto Mac)?"},"options":{"fr":["Oui, sans problème","Non, il est réservé aux machines Apple","Oui, avec Windows 11 installé à côté","Oui, via une simple clé USB"],"en":["Yes, no problem","No, it is reserved for Apple machines","Yes, with Windows 11 installed alongside","Yes, via a simple USB key"],"es":["Si, no hay problema","No, está reservado para máquinas Apple.","Sí, con Windows 11 instalado junto","Sí, a través de una simple llave USB"],"ar":["نعم، لا مشكلة","لا، فهو مخصص لأجهزة Apple","نعم، مع تثبيت Windows 11 جنبًا إلى جنب","نعم، عبر مفتاح USB بسيط"],"pt":["Sim, não há problema","Não, está reservado para máquinas Apple","Sim, com o Windows 11 instalado junto","Sim, através de uma simples chave USB"]},"explain":{"fr":"macOS n\u0027est officiellement disponible que sur le matériel Apple.","en":"macOS is only officially available on Apple hardware.","es":"macOS sólo está disponible oficialmente en hardware de Apple.","ar":"نظام macOS متاح رسميًا فقط على أجهزة Apple.","pt":"O macOS está oficialmente disponível apenas em hardware Apple."},"correct":1},{"q":{"fr":"Pour tester Linux sans rien installer sur son disque dur, on utilise :","en":"To test Linux without installing anything on your hard drive, we use:","es":"Para probar Linux sin instalar nada en su disco duro, utilizamos:","ar":"لاختبار Linux دون تثبيت أي شيء على القرص الصلب لديك، نستخدم:","pt":"Para testar o Linux sem instalar nada no seu disco rígido, usamos:"},"options":{"fr":["Un antivirus","Une clé USB en mode \"Live\"","Un VPN","Le Bureau à distance"],"en":["An antivirus","A USB key in “Live” mode","A VPN","Remote Desktop"],"es":["un antivirus","Una llave USB en modo “Live”","Una VPN","Escritorio remoto"],"ar":["مضاد للفيروسات","مفتاح USB في الوضع \"Live\".","VPN","سطح المكتب البعيد"],"pt":["Um antivírus","Uma chave USB no modo “Live”","Uma VPN","Área de Trabalho Remota"]},"explain":{"fr":"Le mode Live depuis une clé USB permet de tester Linux sans rien modifier sur l\u0027ordinateur.","en":"Live mode from a USB key allows you to test Linux without modifying anything on the computer.","es":"El modo en vivo desde una llave USB le permite probar Linux sin modificar nada en la computadora.","ar":"يتيح لك الوضع المباشر من مفتاح USB اختبار Linux دون تعديل أي شيء على الكمبيوتر.","pt":"O modo Live a partir de uma chave USB permite testar o Linux sem modificar nada no computador."},"correct":1},{"q":{"fr":"LibreOffice, l\u0027alternative gratuite à Microsoft Office, permet d\u0027ouvrir :","en":"LibreOffice, the free alternative to Microsoft Office, allows you to open:","es":"LibreOffice, la alternativa gratuita a Microsoft Office, te permite abrir:","ar":"يتيح لك LibreOffice، البديل المجاني لـ Microsoft Office، فتح:","pt":"O LibreOffice, a alternativa gratuita ao Microsoft Office, permite abrir:"},"options":{"fr":["Seulement les fichiers .odt","Les fichiers Word / Excel / PowerPoint (.docx, .xlsx...)","Seulement les PDF","Aucun fichier Microsoft"],"en":["Only .odt files","Word / Excel / PowerPoint files (.docx, .xlsx...)","Only PDFs","No Microsoft files"],"es":["Sólo archivos .odt","Archivos Word / Excel / PowerPoint (.docx, .xlsx...)","Sólo archivos PDF","Sin archivos de Microsoft"],"ar":["ملفات .odt فقط","ملفات Word / Excel / PowerPoint (.docx، .xlsx...)","ملفات PDF فقط","لا توجد ملفات مايكروسوفت"],"pt":["Somente arquivos .odt","Arquivos Word/Excel/PowerPoint (.docx, .xlsx...)","Somente PDFs","Nenhum arquivo da Microsoft"]},"explain":{"fr":"LibreOffice est compatible avec les formats Microsoft les plus courants.","en":"LibreOffice is compatible with the most common Microsoft formats.","es":"LibreOffice es compatible con los formatos más comunes de Microsoft.","ar":"LibreOffice متوافق مع تنسيقات Microsoft الأكثر شيوعًا.","pt":"O LibreOffice é compatível com os formatos mais comuns da Microsoft."},"correct":1}],"avance":[{"q":{"fr":"Le score final de \"Battle OS\" désigne Linux champion avec combien de points sur 6 rounds ?","en":"The final score of \"Battle OS\" designates Linux champion with how many points over 6 rounds?","es":"La puntuación final de \"Battle OS\" designa al campeón de Linux ¿con cuántos puntos en 6 rondas?","ar":"النتيجة النهائية لـ \"Battle OS\" تحدد بطل Linux بعدد النقاط خلال 6 جولات؟","pt":"A pontuação final do “Battle OS” designa o campeão Linux com quantos pontos em 6 rodadas?"},"options":{"fr":["8 points","11 points","14 points","5 points"],"en":["8 points","11 points","14 points","5 points"],"es":["8 puntos","11 puntos","14 puntos","5 puntos"],"ar":["8 نقاط","11 نقطة","14 نقطة","5 نقاط"],"pt":["8 pontos","11 pontos","14 pontos","5 pontos"]},"explain":{"fr":"Linux remporte 11 points au tableau final des scores, devant Windows (8) et macOS (5).","en":"Linux won 11 points in the final scoreboard, ahead of Windows (8) and macOS (5).","es":"Linux ganó 11 puntos en el marcador final, por delante de Windows (8) y macOS (5).","ar":"حصل Linux على 11 نقطة في لوحة النتائج النهائية، متقدمًا على Windows (8) وmacOS (5).","pt":"O Linux conquistou 11 pontos no placar final, à frente do Windows (8) e do macOS (5)."},"correct":1},{"q":{"fr":"Sur quel round Windows l\u0027emporte-t-il le plus largement ?","en":"In which round does Windows win the most?","es":"¿En qué ronda gana más Windows?","ar":"في أي جولة يفوز Windows أكثر؟","pt":"Em qual rodada o Windows ganha mais?"},"options":{"fr":["Sécurité","Gaming","Reconditionnement","Création"],"en":["Security","Gaming","Reconditioning","Creation"],"es":["Seguridad","Juegos","Reacondicionamiento","Creación"],"ar":["الأمن","الألعاب","تجديد","الخلق"],"pt":["Segurança","Jogos","Recondicionamento","Criação"]},"explain":{"fr":"Windows domine sans partage le round Gaming, avec 95 % des jeux disponibles en premier lieu sur cet OS.","en":"Windows absolutely dominates the Gaming round, with 95% of games available primarily on this OS.","es":"Windows domina absolutamente la ronda de juegos, con el 95% de los juegos disponibles principalmente en este sistema operativo.","ar":"يهيمن Windows تمامًا على جولة الألعاب، حيث تتوفر 95% من الألعاب بشكل أساسي على نظام التشغيل هذا.","pt":"O Windows domina totalmente a rodada de jogos, com 95% dos jogos disponíveis principalmente neste sistema operacional."},"correct":1},{"q":{"fr":"Quelle technologie permet de faire tourner de nombreux jeux Windows sous Linux via Steam ?","en":"What technology allows many Windows games to run on Linux via Steam?","es":"¿Qué tecnología permite que muchos juegos de Windows se ejecuten en Linux a través de Steam?","ar":"ما هي التقنية التي تسمح بتشغيل العديد من ألعاب Windows على Linux عبر Steam؟","pt":"Que tecnologia permite que muitos jogos do Windows rodem no Linux via Steam?"},"options":{"fr":["WINE seul","Proton","Rosetta","Docker"],"en":["WINE alone","Proton","Rosette","Docker"],"es":["VINO solo","Protón","roseta","acoplador"],"ar":["النبيذ وحده","بروتون","روزيت","عامل ميناء"],"pt":["VINHO sozinho","Próton","Roseta","Docker"]},"explain":{"fr":"Proton, intégré à Steam, permet de jouer à de nombreux jeux Windows sous Linux.","en":"Proton, integrated into Steam, allows you to play many Windows games on Linux.","es":"Proton, integrado en Steam, te permite jugar muchos juegos de Windows en Linux.","ar":"يسمح لك Proton، المدمج في Steam، بلعب العديد من ألعاب Windows على Linux.","pt":"O Proton, integrado ao Steam, permite que você jogue muitos jogos do Windows no Linux."},"correct":1},{"q":{"fr":"Pour démarrer sur une clé USB Live, quelle touche presse-t-on généralement au démarrage ?","en":"To boot from a Live USB key, what key do you generally press at startup?","es":"Para arrancar desde una llave Live USB, ¿qué tecla generalmente presiona al iniciar?","ar":"للتمهيد من مفتاح Live USB، ما هو المفتاح الذي تضغط عليه عمومًا عند بدء التشغيل؟","pt":"Para inicializar a partir de uma chave Live USB, qual tecla você geralmente pressiona na inicialização?"},"options":{"fr":["F5","F12 (ou F2 selon les machines)","Ctrl+Alt+Suppr","Windows+R"],"en":["F5","F12 (or F2 depending on the machines)","Ctrl+Alt+Del","Windows+R"],"es":["F5","F12 (o F2 dependiendo de las máquinas)","Ctrl+Alt+Supr","Windows+R"],"ar":["F5","F12 (أو F2 حسب الأجهزة)","السيطرة + البديل + ديل","ويندوز + ر"],"pt":["F5","F12 (ou F2 dependendo das máquinas)","Ctrl+Alt+Del","Janelas+R"]},"explain":{"fr":"F12 ou F2 au démarrage permet d\u0027accéder au menu de démarrage pour choisir la clé USB.","en":"F12 or F2 at startup allows access to the startup menu to choose the USB key.","es":"F12 o F2 al inicio permite acceder al menú de inicio para elegir la llave USB.","ar":"يسمح F12 أو F2 عند بدء التشغيل بالوصول إلى قائمة بدء التشغيل لاختيار مفتاح USB.","pt":"F12 ou F2 na inicialização permite acesso ao menu de inicialização para escolher a chave USB."},"correct":1}]};
-  const UI = {
-  "back": {"fr":"Retour aux ateliers","en":"Back to workshops","es":"Volver a los talleres","ar":"العودة إلى الورش","pt":"Voltar às oficinas"},
-  "sub": {"fr":"Ateliers Médiation Numérique — Cédric Waltener","en":"Digital Mediation Workshops — Cédric Waltener","es":"Talleres de Mediación Digital — Cédric Waltener","ar":"ورش الوساطة الرقمية — Cédric Waltener","pt":"Oficinas de Mediação Digital — Cédric Waltener"},
-  "footerCopy": {"fr":"Reproduction interdite sans autorisation.","en":"Reproduction prohibited without authorization.","es":"Reproducción prohibida sin autorización.","ar":"يُمنع النسخ دون إذن.","pt":"Reprodução proibida sem autorização."},
-  "footerBack": {"fr":"Retour au site","en":"Back to site","es":"Volver al sitio","ar":"العودة إلى الموقع","pt":"Voltar ao site"},
-  "h1": {"fr":"Test de connaissances","en":"Knowledge test","es":"Test de conocimientos","ar":"اختبار المعرفة","pt":"Teste de conhecimento"},
-  "levelDebTitle": {"fr":"🌱 Débutant","en":"🌱 Beginner","es":"🌱 Principiante","ar":"🌱 مبتدئ","pt":"🌱 Iniciante"},
-  "levelDebDesc": {"fr":"Questions simples pour commencer en douceur.","en":"Simple questions to ease into it.","es":"Preguntas simples para empezar suavemente.","ar":"أسئلة بسيطة للبدء بسهولة.","pt":"Perguntas simples para começar com calma."},
-  "levelIntTitle": {"fr":"🌿 Intermédiaire","en":"🌿 Intermediate","es":"🌿 Intermedio","ar":"🌿 متوسط","pt":"🌿 Intermediário"},
-  "levelIntDesc": {"fr":"Le niveau standard, pour vérifier ses acquis.","en":"The standard level, to check what you've learned.","es":"El nivel estándar, para comprobar lo aprendido.","ar":"المستوى القياسي، للتحقق من معارفك.","pt":"O nível padrão, para verificar o que você aprendeu."},
-  "levelAvaTitle": {"fr":"🌳 Avancé","en":"🌳 Advanced","es":"🌳 Avanzado","ar":"🌳 متقدم","pt":"🌳 Avançado"},
-  "levelAvaDesc": {"fr":"Questions plus précises, pour aller plus loin.","en":"More precise questions, to go further.","es":"Preguntas más precisas, para ir más lejos.","ar":"أسئلة أكثر دقة، للمضي قدمًا.","pt":"Perguntas mais precisas, para ir mais longe."},
-  "seeScore": {"fr":"Voir mon score","en":"See my score","es":"Ver mi puntuación","ar":"عرض نتيجتي","pt":"Ver minha pontuação"},
-  "restart": {"fr":"Recommencer","en":"Start over","es":"Reiniciar","ar":"إعادة المحاولة","pt":"Recomeçar"},
-  "changeLevel": {"fr":"Changer de niveau","en":"Change level","es":"Cambiar de nivel","ar":"تغيير المستوى","pt":"Mudar de nível"},
-  "questionLabel": {"fr":"Question","en":"Question","es":"Pregunta","ar":"سؤال","pt":"Pergunta"},
-  "scoreLabel": {"fr":"Score","en":"Score","es":"Puntuación","ar":"النتيجة","pt":"Pontuação"},
-  "tierLow": {"fr":"À revoir ! Relisez la fiche de l'atelier et retentez le test.","en":"Needs work! Reread the workshop sheet and try again.","es":"¡A repasar! Vuelve a leer la ficha del taller e inténtalo de nuevo.","ar":"يحتاج إلى مراجعة! أعد قراءة ورقة الورشة وحاول مرة أخرى.","pt":"Precisa melhorar! Releia a ficha da oficina e tente novamente."},
-  "tierMid": {"fr":"Pas mal ! Encore quelques points à consolider.","en":"Not bad! A few points still to work on.","es":"¡No está mal! Todavía hay algunos puntos por reforzar.","ar":"لا بأس! لا تزال هناك بعض النقاط التي يجب تعزيزها.","pt":"Nada mal! Ainda há alguns pontos a consolidar."},
-  "tierHigh": {"fr":"Excellent ! Vous maîtrisez bien le sujet.","en":"Excellent! You have a solid grasp of the topic.","es":"¡Excelente! Dominas bien el tema.","ar":"ممتاز! أنت تتقن الموضوع جيدًا.","pt":"Excelente! Você domina bem o assunto."},
-  "visits": {"fr":"visite(s) sur ce test","en":"visit(s) on this test","es":"visita(s) en este test","ar":"زيارة لهذا الاختبار","pt":"visita(s) neste teste"}
-};
+  const SLUG = "battle-os";
+  const FR_LEVELS = {"debutant":[{"q":"Combien de systèmes d\u0027exploitation sont comparés dans Battle OS ?","options":["2","3","4","5"],"explain":"Battle OS compare Windows, Linux et macOS.","correct":1},{"q":"Lequel de ces mots désigne un système d\u0027exploitation ?","options":["Google","Windows","Wi-Fi","USB"],"explain":"Windows, comme Linux et macOS, est un système d\u0027exploitation.","correct":1},{"q":"Un ordinateur peut-il fonctionner sans aucun système d\u0027exploitation ?","options":["Oui, facilement","Non, c\u0027est indispensable","Seulement les Mac","Seulement avec Internet"],"explain":"Le système d\u0027exploitation est indispensable pour faire fonctionner un ordinateur.","correct":1},{"q":"Quel logiciel gratuit remplace Microsoft Office, notamment sous Linux ?","options":["Photoshop","LibreOffice","Zoom","Spotify"],"explain":"LibreOffice est l\u0027alternative gratuite à Microsoft Office.","correct":1}],"intermediaire":[{"q":"Quel système est gratuit à 100 % et parfait pour redonner vie à un vieux PC ?","options":["Windows","Linux","macOS","Android"],"explain":"Linux est gratuit et fait tourner sans problème des PC que Windows 11 refuse d\u0027installer.","correct":1},{"q":"Quel système domine largement le jeu vidéo, avec 95 % des jeux disponibles ?","options":["Windows","Linux","macOS","ChromeOS"],"explain":"Windows reste la référence incontestée pour le gaming (Steam, Xbox, Ubisoft...).","correct":0},{"q":"Quel système est reconnu pour ne quasiment collecter aucune donnée personnelle ?","options":["Windows","Linux","macOS","Ils se valent tous"],"explain":"Linux est open source, auditable par tous, avec très peu de collecte de données.","correct":1},{"q":"macOS peut-il s\u0027installer légalement sur un PC classique (hors Mac) ?","options":["Oui, sans problème","Non, il est réservé aux machines Apple","Oui, avec Windows 11 installé à côté","Oui, via une simple clé USB"],"explain":"macOS n\u0027est officiellement disponible que sur le matériel Apple.","correct":1},{"q":"Pour tester Linux sans rien installer sur son disque dur, on utilise :","options":["Un antivirus","Une clé USB en mode \"Live\"","Un VPN","Le Bureau à distance"],"explain":"Le mode Live depuis une clé USB permet de tester Linux sans rien modifier sur l\u0027ordinateur.","correct":1},{"q":"LibreOffice, l\u0027alternative gratuite à Microsoft Office, permet d\u0027ouvrir :","options":["Seulement les fichiers .odt","Les fichiers Word / Excel / PowerPoint (.docx, .xlsx...)","Seulement les PDF","Aucun fichier Microsoft"],"explain":"LibreOffice est compatible avec les formats Microsoft les plus courants.","correct":1}],"avance":[{"q":"Le score final de \"Battle OS\" désigne Linux champion avec combien de points sur 6 rounds ?","options":["8 points","11 points","14 points","5 points"],"explain":"Linux remporte 11 points au tableau final des scores, devant Windows (8) et macOS (5).","correct":1},{"q":"Sur quel round Windows l\u0027emporte-t-il le plus largement ?","options":["Sécurité","Gaming","Reconditionnement","Création"],"explain":"Windows domine sans partage le round Gaming, avec 95 % des jeux disponibles en premier lieu sur cet OS.","correct":1},{"q":"Quelle technologie permet de faire tourner de nombreux jeux Windows sous Linux via Steam ?","options":["WINE seul","Proton","Rosetta","Docker"],"explain":"Proton, intégré à Steam, permet de jouer à de nombreux jeux Windows sous Linux.","correct":1},{"q":"Pour démarrer sur une clé USB Live, quelle touche presse-t-on généralement au démarrage ?","options":["F5","F12 (ou F2 selon les machines)","Ctrl+Alt+Suppr","Windows+R"],"explain":"F12 ou F2 au démarrage permet d\u0027accéder au menu de démarrage pour choisir la clé USB.","correct":1}]};
+  const FR_UI = {
+    back:"Retour aux ateliers", sub:"Ateliers Médiation Numérique — Cédric Waltener",
+    footerCopy:"Reproduction interdite sans autorisation.", footerBack:"Retour au site",
+    h1:"Test de connaissances",
+    levelDebTitle:"🌱 Débutant", levelDebDesc:"Questions simples pour commencer en douceur.",
+    levelIntTitle:"🌿 Intermédiaire", levelIntDesc:"Le niveau standard, pour vérifier ses acquis.",
+    levelAvaTitle:"🌳 Avancé", levelAvaDesc:"Questions plus précises, pour aller plus loin.",
+    seeScore:"Voir mon score", restart:"Recommencer", changeLevel:"Changer de niveau",
+    questionLabel:"Question", scoreLabel:"Score",
+    tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
+    tierMid:"Pas mal ! Encore quelques points à consolider.",
+    tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
+    visits:"visite(s) sur ce test"
+  };
+
+  const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
   const levelScreen = document.getElementById('levelScreen');
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
@@ -150,23 +392,24 @@
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
+  const langSelect = document.getElementById('langSelect');
+  const langLoading = document.getElementById('langLoading');
   let currentLevel = null;
   let currentLang = 'fr';
   let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function tr(dict, lang) { return dict[lang] || dict.fr; }
 
   function renderQuiz(level, lang) {
     currentLevel = level;
-    const QUIZ = LEVELS[level];
+    const QUIZ = cache[lang].levels[level];
     form.innerHTML = QUIZ.map(function(q, i) {
-      const opts = tr(q.options, lang).map(function(o, j) {
+      const opts = q.options.map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
-      return '<div class="qcard"><div class="qnum">' + esc(UI.questionLabel[lang] || UI.questionLabel.fr) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(tr(q.q, lang)) + '</p><div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(tr(q.explain, lang)) + '</div></div>';
+      return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
@@ -178,43 +421,60 @@
   }
 
   function applyStaticUI(lang) {
+    const UI = cache[lang].ui;
     document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.getElementById('backText').textContent = tr(UI.back, lang);
-    document.getElementById('h1El').textContent = tr(UI.h1, lang);
-    document.getElementById('subEl').textContent = tr(UI.sub, lang);
-    document.getElementById('footerCopyEl').textContent = tr(UI.footerCopy, lang);
-    document.getElementById('footerLinkEl').textContent = tr(UI.footerBack, lang);
-    document.getElementById('levelDebTitle').textContent = tr(UI.levelDebTitle, lang);
-    document.getElementById('levelDebDesc').textContent = tr(UI.levelDebDesc, lang);
-    document.getElementById('levelIntTitle').textContent = tr(UI.levelIntTitle, lang);
-    document.getElementById('levelIntDesc').textContent = tr(UI.levelIntDesc, lang);
-    document.getElementById('levelAvaTitle').textContent = tr(UI.levelAvaTitle, lang);
-    document.getElementById('levelAvaDesc').textContent = tr(UI.levelAvaDesc, lang);
-    submitBtn.textContent = tr(UI.seeScore, lang);
-    resetBtn.textContent = tr(UI.restart, lang);
-    levelBtn.textContent = tr(UI.changeLevel, lang);
+    document.documentElement.dir = (lang === 'ar' || lang === 'iw' || lang === 'ur' || lang === 'fa' || lang === 'ps' || lang === 'ckb' || lang === 'sd') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI.back;
+    document.getElementById('h1El').textContent = UI.h1;
+    document.getElementById('subEl').textContent = UI.sub;
+    document.getElementById('footerCopyEl').textContent = UI.footerCopy;
+    document.getElementById('footerLinkEl').textContent = UI.footerBack;
+    document.getElementById('levelDebTitle').textContent = UI.levelDebTitle;
+    document.getElementById('levelDebDesc').textContent = UI.levelDebDesc;
+    document.getElementById('levelIntTitle').textContent = UI.levelIntTitle;
+    document.getElementById('levelIntDesc').textContent = UI.levelIntDesc;
+    document.getElementById('levelAvaTitle').textContent = UI.levelAvaTitle;
+    document.getElementById('levelAvaDesc').textContent = UI.levelAvaDesc;
+    submitBtn.textContent = UI.seeScore;
+    resetBtn.textContent = UI.restart;
+    levelBtn.textContent = UI.changeLevel;
     if (visitCount !== null) {
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + (tr(UI.visits, lang));
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + UI.visits;
     }
-    document.querySelectorAll('#langSwitch button').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
   }
 
-  function setLang(lang) {
+  function finishSetLang(lang) {
     currentLang = lang;
     applyStaticUI(lang);
     if (currentLevel && quizScreen.style.display !== 'none') {
       renderQuiz(currentLevel, lang);
     }
     try { localStorage.setItem('site_lang', lang); } catch (e) {}
+    langLoading.classList.remove('show');
+  }
+
+  function setLang(lang) {
+    if (cache[lang]) { finishSetLang(lang); return; }
+    langLoading.classList.add('show');
+    fetch('i18n/quiz-' + lang + '.json')
+      .then(function(r) { if (!r.ok) throw new Error('missing'); return r.json(); })
+      .then(function(data) {
+        const entry = data.quizzes[SLUG];
+        if (!entry) throw new Error('no slug');
+        cache[lang] = { ui: data.ui, levels: entry };
+        finishSetLang(lang);
+      })
+      .catch(function() {
+        // langue pas encore disponible : on reste sur la langue actuelle
+        langLoading.classList.remove('show');
+        langSelect.value = currentLang;
+      });
   }
 
   document.querySelectorAll('.level-btn').forEach(function(b) {
     b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
   });
-  document.querySelectorAll('#langSwitch button').forEach(function(b) {
-    b.addEventListener('click', function() { setLang(b.dataset.lang); });
-  });
+  langSelect.addEventListener('change', function() { setLang(langSelect.value); });
 
   levelBtn.addEventListener('click', function() {
     quizScreen.style.display = 'none';
@@ -224,7 +484,8 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const QUIZ = LEVELS[currentLevel];
+    const QUIZ = cache[currentLang].levels[currentLevel];
+    const UI = cache[currentLang].ui;
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -239,11 +500,11 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = tr(UI.tierLow, currentLang);
-    if (pct >= 80) { tier = 'tier-high'; msg = tr(UI.tierHigh, currentLang); }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = tr(UI.tierMid, currentLang); }
+    let tier = 'tier-low', msg = UI.tierLow;
+    if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = esc(tr(UI.scoreLabel, currentLang)) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
@@ -255,12 +516,14 @@
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;
-      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + tr(UI.visits, currentLang);
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + cache[currentLang].ui.visits;
     })
     .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 
   let __savedLang = 'fr';
   try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  langSelect.value = __savedLang;
+  if (langSelect.value !== __savedLang) { langSelect.value = 'fr'; __savedLang = 'fr'; }
   setLang(__savedLang);
 </script>
 </body>
