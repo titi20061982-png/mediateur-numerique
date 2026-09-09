@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistiques des quiz — Ateliers Médiation Numérique</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0; --bg-soft: #ece9e2; --card: #ffffff; --text: #211f1c;
+    --muted: #6b6559; --border: #e2ded4; --accent: #35604f; --accent-2: #b6562f;
+    --shadow: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #15181a; --bg-soft: #1b1f21; --card: #1e2224; --text: #eceae5;
+      --muted: #a2a29c; --border: #2c3133; --accent: #83c1a6; --accent-2: #ef9169;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; line-height: 1.65; }
+  h1, h2 { font-family: "Fraunces", Georgia, serif; }
+  header { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 1.6rem 1.5rem; }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  .back { display: inline-block; margin-bottom: 0.9rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .back:hover { text-decoration: underline; }
+  .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  main { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  .totalcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.7rem; margin-bottom: 1.6rem; display: flex; gap: 2.5rem; flex-wrap: wrap; box-shadow: var(--shadow); }
+  .totalcard div strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.6rem; color: var(--accent); }
+  .totalcard div span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .row { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom: none; }
+  .row .icon { font-size: 1.2rem; flex: none; width: 1.6rem; text-align: center; }
+  .row .info { flex: 1; min-width: 0; }
+  .row .info a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  .row .info a:hover { color: var(--accent); }
+  .row .barwrap { background: var(--bg-soft); border-radius: 999px; height: 8px; margin-top: 0.4rem; overflow: hidden; }
+  .row .bar { background: var(--accent); height: 100%; border-radius: 999px; transition: width .4s ease; }
+  .row .count { flex: none; font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--accent); min-width: 2.5rem; text-align: right; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.5rem 1.4rem; box-shadow: var(--shadow); }
+  .loading { text-align: center; color: var(--muted); padding: 2rem; font-size: 0.9rem; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2rem 1.5rem 3rem; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">← Retour aux ateliers</a>
+    <div class="eyebrow">📊 Tableau de bord</div>
+    <h1>Statistiques des quiz</h1>
+    <p class="sub">Nombre de visites par test de connaissances — Ateliers Médiation Numérique</p>
+  </div>
+</header>
+<main>
+  <div class="totalcard" id="totalCard">
+    <div><strong id="totalVisits">—</strong><span>Visites totales</span></div>
+    <div><strong id="totalQuizzes">17</strong><span>Quiz</span></div>
+    <div><strong id="topQuiz">—</strong><span>Le plus visité</span></div>
+  </div>
+
+  <div class="card" id="list">
+    <div class="loading">Chargement des statistiques…</div>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="index.html">Retour au site</a>
+</footer>
+<script>
+  const QUIZZES = [
+    { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻", anchor: "premiers-pas" },
+    { slug: "smartphone", title: "Smartphone et tablette", icon: "🖥️", anchor: "premiers-pas" },
+    { slug: "base-adrn", title: "Base ADRN (montage / diagnostic PC)", icon: "🖥️", anchor: "premiers-pas" },
+    { slug: "phishing", title: "Phishing (hameçonnage)", icon: "🔒", anchor: "securite" },
+    { slug: "cyberharcelement", title: "Cyberharcèlement", icon: "🔒", anchor: "securite" },
+    { slug: "identite-numerique", title: "Identité numérique et e-réputation", icon: "🔒", anchor: "securite" },
+    { slug: "vie-privee", title: "Protéger sa vie privée en ligne", icon: "🔒", anchor: "securite" },
+    { slug: "enfant-internet", title: "Accompagner un enfant sur Internet", icon: "🔒", anchor: "securite" },
+    { slug: "caf", title: "Mon compte CAF", icon: "🏛️", anchor: "demarches" },
+    { slug: "france-titres", title: "France Titres (CNI, passeport, permis, carte grise)", icon: "🏛️", anchor: "demarches" },
+    { slug: "impots", title: "Mes impôts en ligne", icon: "🏛️", anchor: "demarches" },
+    { slug: "ameli", title: "Mon espace santé Ameli", icon: "🏛️", anchor: "demarches" },
+    { slug: "retraite", title: "Ma retraite en ligne", icon: "🏛️", anchor: "demarches" },
+    { slug: "cv-lettre", title: "CV et lettre de motivation", icon: "💼", anchor: "pro" },
+    { slug: "formation", title: "Trouver une formation en ligne", icon: "💼", anchor: "pro" },
+    { slug: "ia", title: "Intelligence artificielle : panorama", icon: "🌐", anchor: "culture" },
+    { slug: "facture-telephone", title: "Comprendre sa facture téléphonique", icon: "🌐", anchor: "culture" }
+  ];
+
+  Promise.all(QUIZZES.map(function(q) {
+    return fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + q.slug + '-quiz')
+      .then(function(r) { return r.json(); })
+      .then(function(d) { return { q: q, count: (typeof d.value === 'number' ? d.value : 0) }; })
+      .catch(function() { return { q: q, count: 0 }; });
+  })).then(function(results) {
+    results.sort(function(a, b) { return b.count - a.count; });
+    const max = Math.max.apply(null, results.map(function(r) { return r.count; })) || 1;
+    const total = results.reduce(function(sum, r) { return sum + r.count; }, 0);
+
+    document.getElementById('totalVisits').textContent = total;
+    document.getElementById('topQuiz').textContent = total > 0 ? results[0].q.title.split(' (')[0] : '—';
+
+    const list = document.getElementById('list');
+    list.innerHTML = results.map(function(r) {
+      const pct = Math.round((r.count / max) * 100);
+      return '<div class="row">' +
+        '<div class="icon">' + r.q.icon + '</div>' +
+        '<div class="info"><a href="ateliers/' + r.q.slug + '_quiz.html">' + r.q.title + '</a>' +
+        '<div class="barwrap"><div class="bar" style="width:' + pct + '%"></div></div></div>' +
+        '<div class="count">' + r.count + '</div></div>';
+    }).join('');
+  });
+</script>
+</body>
+</html>
