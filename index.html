@@ -73,6 +73,30 @@
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
   }
 
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 60;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    transition: width .1s linear;
+  }
+
+  .hero::before { animation: heroBreathe 14s ease-in-out infinite; }
+  @keyframes heroBreathe {
+    0%, 100% { filter: blur(60px) saturate(130%); opacity: 0.55; }
+    50% { filter: blur(75px) saturate(160%); opacity: 0.72; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before { animation: none; }
+  }
+
+  .card { transform-style: preserve-3d; will-change: transform; }
+  .card-tilt-glow {
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%);
+    opacity: 0; transition: opacity .25s ease; z-index: 0;
+  }
+  .card:hover .card-tilt-glow { opacity: 1; }
+  .card > * { position: relative; z-index: 1; }
+
   .theme-toggle {
     position: fixed; top: 1.1rem; right: 1.1rem; z-index: 50;
     width: 2.6rem; height: 2.6rem; border-radius: 999px;
@@ -737,6 +761,7 @@
   </div>
 </div>
 
+<div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="theme-toggle" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 
@@ -1110,7 +1135,14 @@
       targets.forEach(function (el) { el.classList.add('reveal', 'in-view'); });
       return;
     }
-    targets.forEach(function (el) { el.classList.add('reveal'); });
+    targets.forEach(function (el) {
+      el.classList.add('reveal');
+      if (el.classList.contains('card')) {
+        var siblings = Array.from(el.parentElement.children);
+        var idx = siblings.indexOf(el);
+        el.style.transitionDelay = (idx * 70) + 'ms';
+      }
+    });
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -1120,6 +1152,47 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     targets.forEach(function (el) { obs.observe(el); });
+  })();
+
+  // Barre de progression de lecture
+  (function () {
+    var bar = document.getElementById('scrollProgress');
+    function update() {
+      var h = document.documentElement;
+      var scrolled = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      var pct = height > 0 ? (scrolled / height) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // Effet 3D au survol des cartes
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.card').forEach(function (card) {
+      var glow = document.createElement('div');
+      glow.className = 'card-tilt-glow';
+      card.insertBefore(glow, card.firstChild);
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = e.clientX - r.left;
+        var y = e.clientY - r.top;
+        var px = x / r.width;
+        var py = y / r.height;
+        var rx = (py - 0.5) * -6;
+        var ry = (px - 0.5) * 6;
+        card.style.transform = 'translateY(-3px) perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+        card.style.setProperty('--mx', (px * 100) + '%');
+        card.style.setProperty('--my', (py * 100) + '%');
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
   })();
 
   // Navigation active selon la section visible

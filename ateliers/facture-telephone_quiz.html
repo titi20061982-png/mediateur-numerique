@@ -50,6 +50,14 @@
   #scoreBanner.tier-high { background: color-mix(in srgb, var(--good) 16%, var(--card)); color: var(--good); border: 1px solid var(--good); }
   #scoreBanner p { margin: 0.4rem 0 0; font-size: 0.92rem; font-weight: 400; color: var(--text); font-family: "Inter", sans-serif; }
 
+  .confetti-piece { position: fixed; top: -10px; z-index: 999; border-radius: 2px; pointer-events: none; animation: confettiFall linear forwards; }
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(540deg); opacity: 0.3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .confetti-piece { display: none; }
+  }
+
   .qcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1.7rem; margin-bottom: 1.1rem; box-shadow: var(--shadow); }
   .qcard .qnum { color: var(--accent); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
   .qcard .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 1rem; }
@@ -400,6 +408,24 @@
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+  function launchConfetti() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const colors = ['#35604f', '#b6562f', '#2b5d8a', '#e0b04a', '#83c1a6'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const size = 6 + Math.random() * 6;
+      el.style.left = (Math.random() * 100) + 'vw';
+      el.style.width = size + 'px';
+      el.style.height = (size * 0.4) + 'px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+      el.style.animationDelay = (Math.random() * 0.3) + 's';
+      document.body.appendChild(el);
+      setTimeout(function () { el.remove(); }, 4200);
+    }
+  }
+
   function renderQuiz(level, lang) {
     currentLevel = level;
     const QUIZ = cache[lang].levels[level];
@@ -506,6 +532,7 @@
     banner.className = 'show ' + tier;
     banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (tier === 'tier-high') { launchConfetti(); }
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
   });
