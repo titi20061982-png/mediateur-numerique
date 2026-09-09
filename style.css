@@ -326,6 +326,19 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   .qr-box { position: static; margin: 1.1rem auto 0; }
 }
 
+.inscription-badge {
+  position: absolute; top: 1.3rem; left: 1.3rem; z-index: 5;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.85rem;
+  color: #fff; text-decoration: none; background: var(--accent);
+  border: 1px solid var(--border); padding: 0.6rem 1rem; border-radius: 999px;
+  box-shadow: var(--shadow); transition: transform .15s ease, filter .15s ease;
+}
+.inscription-badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
+@media (max-width: 760px) {
+  .inscription-badge { position: static; display: flex; width: fit-content; margin: 0 auto 1.2rem; }
+}
+
 .hero-art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; color: var(--accent); opacity: 0.5; }
 .hero-art .warm { color: var(--accent-2); }
 .hero-art .blue { color: var(--accent-3); }
