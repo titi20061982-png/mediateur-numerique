@@ -122,8 +122,13 @@
 
   .catnav a.active { color: #fff; background: var(--accent); border-color: var(--accent); }
 
-  .site-intro { max-width: 720px; margin: 0.4rem auto 2.4rem; padding: 1.7rem 1.9rem; text-align: left; }
-  .site-intro:hover { transform: none; border-color: var(--border); }
+  .site-intro {
+    max-width: 720px; margin: 0.4rem auto 2.4rem; padding: 1.7rem 1.9rem; text-align: left;
+    background: color-mix(in srgb, var(--accent) 7%, var(--card));
+    border: 1.5px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+    box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 14px 32px rgba(0,0,0,.14);
+  }
+  .site-intro:hover { transform: none; border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
   .site-intro h2 { margin: 0 0 1rem; font-size: 1.15rem; font-weight: 600; text-align: center; }
   .site-intro p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; margin: 0 0 0.9rem; }
   .site-intro p:last-child { margin-bottom: 0; }
