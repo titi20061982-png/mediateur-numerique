@@ -231,14 +231,31 @@
     max-width: 620px;
     font-size: 1.02rem;
   }
+  .cta-btn {
+    display: inline-block; margin: 1.5rem 0 0; font-family: "Inter", sans-serif;
+    font-weight: 600; font-size: 0.98rem; color: #fff; text-decoration: none;
+    background: var(--accent); padding: 0.85rem 1.8rem; border-radius: 999px;
+    box-shadow: var(--shadow); transition: transform .18s ease, filter .18s ease;
+  }
+  .cta-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
   .stats {
     display: flex;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 1rem;
     margin: 2.1rem 0 1.6rem;
     flex-wrap: wrap;
   }
-  .stats div { text-align: center; }
+  .stats div {
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.9rem 1.6rem;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .stats div:hover { transform: translateY(-2px); border-color: var(--accent); }
   .stats strong {
     display: block;
     font-family: "Fraunces", serif;
@@ -480,6 +497,9 @@
   .about-card h3 { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 600; }
   .about-card p { margin: 0; font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
   .about-card strong { color: var(--text); }
+  .about-more-link { text-align: center; margin: 1.3rem 0 0; }
+  .about-more-link a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .about-more-link a:hover { text-decoration: underline; }
 
   .stats-total { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
   .stats-total div strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.6rem; color: var(--accent); }
@@ -506,6 +526,7 @@
   }
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+  .footlinks { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.88rem; font-weight: 500; }
 
   @media (max-width: 640px) {
     .hero { padding: 3.2rem 1.2rem 2.6rem; }
@@ -816,6 +837,7 @@
     <p>Supports pédagogiques créés dans le cadre d'activités de médiation numérique
     (Titre Professionnel Médiateur Numérique, AFPA Guéret) — pour le grand public,
     les débutants et les seniors.</p>
+    <a class="cta-btn" href="#premiers-pas">🚀 Découvrir les ateliers</a>
     <div class="stats">
       <div><strong>17</strong><span>Ateliers</span></div>
       <div><strong>42</strong><span>Supports</span></div>
@@ -823,6 +845,8 @@
     </div>
     <div class="meta-links">
       <a href="https://github.com/titi20061982-png/mediateur-numerique">↗ Dépôt GitHub</a>
+      <a href="a-propos.html">🌳 À propos</a>
+      <a href="prestations.html">💼 Prestations</a>
       <a href="LICENSE">Licence</a>
       <a href="stats.html">📊 Statistiques</a>
     </div>
@@ -853,6 +877,7 @@
     <a href="#pro">💼 Insertion professionnelle</a>
     <a href="#culture">🌐 Culture numérique</a>
     <a href="#apropos">🌳 À propos</a>
+    <a href="prestations.html">🧰 Prestations</a>
   </nav>
 </div>
 
@@ -1095,6 +1120,7 @@
         <p>Tout le contenu (textes, fiches, quiz) est écrit par mes soins dans le cadre de ma formation. Le site lui-même — traduction en plusieurs langues, quiz interactifs à plusieurs niveaux, accessibilité, statistiques — a été construit avec l'aide de Claude (Anthropic) comme assistant de développement, sous ma direction. Le code est public sur GitHub, sous licence ouverte.</p>
       </div>
     </div>
+    <p class="about-more-link"><a href="a-propos.html">Voir la page « À propos » complète (mission, valeurs) →</a></p>
   </section>
 
   <div class="search-no-results" id="searchNoResults">
@@ -1113,6 +1139,12 @@
 </div>
 
 <footer>
+  <div class="footlinks">
+    <a href="https://github.com/titi20061982-png/mediateur-numerique">↗ Dépôt GitHub</a>
+    <a href="a-propos.html">🌳 À propos</a>
+    <a href="prestations.html">💼 Prestations</a>
+    <a href="stats.html">📊 Statistiques</a>
+  </div>
   © 2026 titi_23 — Tous droits réservés. Voir la <a href="LICENSE">licence</a>.
   Toute réutilisation nécessite une autorisation préalable de l'auteur.
 </footer>
