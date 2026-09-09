@@ -431,6 +431,11 @@
   .badge.quiz { background: var(--badge-quiz); }
   .quiz-count { flex: none; font-size: 0.68rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
 
+  .about-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .about-card h3 { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 600; }
+  .about-card p { margin: 0; font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+  .about-card strong { color: var(--text); }
+
   .stats-total { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
   .stats-total div strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.6rem; color: var(--accent); }
   .stats-total div span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -798,6 +803,7 @@
   <a href="#demarches">🏛️ Démarches administratives</a>
   <a href="#pro">💼 Insertion professionnelle</a>
   <a href="#culture">🌐 Culture numérique</a>
+  <a href="#apropos">🌳 À propos</a>
 </nav>
 
 <main>
@@ -1006,6 +1012,34 @@
     </div>
   </section>
 
+  <section class="category about-section" id="apropos">
+    <div class="category-head">
+      <span class="icon">🌳</span>
+      <div>
+        <h2>À propos de ce projet</h2>
+        <p>Pourquoi Yggdrasil, et pour qui sont faits ces ateliers.</p>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-card card">
+        <h3>👋 Qui je suis</h3>
+        <p>Je m'appelle Cédric Waltener. Je prépare le Titre Professionnel <strong>Médiateur Numérique</strong> à l'AFPA de Guéret, avec une spécialisation en reconditionnement de matériel informatique. Ce site rassemble les supports pédagogiques que j'ai conçus pendant ma formation : présentations, fiches pratiques, exercices et quiz, pensés pour être utilisés en atelier, en autonomie, ou en accompagnement individuel.</p>
+      </div>
+      <div class="about-card card">
+        <h3>🌳 Pourquoi "Yggdrasil" ?</h3>
+        <p>Dans la mythologie nordique, Yggdrasil est l'arbre-monde qui relie les différents mondes entre eux. C'est l'image que je voulais pour ce projet : un numérique qui relie, plutôt qu'un numérique qui exclut. Chaque atelier est une branche — smartphone, sécurité, démarches administratives, insertion professionnelle — reliée au même tronc : rendre chacun plus autonome face aux outils numériques du quotidien.</p>
+      </div>
+      <div class="about-card card">
+        <h3>🎯 Pour qui</h3>
+        <p>Ces supports s'adressent en priorité au grand public, aux débutants et aux seniors — les personnes qui, trop souvent, n'osent pas poser leurs questions "de base" sur un ordinateur ou un smartphone. Rien n'est présumé acquis : chaque fiche part du principe qu'il n'y a pas de question bête, seulement des outils mal expliqués.</p>
+      </div>
+      <div class="about-card card">
+        <h3>🛠️ Comment c'est fait</h3>
+        <p>Tout le contenu (textes, fiches, quiz) est écrit par mes soins dans le cadre de ma formation. Le site lui-même — traduction en plusieurs langues, quiz interactifs à plusieurs niveaux, accessibilité, statistiques — a été construit avec l'aide de Claude (Anthropic) comme assistant de développement, sous ma direction. Le code est public sur GitHub, sous licence ouverte.</p>
+      </div>
+    </div>
+  </section>
+
   <p class="search-no-results" id="searchNoResults">🔎 Aucun résultat pour cette recherche. Essayez un autre mot-clé.</p>
 
 </main>
@@ -1189,7 +1223,7 @@
     var noResults = document.getElementById('searchNoResults');
     var countEl = document.getElementById('searchCount');
     var catnav = document.getElementById('catnav');
-    var categories = Array.from(document.querySelectorAll('main > section.category')).filter(function (s) { return s.id !== 'stats-section'; });
+    var categories = Array.from(document.querySelectorAll('main > section.category')).filter(function (s) { return s.id !== 'stats-section' && s.id !== 'apropos'; });
 
     input.addEventListener('input', function () {
       var q = input.value.trim().toLowerCase();
