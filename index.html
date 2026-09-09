@@ -122,8 +122,11 @@
 
   .catnav a.active { color: #fff; background: var(--accent); border-color: var(--accent); }
 
-  .site-intro { max-width: 720px; margin: 0.4rem auto 2.4rem; padding: 0 1.5rem; text-align: center; }
-  .site-intro p { color: var(--muted); font-size: 0.96rem; line-height: 1.75; margin: 0; }
+  .site-intro { max-width: 720px; margin: 0.4rem auto 2.4rem; padding: 1.7rem 1.9rem; text-align: left; }
+  .site-intro:hover { transform: none; border-color: var(--border); }
+  .site-intro h2 { margin: 0 0 1rem; font-size: 1.15rem; font-weight: 600; text-align: center; }
+  .site-intro p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; margin: 0 0 0.9rem; }
+  .site-intro p:last-child { margin-bottom: 0; }
   .site-intro strong { color: var(--text); }
 
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
@@ -848,8 +851,11 @@
 
 <main>
 
-  <section class="site-intro">
-    <p>Chaque atelier propose une ou plusieurs <strong>fiches</strong> (PDF à consulter, imprimer ou télécharger) pour apprendre à votre rythme, et un <strong>quiz</strong> interactif pour vérifier ce que vous avez retenu — avec 3 niveaux de difficulté et une traduction en plusieurs langues. Parcourez les catégories ci-dessus, utilisez la recherche, ou laissez le hasard 🎲 choisir pour vous.</p>
+  <section class="site-intro card">
+    <h2>📖 Comment utiliser ce site</h2>
+    <p>Ce site regroupe les <strong>17 ateliers</strong> créés dans le cadre de ma formation de Médiateur Numérique (Titre Professionnel, AFPA Guéret). Chaque atelier est indépendant : vous pouvez piocher uniquement ce qui vous intéresse, dans l'ordre qui vous convient, sans rien avoir à installer.</p>
+    <p>Selon les ateliers, deux types de supports sont proposés : des <strong>fiches</strong> (PDF à consulter en ligne, imprimer ou télécharger) qui expliquent pas à pas une notion ou un outil numérique, et un <strong>quiz</strong> interactif pour vérifier ce que vous avez retenu — avec 3 niveaux de difficulté (débutant, intermédiaire, avancé) et une traduction disponible en plusieurs langues.</p>
+    <p>Pour naviguer : utilisez les catégories ou la recherche 🔎 ci-dessus, marquez vos ateliers préférés avec l'étoile ⭐ pour les retrouver facilement, ou laissez le hasard 🎲 vous en proposer un si vous ne savez pas par où commencer. Bonne découverte !</p>
   </section>
 
   <section class="category" id="premiers-pas">
