@@ -37,7 +37,7 @@
     --shadow: 0 1px 2px rgba(30,25,15,0.04), 0 8px 24px rgba(30,25,15,0.06);
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --bg: #15181a;
       --bg-soft: #1b1f21;
       --card: #1e2224;
@@ -55,6 +55,71 @@
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
     }
   }
+  :root[data-theme="dark"] {
+    --bg: #15181a;
+    --bg-soft: #1b1f21;
+    --card: #1e2224;
+    --text: #eceae5;
+    --muted: #a2a29c;
+    --border: #2c3133;
+    --accent: #83c1a6;
+    --accent-2: #ef9169;
+    --accent-3: #6ea8dc;
+    --accent-soft: #22302a;
+    --badge-docx: #7bb0ff;
+    --badge-pptx: #ff9e78;
+    --badge-pdf: #ff8177;
+    --badge-quiz: #2f7d4f;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+
+  .theme-toggle {
+    position: fixed; top: 1.1rem; right: 1.1rem; z-index: 50;
+    width: 2.6rem; height: 2.6rem; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
+    cursor: pointer; font-size: 1.15rem; display: flex; align-items: center; justify-content: center;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .theme-toggle:hover { transform: scale(1.08) rotate(12deg); border-color: var(--accent); }
+
+  .back-to-top {
+    position: fixed; bottom: 1.4rem; right: 1.1rem; z-index: 50;
+    width: 2.8rem; height: 2.8rem; border-radius: 999px;
+    background: var(--accent); color: #fff; border: none; box-shadow: var(--shadow);
+    cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .back-to-top:hover { filter: brightness(1.1); }
+
+  @keyframes twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+  .site-mesh circle { animation: twinkle 4s ease-in-out infinite; transform-origin: center; }
+  .site-mesh circle:nth-of-type(2n) { animation-delay: -1.3s; animation-duration: 3.2s; }
+  .site-mesh circle:nth-of-type(3n) { animation-delay: -2.1s; animation-duration: 5s; }
+  .site-mesh circle:nth-of-type(5n) { animation-delay: -0.6s; animation-duration: 3.8s; }
+  @media (prefers-reduced-motion: reduce) {
+    .site-mesh circle { animation: none; }
+  }
+
+  .catnav a.active { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  .card { position: relative; overflow: hidden; }
+  .card:hover { box-shadow: 0 4px 10px rgba(0,0,0,.06), 0 0 0 1px var(--accent), 0 12px 32px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .card::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(135deg, var(--accent), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .25s ease; pointer-events: none;
+  }
+  .card:hover::before { opacity: 1; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -672,6 +737,9 @@
   </div>
 </div>
 
+<button type="button" class="theme-toggle" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+
 <nav class="catnav">
   <a href="#premiers-pas">🖥️ Premiers pas</a>
   <a href="#securite">🔒 Sécurité &amp; vie privée</a>
@@ -965,6 +1033,113 @@
           '<div class="stats-count">' + r.count + '</div></div>';
       }).join('');
     });
+  })();
+
+  // Theme toggle (clair/sombre manuel, memorise)
+  (function () {
+    var btn = document.getElementById('themeToggle');
+    var root = document.documentElement;
+    function sysPrefersDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function updateIcon(theme) {
+      var effective = theme || (sysPrefersDark() ? 'dark' : 'light');
+      btn.textContent = effective === 'dark' ? '☀️' : '🌙';
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') { root.setAttribute('data-theme', saved); }
+    updateIcon(saved);
+    btn.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') || (sysPrefersDark() ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      updateIcon(next);
+    });
+  })();
+
+  // Retour en haut
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () {
+      btn.classList.toggle('show', window.scrollY > 500);
+    }, { passive: true });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+
+  // Compteurs animes dans le hero
+  (function () {
+    var els = document.querySelectorAll('.stats strong');
+    var done = false;
+    function animate() {
+      if (done) return;
+      done = true;
+      els.forEach(function (el) {
+        var target = parseInt(el.textContent, 10);
+        if (isNaN(target)) return;
+        var start = 0;
+        var duration = 1100;
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(start + (target - start) * eased);
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(step);
+      });
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // ne rien animer, laisser les valeurs telles quelles
+    } else if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) animate(); });
+      }, { threshold: 0.4 });
+      var statsEl = document.querySelector('.stats');
+      if (statsEl) obs.observe(statsEl);
+    }
+  })();
+
+  // Apparition au defilement (cartes + entetes de categorie)
+  (function () {
+    var targets = document.querySelectorAll('.card, .category-head');
+    if (!('IntersectionObserver' in window) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      targets.forEach(function (el) { el.classList.add('reveal', 'in-view'); });
+      return;
+    }
+    targets.forEach(function (el) { el.classList.add('reveal'); });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function (el) { obs.observe(el); });
+  })();
+
+  // Navigation active selon la section visible
+  (function () {
+    var navLinks = document.querySelectorAll('.catnav a');
+    var sections = document.querySelectorAll('section.category');
+    if (!navLinks.length || !sections.length || !('IntersectionObserver' in window)) return;
+    var map = {};
+    navLinks.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = map[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (a) { a.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { obs.observe(s); });
   })();
 </script>
 
