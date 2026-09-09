@@ -645,6 +645,12 @@ button.secondary:hover { border-color: var(--accent); color: var(--accent); }
   color: var(--text); font-size: 0.95rem; margin-top: 1.2rem;
 }
 .reg-success.show { display: block; }
+.reg-error {
+  display: none; background: color-mix(in srgb, var(--bad) 12%, var(--card));
+  border: 1.5px solid var(--bad); border-radius: 14px; padding: 1.1rem 1.3rem;
+  color: var(--text); font-size: 0.95rem; margin-top: 1.2rem;
+}
+.reg-error.show { display: block; }
 
 @media print {
   body { background: #fff !important; color: #000 !important; }

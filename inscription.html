@@ -84,13 +84,16 @@
         <label for="regMessage">Message</label>
         <textarea id="regMessage" name="message" placeholder="Précisez votre demande, vos disponibilités, ou toute question…"></textarea>
       </div>
-      <p class="reg-hint">En validant, votre messagerie s'ouvrira avec le message déjà rempli : il ne restera plus qu'à cliquer sur « Envoyer ».</p>
+      <p class="reg-hint">En validant, votre demande m'est envoyée directement — vous n'avez rien d'autre à faire.</p>
       <div class="actions">
-        <button type="submit" class="primary">📩 Envoyer ma demande</button>
+        <button type="submit" class="primary" id="regSubmitBtn">📩 Envoyer ma demande</button>
       </div>
     </form>
     <div class="reg-success" id="regSuccess">
-      ✅ Votre messagerie s'est ouverte avec votre demande pré-remplie. Il ne reste plus qu'à cliquer sur <strong>Envoyer</strong> pour qu'elle me parvienne. Si rien ne s'est ouvert, écrivez-moi directement à <strong>waltenercedric@proton.me</strong>.
+      ✅ Votre demande a bien été envoyée. Je vous recontacterai bientôt pour organiser la séance. Si vous n'avez pas de nouvelles sous quelques jours, écrivez-moi directement à <strong>waltenercedric@proton.me</strong>.
+    </div>
+    <div class="reg-error" id="regError">
+      ❌ L'envoi a échoué. Réessayez dans un instant, ou écrivez-moi directement à <strong>waltenercedric@proton.me</strong>.
     </div>
   </div>
 </main>
@@ -152,29 +155,48 @@
 
   document.getElementById('regForm').addEventListener('submit', function (e) {
     e.preventDefault();
+    var form = document.getElementById('regForm');
+    var submitBtn = document.getElementById('regSubmitBtn');
+    var successBox = document.getElementById('regSuccess');
+    var errorBox = document.getElementById('regError');
+    errorBox.classList.remove('show');
+
     var nom = document.getElementById('regNom').value.trim();
     var prenom = document.getElementById('regPrenom').value.trim();
     var email = document.getElementById('regEmail').value.trim();
     var atelier = document.getElementById('regAtelier').value;
     var message = document.getElementById('regMessage').value.trim();
 
-    var subject = 'Inscription atelier — ' + atelier;
-    var body =
-      'Nom : ' + nom + '\n' +
-      'Prénom : ' + prenom + '\n' +
-      'E-mail : ' + email + '\n' +
-      'Atelier souhaité : ' + atelier + '\n\n' +
-      'Message :\n' + (message || '(aucun message)');
+    var originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ Envoi en cours…';
 
-    var mailto = 'mailto:waltenercedric@proton.me'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
-    window.location.href = mailto;
-
-    var successBox = document.getElementById('regSuccess');
-    successBox.classList.add('show');
-    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    fetch('https://formsubmit.co/ajax/waltenercedric@proton.me', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Inscription atelier — ' + atelier,
+        _template: 'box',
+        _captcha: 'false',
+        Nom: nom,
+        Prénom: prenom,
+        'E-mail': email,
+        'Atelier souhaité': atelier,
+        Message: message || '(aucun message)'
+      })
+    })
+      .then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); })
+      .then(function () {
+        form.style.display = 'none';
+        successBox.classList.add('show');
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        errorBox.classList.add('show');
+        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
   });
 </script>
 </body>
