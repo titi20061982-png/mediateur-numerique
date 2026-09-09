@@ -30,6 +30,7 @@
   --badge-quiz: #35604f;
   --good: #2f7d4f;
   --bad: #b3432f;
+  --font-scale: 1;
   --shadow: 0 1px 2px rgba(30,25,15,0.04), 0 8px 24px rgba(30,25,15,0.06);
 }
 @media (prefers-color-scheme: dark) {
@@ -94,7 +95,7 @@
 
 /* ---------- 2. Reset + typographie de base ---------- */
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: calc(16px * var(--font-scale)); }
 body {
   margin: 0;
   background:
@@ -533,3 +534,51 @@ button.primary { font-family: "Inter", sans-serif; font-weight: 600; font-size: 
 button.primary:hover { opacity: 0.9; }
 button.secondary { font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.95rem; background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 0.75rem 1.6rem; cursor: pointer; }
 button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- 16. Fiches (ateliers/*.html, hors quiz) ----------
+   Reprend uniquement les classes deja utilisees dans les fiches
+   existantes (aucune classe nouvelle), toutes deja pilotees par les
+   variables de couleur ci-dessus. Pas encore reliee aux fiches
+   elles-memes (voir le plan de migration, README.md). */
+
+.lang-switch { margin-top: 1rem; display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+.lang-switch button { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; }
+.lang-switch button:hover { border-color: var(--accent); color: var(--accent); }
+.lang-switch button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.slides { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2.5rem; }
+.slide { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+.slide img { display: block; width: 100%; height: auto; }
+.slide { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.slide.in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .slide { opacity: 1; transform: none; transition: none; } }
+
+.text-toggle {
+  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+  padding: 0.5rem 1.1rem; font-size: 0.88rem; color: var(--text); font-weight: 500;
+  margin-bottom: 1rem; list-style: none;
+}
+.text-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.text-toggle::-webkit-details-marker { display: none; }
+.text-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem 2.1rem; }
+.text-card p { margin: 0 0 1rem; font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+.text-card p:last-child { margin-bottom: 0; }
+.text-card p.lead { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 1.3rem; }
+.text-card p.dim { color: var(--muted); font-size: 0.9rem; }
+.text-card .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
+
+.a11y-controls { display: inline-flex; gap: 0.35rem; margin-top: 0.6rem; }
+.a11y-controls button { font-family: "Inter", sans-serif; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--border); background: var(--card); color: var(--text); width: 2.1rem; height: 2.1rem; border-radius: 999px; cursor: pointer; }
+.a11y-controls button:hover { border-color: var(--accent); color: var(--accent); }
+
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .lang-switch, .a11y-controls, .text-toggle, footer, .back { display: none !important; }
+  details { display: block !important; }
+  .slide { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; margin-bottom: 0.6rem !important; }
+  .text-card { border: none !important; box-shadow: none !important; padding: 0 !important; background: #fff !important; }
+  .text-card p, .text-card p.lead { color: #000 !important; }
+  .wrap, main { max-width: 100% !important; }
+  header { border-bottom: 2px solid #000 !important; background: #fff !important; }
+}
