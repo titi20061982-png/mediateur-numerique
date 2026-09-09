@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,95 +73,84 @@
     <div class="eyebrow">🌐 Intelligence artificielle : panorama</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 6</div>
-      <p class="qtext">L'IA générative "comprend"-elle le monde comme un humain ?</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Oui, exactement pareil</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Non, elle prédit le mot ou le pixel le plus probable</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Oui mais plus lentement</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Cela dépend uniquement du modèle</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 L'IA générative ne "comprend" pas : elle prédit statistiquement ce qui vient probablement après, à partir de ce qu'elle a appris.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 6</div>
-      <p class="qtext">Quand une IA invente une fausse information avec assurance, on appelle ça :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Un bug</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Une hallucination</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Un virus</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Une mise à jour</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 On parle d'"hallucination" quand une IA invente un fait ou une source de manière plausible mais fausse.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 6</div>
-      <p class="qtext">Selon le Parlement européen (AI Act), un contenu 100 % généré par IA sans intervention humaine créative est :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Automatiquement protégé par le droit d'auteur</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Non protégeable en l'état actuel du droit</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Interdit à la vente</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Toujours gratuit</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 En France, une œuvre n'est protégée que si elle porte l'empreinte de la personnalité d'un auteur humain.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 6</div>
-      <p class="qtext">Que faut-il éviter de saisir dans un chatbot IA sans consentement explicite ?</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Des questions générales</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Des données de santé ou bancaires</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Des demandes de résumé</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Rien, tout est sans risque</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Il ne faut jamais saisir de données de santé, d'origine ou d'opinions dans un chatbot sans nécessité claire et consentement explicite.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 6</div>
-      <p class="qtext">Un agent IA, contrairement à un simple chatbot :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Se contente de répondre à une question</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Planifie et exécute seul une suite d'actions</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Ne fonctionne que hors ligne</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Ne peut jamais se tromper</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Un agent IA planifie et exécute des actions pour atteindre un objectif, sans validation à chaque étape.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 6 / 6</div>
-      <p class="qtext">Parmi ces IA, laquelle est française et hébergée en France/UE ?</p>
-      <div id="opts5">
-      <label class="opt"><input type="radio" name="q5" value="0" required><span>ChatGPT</span></label>
-      <label class="opt"><input type="radio" name="q5" value="1" required><span>Le Chat (Mistral AI)</span></label>
-      <label class="opt"><input type="radio" name="q5" value="2" required><span>Gemini</span></label>
-      <label class="opt"><input type="radio" name="q5" value="3" required><span>Copilot</span></label>
-      </div>
-      <div class="explain" id="explain5">💡 Le Chat, développé par Mistral AI, est hébergé en France/UE, contrairement à la plupart des autres IA citées.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"L\u0027IA générative \"comprend\"-elle le monde comme un humain ?","options":["Oui, exactement pareil","Non, elle prédit le mot ou le pixel le plus probable","Oui mais plus lentement","Cela dépend uniquement du modèle"],"correct":1,"explain":"L\u0027IA générative ne \"comprend\" pas : elle prédit statistiquement ce qui vient probablement après, à partir de ce qu\u0027elle a appris."},{"q":"Quand une IA invente une fausse information avec assurance, on appelle ça :","options":["Un bug","Une hallucination","Un virus","Une mise à jour"],"correct":1,"explain":"On parle d\u0027\"hallucination\" quand une IA invente un fait ou une source de manière plausible mais fausse."},{"q":"Selon le Parlement européen (AI Act), un contenu 100 % généré par IA sans intervention humaine créative est :","options":["Automatiquement protégé par le droit d\u0027auteur","Non protégeable en l\u0027état actuel du droit","Interdit à la vente","Toujours gratuit"],"correct":1,"explain":"En France, une œuvre n\u0027est protégée que si elle porte l\u0027empreinte de la personnalité d\u0027un auteur humain."},{"q":"Que faut-il éviter de saisir dans un chatbot IA sans consentement explicite ?","options":["Des questions générales","Des données de santé ou bancaires","Des demandes de résumé","Rien, tout est sans risque"],"correct":1,"explain":"Il ne faut jamais saisir de données de santé, d\u0027origine ou d\u0027opinions dans un chatbot sans nécessité claire et consentement explicite."},{"q":"Un agent IA, contrairement à un simple chatbot :","options":["Se contente de répondre à une question","Planifie et exécute seul une suite d\u0027actions","Ne fonctionne que hors ligne","Ne peut jamais se tromper"],"correct":1,"explain":"Un agent IA planifie et exécute des actions pour atteindre un objectif, sans validation à chaque étape."},{"q":"Parmi ces IA, laquelle est française et hébergée en France/UE ?","options":["ChatGPT","Le Chat (Mistral AI)","Gemini","Copilot"],"correct":1,"explain":"Le Chat, développé par Mistral AI, est hébergé en France/UE, contrairement à la plupart des autres IA citées."}];
+  const LEVELS = {"debutant":[{"q":"IA est l\u0027abréviation de :","options":["Internet Avancé","Intelligence Artificielle","Interface Automatique","Innovation Appliquée"],"correct":1,"explain":"IA signifie Intelligence Artificielle."},{"q":"ChatGPT est un exemple de :","options":["Moteur de recherche classique","Chatbot / assistant IA","Antivirus","Réseau social"],"correct":1,"explain":"ChatGPT est un assistant IA conversationnel (chatbot)."},{"q":"Une IA peut-elle se tromper tout en semblant sûre d\u0027elle ?","options":["Non, jamais","Oui, c\u0027est ce qu\u0027on appelle une hallucination","Seulement les IA gratuites","Seulement sur les images"],"correct":1,"explain":"L\u0027IA peut générer de fausses informations avec assurance : on parle d\u0027hallucination."}],"intermediaire":[{"q":"L\u0027IA générative \"comprend\"-elle le monde comme un humain ?","options":["Oui, exactement pareil","Non, elle prédit le mot ou le pixel le plus probable","Oui mais plus lentement","Cela dépend uniquement du modèle"],"correct":1,"explain":"L\u0027IA générative ne \"comprend\" pas : elle prédit statistiquement ce qui vient probablement après, à partir de ce qu\u0027elle a appris."},{"q":"Quand une IA invente une fausse information avec assurance, on appelle ça :","options":["Un bug","Une hallucination","Un virus","Une mise à jour"],"correct":1,"explain":"On parle d\u0027\"hallucination\" quand une IA invente un fait ou une source de manière plausible mais fausse."},{"q":"Selon le Parlement européen (AI Act), un contenu 100 % généré par IA sans intervention humaine créative est :","options":["Automatiquement protégé par le droit d\u0027auteur","Non protégeable en l\u0027état actuel du droit","Interdit à la vente","Toujours gratuit"],"correct":1,"explain":"En France, une œuvre n\u0027est protégée que si elle porte l\u0027empreinte de la personnalité d\u0027un auteur humain."},{"q":"Que faut-il éviter de saisir dans un chatbot IA sans consentement explicite ?","options":["Des questions générales","Des données de santé ou bancaires","Des demandes de résumé","Rien, tout est sans risque"],"correct":1,"explain":"Il ne faut jamais saisir de données de santé, d\u0027origine ou d\u0027opinions dans un chatbot sans nécessité claire et consentement explicite."},{"q":"Un agent IA, contrairement à un simple chatbot :","options":["Se contente de répondre à une question","Planifie et exécute seul une suite d\u0027actions","Ne fonctionne que hors ligne","Ne peut jamais se tromper"],"correct":1,"explain":"Un agent IA planifie et exécute des actions pour atteindre un objectif, sans validation à chaque étape."},{"q":"Parmi ces IA, laquelle est française et hébergée en France/UE ?","options":["ChatGPT","Le Chat (Mistral AI)","Gemini","Copilot"],"correct":1,"explain":"Le Chat, développé par Mistral AI, est hébergé en France/UE, contrairement à la plupart des autres IA citées."}],"avance":[{"q":"Selon les chiffres cités, la consommation électrique mondiale des data centers pour l\u0027IA en 2024 est d\u0027environ :","options":["45 TWh","415 TWh","4 150 TWh","4,15 TWh"],"correct":1,"explain":"415 TWh en 2024, soit presque la consommation électrique annuelle totale de la France (449 TWh)."},{"q":"Gartner prévoit que d\u0027ici 2028, quel pourcentage d\u0027applications d\u0027entreprise intégreront de l\u0027IA agentique ?","options":["10 %","33 %","75 %","100 %"],"correct":1,"explain":"Gartner prévoit 33 % d\u0027ici 2028, contre moins de 1 % en 2024."},{"q":"Combien coûterait l\u0027entraînement d\u0027un grand modèle comme GPT-4, selon le repère chiffré cité ?","options":["Plus de 100 000 dollars","Plus de 1 million de dollars","Plus de 100 millions de dollars","Moins de 10 000 dollars"],"correct":2,"explain":"L\u0027entraînement d\u0027un grand modèle coûterait plus de 100 millions de dollars, pour plusieurs milliers de MWh consommés."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -180,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/ia-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

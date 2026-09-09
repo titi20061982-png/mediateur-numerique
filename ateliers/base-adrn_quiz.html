@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,84 +73,84 @@
     <div class="eyebrow">🖥️ Base ADRN (montage / diagnostic PC)</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 5</div>
-      <p class="qtext">La carte mère sert avant tout à :</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Stocker les fichiers</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Relier et faire communiquer tous les composants entre eux</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Refroidir le processeur</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Afficher l'image à l'écran</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 La carte mère est le "chef d'orchestre" qui relie CPU, RAM, stockage et périphériques.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 5</div>
-      <p class="qtext">Le CPU (processeur) est souvent comparé à :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Le disque dur</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Le cerveau de la machine</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>L'alimentation</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>L'écran</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Le CPU exécute les instructions et effectue les calculs : c'est le cerveau de l'ordinateur.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 5</div>
-      <p class="qtext">La RAM (mémoire vive) est :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Permanente, même éteinte</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Volatile : son contenu s'efface à chaque extinction</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Un logiciel</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Le système d'exploitation</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Contrairement au stockage, la RAM est volatile : elle perd son contenu dès que l'ordinateur s'éteint.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 5</div>
-      <p class="qtext">Pour reconnaître une barrette DDR4 sans étiquette, on regarde surtout :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>La couleur</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Le nombre de broches et la forme du connecteur</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Le poids</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>La taille de la boîte</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Le nombre de broches et la position de l'encoche du connecteur permettent d'identifier la génération de RAM.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 5</div>
-      <p class="qtext">Le socket du processeur détermine :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>La couleur de la carte mère</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>La compatibilité avec une famille précise de processeurs</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>La vitesse d'Internet</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Le prix de l'ordinateur</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Chaque socket (ex. LGA1700, AM5) n'accepte qu'une famille de processeurs bien précise.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"La carte mère sert avant tout à :","options":["Stocker les fichiers","Relier et faire communiquer tous les composants entre eux","Refroidir le processeur","Afficher l\u0027image à l\u0027écran"],"correct":1,"explain":"La carte mère est le \"chef d\u0027orchestre\" qui relie CPU, RAM, stockage et périphériques."},{"q":"Le CPU (processeur) est souvent comparé à :","options":["Le disque dur","Le cerveau de la machine","L\u0027alimentation","L\u0027écran"],"correct":1,"explain":"Le CPU exécute les instructions et effectue les calculs : c\u0027est le cerveau de l\u0027ordinateur."},{"q":"La RAM (mémoire vive) est :","options":["Permanente, même éteinte","Volatile : son contenu s\u0027efface à chaque extinction","Un logiciel","Le système d\u0027exploitation"],"correct":1,"explain":"Contrairement au stockage, la RAM est volatile : elle perd son contenu dès que l\u0027ordinateur s\u0027éteint."},{"q":"Pour reconnaître une barrette DDR4 sans étiquette, on regarde surtout :","options":["La couleur","Le nombre de broches et la forme du connecteur","Le poids","La taille de la boîte"],"correct":1,"explain":"Le nombre de broches et la position de l\u0027encoche du connecteur permettent d\u0027identifier la génération de RAM."},{"q":"Le socket du processeur détermine :","options":["La couleur de la carte mère","La compatibilité avec une famille précise de processeurs","La vitesse d\u0027Internet","Le prix de l\u0027ordinateur"],"correct":1,"explain":"Chaque socket (ex. LGA1700, AM5) n\u0027accepte qu\u0027une famille de processeurs bien précise."}];
+  const LEVELS = {"debutant":[{"q":"Le stockage d\u0027un ordinateur (HDD/SSD/NVMe) sert à :","options":["Calculer les instructions","Conserver les données de façon permanente","Refroidir la machine","Afficher l\u0027image"],"correct":1,"explain":"Le stockage conserve les données de façon permanente, contrairement à la RAM qui est volatile."},{"q":"L\u0027alimentation d\u0027un ordinateur sert à :","options":["Stocker des fichiers","Fournir l\u0027énergie électrique aux composants","Afficher l\u0027écran","Se connecter au Wi-Fi"],"correct":1,"explain":"L\u0027alimentation convertit le courant électrique pour fournir l\u0027énergie nécessaire à tous les composants."}],"intermediaire":[{"q":"La carte mère sert avant tout à :","options":["Stocker les fichiers","Relier et faire communiquer tous les composants entre eux","Refroidir le processeur","Afficher l\u0027image à l\u0027écran"],"correct":1,"explain":"La carte mère est le \"chef d\u0027orchestre\" qui relie CPU, RAM, stockage et périphériques."},{"q":"Le CPU (processeur) est souvent comparé à :","options":["Le disque dur","Le cerveau de la machine","L\u0027alimentation","L\u0027écran"],"correct":1,"explain":"Le CPU exécute les instructions et effectue les calculs : c\u0027est le cerveau de l\u0027ordinateur."},{"q":"La RAM (mémoire vive) est :","options":["Permanente, même éteinte","Volatile : son contenu s\u0027efface à chaque extinction","Un logiciel","Le système d\u0027exploitation"],"correct":1,"explain":"Contrairement au stockage, la RAM est volatile : elle perd son contenu dès que l\u0027ordinateur s\u0027éteint."},{"q":"Pour reconnaître une barrette DDR4 sans étiquette, on regarde surtout :","options":["La couleur","Le nombre de broches et la forme du connecteur","Le poids","La taille de la boîte"],"correct":1,"explain":"Le nombre de broches et la position de l\u0027encoche du connecteur permettent d\u0027identifier la génération de RAM."},{"q":"Le socket du processeur détermine :","options":["La couleur de la carte mère","La compatibilité avec une famille précise de processeurs","La vitesse d\u0027Internet","Le prix de l\u0027ordinateur"],"correct":1,"explain":"Chaque socket (ex. LGA1700, AM5) n\u0027accepte qu\u0027une famille de processeurs bien précise."}],"avance":[{"q":"Une carte graphique dédiée se branche généralement sur quel type de connecteur de la carte mère ?","options":["DIMM","PCIe","SATA","USB"],"correct":1,"explain":"Les cartes graphiques dédiées se branchent sur un slot PCIe de la carte mère."},{"q":"Combien de broches compte une barrette de RAM DDR4 ?","options":["184 broches","240 broches","288 broches","128 broches"],"correct":2,"explain":"La DDR4 compte 288 broches, avec un bord de connecteur légèrement incurvé, comme la DDR5."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -169,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/base-adrn-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

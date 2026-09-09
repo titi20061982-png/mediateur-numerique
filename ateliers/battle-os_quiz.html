@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,95 +73,84 @@
     <div class="eyebrow">💻 Battle OS (Windows / Linux / macOS)</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 6</div>
-      <p class="qtext">Quel système est gratuit à 100 % et parfait pour redonner vie à un vieux PC ?</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Windows</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Linux</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>macOS</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Android</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 Linux est gratuit et fait tourner sans problème des PC que Windows 11 refuse d'installer.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 6</div>
-      <p class="qtext">Quel système domine largement le jeu vidéo, avec 95 % des jeux disponibles ?</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Windows</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Linux</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>macOS</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>ChromeOS</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Windows reste la référence incontestée pour le gaming (Steam, Xbox, Ubisoft...).</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 6</div>
-      <p class="qtext">Quel système est reconnu pour ne quasiment collecter aucune donnée personnelle ?</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Windows</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Linux</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>macOS</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Ils se valent tous</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Linux est open source, auditable par tous, avec très peu de collecte de données.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 6</div>
-      <p class="qtext">macOS peut-il s'installer légalement sur un PC classique (hors Mac) ?</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Oui, sans problème</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Non, il est réservé aux machines Apple</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Oui, avec Windows 11 installé à côté</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Oui, via une simple clé USB</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 macOS n'est officiellement disponible que sur le matériel Apple.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 6</div>
-      <p class="qtext">Pour tester Linux sans rien installer sur son disque dur, on utilise :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Un antivirus</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Une clé USB en mode "Live"</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Un VPN</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Le Bureau à distance</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Le mode Live depuis une clé USB permet de tester Linux sans rien modifier sur l'ordinateur.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 6 / 6</div>
-      <p class="qtext">LibreOffice, l'alternative gratuite à Microsoft Office, permet d'ouvrir :</p>
-      <div id="opts5">
-      <label class="opt"><input type="radio" name="q5" value="0" required><span>Seulement les fichiers .odt</span></label>
-      <label class="opt"><input type="radio" name="q5" value="1" required><span>Les fichiers Word / Excel / PowerPoint (.docx, .xlsx...)</span></label>
-      <label class="opt"><input type="radio" name="q5" value="2" required><span>Seulement les PDF</span></label>
-      <label class="opt"><input type="radio" name="q5" value="3" required><span>Aucun fichier Microsoft</span></label>
-      </div>
-      <div class="explain" id="explain5">💡 LibreOffice est compatible avec les formats Microsoft les plus courants.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Quel système est gratuit à 100 % et parfait pour redonner vie à un vieux PC ?","options":["Windows","Linux","macOS","Android"],"correct":1,"explain":"Linux est gratuit et fait tourner sans problème des PC que Windows 11 refuse d\u0027installer."},{"q":"Quel système domine largement le jeu vidéo, avec 95 % des jeux disponibles ?","options":["Windows","Linux","macOS","ChromeOS"],"correct":0,"explain":"Windows reste la référence incontestée pour le gaming (Steam, Xbox, Ubisoft...)."},{"q":"Quel système est reconnu pour ne quasiment collecter aucune donnée personnelle ?","options":["Windows","Linux","macOS","Ils se valent tous"],"correct":1,"explain":"Linux est open source, auditable par tous, avec très peu de collecte de données."},{"q":"macOS peut-il s\u0027installer légalement sur un PC classique (hors Mac) ?","options":["Oui, sans problème","Non, il est réservé aux machines Apple","Oui, avec Windows 11 installé à côté","Oui, via une simple clé USB"],"correct":1,"explain":"macOS n\u0027est officiellement disponible que sur le matériel Apple."},{"q":"Pour tester Linux sans rien installer sur son disque dur, on utilise :","options":["Un antivirus","Une clé USB en mode \"Live\"","Un VPN","Le Bureau à distance"],"correct":1,"explain":"Le mode Live depuis une clé USB permet de tester Linux sans rien modifier sur l\u0027ordinateur."},{"q":"LibreOffice, l\u0027alternative gratuite à Microsoft Office, permet d\u0027ouvrir :","options":["Seulement les fichiers .odt","Les fichiers Word / Excel / PowerPoint (.docx, .xlsx...)","Seulement les PDF","Aucun fichier Microsoft"],"correct":1,"explain":"LibreOffice est compatible avec les formats Microsoft les plus courants."}];
+  const LEVELS = {"debutant":[{"q":"Combien de systèmes d\u0027exploitation sont comparés dans Battle OS ?","options":["2","3","4","5"],"correct":1,"explain":"Battle OS compare Windows, Linux et macOS."},{"q":"Lequel de ces mots désigne un système d\u0027exploitation ?","options":["Google","Windows","Wi-Fi","USB"],"correct":1,"explain":"Windows, comme Linux et macOS, est un système d\u0027exploitation."},{"q":"Un ordinateur peut-il fonctionner sans aucun système d\u0027exploitation ?","options":["Oui, facilement","Non, c\u0027est indispensable","Seulement les Mac","Seulement avec Internet"],"correct":1,"explain":"Le système d\u0027exploitation est indispensable pour faire fonctionner un ordinateur."},{"q":"Quel logiciel gratuit remplace Microsoft Office, notamment sous Linux ?","options":["Photoshop","LibreOffice","Zoom","Spotify"],"correct":1,"explain":"LibreOffice est l\u0027alternative gratuite à Microsoft Office."}],"intermediaire":[{"q":"Quel système est gratuit à 100 % et parfait pour redonner vie à un vieux PC ?","options":["Windows","Linux","macOS","Android"],"correct":1,"explain":"Linux est gratuit et fait tourner sans problème des PC que Windows 11 refuse d\u0027installer."},{"q":"Quel système domine largement le jeu vidéo, avec 95 % des jeux disponibles ?","options":["Windows","Linux","macOS","ChromeOS"],"correct":0,"explain":"Windows reste la référence incontestée pour le gaming (Steam, Xbox, Ubisoft...)."},{"q":"Quel système est reconnu pour ne quasiment collecter aucune donnée personnelle ?","options":["Windows","Linux","macOS","Ils se valent tous"],"correct":1,"explain":"Linux est open source, auditable par tous, avec très peu de collecte de données."},{"q":"macOS peut-il s\u0027installer légalement sur un PC classique (hors Mac) ?","options":["Oui, sans problème","Non, il est réservé aux machines Apple","Oui, avec Windows 11 installé à côté","Oui, via une simple clé USB"],"correct":1,"explain":"macOS n\u0027est officiellement disponible que sur le matériel Apple."},{"q":"Pour tester Linux sans rien installer sur son disque dur, on utilise :","options":["Un antivirus","Une clé USB en mode \"Live\"","Un VPN","Le Bureau à distance"],"correct":1,"explain":"Le mode Live depuis une clé USB permet de tester Linux sans rien modifier sur l\u0027ordinateur."},{"q":"LibreOffice, l\u0027alternative gratuite à Microsoft Office, permet d\u0027ouvrir :","options":["Seulement les fichiers .odt","Les fichiers Word / Excel / PowerPoint (.docx, .xlsx...)","Seulement les PDF","Aucun fichier Microsoft"],"correct":1,"explain":"LibreOffice est compatible avec les formats Microsoft les plus courants."}],"avance":[{"q":"Le score final de \"Battle OS\" désigne Linux champion avec combien de points sur 6 rounds ?","options":["8 points","11 points","14 points","5 points"],"correct":1,"explain":"Linux remporte 11 points au tableau final des scores, devant Windows (8) et macOS (5)."},{"q":"Sur quel round Windows l\u0027emporte-t-il le plus largement ?","options":["Sécurité","Gaming","Reconditionnement","Création"],"correct":1,"explain":"Windows domine sans partage le round Gaming, avec 95 % des jeux disponibles en premier lieu sur cet OS."},{"q":"Quelle technologie permet de faire tourner de nombreux jeux Windows sous Linux via Steam ?","options":["WINE seul","Proton","Rosetta","Docker"],"correct":1,"explain":"Proton, intégré à Steam, permet de jouer à de nombreux jeux Windows sous Linux."},{"q":"Pour démarrer sur une clé USB Live, quelle touche presse-t-on généralement au démarrage ?","options":["F5","F12 (ou F2 selon les machines)","Ctrl+Alt+Suppr","Windows+R"],"correct":1,"explain":"F12 ou F2 au démarrage permet d\u0027accéder au menu de démarrage pour choisir la clé USB."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -180,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/battle-os-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

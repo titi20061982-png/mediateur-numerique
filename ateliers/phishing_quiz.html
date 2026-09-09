@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,95 +73,84 @@
     <div class="eyebrow">🔒 Phishing (hameçonnage)</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 6</div>
-      <p class="qtext">Que faire si on reçoit un code de vérification par SMS qu'on n'a pas demandé soi-même ?</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Le donner si on nous le demande gentiment</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Ne jamais le communiquer à qui que ce soit</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Le transférer à un ami</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Le noter sur un post-it au cas où</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 Aucune banque ni aucun service public ne vous demandera jamais ce code : le donner, c'est ouvrir la porte à une arnaque.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 6</div>
-      <p class="qtext">Comment reconnaît-on un site officiel de service public français ?</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Il se termine toujours par .com</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Il se termine toujours par .gouv.fr</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Il est toujours bleu</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Il demande toujours une carte bancaire</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Un service public se termine toujours par .gouv.fr.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 6</div>
-      <p class="qtext">Face à un message qui crée l'urgence ("compte bloqué sous 24h"), le bon réflexe est :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Cliquer vite pour régler le problème</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Se méfier : c'est une technique classique d'arnaque</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Répondre pour demander plus d'infos</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Transférer le message à ses contacts</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 La pression et la menace sont la signature classique des arnaques par hameçonnage.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 6</div>
-      <p class="qtext">Quel outil protège le mieux contre le phishing en ne remplissant vos identifiants QUE sur le vrai site ?</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Un antivirus seul</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Un gestionnaire de mots de passe</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Une messagerie chiffrée</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Un VPN gratuit</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Un gestionnaire de mots de passe reconnaît le vrai site et refuse de remplir un faux site : c'est un signal d'alerte précieux.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 6</div>
-      <p class="qtext">En cas de doute sur un lien reçu par message, il vaut mieux :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Cliquer pour vérifier</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Taper l'adresse soi-même dans le navigateur</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>L'ouvrir sur le téléphone d'un proche</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Répondre au message</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Ne jamais utiliser le lien d'un message douteux : on tape l'adresse officielle soi-même.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 6 / 6</div>
-      <p class="qtext">Le "quishing" désigne une arnaque via :</p>
-      <div id="opts5">
-      <label class="opt"><input type="radio" name="q5" value="0" required><span>Un appel téléphonique</span></label>
-      <label class="opt"><input type="radio" name="q5" value="1" required><span>Un QR code piégé</span></label>
-      <label class="opt"><input type="radio" name="q5" value="2" required><span>Une clé USB</span></label>
-      <label class="opt"><input type="radio" name="q5" value="3" required><span>Un faux Wi-Fi</span></label>
-      </div>
-      <div class="explain" id="explain5">💡 Le quishing est un hameçonnage qui passe par un QR code frauduleux (reçu par message ou collé dans la rue).</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Que faire si on reçoit un code de vérification par SMS qu\u0027on n\u0027a pas demandé soi-même ?","options":["Le donner si on nous le demande gentiment","Ne jamais le communiquer à qui que ce soit","Le transférer à un ami","Le noter sur un post-it au cas où"],"correct":1,"explain":"Aucune banque ni aucun service public ne vous demandera jamais ce code : le donner, c\u0027est ouvrir la porte à une arnaque."},{"q":"Comment reconnaît-on un site officiel de service public français ?","options":["Il se termine toujours par .com","Il se termine toujours par .gouv.fr","Il est toujours bleu","Il demande toujours une carte bancaire"],"correct":1,"explain":"Un service public se termine toujours par .gouv.fr."},{"q":"Face à un message qui crée l\u0027urgence (\"compte bloqué sous 24h\"), le bon réflexe est :","options":["Cliquer vite pour régler le problème","Se méfier : c\u0027est une technique classique d\u0027arnaque","Répondre pour demander plus d\u0027infos","Transférer le message à ses contacts"],"correct":1,"explain":"La pression et la menace sont la signature classique des arnaques par hameçonnage."},{"q":"Quel outil protège le mieux contre le phishing en ne remplissant vos identifiants QUE sur le vrai site ?","options":["Un antivirus seul","Un gestionnaire de mots de passe","Une messagerie chiffrée","Un VPN gratuit"],"correct":1,"explain":"Un gestionnaire de mots de passe reconnaît le vrai site et refuse de remplir un faux site : c\u0027est un signal d\u0027alerte précieux."},{"q":"En cas de doute sur un lien reçu par message, il vaut mieux :","options":["Cliquer pour vérifier","Taper l\u0027adresse soi-même dans le navigateur","L\u0027ouvrir sur le téléphone d\u0027un proche","Répondre au message"],"correct":1,"explain":"Ne jamais utiliser le lien d\u0027un message douteux : on tape l\u0027adresse officielle soi-même."},{"q":"Le \"quishing\" désigne une arnaque via :","options":["Un appel téléphonique","Un QR code piégé","Une clé USB","Un faux Wi-Fi"],"correct":1,"explain":"Le quishing est un hameçonnage qui passe par un QR code frauduleux (reçu par message ou collé dans la rue)."}];
+  const LEVELS = {"debutant":[{"q":"Le phishing, c\u0027est une tentative de :","options":["Ralentir votre ordinateur","Vous voler des informations en se faisant passer pour un site fiable","Améliorer votre Wi-Fi","Installer des jeux gratuits"],"correct":1,"explain":"Le phishing (hameçonnage) vise à voler vos informations en imitant un site ou un organisme de confiance."},{"q":"Faut-il donner son mot de passe si un \"conseiller\" nous le demande au téléphone ?","options":["Oui, si la voix est aimable","Non, jamais","Seulement pour les banques","Oui, si on rappelle nous-même"],"correct":1,"explain":"Aucun conseiller légitime ne demande jamais votre mot de passe par téléphone."},{"q":"Un lien suspect reçu par SMS, on doit :","options":["Cliquer par curiosité","Ne pas cliquer","Le transférer à 10 amis","L\u0027enregistrer"],"correct":1,"explain":"Il ne faut jamais cliquer sur un lien suspect reçu par SMS."},{"q":"Bitwarden est un exemple de :","options":["Antivirus","Gestionnaire de mots de passe","Réseau social","Moteur de recherche"],"correct":1,"explain":"Bitwarden est un gestionnaire de mots de passe gratuit, cité dans la fiche."}],"intermediaire":[{"q":"Que faire si on reçoit un code de vérification par SMS qu\u0027on n\u0027a pas demandé soi-même ?","options":["Le donner si on nous le demande gentiment","Ne jamais le communiquer à qui que ce soit","Le transférer à un ami","Le noter sur un post-it au cas où"],"correct":1,"explain":"Aucune banque ni aucun service public ne vous demandera jamais ce code : le donner, c\u0027est ouvrir la porte à une arnaque."},{"q":"Comment reconnaît-on un site officiel de service public français ?","options":["Il se termine toujours par .com","Il se termine toujours par .gouv.fr","Il est toujours bleu","Il demande toujours une carte bancaire"],"correct":1,"explain":"Un service public se termine toujours par .gouv.fr."},{"q":"Face à un message qui crée l\u0027urgence (\"compte bloqué sous 24h\"), le bon réflexe est :","options":["Cliquer vite pour régler le problème","Se méfier : c\u0027est une technique classique d\u0027arnaque","Répondre pour demander plus d\u0027infos","Transférer le message à ses contacts"],"correct":1,"explain":"La pression et la menace sont la signature classique des arnaques par hameçonnage."},{"q":"Quel outil protège le mieux contre le phishing en ne remplissant vos identifiants QUE sur le vrai site ?","options":["Un antivirus seul","Un gestionnaire de mots de passe","Une messagerie chiffrée","Un VPN gratuit"],"correct":1,"explain":"Un gestionnaire de mots de passe reconnaît le vrai site et refuse de remplir un faux site : c\u0027est un signal d\u0027alerte précieux."},{"q":"En cas de doute sur un lien reçu par message, il vaut mieux :","options":["Cliquer pour vérifier","Taper l\u0027adresse soi-même dans le navigateur","L\u0027ouvrir sur le téléphone d\u0027un proche","Répondre au message"],"correct":1,"explain":"Ne jamais utiliser le lien d\u0027un message douteux : on tape l\u0027adresse officielle soi-même."},{"q":"Le \"quishing\" désigne une arnaque via :","options":["Un appel téléphonique","Un QR code piégé","Une clé USB","Un faux Wi-Fi"],"correct":1,"explain":"Le quishing est un hameçonnage qui passe par un QR code frauduleux (reçu par message ou collé dans la rue)."}],"avance":[{"q":"Comment appelle-t-on l\u0027hameçonnage réalisé par téléphone (appel vocal) ?","options":["Smishing","Vishing","Quishing","Spoofing"],"correct":1,"explain":"Le \"vishing\" désigne le phishing réalisé par appel vocal (voice + phishing)."},{"q":"En plus de Bitwarden, quelle application de double authentification est citée dans la fiche ?","options":["WhatsApp","Google Authenticator / Microsoft Authenticator","Canva","VLC"],"correct":1,"explain":"La fiche cite Google Authenticator et Microsoft Authenticator comme applications de double authentification."},{"q":"VirusTotal sert à :","options":["Créer un antivirus","Analyser un lien ou fichier douteux via plusieurs antivirus à la fois","Bloquer les publicités","Chiffrer ses emails"],"correct":1,"explain":"VirusTotal permet de coller un lien ou déposer un fichier douteux pour l\u0027analyser avec des dizaines d\u0027antivirus."},{"q":"Sur ordinateur, quel outil déjà intégré à Windows protège gratuitement contre les sites piégés ?","options":["Windows Defender","Windows Media Player","Paint","Bloc-notes"],"correct":0,"explain":"Microsoft Defender est déjà intégré à Windows et bloque gratuitement sites piégés et pièces jointes malveillantes."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -180,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/phishing-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

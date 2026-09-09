@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,84 +73,84 @@
     <div class="eyebrow">🏛️ Mes impôts en ligne</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 5</div>
-      <p class="qtext">Le site officiel pour déclarer ses impôts en ligne est :</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>impots.fr</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>impots.gouv.fr</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>declaration-impots.com</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>service-public.com</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 impots.gouv.fr est le seul site officiel de la Direction Générale des Finances Publiques.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 5</div>
-      <p class="qtext">Le nouveau nom de l'espace personnel des impôts est :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Mon compte fiscal</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Mon espace Finances publiques</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Ma déclaration en ligne</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Mon dossier impôts</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 "Mon espace Finances publiques" est le nouveau nom de l'ancien "espace particulier".</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 5</div>
-      <p class="qtext">Pour se connecter pour la première fois, il faut notamment :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Son numéro fiscal (13 chiffres)</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Son numéro de sécurité sociale</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Sa carte grise</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Son numéro de passeport</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Le numéro fiscal à 13 chiffres, indiqué sur le dernier avis, est nécessaire pour la première connexion.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 5</div>
-      <p class="qtext">Déclarer ses impôts en ligne, comparé au papier :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Est plus compliqué</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Laisse plus de temps (date limite plus tardive)</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Coûte plus cher</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>N'est pas sécurisé</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 La date limite de déclaration en ligne est généralement plus tardive que celle de la déclaration papier.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 5</div>
-      <p class="qtext">Face à un mail suspect qui se dit venir des impôts avec un lien de paiement, le bon réflexe est de :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Cliquer sur le lien pour vérifier</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Taper vous-même impots.gouv.fr dans le navigateur</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Répondre en donnant son RIB</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Payer immédiatement par précaution</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Les impôts ne réclament jamais de paiement par message : il faut toujours taper l'adresse officielle soi-même.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Le site officiel pour déclarer ses impôts en ligne est :","options":["impots.fr","impots.gouv.fr","declaration-impots.com","service-public.com"],"correct":1,"explain":"impots.gouv.fr est le seul site officiel de la Direction Générale des Finances Publiques."},{"q":"Le nouveau nom de l\u0027espace personnel des impôts est :","options":["Mon compte fiscal","Mon espace Finances publiques","Ma déclaration en ligne","Mon dossier impôts"],"correct":1,"explain":"\"Mon espace Finances publiques\" est le nouveau nom de l\u0027ancien \"espace particulier\"."},{"q":"Pour se connecter pour la première fois, il faut notamment :","options":["Son numéro fiscal (13 chiffres)","Son numéro de sécurité sociale","Sa carte grise","Son numéro de passeport"],"correct":0,"explain":"Le numéro fiscal à 13 chiffres, indiqué sur le dernier avis, est nécessaire pour la première connexion."},{"q":"Déclarer ses impôts en ligne, comparé au papier :","options":["Est plus compliqué","Laisse plus de temps (date limite plus tardive)","Coûte plus cher","N\u0027est pas sécurisé"],"correct":1,"explain":"La date limite de déclaration en ligne est généralement plus tardive que celle de la déclaration papier."},{"q":"Face à un mail suspect qui se dit venir des impôts avec un lien de paiement, le bon réflexe est de :","options":["Cliquer sur le lien pour vérifier","Taper vous-même impots.gouv.fr dans le navigateur","Répondre en donnant son RIB","Payer immédiatement par précaution"],"correct":1,"explain":"Les impôts ne réclament jamais de paiement par message : il faut toujours taper l\u0027adresse officielle soi-même."}];
+  const LEVELS = {"debutant":[{"q":"Sur quel document trouve-t-on son numéro fiscal à 13 chiffres ?","options":["Sur sa carte Vitale","Sur son dernier avis d\u0027imposition","Sur sa carte grise","Sur son passeport"],"correct":1,"explain":"Le numéro fiscal à 13 chiffres se trouve en haut du dernier avis d\u0027imposition."},{"q":"Déclarer ses impôts en ligne est-il payant ?","options":["Oui, un forfait annuel","Non, c\u0027est gratuit","Oui, seulement la première fois","Cela dépend des revenus"],"correct":1,"explain":"Déclarer en ligne sur impots.gouv.fr est entièrement gratuit."}],"intermediaire":[{"q":"Le site officiel pour déclarer ses impôts en ligne est :","options":["impots.fr","impots.gouv.fr","declaration-impots.com","service-public.com"],"correct":1,"explain":"impots.gouv.fr est le seul site officiel de la Direction Générale des Finances Publiques."},{"q":"Le nouveau nom de l\u0027espace personnel des impôts est :","options":["Mon compte fiscal","Mon espace Finances publiques","Ma déclaration en ligne","Mon dossier impôts"],"correct":1,"explain":"\"Mon espace Finances publiques\" est le nouveau nom de l\u0027ancien \"espace particulier\"."},{"q":"Pour se connecter pour la première fois, il faut notamment :","options":["Son numéro fiscal (13 chiffres)","Son numéro de sécurité sociale","Sa carte grise","Son numéro de passeport"],"correct":0,"explain":"Le numéro fiscal à 13 chiffres, indiqué sur le dernier avis, est nécessaire pour la première connexion."},{"q":"Déclarer ses impôts en ligne, comparé au papier :","options":["Est plus compliqué","Laisse plus de temps (date limite plus tardive)","Coûte plus cher","N\u0027est pas sécurisé"],"correct":1,"explain":"La date limite de déclaration en ligne est généralement plus tardive que celle de la déclaration papier."},{"q":"Face à un mail suspect qui se dit venir des impôts avec un lien de paiement, le bon réflexe est de :","options":["Cliquer sur le lien pour vérifier","Taper vous-même impots.gouv.fr dans le navigateur","Répondre en donnant son RIB","Payer immédiatement par précaution"],"correct":1,"explain":"Les impôts ne réclament jamais de paiement par message : il faut toujours taper l\u0027adresse officielle soi-même."}],"avance":[{"q":"En plus du numéro fiscal, quels autres identifiants sont nécessaires pour une première connexion ?","options":["Numéro d\u0027accès en ligne et revenu fiscal de référence","Numéro de Sécurité sociale et RIB","Carte grise et permis de conduire","Aucun autre identifiant n\u0027est nécessaire"],"correct":0,"explain":"Pour la première connexion, il faut le numéro fiscal, le numéro d\u0027accès en ligne, et le revenu fiscal de référence."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -169,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/impots-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

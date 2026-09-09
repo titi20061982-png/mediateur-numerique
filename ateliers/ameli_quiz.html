@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,84 +73,84 @@
     <div class="eyebrow">🏛️ Mon espace santé Ameli</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 5</div>
-      <p class="qtext">Le compte Ameli et "Mon espace santé" sont :</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Le même site</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Deux sites différents, avec des rôles différents</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Réservés aux médecins</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Payants</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 assure.ameli.fr (administratif) et monespacesante.fr (médical) sont deux sites bien distincts.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 5</div>
-      <p class="qtext">assure.ameli.fr concerne surtout :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Le dossier médical</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Les remboursements et l'administratif</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Les ordonnances</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>La vaccination</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Le compte Ameli gère le côté administratif : remboursements, attestations, carte Vitale.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 5</div>
-      <p class="qtext">Le numéro de Sécurité sociale comporte :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>10 chiffres</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>15 chiffres, et commence par 1 ou 2</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>5 chiffres</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Des lettres uniquement</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Le numéro de Sécurité sociale comporte 15 chiffres et commence par 1 (homme) ou 2 (femme).</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 5</div>
-      <p class="qtext">monespacesante.fr permet notamment de consulter :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Ses remboursements CAF</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Son carnet de vaccination et ses ordonnances</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Sa déclaration d'impôts</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Sa carte grise</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Mon espace santé regroupe le dossier médical : ordonnances, résultats d'analyses, carnet de vaccination.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 5</div>
-      <p class="qtext">Sur le compte Ameli, on peut télécharger :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Sa carte grise</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Son attestation de droits</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Son passeport</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Son permis de conduire</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 L'attestation de droits, prouvant vos droits à l'Assurance Maladie, se télécharge en 2 clics sur le compte Ameli.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Le compte Ameli et \"Mon espace santé\" sont :","options":["Le même site","Deux sites différents, avec des rôles différents","Réservés aux médecins","Payants"],"correct":1,"explain":"assure.ameli.fr (administratif) et monespacesante.fr (médical) sont deux sites bien distincts."},{"q":"assure.ameli.fr concerne surtout :","options":["Le dossier médical","Les remboursements et l\u0027administratif","Les ordonnances","La vaccination"],"correct":1,"explain":"Le compte Ameli gère le côté administratif : remboursements, attestations, carte Vitale."},{"q":"Le numéro de Sécurité sociale comporte :","options":["10 chiffres","15 chiffres, et commence par 1 ou 2","5 chiffres","Des lettres uniquement"],"correct":1,"explain":"Le numéro de Sécurité sociale comporte 15 chiffres et commence par 1 (homme) ou 2 (femme)."},{"q":"monespacesante.fr permet notamment de consulter :","options":["Ses remboursements CAF","Son carnet de vaccination et ses ordonnances","Sa déclaration d\u0027impôts","Sa carte grise"],"correct":1,"explain":"Mon espace santé regroupe le dossier médical : ordonnances, résultats d\u0027analyses, carnet de vaccination."},{"q":"Sur le compte Ameli, on peut télécharger :","options":["Sa carte grise","Son attestation de droits","Son passeport","Son permis de conduire"],"correct":1,"explain":"L\u0027attestation de droits, prouvant vos droits à l\u0027Assurance Maladie, se télécharge en 2 clics sur le compte Ameli."}];
+  const LEVELS = {"debutant":[{"q":"La carte Vitale sert à :","options":["Payer ses impôts","Attester de ses droits à l\u0027Assurance Maladie","Voter","Conduire"],"correct":1,"explain":"La carte Vitale atteste de vos droits à l\u0027Assurance Maladie et facilite le remboursement des soins."},{"q":"Le compte Ameli permet notamment de voir :","options":["Ses notes scolaires","Ses remboursements de santé","Sa déclaration d\u0027impôts","Sa carte grise"],"correct":1,"explain":"Le compte Ameli permet de voir ce que la Sécurité sociale a remboursé, et quand."}],"intermediaire":[{"q":"Le compte Ameli et \"Mon espace santé\" sont :","options":["Le même site","Deux sites différents, avec des rôles différents","Réservés aux médecins","Payants"],"correct":1,"explain":"assure.ameli.fr (administratif) et monespacesante.fr (médical) sont deux sites bien distincts."},{"q":"assure.ameli.fr concerne surtout :","options":["Le dossier médical","Les remboursements et l\u0027administratif","Les ordonnances","La vaccination"],"correct":1,"explain":"Le compte Ameli gère le côté administratif : remboursements, attestations, carte Vitale."},{"q":"Le numéro de Sécurité sociale comporte :","options":["10 chiffres","15 chiffres, et commence par 1 ou 2","5 chiffres","Des lettres uniquement"],"correct":1,"explain":"Le numéro de Sécurité sociale comporte 15 chiffres et commence par 1 (homme) ou 2 (femme)."},{"q":"monespacesante.fr permet notamment de consulter :","options":["Ses remboursements CAF","Son carnet de vaccination et ses ordonnances","Sa déclaration d\u0027impôts","Sa carte grise"],"correct":1,"explain":"Mon espace santé regroupe le dossier médical : ordonnances, résultats d\u0027analyses, carnet de vaccination."},{"q":"Sur le compte Ameli, on peut télécharger :","options":["Sa carte grise","Son attestation de droits","Son passeport","Son permis de conduire"],"correct":1,"explain":"L\u0027attestation de droits, prouvant vos droits à l\u0027Assurance Maladie, se télécharge en 2 clics sur le compte Ameli."}],"avance":[{"q":"Combien de façons différentes d\u0027accéder à son compte Ameli sont présentées dans l\u0027atelier ?","options":["1","2","3","5"],"correct":2,"explain":"L\u0027atelier présente 3 façons d\u0027accéder à son compte Ameli."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -169,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/ameli-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

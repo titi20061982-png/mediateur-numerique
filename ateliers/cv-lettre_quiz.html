@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,95 +73,84 @@
     <div class="eyebrow">💼 CV et lettre de motivation</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 6</div>
-      <p class="qtext">Quel format de fichier faut-il utiliser pour envoyer son CV ?</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Word (.docx)</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>PDF</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Une photo du CV</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Un fichier texte brut</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 Le PDF garantit que la mise en page reste identique quel que soit l'ordinateur qui l'ouvre.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 6</div>
-      <p class="qtext">Un CV ne doit pas dépasser :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>3 pages</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>1 page</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>5 pages</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Il n'y a pas de limite</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Un CV tient sur une seule page, même sans expérience professionnelle.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 6</div>
-      <p class="qtext">Le nom de fichier de CV recommandé est du type :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>cv.pdf</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Prenom_Nom_CV.pdf</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>document1.pdf</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>mon_cv_final_v3.pdf</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Un nom de fichier clair (Prenom_Nom_CV.pdf) facilite le tri pour le recruteur.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 6</div>
-      <p class="qtext">La lettre de motivation doit être :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>La même pour toutes les entreprises</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Personnalisée pour chaque entreprise</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>Écrite à la main uniquement</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Facultative dans tous les cas</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Une lettre copiée-collée se repère immédiatement ; elle doit toujours être personnalisée.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 6</div>
-      <p class="qtext">Après combien de jours sans réponse est-il conseillé de relancer poliment ?</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>1 jour</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>7 à 10 jours</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>2 mois</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Il ne faut jamais relancer</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Une relance polie après 7-10 jours est le délai raisonnable recommandé.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 6 / 6</div>
-      <p class="qtext">Sur quel site gratuit peut-on facilement créer un CV en ligne ?</p>
-      <div id="opts5">
-      <label class="opt"><input type="radio" name="q5" value="0" required><span>Canva</span></label>
-      <label class="opt"><input type="radio" name="q5" value="1" required><span>Photoshop</span></label>
-      <label class="opt"><input type="radio" name="q5" value="2" required><span>Excel</span></label>
-      <label class="opt"><input type="radio" name="q5" value="3" required><span>Instagram</span></label>
-      </div>
-      <div class="explain" id="explain5">💡 Canva propose des modèles de CV gratuits, simples à personnaliser et à exporter en PDF.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Quel format de fichier faut-il utiliser pour envoyer son CV ?","options":["Word (.docx)","PDF","Une photo du CV","Un fichier texte brut"],"correct":1,"explain":"Le PDF garantit que la mise en page reste identique quel que soit l\u0027ordinateur qui l\u0027ouvre."},{"q":"Un CV ne doit pas dépasser :","options":["3 pages","1 page","5 pages","Il n\u0027y a pas de limite"],"correct":1,"explain":"Un CV tient sur une seule page, même sans expérience professionnelle."},{"q":"Le nom de fichier de CV recommandé est du type :","options":["cv.pdf","Prenom_Nom_CV.pdf","document1.pdf","mon_cv_final_v3.pdf"],"correct":1,"explain":"Un nom de fichier clair (Prenom_Nom_CV.pdf) facilite le tri pour le recruteur."},{"q":"La lettre de motivation doit être :","options":["La même pour toutes les entreprises","Personnalisée pour chaque entreprise","Écrite à la main uniquement","Facultative dans tous les cas"],"correct":1,"explain":"Une lettre copiée-collée se repère immédiatement ; elle doit toujours être personnalisée."},{"q":"Après combien de jours sans réponse est-il conseillé de relancer poliment ?","options":["1 jour","7 à 10 jours","2 mois","Il ne faut jamais relancer"],"correct":1,"explain":"Une relance polie après 7-10 jours est le délai raisonnable recommandé."},{"q":"Sur quel site gratuit peut-on facilement créer un CV en ligne ?","options":["Canva","Photoshop","Excel","Instagram"],"correct":0,"explain":"Canva propose des modèles de CV gratuits, simples à personnaliser et à exporter en PDF."}];
+  const LEVELS = {"debutant":[{"q":"Combien de pages maximum doit faire un CV, selon la fiche ?","options":["Aucune limite","1 page","3 pages","10 pages"],"correct":1,"explain":"Le CV doit tenir sur 1 page maximum, même sans expérience professionnelle."},{"q":"Quel outil gratuit est recommandé pour créer facilement son CV ?","options":["Word","Canva","Photoshop","Excel"],"correct":1,"explain":"Canva est l\u0027outil gratuit recommandé pour créer un CV propre et lisible."},{"q":"Un CV doit être envoyé de préférence au format :","options":["Word (.docx)","PDF","Image (.jpg)","Fichier texte (.txt)"],"correct":1,"explain":"Le format PDF garde la mise en page intacte, quel que soit l\u0027ordinateur du destinataire."}],"intermediaire":[{"q":"Quel format de fichier faut-il utiliser pour envoyer son CV ?","options":["Word (.docx)","PDF","Une photo du CV","Un fichier texte brut"],"correct":1,"explain":"Le PDF garantit que la mise en page reste identique quel que soit l\u0027ordinateur qui l\u0027ouvre."},{"q":"Un CV ne doit pas dépasser :","options":["3 pages","1 page","5 pages","Il n\u0027y a pas de limite"],"correct":1,"explain":"Un CV tient sur une seule page, même sans expérience professionnelle."},{"q":"Le nom de fichier de CV recommandé est du type :","options":["cv.pdf","Prenom_Nom_CV.pdf","document1.pdf","mon_cv_final_v3.pdf"],"correct":1,"explain":"Un nom de fichier clair (Prenom_Nom_CV.pdf) facilite le tri pour le recruteur."},{"q":"La lettre de motivation doit être :","options":["La même pour toutes les entreprises","Personnalisée pour chaque entreprise","Écrite à la main uniquement","Facultative dans tous les cas"],"correct":1,"explain":"Une lettre copiée-collée se repère immédiatement ; elle doit toujours être personnalisée."},{"q":"Après combien de jours sans réponse est-il conseillé de relancer poliment ?","options":["1 jour","7 à 10 jours","2 mois","Il ne faut jamais relancer"],"correct":1,"explain":"Une relance polie après 7-10 jours est le délai raisonnable recommandé."},{"q":"Sur quel site gratuit peut-on facilement créer un CV en ligne ?","options":["Canva","Photoshop","Excel","Instagram"],"correct":0,"explain":"Canva propose des modèles de CV gratuits, simples à personnaliser et à exporter en PDF."}],"avance":[{"q":"Parmi les sections essentielles du CV citées dans la fiche, laquelle n\u0027en fait PAS partie ?","options":["En-tête","Profil","Casier judiciaire","Compétences"],"correct":2,"explain":"Les sections citées sont En-tête, Profil, Expériences, Formation et Compétences — le casier judiciaire n\u0027en fait pas partie."},{"q":"Le dossier de candidature complet peut inclure, en plus du CV et de la lettre :","options":["Un extrait de naissance","Un portfolio ou des liens (si applicable)","Une caution bancaire","Un casier judiciaire"],"correct":1,"explain":"La fiche cite le portfolio/liens et les diplômes/certificats comme pièces complémentaires possibles."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -180,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/cv-lettre-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

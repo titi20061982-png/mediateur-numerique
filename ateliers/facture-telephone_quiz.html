@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,84 +73,84 @@
     <div class="eyebrow">🌐 Comprendre sa facture téléphonique</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 5</div>
-      <p class="qtext">En France, le taux de TVA appliqué sur un forfait mobile est de :</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>10 %</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>20 %</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>30 %</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>5,5 %</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 La TVA standard en France, appliquée sur les forfaits mobiles, est de 20 %.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 5</div>
-      <p class="qtext">Le prix "TTC" correspond à :</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Le prix sans taxe</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Le prix final, taxe comprise</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Le prix du hors-forfait uniquement</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Le prix à l'étranger</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 TTC signifie "Toutes Taxes Comprises" : c'est le prix réellement payé.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 5</div>
-      <p class="qtext">Le "roaming" désigne :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Un bug réseau</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>L'utilisation du téléphone à l'étranger</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Un forfait illimité</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Une option de sécurité</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Le roaming (itinérance) correspond à l'usage de son téléphone hors de son pays d'origine.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 5</div>
-      <p class="qtext">En cas de litige sur sa facture, il faut d'abord contacter :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>Directement un avocat</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>Son opérateur, puis le médiateur des télécoms si besoin</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>La police</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>Les impôts</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Il faut d'abord se tourner vers son opérateur, puis le médiateur des communications électroniques en cas de désaccord persistant.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 5</div>
-      <p class="qtext">Que faut-il vérifier en premier en recevant sa facture ?</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Le montant total et les options payantes en plus</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>La couleur du papier</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Le nom de l'imprimante</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Rien, c'est automatique</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Le montant total et les lignes en plus du forfait (hors-forfait, options, roaming) sont les premiers points à vérifier.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"En France, le taux de TVA appliqué sur un forfait mobile est de :","options":["10 %","20 %","30 %","5,5 %"],"correct":1,"explain":"La TVA standard en France, appliquée sur les forfaits mobiles, est de 20 %."},{"q":"Le prix \"TTC\" correspond à :","options":["Le prix sans taxe","Le prix final, taxe comprise","Le prix du hors-forfait uniquement","Le prix à l\u0027étranger"],"correct":1,"explain":"TTC signifie \"Toutes Taxes Comprises\" : c\u0027est le prix réellement payé."},{"q":"Le \"roaming\" désigne :","options":["Un bug réseau","L\u0027utilisation du téléphone à l\u0027étranger","Un forfait illimité","Une option de sécurité"],"correct":1,"explain":"Le roaming (itinérance) correspond à l\u0027usage de son téléphone hors de son pays d\u0027origine."},{"q":"En cas de litige sur sa facture, il faut d\u0027abord contacter :","options":["Directement un avocat","Son opérateur, puis le médiateur des télécoms si besoin","La police","Les impôts"],"correct":1,"explain":"Il faut d\u0027abord se tourner vers son opérateur, puis le médiateur des communications électroniques en cas de désaccord persistant."},{"q":"Que faut-il vérifier en premier en recevant sa facture ?","options":["Le montant total et les options payantes en plus","La couleur du papier","Le nom de l\u0027imprimante","Rien, c\u0027est automatique"],"correct":0,"explain":"Le montant total et les lignes en plus du forfait (hors-forfait, options, roaming) sont les premiers points à vérifier."}];
+  const LEVELS = {"debutant":[{"q":"Le \"hors forfait\", c\u0027est :","options":["Ce qui est compris dans le forfait","Ce que vous consommez en plus du forfait","Une remise","Un bonus fidélité"],"correct":1,"explain":"Le hors-forfait correspond à ce qui est consommé en plus du forfait souscrit."},{"q":"TTC veut dire :","options":["Taxe Totale Comprise","Toutes Taxes Comprises","Tarif Très Cher","Tarif Type Client"],"correct":1,"explain":"TTC signifie Toutes Taxes Comprises."}],"intermediaire":[{"q":"En France, le taux de TVA appliqué sur un forfait mobile est de :","options":["10 %","20 %","30 %","5,5 %"],"correct":1,"explain":"La TVA standard en France, appliquée sur les forfaits mobiles, est de 20 %."},{"q":"Le prix \"TTC\" correspond à :","options":["Le prix sans taxe","Le prix final, taxe comprise","Le prix du hors-forfait uniquement","Le prix à l\u0027étranger"],"correct":1,"explain":"TTC signifie \"Toutes Taxes Comprises\" : c\u0027est le prix réellement payé."},{"q":"Le \"roaming\" désigne :","options":["Un bug réseau","L\u0027utilisation du téléphone à l\u0027étranger","Un forfait illimité","Une option de sécurité"],"correct":1,"explain":"Le roaming (itinérance) correspond à l\u0027usage de son téléphone hors de son pays d\u0027origine."},{"q":"En cas de litige sur sa facture, il faut d\u0027abord contacter :","options":["Directement un avocat","Son opérateur, puis le médiateur des télécoms si besoin","La police","Les impôts"],"correct":1,"explain":"Il faut d\u0027abord se tourner vers son opérateur, puis le médiateur des communications électroniques en cas de désaccord persistant."},{"q":"Que faut-il vérifier en premier en recevant sa facture ?","options":["Le montant total et les options payantes en plus","La couleur du papier","Le nom de l\u0027imprimante","Rien, c\u0027est automatique"],"correct":0,"explain":"Le montant total et les lignes en plus du forfait (hors-forfait, options, roaming) sont les premiers points à vérifier."}],"avance":[{"q":"Vers quel site officiel se tourner en dernier recours en cas de litige non résolu avec son opérateur ?","options":["impots.gouv.fr","mediation-telecom.org","ants.gouv.fr","service-public.fr uniquement"],"correct":1,"explain":"Le médiateur des communications électroniques (mediation-telecom.org) intervient après l\u0027opérateur en cas de litige non résolu."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -169,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/facture-telephone-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>

@@ -28,8 +28,14 @@
   .back:hover { text-decoration: underline; }
   .eyebrow { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   h1 { margin: 0.3rem 0 0.2rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .visits { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
   main { max-width: 760px; margin: 0 auto; padding: 2.2rem 1.5rem 3rem; }
+
+  #levelScreen .level-btn { display: block; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; cursor: pointer; box-shadow: var(--shadow); }
+  #levelScreen .level-btn:hover { border-color: var(--accent); }
+  #levelScreen .level-btn strong { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.2rem; }
+  #levelScreen .level-btn span { font-size: 0.88rem; color: var(--muted); }
 
   #scoreBanner { display: none; border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.8rem; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; font-weight: 600; box-shadow: var(--shadow); }
   #scoreBanner.show { display: block; }
@@ -67,95 +73,84 @@
     <div class="eyebrow">🔒 Accompagner un enfant sur Internet</div>
     <h1>Test de connaissances</h1>
     <p class="sub">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <span class="visits" id="visitsCounter">👥 …</span>
   </div>
 </header>
 <main>
-  <div id="scoreBanner"></div>
-  <form id="quizForm">
-    <div class="qcard">
-      <div class="qnum">Question 1 / 6</div>
-      <p class="qtext">Un contrôle parental est avant tout :</p>
-      <div id="opts0">
-      <label class="opt"><input type="radio" name="q0" value="0" required><span>Un mur qui remplace le dialogue</span></label>
-      <label class="opt"><input type="radio" name="q0" value="1" required><span>Un outil qui accompagne le dialogue</span></label>
-      <label class="opt"><input type="radio" name="q0" value="2" required><span>Obligatoire par la loi</span></label>
-      <label class="opt"><input type="radio" name="q0" value="3" required><span>Payant uniquement</span></label>
-      </div>
-      <div class="explain" id="explain0">💡 Le contrôle parental accompagne le dialogue avec l'enfant, il ne le remplace jamais.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 2 / 6</div>
-      <p class="qtext">Où est-il conseillé de garder les écrans à la maison ?</p>
-      <div id="opts1">
-      <label class="opt"><input type="radio" name="q1" value="0" required><span>Dans la chambre de l'enfant</span></label>
-      <label class="opt"><input type="radio" name="q1" value="1" required><span>Dans les espaces communs</span></label>
-      <label class="opt"><input type="radio" name="q1" value="2" required><span>Peu importe l'endroit</span></label>
-      <label class="opt"><input type="radio" name="q1" value="3" required><span>Toujours éteints et rangés</span></label>
-      </div>
-      <div class="explain" id="explain1">💡 Garder les écrans dans les espaces communs facilite la supervision et le dialogue.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 3 / 6</div>
-      <p class="qtext">Qwant Junior est :</p>
-      <div id="opts2">
-      <label class="opt"><input type="radio" name="q2" value="0" required><span>Un antivirus</span></label>
-      <label class="opt"><input type="radio" name="q2" value="1" required><span>Un moteur de recherche pour les 6-12 ans</span></label>
-      <label class="opt"><input type="radio" name="q2" value="2" required><span>Un jeu vidéo</span></label>
-      <label class="opt"><input type="radio" name="q2" value="3" required><span>Un réseau social pour enfants</span></label>
-      </div>
-      <div class="explain" id="explain2">💡 Qwant Junior est un moteur de recherche français qui bloque violence, pornographie et publicités pour les enfants.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 4 / 6</div>
-      <p class="qtext">Le numéro national pour "Enfance en danger" est le :</p>
-      <div id="opts3">
-      <label class="opt"><input type="radio" name="q3" value="0" required><span>3018</span></label>
-      <label class="opt"><input type="radio" name="q3" value="1" required><span>119</span></label>
-      <label class="opt"><input type="radio" name="q3" value="2" required><span>3919</span></label>
-      <label class="opt"><input type="radio" name="q3" value="3" required><span>17</span></label>
-      </div>
-      <div class="explain" id="explain3">💡 Le 119 est le numéro national gratuit et anonyme dédié à l'enfance en danger.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 5 / 6</div>
-      <p class="qtext">Google Family Link permet notamment de :</p>
-      <div id="opts4">
-      <label class="opt"><input type="radio" name="q4" value="0" required><span>Limiter le temps d'écran et localiser l'appareil Android</span></label>
-      <label class="opt"><input type="radio" name="q4" value="1" required><span>Créer un compte email professionnel</span></label>
-      <label class="opt"><input type="radio" name="q4" value="2" required><span>Payer des applications à distance</span></label>
-      <label class="opt"><input type="radio" name="q4" value="3" required><span>Bloquer Internet totalement et définitivement</span></label>
-      </div>
-      <div class="explain" id="explain4">💡 Family Link permet de limiter le temps d'écran, valider les applications et localiser l'appareil de l'enfant.</div>
-    </div>
-    <div class="qcard">
-      <div class="qnum">Question 6 / 6</div>
-      <p class="qtext">En cas de doute sur ce que vit son enfant en ligne, il faut :</p>
-      <div id="opts5">
-      <label class="opt"><input type="radio" name="q5" value="0" required><span>Punir sans discuter</span></label>
-      <label class="opt"><input type="radio" name="q5" value="1" required><span>Dialoguer sans punir et conserver les preuves</span></label>
-      <label class="opt"><input type="radio" name="q5" value="2" required><span>Confisquer le téléphone sans explication</span></label>
-      <label class="opt"><input type="radio" name="q5" value="3" required><span>Ignorer, ça passera</span></label>
-      </div>
-      <div class="explain" id="explain5">💡 Le dialogue sans punition et la conservation des preuves permettent d'agir efficacement si besoin.</div>
-    </div>
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong>🌱 Débutant</strong>
+      <span>Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong>🌿 Intermédiaire</strong>
+      <span>Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong>🌳 Avancé</strong>
+      <span>Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
     <div class="actions">
-      <button type="submit" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
       <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
     </div>
-  </form>
+  </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [{"q":"Un contrôle parental est avant tout :","options":["Un mur qui remplace le dialogue","Un outil qui accompagne le dialogue","Obligatoire par la loi","Payant uniquement"],"correct":1,"explain":"Le contrôle parental accompagne le dialogue avec l\u0027enfant, il ne le remplace jamais."},{"q":"Où est-il conseillé de garder les écrans à la maison ?","options":["Dans la chambre de l\u0027enfant","Dans les espaces communs","Peu importe l\u0027endroit","Toujours éteints et rangés"],"correct":1,"explain":"Garder les écrans dans les espaces communs facilite la supervision et le dialogue."},{"q":"Qwant Junior est :","options":["Un antivirus","Un moteur de recherche pour les 6-12 ans","Un jeu vidéo","Un réseau social pour enfants"],"correct":1,"explain":"Qwant Junior est un moteur de recherche français qui bloque violence, pornographie et publicités pour les enfants."},{"q":"Le numéro national pour \"Enfance en danger\" est le :","options":["3018","119","3919","17"],"correct":1,"explain":"Le 119 est le numéro national gratuit et anonyme dédié à l\u0027enfance en danger."},{"q":"Google Family Link permet notamment de :","options":["Limiter le temps d\u0027écran et localiser l\u0027appareil Android","Créer un compte email professionnel","Payer des applications à distance","Bloquer Internet totalement et définitivement"],"correct":0,"explain":"Family Link permet de limiter le temps d\u0027écran, valider les applications et localiser l\u0027appareil de l\u0027enfant."},{"q":"En cas de doute sur ce que vit son enfant en ligne, il faut :","options":["Punir sans discuter","Dialoguer sans punir et conserver les preuves","Confisquer le téléphone sans explication","Ignorer, ça passera"],"correct":1,"explain":"Le dialogue sans punition et la conservation des preuves permettent d\u0027agir efficacement si besoin."}];
+  const LEVELS = {"debutant":[{"q":"Un contrôle parental sert notamment à :","options":["Espionner sans raison","Limiter le temps d\u0027écran et filtrer certains contenus","Bloquer tout Internet","Remplacer les parents"],"correct":1,"explain":"Le contrôle parental limite le temps d\u0027écran, filtre les contenus adultes et fixe des horaires."},{"q":"Faut-il punir son enfant sans discuter en cas de problème en ligne ?","options":["Oui, c\u0027est le plus efficace","Non, il vaut mieux dialoguer","Oui, mais une seule fois","Ça dépend de l\u0027humeur"],"correct":1,"explain":"Le dialogue sans punition est le bon réflexe recommandé dans la fiche."},{"q":"Microsoft Family Safety fonctionne sur quelle plateforme ?","options":["Uniquement Mac","Windows / Xbox","Uniquement Android","Uniquement iPhone"],"correct":1,"explain":"Microsoft Family Safety contrôle le PC et la console Xbox : temps de jeu, sites et rapports."}],"intermediaire":[{"q":"Un contrôle parental est avant tout :","options":["Un mur qui remplace le dialogue","Un outil qui accompagne le dialogue","Obligatoire par la loi","Payant uniquement"],"correct":1,"explain":"Le contrôle parental accompagne le dialogue avec l\u0027enfant, il ne le remplace jamais."},{"q":"Où est-il conseillé de garder les écrans à la maison ?","options":["Dans la chambre de l\u0027enfant","Dans les espaces communs","Peu importe l\u0027endroit","Toujours éteints et rangés"],"correct":1,"explain":"Garder les écrans dans les espaces communs facilite la supervision et le dialogue."},{"q":"Qwant Junior est :","options":["Un antivirus","Un moteur de recherche pour les 6-12 ans","Un jeu vidéo","Un réseau social pour enfants"],"correct":1,"explain":"Qwant Junior est un moteur de recherche français qui bloque violence, pornographie et publicités pour les enfants."},{"q":"Le numéro national pour \"Enfance en danger\" est le :","options":["3018","119","3919","17"],"correct":1,"explain":"Le 119 est le numéro national gratuit et anonyme dédié à l\u0027enfance en danger."},{"q":"Google Family Link permet notamment de :","options":["Limiter le temps d\u0027écran et localiser l\u0027appareil Android","Créer un compte email professionnel","Payer des applications à distance","Bloquer Internet totalement et définitivement"],"correct":0,"explain":"Family Link permet de limiter le temps d\u0027écran, valider les applications et localiser l\u0027appareil de l\u0027enfant."},{"q":"En cas de doute sur ce que vit son enfant en ligne, il faut :","options":["Punir sans discuter","Dialoguer sans punir et conserver les preuves","Confisquer le téléphone sans explication","Ignorer, ça passera"],"correct":1,"explain":"Le dialogue sans punition et la conservation des preuves permettent d\u0027agir efficacement si besoin."}],"avance":[{"q":"cybermalveillance.gouv.fr propose notamment :","options":["Des jeux vidéo pour enfants","De l\u0027aide et des prestataires de confiance près de chez vous","Des forfaits mobiles","Des cours de code"],"correct":1,"explain":"cybermalveillance.gouv.fr aide à trouver de l\u0027assistance et des prestataires de confiance en cas de problème."},{"q":"Quelle est la tranche d\u0027âge indicative visée par Qwant Junior ?","options":["3-5 ans","6-12 ans","13-18 ans","Tous âges sans distinction"],"correct":1,"explain":"Qwant Junior est un moteur de recherche français conçu pour les 6-12 ans."}]};
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  let currentLevel = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderQuiz(level) {
+    currentLevel = level;
+    const QUIZ = LEVELS[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level); });
+  });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const QUIZ = LEVELS[currentLevel];
     let score = 0;
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
@@ -180,7 +175,12 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { window.location.reload(); });
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique/enfant-internet-quiz')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { document.getElementById('visitsCounter').textContent = '👥 ' + d.value + ' visite' + (d.value > 1 ? 's' : '') + ' sur ce test'; })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
 </script>
 </body>
 </html>
