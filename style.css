@@ -535,6 +535,20 @@ button.primary:hover { opacity: 0.9; }
 button.secondary { font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.95rem; background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 0.75rem 1.6rem; cursor: pointer; }
 button.secondary:hover { border-color: var(--accent); color: var(--accent); }
 
+/* Compte rendu visuel du quiz (tableau + synthese apres validation).
+   Selecteurs par identifiant uniquement -- aucune nouvelle classe globale,
+   couleurs pilotees par --good/--bad (memes jetons que .opt.correct/
+   .opt.incorrect juste au-dessus). */
+#recapSynthesis { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.3rem 1.6rem; margin-bottom: 1.2rem; box-shadow: var(--shadow); }
+#recapSynthesis p { margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text); }
+#recapSynthesis ul { margin: 0.3rem 0 0; padding-left: 1.3rem; color: var(--muted); font-size: 0.9rem; }
+#recapSynthesis li { margin-bottom: 0.25rem; }
+#recapTableWrap { overflow-x: auto; margin-bottom: 1.6rem; border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
+#recapTable { width: 100%; border-collapse: collapse; font-size: 0.88rem; background: var(--card); }
+#recapTable th { background: var(--bg-soft); color: var(--text); text-align: left; padding: 0.7rem 0.9rem; font-weight: 600; border-bottom: 2px solid var(--border); white-space: nowrap; }
+#recapTable td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+#recapTable tr:last-child td { border-bottom: none; }
+
 /* ---------- 16. Fiches (ateliers/*.html, hors quiz) ----------
    Reprend uniquement les classes deja utilisees dans les fiches
    existantes (aucune classe nouvelle), toutes deja pilotees par les

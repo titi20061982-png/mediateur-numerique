@@ -293,6 +293,7 @@
 
   <div id="quizScreen" style="display:none;">
     <div id="scoreBanner"></div>
+    <div id="recapWrap" style="display:none;"></div>
     <form id="quizForm"></form>
     <div class="actions">
       <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
@@ -319,7 +320,13 @@
     tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
     tierMid:"Pas mal ! Encore quelques points à consolider.",
     tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
-    visits:"visite(s) sur ce test"
+    visits:"visite(s) sur ce test",
+    recapLevelLabel:"Niveau atteint", recapImproveLabel:"Points à améliorer",
+    recapNoImprove:"Aucun — bravo !",
+    recapColQuestion:"Question", recapColYourAnswer:"Réponse donnée",
+    recapColCorrectAnswer:"Bonne réponse", recapColResult:"Résultat",
+    recapNoAnswer:"(pas de réponse)",
+    recapRestart:"Recommencer le quiz", recapHome:"Retour au site"
   };
 
   const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
@@ -327,6 +334,7 @@
   const quizScreen = document.getElementById('quizScreen');
   const form = document.getElementById('quizForm');
   const banner = document.getElementById('scoreBanner');
+  const recapWrap = document.getElementById('recapWrap');
   const submitBtn = document.getElementById('submitBtn');
   const resetBtn = document.getElementById('resetBtn');
   const levelBtn = document.getElementById('levelBtn');
@@ -356,6 +364,63 @@
     }
   }
 
+  function levelLabel(level, UI) {
+    if (level === 'debutant') return UI.levelDebTitle;
+    if (level === 'intermediaire') return UI.levelIntTitle;
+    return UI.levelAvaTitle;
+  }
+
+  // Compte rendu visuel : tableau recapitulatif + synthese, affiches apres validation.
+  function renderRecap(level, lang, answers) {
+    const UI = cache[lang].ui;
+    const rows = answers.map(function(a) {
+      const mark = a.isCorrect
+        ? '<span style="color:var(--good);font-weight:700;">✔</span>'
+        : '<span style="color:var(--bad);font-weight:700;">❌</span>';
+      return '<tr>' +
+        '<td>' + esc(a.question) + '</td>' +
+        '<td>' + esc(a.chosenText) + '</td>' +
+        '<td>' + esc(a.correctText) + '</td>' +
+        '<td style="text-align:center;">' + mark + '</td>' +
+        '</tr>';
+    }).join('');
+
+    const wrong = answers.filter(function(a) { return !a.isCorrect; }).map(function(a) { return a.question; });
+    const improveHtml = wrong.length
+      ? '<ul>' + wrong.map(function(q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul>'
+      : '<p>' + esc(UI.recapNoImprove) + '</p>';
+
+    recapWrap.innerHTML =
+      '<div id="recapSynthesis">' +
+        '<p><strong>' + esc(UI.recapLevelLabel) + ' :</strong> ' + esc(levelLabel(level, UI)) + '</p>' +
+        '<p><strong>' + esc(UI.recapImproveLabel) + ' :</strong></p>' +
+        improveHtml +
+      '</div>' +
+      '<div id="recapTableWrap">' +
+        '<table id="recapTable">' +
+          '<thead><tr>' +
+            '<th>' + esc(UI.recapColQuestion) + '</th>' +
+            '<th>' + esc(UI.recapColYourAnswer) + '</th>' +
+            '<th>' + esc(UI.recapColCorrectAnswer) + '</th>' +
+            '<th>' + esc(UI.recapColResult) + '</th>' +
+          '</tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+      '<div class="actions">' +
+        '<button type="button" class="primary" id="recapRestartBtn">' + esc(UI.recapRestart) + '</button>' +
+        '<button type="button" class="secondary" id="recapHomeBtn">' + esc(UI.recapHome) + '</button>' +
+      '</div>';
+    recapWrap.style.display = 'block';
+
+    document.getElementById('recapRestartBtn').addEventListener('click', function() {
+      renderQuiz(currentLevel, currentLang);
+    });
+    document.getElementById('recapHomeBtn').addEventListener('click', function() {
+      window.location.href = '../index.html';
+    });
+  }
+
   function renderQuiz(level, lang) {
     currentLevel = level;
     const QUIZ = cache[lang].levels[level];
@@ -369,6 +434,8 @@
     }).join('');
     banner.className = '';
     banner.innerHTML = '';
+    recapWrap.style.display = 'none';
+    recapWrap.innerHTML = '';
     submitBtn.style.display = 'inline-block';
     resetBtn.style.display = 'none';
     levelScreen.style.display = 'none';
@@ -443,6 +510,7 @@
     const QUIZ = cache[currentLang].levels[currentLevel];
     const UI = cache[currentLang].ui;
     let score = 0;
+    const answers = [];
     QUIZ.forEach(function(q, i) {
       const chosen = form.querySelector('input[name="q' + i + '"]:checked');
       const opts = document.querySelectorAll('#opts' + i + ' .opt');
@@ -452,7 +520,14 @@
         else if (chosen && parseInt(chosen.value) === j) el.classList.add('incorrect');
       });
       document.getElementById('explain' + i).classList.add('show');
-      if (chosen && parseInt(chosen.value) === q.correct) score++;
+      const isCorrect = !!(chosen && parseInt(chosen.value) === q.correct);
+      if (isCorrect) score++;
+      answers.push({
+        question: q.q,
+        chosenText: chosen ? q.options[parseInt(chosen.value)] : UI.recapNoAnswer,
+        correctText: q.options[q.correct],
+        isCorrect: isCorrect
+      });
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
@@ -461,6 +536,7 @@
     else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
     banner.className = 'show ' + tier;
     banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    renderRecap(currentLevel, currentLang, answers);
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (tier === 'tier-high') { launchConfetti(); }
     submitBtn.style.display = 'none';
