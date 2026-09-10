@@ -330,6 +330,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   position: absolute; top: 1.3rem; right: 1.3rem; z-index: 5;
   display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem;
 }
+.hero-corner-right .qr-box { position: static; }
 .inscription-badge {
   position: absolute; top: 1.3rem; left: 1.3rem; z-index: 5;
   display: inline-flex; align-items: center; gap: 0.55rem;
