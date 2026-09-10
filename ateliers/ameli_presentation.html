@@ -1244,7 +1244,7 @@
 </script>
 
 <script type="module">
-  import { watchAuth, getQuizHistory } from '../auth.js';
+  import { watchAuth, getQuizHistory, isModerator } from '../auth.js';
   const SLUG = 'ameli';
   const MIN_PCT = 100;
   const gateCard = document.getElementById('lockGateCard');
@@ -1271,6 +1271,7 @@
   }
 
   watchAuth(function (user) {
+    if (user && isModerator(user)) { unlock(); return; }
     if (!user) {
       lock('🔒 Cette fiche est débloquée à partir de 100 % au niveau avancé du quiz. Connectez-vous puis réussissez le quiz pour y accéder.');
       return;

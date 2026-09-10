@@ -84,6 +84,14 @@
       <p class="acct-email">Connecté en tant que <strong id="userEmailLabel"></strong></p>
       <p class="acct-empty" id="usernameSub" style="display:none;"></p>
       <p class="acct-email" id="modBadge" style="display:none;">👑 Compte modérateur</p>
+      <div class="reg-field" style="margin-top:0.6rem;">
+        <label for="usernameInput">Nom d'utilisateur</label>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <input type="text" id="usernameInput" maxlength="30" autocomplete="nickname" placeholder="Votre nom d'utilisateur" style="flex:1;min-width:180px;">
+          <button type="button" class="secondary" id="saveUsernameBtn">Enregistrer</button>
+        </div>
+        <p class="reg-hint" id="usernameSaveMsg" style="display:none;"></p>
+      </div>
       <div class="actions">
         <a class="acct-badge" id="modLink" href="moderateur.html" style="display:none;position:static;">👑 Tableau de bord modérateur</a>
         <button type="button" class="secondary" id="logoutBtn">Se déconnecter</button>
@@ -214,6 +222,26 @@
 
   document.getElementById('logoutBtn').addEventListener('click', function () { logout(); });
 
+  document.getElementById('saveUsernameBtn').addEventListener('click', function () {
+    const user = currentUserRef;
+    if (!user) return;
+    const value = document.getElementById('usernameInput').value.trim();
+    if (!value) return;
+    const btn = document.getElementById('saveUsernameBtn');
+    const msg = document.getElementById('usernameSaveMsg');
+    btn.disabled = true;
+    setUsername(user.uid, value).then(function () {
+      var sub = document.getElementById('usernameSub');
+      sub.textContent = '👋 ' + value;
+      sub.style.display = '';
+      msg.textContent = '✅ Nom d\'utilisateur enregistré.';
+      msg.style.display = '';
+    }).catch(function () {
+      msg.textContent = '❌ Une erreur est survenue, réessayez.';
+      msg.style.display = '';
+    }).finally(function () { btn.disabled = false; });
+  });
+
   function renderFavorites(favorites) {
     const el = document.getElementById('favoritesList');
     if (!favorites.length) {
@@ -246,7 +274,10 @@
       }).join('') + '</tbody></table></div>';
   }
 
+  let currentUserRef = null;
+
   watchAuth(function (user) {
+    currentUserRef = user;
     if (user) {
       loggedOutView.style.display = 'none';
       loggedInView.style.display = '';
@@ -257,6 +288,7 @@
           sub.textContent = '👋 ' + profile.username;
           sub.style.display = '';
         }
+        document.getElementById('usernameInput').value = profile.username || '';
       }).catch(function () {});
       if (isModerator(user)) {
         document.getElementById('modBadge').style.display = '';

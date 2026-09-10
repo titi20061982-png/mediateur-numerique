@@ -1001,7 +1001,7 @@
 </script>
 
 <script type="module">
-  import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites, getQuizHistory } from './auth.js';
+  import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites, getQuizHistory, isModerator } from './auth.js';
 
   const acctLink = document.getElementById('acctLink');
   const acctIcon = document.getElementById('acctIcon');
@@ -1025,6 +1025,12 @@
     });
   }
 
+  function unlockAllLocks() {
+    document.querySelectorAll('.lock-fiche[data-lock-slug]').forEach(function (li) {
+      li.classList.remove('is-locked');
+    });
+  }
+
   watchAuth(function (user) {
     if (user) {
       acctLink.title = 'Mon compte (' + user.email + ')';
@@ -1037,7 +1043,11 @@
         window.__favApi.set(merged);
         return setCloudFavorites(user.uid, merged);
       }).catch(function () {}).finally(function () { syncing = false; });
-      getQuizHistory(user.uid).then(refreshLocks).catch(function () { refreshLocks(null); });
+      if (isModerator(user)) {
+        unlockAllLocks();
+      } else {
+        getQuizHistory(user.uid).then(refreshLocks).catch(function () { refreshLocks(null); });
+      }
     } else {
       acctLink.title = 'Se connecter';
       acctIcon.textContent = '👤';

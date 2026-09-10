@@ -223,7 +223,7 @@
 </script>
 
 <script type="module">
-  import { watchAuth, getQuizHistory } from './auth.js';
+  import { watchAuth, getQuizHistory, isModerator } from './auth.js';
 
   const MIN_SCORE_PCT = 50;
   const authGateCard = document.getElementById('authGateCard');
@@ -269,6 +269,13 @@
       authGateActions.style.display = '';
       authGateCard.style.display = '';
       formCard.style.display = 'none';
+      return;
+    }
+    if (isModerator(user)) {
+      authGateCard.style.display = 'none';
+      formCard.style.display = '';
+      passedSlugs = null;
+      checkGate();
       return;
     }
     getQuizHistory(user.uid).then(function (history) {

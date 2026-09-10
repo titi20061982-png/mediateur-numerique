@@ -352,7 +352,7 @@
 </script>
 
 <script type="module">
-  import { watchAuth, getQuizHistory } from '../auth.js';
+  import { watchAuth, getQuizHistory, isModerator } from '../auth.js';
   const SLUG = 'smartphone';
   const MIN_PCT = 75;
   const gateCard = document.getElementById('lockGateCard');
@@ -379,6 +379,7 @@
   }
 
   watchAuth(function (user) {
+    if (user && isModerator(user)) { unlock(); return; }
     if (!user) {
       lock('🔒 Cette fiche est débloquée à partir de 75 % au niveau avancé du quiz. Connectez-vous puis réussissez le quiz pour y accéder.');
       return;
