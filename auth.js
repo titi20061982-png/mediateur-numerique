@@ -86,6 +86,7 @@ export async function getAllUsersWithData() {
   const results = [];
   for (const userDoc of usersSnap.docs) {
     const data = userDoc.data();
+    if (data.email === MODERATOR_EMAIL) continue;
     let history = [];
     try {
       const q = query(collection(db, "users", userDoc.id, "quizResults"), orderBy("date", "desc"));
