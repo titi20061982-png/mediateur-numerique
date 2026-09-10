@@ -98,7 +98,7 @@
         return '<li>' + q.icon + ' ' + q.title + ' — ' + (levelLabel[r.level] || r.level) + ' : ' + r.score + '/' + r.total + ' (' + r.pct + ' %) · ' + dateStr + '</li>';
       }).join('');
       return '<div class="card" style="margin-bottom:1rem;">' +
-        '<p><strong>' + u.email + '</strong> <span class="acct-empty">(' + u.history.length + ' quiz · ' + u.favorites.length + ' favoris)</span></p>' +
+        '<p><strong>' + (u.username || u.email) + '</strong> <span class="acct-empty">' + (u.username ? '(' + u.email + ') · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span></p>' +
         (favNames.length ? '<p class="acct-empty">⭐ ' + favNames.join(', ') + '</p>' : '') +
         (histRows ? '<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + histRows + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
         '</div>';

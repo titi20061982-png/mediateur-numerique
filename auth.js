@@ -47,6 +47,15 @@ export async function getCloudFavorites(uid) {
   return snap.exists() ? (snap.data().favorites || []) : [];
 }
 
+export async function getUserProfile(uid) {
+  const snap = await getDoc(doc(db, "users", uid));
+  return snap.exists() ? snap.data() : {};
+}
+
+export async function setUsername(uid, username) {
+  await setDoc(doc(db, "users", uid), { username }, { merge: true });
+}
+
 export async function setCloudFavorites(uid, favorites) {
   await setDoc(doc(db, "users", uid), { favorites }, { merge: true });
 }
@@ -86,6 +95,7 @@ export async function getAllUsersWithData() {
     results.push({
       uid: userDoc.id,
       email: data.email || "(inconnu)",
+      username: data.username || "",
       favorites: data.favorites || [],
       history: history
     });

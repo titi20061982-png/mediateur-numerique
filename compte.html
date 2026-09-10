@@ -57,6 +57,10 @@
 
       <form class="reg-form" id="registerForm" style="display:none;">
         <div class="reg-field">
+          <label for="regUsername">Nom d'utilisateur</label>
+          <input type="text" id="regUsername" required autocomplete="nickname" maxlength="30">
+        </div>
+        <div class="reg-field">
           <label for="regEmail2">Adresse e-mail</label>
           <input type="email" id="regEmail2" required autocomplete="email">
         </div>
@@ -78,6 +82,7 @@
   <div id="loggedInView" style="display:none;">
     <div class="card reveal">
       <p class="acct-email">Connecté en tant que <strong id="userEmailLabel"></strong></p>
+      <p class="acct-empty" id="usernameSub" style="display:none;"></p>
       <p class="acct-email" id="modBadge" style="display:none;">👑 Compte modérateur</p>
       <div class="actions">
         <a class="acct-badge" id="modLink" href="moderateur.html" style="display:none;position:static;">👑 Tableau de bord modérateur</a>
@@ -108,7 +113,7 @@
 </footer>
 
 <script type="module">
-  import { watchAuth, login, register, logout, resetPassword, authErrorMessage, getCloudFavorites, getQuizHistory, isModerator } from './auth.js';
+  import { watchAuth, login, register, logout, resetPassword, authErrorMessage, getCloudFavorites, getQuizHistory, isModerator, setUsername, getUserProfile } from './auth.js';
 
   const QUIZZES = [
     { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻" },
@@ -184,11 +189,14 @@
   registerForm.addEventListener('submit', function (e) {
     e.preventDefault();
     clearMessages();
+    const username = document.getElementById('regUsername').value.trim();
     const email = document.getElementById('regEmail2').value.trim();
     const password = document.getElementById('regPassword').value;
     const btn = document.getElementById('registerSubmitBtn');
     btn.disabled = true;
-    register(email, password).catch(function (err) {
+    register(email, password).then(function (cred) {
+      return setUsername(cred.user.uid, username);
+    }).catch(function (err) {
       showError(authErrorMessage(err));
     }).finally(function () { btn.disabled = false; });
   });
@@ -243,6 +251,13 @@
       loggedOutView.style.display = 'none';
       loggedInView.style.display = '';
       document.getElementById('userEmailLabel').textContent = user.email;
+      getUserProfile(user.uid).then(function (profile) {
+        if (profile.username) {
+          var sub = document.getElementById('usernameSub');
+          sub.textContent = '👋 ' + profile.username;
+          sub.style.display = '';
+        }
+      }).catch(function () {});
       if (isModerator(user)) {
         document.getElementById('modBadge').style.display = '';
         document.getElementById('modLink').style.display = '';
