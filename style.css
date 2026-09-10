@@ -524,6 +524,7 @@ footer a:hover { text-decoration: underline; }
   transition: transform .2s ease, border-color .2s ease;
 }
 .theme-toggle:hover { transform: scale(1.08) rotate(12deg); border-color: var(--accent); }
+.theme-toggle.acct-toggle { right: 3.9rem; text-decoration: none; color: var(--text); }
 
 .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
 .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
@@ -651,6 +652,27 @@ button.secondary:hover { border-color: var(--accent); color: var(--accent); }
   color: var(--text); font-size: 0.95rem; margin-top: 1.2rem;
 }
 .reg-error.show { display: block; }
+
+/* ---------- Mon compte ---------- */
+.acct-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.4rem; border-bottom: 1px solid var(--border); }
+.acct-tab {
+  font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.92rem;
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--muted); padding: 0.6rem 0.2rem; margin-bottom: -1px; cursor: pointer;
+}
+.acct-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.acct-tab:hover { color: var(--accent); }
+.acct-email { font-size: 0.95rem; margin: 0 0 0.9rem; }
+.acct-empty { color: var(--muted); font-size: 0.92rem; }
+#favoritesCard h3, #historyCard h3 { margin: 0 0 1rem; font-size: 1.05rem; }
+.acct-history-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.acct-history-table th {
+  text-align: left; padding: 0.5rem 0.7rem; color: var(--muted); font-weight: 600;
+  border-bottom: 1px solid var(--border); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.acct-history-table td { padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--border); }
+.acct-history-table tr:last-child td { border-bottom: none; }
+.stats-list-wrap { overflow-x: auto; }
 
 @media print {
   body { background: #fff !important; color: #000 !important; }

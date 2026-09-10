@@ -297,6 +297,7 @@
     </div>
     <button type="button" class="icon-btn" id="randomBtn" title="Atelier au hasard" aria-label="Atelier au hasard">🎲</button>
     <button type="button" class="icon-btn" id="favToggleBtn" title="Voir mes favoris" aria-label="Voir mes favoris">⭐</button>
+    <a class="icon-btn" id="acctLink" href="compte.html" title="Se connecter" aria-label="Mon compte">👤</a>
     <button type="button" class="icon-btn" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
   </div>
   <nav class="catnav" id="catnav">
@@ -759,6 +760,7 @@
     function isFav(key) { return favorites.indexOf(key) !== -1; }
 
     var favMode = false;
+    var starEls = [];
 
     // Index de tous les ateliers (cle stable = data-key du quiz, sinon titre)
     var allCards = [];
@@ -789,6 +791,7 @@
           if (favMode) applyFavFilter();
         });
         card.appendChild(star);
+        starEls.push({ key: key, el: star });
 
         // Liste complete cliquable (etat "aucun resultat")
         var btn = document.createElement('button');
@@ -798,6 +801,19 @@
         listEl.appendChild(btn);
       });
     });
+
+    function refreshStars() {
+      starEls.forEach(function (s) {
+        s.el.textContent = isFav(s.key) ? '★' : '☆';
+        s.el.classList.toggle('is-fav', isFav(s.key));
+      });
+    }
+
+    // Expose pour la synchronisation cloud (module auth.js, voir plus bas)
+    window.__favApi = {
+      get: function () { return favorites; },
+      set: function (arr) { favorites = arr; saveFavorites(); refreshStars(); if (favMode) applyFavFilter(); }
+    };
 
     function resetSearchUI() {
       document.querySelectorAll('.card.search-hide, section.category.search-hide').forEach(function (el) { el.classList.remove('search-hide'); });
@@ -983,6 +999,37 @@
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
     sections.forEach(function (s) { obs.observe(s); });
   })();
+</script>
+
+<script type="module">
+  import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites } from './auth.js';
+
+  const acctLink = document.getElementById('acctLink');
+  let syncing = false;
+
+  watchAuth(function (user) {
+    if (user) {
+      acctLink.title = 'Mon compte (' + user.email + ')';
+      acctLink.textContent = '🟢';
+      syncing = true;
+      getCloudFavorites(user.uid).then(function (cloudFavs) {
+        const local = window.__favApi.get();
+        const merged = Array.from(new Set(local.concat(cloudFavs)));
+        window.__favApi.set(merged);
+        return setCloudFavorites(user.uid, merged);
+      }).catch(function () {}).finally(function () { syncing = false; });
+    } else {
+      acctLink.title = 'Se connecter';
+      acctLink.textContent = '👤';
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!(e.target && e.target.closest && e.target.closest('.fav-star'))) return;
+    if (syncing) return;
+    const user = currentUser();
+    if (user) { setCloudFavorites(user.uid, window.__favApi.get()).catch(function () {}); }
+  });
 </script>
 
 </body>

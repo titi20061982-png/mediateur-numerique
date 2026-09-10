@@ -11,6 +11,7 @@
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
+<a class="theme-toggle acct-toggle" id="acctLink" href="../compte.html" title="Se connecter" aria-label="Mon compte">👤</a>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 <header>
   <div class="wrap">
@@ -593,6 +594,7 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
+    if (window.__onQuizSubmitted) { window.__onQuizSubmitted({ slug: SLUG, level: currentLevel, score: score, total: QUIZ.length, pct: pct }); }
     let tier = 'tier-low', msg = UI.tierLow;
     if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
     else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
@@ -652,6 +654,21 @@
     window.addEventListener('scroll', upd, { passive: true });
     upd();
   })();
+</script>
+
+<script type="module">
+  import { watchAuth, currentUser, saveQuizResult } from '../auth.js';
+
+  const acctLink = document.getElementById('acctLink');
+  watchAuth(function (user) {
+    if (user) { acctLink.title = 'Mon compte (' + user.email + ')'; acctLink.textContent = '🟢'; }
+    else { acctLink.title = 'Se connecter'; acctLink.textContent = '👤'; }
+  });
+
+  window.__onQuizSubmitted = function (result) {
+    const user = currentUser();
+    if (user) { saveQuizResult(user.uid, result).catch(function () {}); }
+  };
 </script>
 </body>
 </html>
