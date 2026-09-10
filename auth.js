@@ -25,7 +25,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export function watchAuth(cb) { return onAuthStateChanged(auth, cb); }
+export const MODERATOR_EMAIL = "waltenercedric@proton.me";
+export function isModerator(user) { return !!user && user.email === MODERATOR_EMAIL; }
+
+export function watchAuth(cb) {
+  return onAuthStateChanged(auth, function (user) {
+    if (user) {
+      setDoc(doc(db, "users", user.uid), { email: user.email }, { merge: true }).catch(function () {});
+    }
+    cb(user);
+  });
+}
 export function login(email, password) { return signInWithEmailAndPassword(auth, email, password); }
 export function register(email, password) { return createUserWithEmailAndPassword(auth, email, password); }
 export function logout() { return signOut(auth); }
@@ -60,6 +70,27 @@ export async function getQuizHistory(uid) {
   const q = query(collection(db, "users", uid, "quizResults"), orderBy("date", "desc"));
   const snap = await getDocs(q);
   return snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+}
+
+export async function getAllUsersWithData() {
+  const usersSnap = await getDocs(collection(db, "users"));
+  const results = [];
+  for (const userDoc of usersSnap.docs) {
+    const data = userDoc.data();
+    let history = [];
+    try {
+      const q = query(collection(db, "users", userDoc.id, "quizResults"), orderBy("date", "desc"));
+      const historySnap = await getDocs(q);
+      history = historySnap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+    } catch (e) {}
+    results.push({
+      uid: userDoc.id,
+      email: data.email || "(inconnu)",
+      favorites: data.favorites || [],
+      history: history
+    });
+  }
+  return results;
 }
 
 function authErrorMessage(err) {

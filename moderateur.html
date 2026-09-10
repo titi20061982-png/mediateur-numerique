@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de bord modérateur — Ateliers Médiation Numérique</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#35604f">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="icon-btn icon-btn-floating" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">← Retour aux ateliers</a>
+    <div class="eyebrow">👑 Modérateur</div>
+    <h1>Tableau de bord</h1>
+    <p class="sub">Vue d'ensemble des comptes visiteurs : favoris et résultats de quiz.</p>
+    <nav class="toplinks">
+      <a href="index.html">🏠 Accueil</a>
+      <a href="compte.html">👤 Mon compte</a>
+    </nav>
+  </div>
+</header>
+
+<main class="narrow">
+  <div class="card" id="checkingCard">
+    <p>⏳ Vérification de vos droits…</p>
+  </div>
+  <div class="card" id="deniedCard" style="display:none;">
+    <p>🚫 Cette page est réservée au modérateur du site. <a href="compte.html">Se connecter</a> avec le compte modérateur.</p>
+  </div>
+  <div id="dashboard" style="display:none;">
+    <div class="stats-total card" id="statsTotal">
+      <div><strong id="statTotalUsers">—</strong><span>Comptes</span></div>
+      <div><strong id="statTotalQuizzes">—</strong><span>Quiz passés</span></div>
+      <div><strong id="statTotalFavs">—</strong><span>Favoris posés</span></div>
+    </div>
+    <div class="card" id="usersCard">
+      <h3>👥 Comptes visiteurs</h3>
+      <div id="usersList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footlinks">
+    <a href="index.html">🏠 Accueil</a>
+  </div>
+  © 2026 titi_23 — Tous droits réservés. Voir la <a href="LICENSE">licence</a>.
+</footer>
+
+<script type="module">
+  import { watchAuth, isModerator, getAllUsersWithData } from './auth.js';
+
+  const QUIZZES = [
+    { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻" },
+    { slug: "smartphone", title: "Smartphone et tablette", icon: "🖥️" },
+    { slug: "base-adrn", title: "Base ADRN (montage / diagnostic PC)", icon: "🖥️" },
+    { slug: "phishing", title: "Phishing (hameçonnage)", icon: "🔒" },
+    { slug: "cyberharcelement", title: "Cyberharcèlement", icon: "🔒" },
+    { slug: "identite-numerique", title: "Identité numérique et e-réputation", icon: "🔒" },
+    { slug: "vie-privee", title: "Protéger sa vie privée en ligne", icon: "🔒" },
+    { slug: "enfant-internet", title: "Accompagner un enfant sur Internet", icon: "🔒" },
+    { slug: "caf", title: "Mon compte CAF", icon: "🏛️" },
+    { slug: "france-titres", title: "France Titres (CNI, passeport, permis, carte grise)", icon: "🏛️" },
+    { slug: "impots", title: "Mes impôts en ligne", icon: "🏛️" },
+    { slug: "ameli", title: "Mon espace santé Ameli", icon: "🏛️" },
+    { slug: "retraite", title: "Ma retraite en ligne", icon: "🏛️" },
+    { slug: "cv-lettre", title: "CV et lettre de motivation", icon: "💼" },
+    { slug: "formation", title: "Trouver une formation en ligne", icon: "💼" },
+    { slug: "ia", title: "Intelligence artificielle : panorama", icon: "🌐" },
+    { slug: "facture-telephone", title: "Comprendre sa facture téléphonique", icon: "🌐" }
+  ];
+  function quizBySlug(slug) { return QUIZZES.find(function (q) { return q.slug === slug; }); }
+  function quizByKey(key) { return quizBySlug(key.replace(/-quiz(-v2)?$/, '')); }
+  const levelLabel = { debutant: '🌱 Déb.', intermediaire: '🌿 Int.', avance: '🌳 Avancé' };
+
+  function renderUsers(users) {
+    let totalQuizzes = 0, totalFavs = 0;
+    const rows = users.map(function (u) {
+      totalQuizzes += u.history.length;
+      totalFavs += u.favorites.length;
+      const favNames = u.favorites.map(function (key) {
+        const q = quizByKey(key);
+        return q ? q.icon + ' ' + q.title : key;
+      });
+      const histRows = u.history.slice(0, 5).map(function (r) {
+        const q = quizBySlug(r.slug) || { title: r.slug, icon: '📄' };
+        const d = new Date(r.date);
+        const dateStr = isNaN(d) ? '' : d.toLocaleDateString('fr-FR');
+        return '<li>' + q.icon + ' ' + q.title + ' — ' + (levelLabel[r.level] || r.level) + ' : ' + r.score + '/' + r.total + ' (' + r.pct + ' %) · ' + dateStr + '</li>';
+      }).join('');
+      return '<div class="card" style="margin-bottom:1rem;">' +
+        '<p><strong>' + u.email + '</strong> <span class="acct-empty">(' + u.history.length + ' quiz · ' + u.favorites.length + ' favoris)</span></p>' +
+        (favNames.length ? '<p class="acct-empty">⭐ ' + favNames.join(', ') + '</p>' : '') +
+        (histRows ? '<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + histRows + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
+        '</div>';
+    }).join('');
+    document.getElementById('usersList').innerHTML = rows || '<p class="acct-empty">Aucun compte pour l\'instant.</p>';
+    document.getElementById('statTotalUsers').textContent = users.length;
+    document.getElementById('statTotalQuizzes').textContent = totalQuizzes;
+    document.getElementById('statTotalFavs').textContent = totalFavs;
+  }
+
+  watchAuth(function (user) {
+    document.getElementById('checkingCard').style.display = 'none';
+    if (!isModerator(user)) {
+      document.getElementById('deniedCard').style.display = '';
+      return;
+    }
+    document.getElementById('dashboard').style.display = '';
+    getAllUsersWithData().then(renderUsers).catch(function () {
+      document.getElementById('usersList').innerHTML = '<p class="acct-empty">Erreur de chargement des données.</p>';
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+    icon(saved);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      icon(next);
+    });
+  })();
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+</script>
+</body>
+</html>

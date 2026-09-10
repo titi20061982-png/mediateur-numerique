@@ -78,7 +78,9 @@
   <div id="loggedInView" style="display:none;">
     <div class="card reveal">
       <p class="acct-email">Connecté en tant que <strong id="userEmailLabel"></strong></p>
+      <p class="acct-email" id="modBadge" style="display:none;">👑 Compte modérateur</p>
       <div class="actions">
+        <a class="acct-badge" id="modLink" href="moderateur.html" style="display:none;position:static;">👑 Tableau de bord modérateur</a>
         <button type="button" class="secondary" id="logoutBtn">Se déconnecter</button>
       </div>
     </div>
@@ -106,7 +108,7 @@
 </footer>
 
 <script type="module">
-  import { watchAuth, login, register, logout, resetPassword, authErrorMessage, getCloudFavorites, getQuizHistory } from './auth.js';
+  import { watchAuth, login, register, logout, resetPassword, authErrorMessage, getCloudFavorites, getQuizHistory, isModerator } from './auth.js';
 
   const QUIZZES = [
     { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻" },
@@ -241,6 +243,10 @@
       loggedOutView.style.display = 'none';
       loggedInView.style.display = '';
       document.getElementById('userEmailLabel').textContent = user.email;
+      if (isModerator(user)) {
+        document.getElementById('modBadge').style.display = '';
+        document.getElementById('modLink').style.display = '';
+      }
       getCloudFavorites(user.uid).then(renderFavorites).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
       });
