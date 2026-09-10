@@ -22,6 +22,7 @@
     <div class="eyebrow">📝 Inscription</div>
     <h1>S'inscrire à un cours de médiation numérique</h1>
     <p class="sub">Vous souhaitez participer à un atelier collectif ou bénéficier d'un accompagnement individuel <strong>en présentiel avec moi</strong> ? Remplissez ce formulaire pour vous inscrire : je vous recontacterai pour organiser la séance.</p>
+    <p class="sub">⚠️ Pour vous inscrire, vous devez être connecté et avoir obtenu au moins <strong>50 %</strong> au test de connaissances de l'atelier concerné.</p>
     <nav class="toplinks">
       <a href="index.html">🏠 Accueil</a>
       <a href="a-propos.html">🌳 À propos</a>
@@ -32,7 +33,13 @@
 </header>
 
 <main class="narrow">
-  <div class="card reveal">
+  <div class="card reveal" id="authGateCard">
+    <p id="authGateText">⏳ Vérification de votre connexion…</p>
+    <div class="actions" id="authGateActions" style="display:none;">
+      <a class="acct-badge" href="compte.html" style="position:static;">👤 Se connecter / créer un compte</a>
+    </div>
+  </div>
+  <div class="card reveal" id="formCard" style="display:none;">
     <form class="reg-form" id="regForm">
       <div class="reg-field">
         <label for="regNom">Nom <span class="req">*</span></label>
@@ -51,33 +58,43 @@
         <select id="regAtelier" name="atelier" required>
           <option value="" disabled selected>— Choisir un atelier —</option>
           <optgroup label="🖥️ Premiers pas avec son matériel">
-            <option>Smartphone et tablette</option>
-            <option>Battle OS (Windows / Linux / macOS)</option>
-            <option>Base ADRN (montage / diagnostic PC)</option>
+            <option value="smartphone">Smartphone et tablette</option>
+            <option value="battle-os">Battle OS (Windows / Linux / macOS)</option>
+            <option value="base-adrn">Base ADRN (montage / diagnostic PC)</option>
           </optgroup>
           <optgroup label="🔒 Sécurité, vie privée &amp; bien-être en ligne">
-            <option>Phishing (hameçonnage)</option>
-            <option>Cyberharcèlement</option>
-            <option>Identité numérique et e-réputation</option>
-            <option>Protéger sa vie privée en ligne</option>
-            <option>Accompagner un enfant sur Internet</option>
+            <option value="phishing">Phishing (hameçonnage)</option>
+            <option value="cyberharcelement">Cyberharcèlement</option>
+            <option value="identite-numerique">Identité numérique et e-réputation</option>
+            <option value="vie-privee">Protéger sa vie privée en ligne</option>
+            <option value="enfant-internet">Accompagner un enfant sur Internet</option>
           </optgroup>
           <optgroup label="🏛️ Démarches administratives en ligne">
-            <option>Mon compte CAF</option>
-            <option>France Titres (CNI, passeport, permis, carte grise)</option>
-            <option>Mes impôts en ligne</option>
-            <option>Mon espace santé Ameli</option>
-            <option>Ma retraite en ligne</option>
+            <option value="caf">Mon compte CAF</option>
+            <option value="france-titres">France Titres (CNI, passeport, permis, carte grise)</option>
+            <option value="impots">Mes impôts en ligne</option>
+            <option value="ameli">Mon espace santé Ameli</option>
+            <option value="retraite">Ma retraite en ligne</option>
           </optgroup>
           <optgroup label="💼 Insertion professionnelle">
-            <option>CV et lettre de motivation</option>
-            <option>Trouver une formation en ligne</option>
+            <option value="cv-lettre">CV et lettre de motivation</option>
+            <option value="formation">Trouver une formation en ligne</option>
           </optgroup>
           <optgroup label="🌐 Culture numérique">
-            <option>Intelligence artificielle : panorama</option>
-            <option>Comprendre sa facture téléphonique</option>
+            <option value="ia">Intelligence artificielle : panorama</option>
+            <option value="facture-telephone">Comprendre sa facture téléphonique</option>
           </optgroup>
-          <option>Je ne sais pas encore / autre demande</option>
+          <option value="autre">Je ne sais pas encore / autre demande</option>
+        </select>
+        <p class="reg-error" id="quizGate">Vous devez d'abord réussir le test de connaissances de cet atelier (50 % minimum) avant de pouvoir vous inscrire. <a href="#" id="quizGateLink">Faire le test maintenant →</a></p>
+      </div>
+      <div class="reg-field">
+        <label for="regNiveau">Niveau actuel <span class="req">*</span></label>
+        <select id="regNiveau" name="niveau" required>
+          <option value="" disabled selected>— Choisir votre niveau —</option>
+          <option value="debutant">🌱 Débutant</option>
+          <option value="intermediaire">🌿 Intermédiaire</option>
+          <option value="avance">🌳 Avancé</option>
         </select>
       </div>
       <div class="reg-field">
@@ -160,11 +177,15 @@
     var successBox = document.getElementById('regSuccess');
     var errorBox = document.getElementById('regError');
     errorBox.classList.remove('show');
+    if (submitBtn.disabled) { return; }
 
     var nom = document.getElementById('regNom').value.trim();
     var prenom = document.getElementById('regPrenom').value.trim();
     var email = document.getElementById('regEmail').value.trim();
-    var atelier = document.getElementById('regAtelier').value;
+    var atelierSelect = document.getElementById('regAtelier');
+    var atelierLabel = atelierSelect.options[atelierSelect.selectedIndex].text;
+    var niveauSelect = document.getElementById('regNiveau');
+    var niveauLabel = niveauSelect.options[niveauSelect.selectedIndex].text;
     var message = document.getElementById('regMessage').value.trim();
 
     var originalLabel = submitBtn.textContent;
@@ -175,13 +196,14 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        _subject: 'Inscription atelier — ' + atelier,
+        _subject: 'Inscription atelier — ' + atelierLabel,
         _template: 'box',
         _captcha: 'false',
         Nom: nom,
         Prénom: prenom,
         'E-mail': email,
-        'Atelier souhaité': atelier,
+        'Atelier souhaité': atelierLabel,
+        'Niveau actuel': niveauLabel,
         Message: message || '(aucun message)'
       })
     })
@@ -197,6 +219,73 @@
         errorBox.classList.add('show');
         errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
+  });
+</script>
+
+<script type="module">
+  import { watchAuth, getQuizHistory } from './auth.js';
+
+  const MIN_SCORE_PCT = 50;
+  const authGateCard = document.getElementById('authGateCard');
+  const authGateText = document.getElementById('authGateText');
+  const authGateActions = document.getElementById('authGateActions');
+  const formCard = document.getElementById('formCard');
+  const atelierSelect = document.getElementById('regAtelier');
+  const quizGate = document.getElementById('quizGate');
+  const submitBtn = document.getElementById('regSubmitBtn');
+
+  let passedSlugs = null;
+
+  function bestScorePct(history, slug) {
+    let best = 0;
+    history.forEach(function (r) {
+      if (r.slug === slug && typeof r.pct === 'number' && r.pct > best) best = r.pct;
+    });
+    return best;
+  }
+
+  function checkGate() {
+    const slug = atelierSelect.value;
+    if (!slug || slug === 'autre' || !passedSlugs) {
+      quizGate.classList.remove('show');
+      submitBtn.disabled = false;
+      return;
+    }
+    if (passedSlugs.indexOf(slug) === -1) {
+      quizGate.classList.add('show');
+      document.getElementById('quizGateLink').href = 'ateliers/' + slug + '_quiz.html';
+      submitBtn.disabled = true;
+    } else {
+      quizGate.classList.remove('show');
+      submitBtn.disabled = false;
+    }
+  }
+
+  atelierSelect.addEventListener('change', checkGate);
+
+  watchAuth(function (user) {
+    if (!user) {
+      authGateText.textContent = '🔒 Vous devez être connecté pour vous inscrire, et avoir réussi le test de connaissances (50 % minimum) de l\'atelier concerné.';
+      authGateActions.style.display = '';
+      authGateCard.style.display = '';
+      formCard.style.display = 'none';
+      return;
+    }
+    getQuizHistory(user.uid).then(function (history) {
+      const slugs = {};
+      history.forEach(function (r) {
+        if (bestScorePct(history, r.slug) >= MIN_SCORE_PCT) slugs[r.slug] = true;
+      });
+      passedSlugs = Object.keys(slugs);
+      authGateCard.style.display = 'none';
+      formCard.style.display = '';
+      checkGate();
+    }).catch(function () {
+      passedSlugs = [];
+      authGateCard.style.display = 'none';
+      formCard.style.display = '';
+      checkGate();
+    });
   });
 </script>
 </body>
