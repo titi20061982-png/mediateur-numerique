@@ -297,7 +297,7 @@
     </div>
     <button type="button" class="icon-btn" id="randomBtn" title="Atelier au hasard" aria-label="Atelier au hasard">🎲</button>
     <button type="button" class="icon-btn" id="favToggleBtn" title="Voir mes favoris" aria-label="Voir mes favoris">⭐</button>
-    <a class="icon-btn" id="acctLink" href="compte.html" title="Se connecter" aria-label="Mon compte">👤</a>
+    <a class="icon-btn acct-icon-btn" id="acctLink" href="compte.html" title="Se connecter" aria-label="Se connecter / Mon compte"><span id="acctIcon">👤</span><span class="acct-icon-label" id="acctLabel">Connexion</span></a>
     <button type="button" class="icon-btn" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
   </div>
   <nav class="catnav" id="catnav">
@@ -1005,12 +1005,15 @@
   import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites } from './auth.js';
 
   const acctLink = document.getElementById('acctLink');
+  const acctIcon = document.getElementById('acctIcon');
+  const acctLabel = document.getElementById('acctLabel');
   let syncing = false;
 
   watchAuth(function (user) {
     if (user) {
       acctLink.title = 'Mon compte (' + user.email + ')';
-      acctLink.textContent = '🟢';
+      acctIcon.textContent = '🟢';
+      acctLabel.textContent = 'Mon compte';
       syncing = true;
       getCloudFavorites(user.uid).then(function (cloudFavs) {
         const local = window.__favApi.get();
@@ -1020,7 +1023,8 @@
       }).catch(function () {}).finally(function () { syncing = false; });
     } else {
       acctLink.title = 'Se connecter';
-      acctLink.textContent = '👤';
+      acctIcon.textContent = '👤';
+      acctLabel.textContent = 'Connexion';
     }
   });
 

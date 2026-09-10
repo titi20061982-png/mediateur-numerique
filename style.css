@@ -133,6 +133,16 @@ body.no-select {
 }
 .icon-btn:hover { transform: translateY(-2px); border-color: var(--accent); }
 .icon-btn.active { background: var(--accent); border-color: var(--accent); }
+.acct-icon-btn {
+  width: auto; gap: 0.4rem; padding: 0 0.9rem;
+  background: var(--accent-soft); border-color: var(--accent); color: var(--accent);
+  text-decoration: none; font-weight: 600; font-size: 0.85rem;
+}
+.acct-icon-label { white-space: nowrap; }
+@media (max-width: 640px) {
+  .acct-icon-btn { width: 2.6rem; padding: 0; }
+  .acct-icon-label { display: none; }
+}
 /* Variante bouton de theme flottant, utilisee sur les pages secondaires
    (sur l'accueil, le bouton de theme vit dans la barre de recherche collante) */
 .icon-btn.icon-btn-floating { position: fixed; top: 1.1rem; right: 1.1rem; z-index: 50; }
