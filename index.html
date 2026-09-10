@@ -1020,7 +1020,7 @@
     document.querySelectorAll('.lock-fiche[data-lock-slug]').forEach(function (li) {
       const slug = li.dataset.lockSlug;
       const pct = history ? bestPct(history, slug, 'avance') : 0;
-      li.classList.toggle('is-locked', pct < 75);
+      li.classList.toggle('is-locked', pct < 100);
     });
   }
 
