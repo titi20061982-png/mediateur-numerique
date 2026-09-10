@@ -460,6 +460,11 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .grid .card a.main-link { flex: 1; min-width: 0; }
 .grid .card a.dl-link { flex: none; font-size: 0.75rem; color: var(--muted); padding: 0.28rem 0.45rem; }
 .grid .card a.dl-link:hover { color: var(--accent); }
+.lock-fiche.is-locked .main-link, .lock-fiche.is-locked .dl-link { opacity: 0.45; pointer-events: none; cursor: not-allowed; }
+.lock-fiche.is-locked::after {
+  content: "🔒 Débloqué à 75 % niveau avancé du quiz"; display: block;
+  font-size: 0.7rem; color: var(--muted); margin: 0.1rem 0 0.2rem;
+}
 .grid .card h3 { margin: 0 0 0.9rem; font-size: 1.03rem; }
 
 .badge { flex: none; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.03em; color: #fff; padding: 0.14rem 0.4rem; border-radius: 5px; }
