@@ -1001,7 +1001,7 @@
 </script>
 
 <script type="module">
-  import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites, getQuizHistory, isModerator } from './auth.js';
+  import { watchAuth, currentUser, getCloudFavorites, setCloudFavorites, getQuizHistory, isModerator, getUserProfile } from './auth.js';
 
   const acctLink = document.getElementById('acctLink');
   const acctIcon = document.getElementById('acctIcon');
@@ -1036,6 +1036,9 @@
       acctLink.title = 'Mon compte (' + user.email + ')';
       acctIcon.textContent = '🟢';
       acctLabel.textContent = 'Mon compte';
+      getUserProfile(user.uid).then(function (profile) {
+        if (profile.username) { acctLabel.textContent = profile.username; }
+      }).catch(function () {});
       syncing = true;
       getCloudFavorites(user.uid).then(function (cloudFavs) {
         const local = window.__favApi.get();
