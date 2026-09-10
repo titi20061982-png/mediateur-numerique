@@ -133,16 +133,6 @@ body.no-select {
 }
 .icon-btn:hover { transform: translateY(-2px); border-color: var(--accent); }
 .icon-btn.active { background: var(--accent); border-color: var(--accent); }
-.acct-icon-btn {
-  width: auto; gap: 0.4rem; padding: 0 0.9rem;
-  background: var(--accent-soft); border-color: var(--accent); color: var(--accent);
-  text-decoration: none; font-weight: 600; font-size: 0.85rem;
-}
-.acct-icon-label { white-space: nowrap; }
-@media (max-width: 640px) {
-  .acct-icon-btn { width: 2.6rem; padding: 0; }
-  .acct-icon-label { display: none; }
-}
 /* Variante bouton de theme flottant, utilisee sur les pages secondaires
    (sur l'accueil, le bouton de theme vit dans la barre de recherche collante) */
 .icon-btn.icon-btn-floating { position: fixed; top: 1.1rem; right: 1.1rem; z-index: 50; }
@@ -349,6 +339,14 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   box-shadow: var(--shadow); transition: transform .15s ease, filter .15s ease;
 }
 .inscription-badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.acct-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 0.85rem;
+  color: #fff; text-decoration: none; background: var(--accent);
+  border: 1px solid var(--border); padding: 0.55rem 0.95rem; border-radius: 999px;
+  box-shadow: var(--shadow); transition: transform .15s ease, filter .15s ease;
+}
+.acct-badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
 @media (max-width: 760px) {
   .hero-corner-right { position: static; align-items: center; margin: 0 auto 1.2rem; }
   .inscription-badge { position: static; display: flex; width: fit-content; margin: 0 auto 1.2rem; font-size: 1.05rem; padding: 0.85rem 1.4rem; }
