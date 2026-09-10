@@ -46,6 +46,8 @@
             <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés.</li>
             <li>Plus bas : la liste de chaque visiteur avec son nom/e-mail, ses favoris et ses 5 derniers résultats de quiz.</li>
             <li>Votre propre compte n'apparaît jamais dans ces stats ni dans cette liste.</li>
+            <li><strong>🔁 Réinitialiser le quiz</strong> : efface tout l'historique de quiz de ce visiteur (utile en cas de triche ou pour repartir de zéro).</li>
+            <li><strong>🗑️ Supprimer le compte</strong> : efface son profil, ses favoris et son historique. La personne pourra toujours se reconnecter avec son e-mail/mot de passe, mais repartira de zéro (impossible de supprimer sa connexion elle-même depuis le site).</li>
           </ul>
           <p><strong>Une fois connecté avec ce compte modérateur, sur tout le site</strong></p>
           <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
@@ -83,7 +85,7 @@
 </footer>
 
 <script type="module">
-  import { watchAuth, isModerator, getAllUsersWithData } from './auth.js';
+  import { watchAuth, isModerator, getAllUsersWithData, resetUserQuizHistory, deleteUserAccount } from './auth.js';
 
   const QUIZZES = [
     { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻" },
@@ -108,6 +110,18 @@
   function quizByKey(key) { return quizBySlug(key.replace(/-quiz(-v2)?$/, '')); }
   const levelLabel = { debutant: '🌱 Déb.', intermediaire: '🌿 Int.', avance: '🌳 Avancé' };
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function loadUsers() {
+    getAllUsersWithData().then(renderUsers).catch(function () {
+      document.getElementById('usersList').innerHTML = '<p class="acct-empty">Erreur de chargement des données.</p>';
+    });
+  }
+
   function renderUsers(users) {
     let totalQuizzes = 0, totalFavs = 0;
     const rows = users.map(function (u) {
@@ -123,10 +137,15 @@
         const dateStr = isNaN(d) ? '' : d.toLocaleDateString('fr-FR');
         return '<li>' + q.icon + ' ' + q.title + ' — ' + (levelLabel[r.level] || r.level) + ' : ' + r.score + '/' + r.total + ' (' + r.pct + ' %) · ' + dateStr + '</li>';
       }).join('');
+      const label = escapeHtml(u.username || u.email);
       return '<div class="card" style="margin-bottom:1rem;">' +
-        '<p><strong>' + (u.username || u.email) + '</strong> <span class="acct-empty">' + (u.username ? '(' + u.email + ') · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span></p>' +
+        '<p><strong>' + label + '</strong> <span class="acct-empty">' + (u.username ? '(' + escapeHtml(u.email) + ') · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span></p>' +
         (favNames.length ? '<p class="acct-empty">⭐ ' + favNames.join(', ') + '</p>' : '') +
         (histRows ? '<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + histRows + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
+        '<div class="actions" style="margin-top:0.6rem;">' +
+        '<button type="button" class="secondary reset-quiz-btn" data-uid="' + u.uid + '" data-label="' + label + '">🔁 Réinitialiser le quiz</button>' +
+        '<button type="button" class="secondary delete-account-btn" data-uid="' + u.uid + '" data-label="' + label + '">🗑️ Supprimer le compte</button>' +
+        '</div>' +
         '</div>';
     }).join('');
     document.getElementById('usersList').innerHTML = rows || '<p class="acct-empty">Aucun compte pour l\'instant.</p>';
@@ -135,6 +154,30 @@
     document.getElementById('statTotalFavs').textContent = totalFavs;
   }
 
+  document.getElementById('usersList').addEventListener('click', function (e) {
+    const resetBtn = e.target.closest('.reset-quiz-btn');
+    const delBtn = e.target.closest('.delete-account-btn');
+    if (resetBtn) {
+      const uid = resetBtn.dataset.uid;
+      const label = resetBtn.dataset.label;
+      if (!confirm('Réinitialiser tout l\'historique de quiz de "' + label + '" ? Cette action est irréversible.')) return;
+      resetBtn.disabled = true;
+      resetUserQuizHistory(uid).then(loadUsers).catch(function () {
+        alert('Erreur lors de la réinitialisation.');
+        resetBtn.disabled = false;
+      });
+    } else if (delBtn) {
+      const uid = delBtn.dataset.uid;
+      const label = delBtn.dataset.label;
+      if (!confirm('Supprimer complètement le compte "' + label + '" (profil, favoris, historique) ? Cette action est irréversible.\n\nNote : la personne pourra toujours se reconnecter avec son e-mail/mot de passe, mais repartira de zéro.')) return;
+      delBtn.disabled = true;
+      deleteUserAccount(uid).then(loadUsers).catch(function () {
+        alert('Erreur lors de la suppression.');
+        delBtn.disabled = false;
+      });
+    }
+  });
+
   watchAuth(function (user) {
     document.getElementById('checkingCard').style.display = 'none';
     if (!isModerator(user)) {
@@ -142,9 +185,7 @@
       return;
     }
     document.getElementById('dashboard').style.display = '';
-    getAllUsersWithData().then(renderUsers).catch(function () {
-      document.getElementById('usersList').innerHTML = '<p class="acct-empty">Erreur de chargement des données.</p>';
-    });
+    loadUsers();
   });
 </script>
 

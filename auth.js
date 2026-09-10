@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword, signOut, sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, setDoc,
+  getFirestore, doc, getDoc, setDoc, deleteDoc,
   arrayUnion, arrayRemove, collection, addDoc,
   query, orderBy, getDocs
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
@@ -79,6 +79,16 @@ export async function getQuizHistory(uid) {
   const q = query(collection(db, "users", uid, "quizResults"), orderBy("date", "desc"));
   const snap = await getDocs(q);
   return snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+}
+
+export async function resetUserQuizHistory(uid) {
+  const snap = await getDocs(collection(db, "users", uid, "quizResults"));
+  await Promise.all(snap.docs.map(function (d) { return deleteDoc(d.ref); }));
+}
+
+export async function deleteUserAccount(uid) {
+  await resetUserQuizHistory(uid);
+  await deleteDoc(doc(db, "users", uid));
 }
 
 export async function getAllUsersWithData() {
