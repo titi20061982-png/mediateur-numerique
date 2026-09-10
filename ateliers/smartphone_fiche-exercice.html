@@ -354,7 +354,7 @@
 <script type="module">
   import { watchAuth, getQuizHistory } from '../auth.js';
   const SLUG = 'smartphone';
-  const MIN_PCT = 100;
+  const MIN_PCT = 75;
   const gateCard = document.getElementById('lockGateCard');
   const gateText = document.getElementById('lockGateText');
   const gateActions = document.getElementById('lockGateActions');
@@ -380,14 +380,14 @@
 
   watchAuth(function (user) {
     if (!user) {
-      lock('🔒 Cette fiche est débloquée à partir de 100 % au niveau avancé du quiz. Connectez-vous puis réussissez le quiz pour y accéder.');
+      lock('🔒 Cette fiche est débloquée à partir de 75 % au niveau avancé du quiz. Connectez-vous puis réussissez le quiz pour y accéder.');
       return;
     }
     getQuizHistory(user.uid).then(function (history) {
       if (bestPct(history) >= MIN_PCT) { unlock(); }
-      else { lock('🔒 Cette fiche est débloquée à partir de 100 % au niveau avancé du quiz. Vous n\'avez pas encore atteint ce score.'); }
+      else { lock('🔒 Cette fiche est débloquée à partir de 75 % au niveau avancé du quiz. Vous n\'avez pas encore atteint ce score.'); }
     }).catch(function () {
-      lock('🔒 Cette fiche est débloquée à partir de 100 % au niveau avancé du quiz.');
+      lock('🔒 Cette fiche est débloquée à partir de 75 % au niveau avancé du quiz.');
     });
   });
 </script>

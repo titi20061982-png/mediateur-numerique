@@ -462,7 +462,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .grid .card a.dl-link:hover { color: var(--accent); }
 .lock-fiche.is-locked .main-link, .lock-fiche.is-locked .dl-link { opacity: 0.45; pointer-events: none; cursor: not-allowed; }
 .lock-fiche.is-locked::after {
-  content: "🔒 Débloqué à 100 % niveau avancé du quiz"; display: block;
+  content: "🔒 Débloqué à " attr(data-lock-pct) " % niveau avancé du quiz"; display: block;
   font-size: 0.7rem; color: var(--muted); margin: 0.1rem 0 0.2rem;
 }
 .grid .card h3 { margin: 0 0 0.9rem; font-size: 1.03rem; }
