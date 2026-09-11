@@ -98,6 +98,23 @@
       </div>
     </div>
 
+    <div class="card reveal" id="progressCard">
+      <h3>📈 Ma progression</h3>
+      <div class="progress-overall">
+        <div class="progress-label">
+          <span id="progressOverallLabel">Chargement…</span>
+          <span id="progressOverallPct"></span>
+        </div>
+        <div class="stats-barwrap"><div class="stats-bar" id="progressOverallBar" style="width:0%"></div></div>
+      </div>
+      <div id="progressList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
+    <div class="card reveal" id="badgesCard">
+      <h3>🏅 Mes badges</h3>
+      <div class="badges-grid" id="badgesList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
     <div class="card reveal" id="favoritesCard">
       <h3>⭐ Mes ateliers favoris</h3>
       <div id="favoritesList"><p class="acct-empty">Chargement…</p></div>
@@ -243,6 +260,68 @@
     }).finally(function () { btn.disabled = false; });
   });
 
+  const BADGES = [
+    { icon: '🎉', name: 'Premier pas', desc: 'Terminer un premier quiz.', test: function (s) { return s.totalQuizzesTaken >= 1; } },
+    { icon: '🌱', name: 'Explorateur', desc: 'Essayer 5 ateliers différents.', test: function (s) { return s.attemptedCount >= 5; } },
+    { icon: '💯', name: 'Sans faute', desc: 'Obtenir 100 % à un quiz.', test: function (s) { return s.perfectCount >= 1; } },
+    { icon: '🌳', name: 'Niveau avancé validé', desc: 'Réussir un quiz niveau avancé (≥ 75 %).', test: function (s) { return s.masteredCount >= 1; } },
+    { icon: '⭐', name: 'Collectionneur', desc: 'Ajouter 5 ateliers en favoris.', test: function (s) { return s.favoritesCount >= 5; } },
+    { icon: '🔁', name: 'Persévérant', desc: 'Passer 20 quiz au total.', test: function (s) { return s.totalQuizzesTaken >= 20; } },
+    { icon: '👑', name: 'Grand maître', desc: 'Maîtriser les ' + QUIZZES.length + ' ateliers en niveau avancé.', test: function (s) { return s.masteredCount >= QUIZZES.length; } }
+  ];
+
+  function computeStats(history, favorites) {
+    const bestBySlug = {};
+    history.forEach(function (r) {
+      if (!bestBySlug[r.slug]) bestBySlug[r.slug] = { any: 0, avance: 0 };
+      if (typeof r.pct === 'number' && r.pct > bestBySlug[r.slug].any) bestBySlug[r.slug].any = r.pct;
+      if (r.level === 'avance' && typeof r.pct === 'number' && r.pct > bestBySlug[r.slug].avance) bestBySlug[r.slug].avance = r.pct;
+    });
+    const attemptedCount = Object.keys(bestBySlug).length;
+    const masteredCount = Object.keys(bestBySlug).filter(function (s) { return bestBySlug[s].avance >= 75; }).length;
+    const perfectCount = history.filter(function (r) { return r.pct === 100; }).length;
+    return {
+      bestBySlug: bestBySlug,
+      attemptedCount: attemptedCount,
+      masteredCount: masteredCount,
+      totalQuizzesTaken: history.length,
+      perfectCount: perfectCount,
+      favoritesCount: favorites.length
+    };
+  }
+
+  function renderProgress(stats) {
+    const total = QUIZZES.length;
+    const pct = total ? Math.round((stats.masteredCount / total) * 100) : 0;
+    document.getElementById('progressOverallLabel').textContent = stats.masteredCount + ' / ' + total + ' ateliers maîtrisés (niveau avancé ≥ 75 %)';
+    document.getElementById('progressOverallPct').textContent = pct + ' %';
+    document.getElementById('progressOverallBar').style.width = pct + '%';
+
+    document.getElementById('progressList').innerHTML = QUIZZES.map(function (q) {
+      const best = stats.bestBySlug[q.slug];
+      const anyPct = best ? best.any : 0;
+      let statusClass = '', statusText;
+      if (!best) { statusText = '🔒 À découvrir'; }
+      else if (best.avance >= 75) { statusText = '🌳 Maîtrisé'; statusClass = 'status-mastered'; }
+      else if (anyPct >= 50) { statusText = '✅ Validé'; statusClass = 'status-passed'; }
+      else { statusText = '🌱 En cours'; }
+      return '<div class="stats-row"><div class="stats-icon">' + q.icon + '</div>' +
+        '<div class="stats-info"><a href="ateliers/' + q.slug + '_quiz.html">' + q.title + '</a>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + anyPct + '%"></div></div></div>' +
+        '<div class="progress-status ' + statusClass + '">' + statusText + '</div></div>';
+    }).join('');
+  }
+
+  function renderBadges(stats) {
+    document.getElementById('badgesList').innerHTML = BADGES.map(function (b) {
+      const earned = b.test(stats);
+      return '<div class="badge-tile' + (earned ? ' earned' : '') + '">' +
+        '<div class="badge-icon">' + b.icon + '</div>' +
+        '<div class="badge-info"><div class="badge-name">' + b.name + '</div>' +
+        '<div class="badge-desc">' + b.desc + '</div></div></div>';
+    }).join('');
+  }
+
   function renderFavorites(favorites) {
     const el = document.getElementById('favoritesList');
     if (!favorites.length) {
@@ -295,11 +374,18 @@
         document.getElementById('modBadge').style.display = '';
         document.getElementById('modLink').style.display = '';
       }
-      getCloudFavorites(user.uid).then(renderFavorites).catch(function () {
+      Promise.all([getCloudFavorites(user.uid), getQuizHistory(user.uid)]).then(function (results) {
+        const favorites = results[0], history = results[1];
+        renderFavorites(favorites);
+        renderHistory(history);
+        const stats = computeStats(history, favorites);
+        renderProgress(stats);
+        renderBadges(stats);
+      }).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
-      });
-      getQuizHistory(user.uid).then(renderHistory).catch(function () {
         document.getElementById('historyList').innerHTML = '<p class="acct-empty">Impossible de charger l\'historique pour le moment.</p>';
+        document.getElementById('progressList').innerHTML = '<p class="acct-empty">Impossible de charger la progression pour le moment.</p>';
+        document.getElementById('badgesList').innerHTML = '<p class="acct-empty">Impossible de charger les badges pour le moment.</p>';
       });
     } else {
       loggedOutView.style.display = '';

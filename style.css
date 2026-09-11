@@ -505,6 +505,23 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .stats-row .stats-bar { background: var(--accent); height: 100%; border-radius: 999px; transition: width .4s ease; }
 .stats-row .stats-count { flex: none; font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--accent); min-width: 2.2rem; text-align: right; }
 
+/* ---------- 12bis. Progression et badges (compte.html) ---------- */
+.progress-overall { margin: 0.2rem 0 1.1rem; }
+.progress-overall .progress-label { display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; }
+.progress-overall .stats-barwrap { height: 10px; }
+.progress-status { flex: none; font-size: 0.72rem; font-weight: 700; padding: 0.22rem 0.55rem; border-radius: 999px; background: var(--bg-soft); color: var(--muted); white-space: nowrap; }
+.progress-status.status-mastered { background: var(--accent-soft); color: var(--accent); }
+.progress-status.status-passed { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+.badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.7rem; margin-top: 0.2rem; }
+.badge-tile { display: flex; gap: 0.7rem; align-items: center; padding: 0.7rem 0.85rem; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-soft); }
+.badge-tile .badge-icon { font-size: 1.6rem; flex: none; width: 2.1rem; text-align: center; filter: grayscale(1); opacity: 0.4; }
+.badge-tile.earned { background: var(--accent-soft); border-color: var(--accent); }
+.badge-tile.earned .badge-icon { filter: none; opacity: 1; }
+.badge-tile .badge-info { min-width: 0; }
+.badge-tile .badge-name { font-weight: 600; font-size: 0.87rem; color: var(--text); }
+.badge-tile.earned .badge-name { color: var(--accent); }
+.badge-tile .badge-desc { font-size: 0.76rem; color: var(--muted); margin-top: 0.1rem; line-height: 1.4; }
+
 /* ---------- 13. Pied de page ---------- */
 footer {
   text-align: center; color: var(--muted); font-size: 0.83rem;
