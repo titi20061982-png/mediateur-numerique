@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de connaissances Maîtrise du clavier — Ateliers Médiation Numérique</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
+<a class="theme-toggle acct-toggle" id="acctLink" href="../compte.html" title="Se connecter" aria-label="Mon compte">👤</a>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html#premiers-pas" id="backLink">← <span id="backText">Retour aux ateliers</span></a>
+    <div class="eyebrow" id="eyebrowEl">⌨️ Maîtrise du clavier</div>
+    <h1 id="h1El">Test de connaissances</h1>
+    <p class="sub" id="subEl">Ateliers Médiation Numérique — Cédric Waltener</p>
+    <div><span class="visits" id="visitsCounter">👥 …</span></div>
+    <div class="lang-select-wrap">
+      <select id="langSelect">
+      <option value="fr">Français</option>
+      <option value="ab">Abkhaze</option>
+      <option value="ace">Aceh</option>
+      <option value="ach">Acholi</option>
+      <option value="aa">Afar</option>
+      <option value="af">Afrikaans</option>
+      <option value="sq">Albanais</option>
+      <option value="de">Allemand</option>
+      <option value="alz">Alur</option>
+      <option value="am">Amharique</option>
+      <option value="en">Anglais</option>
+      <option value="ar">Arabe</option>
+      <option value="hy">Arménien</option>
+      <option value="as">Assamais</option>
+      <option value="av">Avar</option>
+      <option value="awa">Awadhi</option>
+      <option value="ay">Aymara</option>
+      <option value="az">Azéri</option>
+      <option value="ba">Bachkir</option>
+      <option value="ban">Balinais</option>
+      <option value="bal">Baloutchi</option>
+      <option value="bm">Bambara</option>
+      <option value="bci">Baoulé</option>
+      <option value="eu">Basque</option>
+      <option value="btx">Batak Karo</option>
+      <option value="bts">Batak Simalungun</option>
+      <option value="bbc">Batak Toba</option>
+      <option value="bem">Bemba</option>
+      <option value="bn">Bengali</option>
+      <option value="bew">Betawi</option>
+      <option value="bho">Bhodjpouri</option>
+      <option value="bik">Bicol</option>
+      <option value="be">Biélorusse</option>
+      <option value="bs">Bosniaque</option>
+      <option value="bua">Bouriate</option>
+      <option value="br">Breton</option>
+      <option value="bg">Bulgare</option>
+      <option value="yue">Cantonais</option>
+      <option value="ca">Catalan</option>
+      <option value="ceb">Cebuano</option>
+      <option value="ch">Chamorro</option>
+      <option value="ny">Chichewa</option>
+      <option value="zh-CN">Chinois (simplifié)</option>
+      <option value="zh-TW">Chinois (traditionnel)</option>
+      <option value="chk">Chuuk</option>
+      <option value="si">Cinghalais</option>
+      <option value="ko">Coréen</option>
+      <option value="co">Corse</option>
+      <option value="ht">Créole haïtien</option>
+      <option value="mfe">Créole mauricien</option>
+      <option value="crs">Créole seychellois</option>
+      <option value="hr">Croate</option>
+      <option value="da">Danois</option>
+      <option value="fa-AF">Dari</option>
+      <option value="din">Dinka</option>
+      <option value="dyu">Dioula</option>
+      <option value="dv">Divéhi</option>
+      <option value="doi">Dogri</option>
+      <option value="dov">Dombe</option>
+      <option value="dz">Dzongkha</option>
+      <option value="es">Espagnol</option>
+      <option value="eo">Espéranto</option>
+      <option value="et">Estonien</option>
+      <option value="ee">Ewe</option>
+      <option value="fo">Féroïen</option>
+      <option value="fj">Fidjien</option>
+      <option value="fi">Finnois</option>
+      <option value="fon">Fon</option>
+      <option value="fr-CA">Français (Canada)</option>
+      <option value="fur">Frioulan</option>
+      <option value="fy">Frison</option>
+      <option value="gaa">Ga</option>
+      <option value="gd">Gaélique (Écosse)</option>
+      <option value="gl">Galicien</option>
+      <option value="cy">Gallois</option>
+      <option value="ka">Géorgien</option>
+      <option value="el">Grec</option>
+      <option value="gn">Guarani</option>
+      <option value="gu">Gujarati</option>
+      <option value="cnh">Hakha Chin</option>
+      <option value="ha">Haoussa</option>
+      <option value="haw">Hawaïen</option>
+      <option value="iw">Hébreu</option>
+      <option value="hil">Hiligaïnon</option>
+      <option value="hi">Hindi</option>
+      <option value="hmn">Hmong</option>
+      <option value="hu">Hongrois</option>
+      <option value="hrx">Hunsrik</option>
+      <option value="iba">Iban</option>
+      <option value="ig">Igbo</option>
+      <option value="ilo">Ilocano</option>
+      <option value="id">Indonésien</option>
+      <option value="iu-Latn">Inuktut (latin)</option>
+      <option value="iu">Inuktut (syllabique)</option>
+      <option value="ga">Irlandais</option>
+      <option value="is">Islandais</option>
+      <option value="it">Italien</option>
+      <option value="ja">Japonais</option>
+      <option value="jw">Javanais</option>
+      <option value="kac">Jingpo</option>
+      <option value="kl">Kalaallisut</option>
+      <option value="kn">Kannada</option>
+      <option value="kr">Kanuri</option>
+      <option value="kk">Kazakh</option>
+      <option value="kha">Khasi</option>
+      <option value="km">Khmer</option>
+      <option value="cgg">Kiga</option>
+      <option value="kg">Kikongo</option>
+      <option value="rw">Kinyarwanda</option>
+      <option value="ky">Kirghiz</option>
+      <option value="ktu">Kituba</option>
+      <option value="trp">Kok Borok</option>
+      <option value="kv">Komi</option>
+      <option value="gom">Konkani</option>
+      <option value="kri">Krio</option>
+      <option value="ku">Kurde (Kurmandji)</option>
+      <option value="ckb">Kurde (Sorani)</option>
+      <option value="lo">Laotien</option>
+      <option value="ltg">Latgalien</option>
+      <option value="la">Latin</option>
+      <option value="lv">Letton</option>
+      <option value="lij">Ligure</option>
+      <option value="li">Limbourgeois</option>
+      <option value="ln">Lingala</option>
+      <option value="lt">Lituanien</option>
+      <option value="lmo">Lombard</option>
+      <option value="lg">Luganda</option>
+      <option value="luo">Luo</option>
+      <option value="lb">Luxembourgeois</option>
+      <option value="mak">Macassar</option>
+      <option value="mk">Macédonien</option>
+      <option value="mad">Madurais</option>
+      <option value="mai">Maïthili</option>
+      <option value="ms-Arab">Malais (Jawi)</option>
+      <option value="ms">Malaisien</option>
+      <option value="ml">Malayalam</option>
+      <option value="mg">Malgache</option>
+      <option value="mt">Maltais</option>
+      <option value="mam">Mam</option>
+      <option value="gv">Manx</option>
+      <option value="mi">Maori</option>
+      <option value="mr">Marathi</option>
+      <option value="chm">Mari des prairies</option>
+      <option value="mh">Marshallais</option>
+      <option value="mwr">Marwari</option>
+      <option value="yua">Maya yucatèque</option>
+      <option value="mni-Mtei">Meitei (Manipuri)</option>
+      <option value="min">Minangkabau</option>
+      <option value="lus">Mizo</option>
+      <option value="mn">Mongol</option>
+      <option value="my">Myanmar (Birman)</option>
+      <option value="nhe">Nahuatl (Huasteca oriental)</option>
+      <option value="ndc-ZW">Ndau</option>
+      <option value="nr">Ndébélé (Sud)</option>
+      <option value="nl">Néerlandais</option>
+      <option value="ne">Népalais</option>
+      <option value="new">Nepalbhasa (Newari)</option>
+      <option value="bm-Nkoo">NKo</option>
+      <option value="no">Norvégien</option>
+      <option value="nus">Nuer</option>
+      <option value="oc">Occitan</option>
+      <option value="or">Odia (Oriya)</option>
+      <option value="om">Oromo</option>
+      <option value="os">Ossète</option>
+      <option value="udm">Oudmourte</option>
+      <option value="ug">Ouïgour</option>
+      <option value="uz">Ouzbek</option>
+      <option value="ps">Pachtô</option>
+      <option value="pam">Pampangan</option>
+      <option value="pag">Pangasinan</option>
+      <option value="pa">Panjabi (Gurmukhi)</option>
+      <option value="pa-Arab">Panjabi (Shahmukhi)</option>
+      <option value="pap">Papiamento</option>
+      <option value="jam">Patois jamaïcain</option>
+      <option value="fa">Persan</option>
+      <option value="ff">Peul</option>
+      <option value="tl">Philippin</option>
+      <option value="pl">Polonais</option>
+      <option value="pt">Portugais (Brésil)</option>
+      <option value="pt-PT">Portugais (Portugal)</option>
+      <option value="kek">Q'eqchi'</option>
+      <option value="qu">Quechua</option>
+      <option value="rom">Romani</option>
+      <option value="ro">Roumain</option>
+      <option value="rn">Roundi</option>
+      <option value="ru">Russe</option>
+      <option value="se">Same (Nord)</option>
+      <option value="sm">Samoan</option>
+      <option value="sg">Sango</option>
+      <option value="sa">Sanskrit</option>
+      <option value="sat-Latn">Santali (latin)</option>
+      <option value="sat">Santali (ol chiki)</option>
+      <option value="nso">Sepedi</option>
+      <option value="sr">Serbe</option>
+      <option value="st">Sesotho</option>
+      <option value="shn">Shan</option>
+      <option value="sn">Shona</option>
+      <option value="scn">Sicilien</option>
+      <option value="szl">Silésien</option>
+      <option value="sd">Sindhî</option>
+      <option value="sk">Slovaque</option>
+      <option value="sl">Slovène</option>
+      <option value="so">Somali</option>
+      <option value="su">Soundanais</option>
+      <option value="sus">Soussou</option>
+      <option value="sv">Suédois</option>
+      <option value="sw">Swahili</option>
+      <option value="ss">Swati</option>
+      <option value="tg">Tadjik</option>
+      <option value="ty">Tahitien</option>
+      <option value="ber-Latn">Tamazight</option>
+      <option value="ber">Tamazight (Tifinagh)</option>
+      <option value="ta">Tamoul</option>
+      <option value="tt">Tatar</option>
+      <option value="crh">Tatar de Crimée (cyrillique)</option>
+      <option value="crh-Latn">Tatar de Crimée (latin)</option>
+      <option value="cs">Tchèque</option>
+      <option value="ce">Tchétchène</option>
+      <option value="cv">Tchouvache</option>
+      <option value="te">Telugu</option>
+      <option value="tet">Tétoum</option>
+      <option value="th">Thaï</option>
+      <option value="bo">Tibétain</option>
+      <option value="ti">Tigrigna</option>
+      <option value="tiv">Tiv</option>
+      <option value="tpi">Tok pisin</option>
+      <option value="to">Tongien</option>
+      <option value="tcy">Toulou</option>
+      <option value="tyv">Touvain</option>
+      <option value="lua">Tshiluba</option>
+      <option value="ts">Tsonga</option>
+      <option value="tn">Tswana</option>
+      <option value="tum">Tumbuka</option>
+      <option value="tr">Turc</option>
+      <option value="tk">Turkmène</option>
+      <option value="ak">Twi</option>
+      <option value="uk">Ukrainien</option>
+      <option value="ur">Urdu</option>
+      <option value="ve">Venda</option>
+      <option value="vec">Vénitien</option>
+      <option value="vi">Vietnamien</option>
+      <option value="war">Waray-waray</option>
+      <option value="wo">Wolof</option>
+      <option value="xh">Xhosa</option>
+      <option value="sah">Yakoute</option>
+      <option value="yi">Yiddish</option>
+      <option value="yo">Yoruba</option>
+      <option value="zap">Zapotèque</option>
+      <option value="zu">Zoulou</option>
+      </select>
+      <span class="lang-loading" id="langLoading">⏳</span>
+    </div>
+    <div class="qr-box">
+      <span class="qr-label">📱 Sur smartphone</span>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Ftiti20061982-png.github.io%2Fmediateur-numerique%2Fateliers%2Fclavier_quiz.html" alt="QR code vers ce quiz" width="120" height="120" loading="lazy">
+      <span class="qr-caption">Scannez pour ouvrir ce quiz</span>
+    </div>
+  </div>
+</header>
+<main class="narrow">
+  <div id="levelScreen">
+    <button type="button" class="level-btn" data-level="debutant">
+      <strong id="levelDebTitle">🌱 Débutant</strong>
+      <span id="levelDebDesc">Questions simples pour commencer en douceur.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="intermediaire">
+      <strong id="levelIntTitle">🌿 Intermédiaire</strong>
+      <span id="levelIntDesc">Le niveau standard, pour vérifier ses acquis.</span>
+    </button>
+    <button type="button" class="level-btn" data-level="avance">
+      <strong id="levelAvaTitle">🌳 Avancé</strong>
+      <span id="levelAvaDesc">Questions plus précises, pour aller plus loin.</span>
+    </button>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <div id="recapWrap" style="display:none;"></div>
+    <form id="quizForm"></form>
+    <div class="actions">
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon score</button>
+      <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+      <button type="button" class="secondary" id="levelBtn">Changer de niveau</button>
+    </div>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — <span id="footerCopyEl">Reproduction interdite sans autorisation.</span> <a href="../index.html" id="footerLinkEl">Retour au site</a>
+</footer>
+<script>
+  const SLUG = "clavier";
+  const FR_LEVELS = {"debutant":[{"q":"Pour taper une lettre en majuscule, on maintient enfoncée la touche :","options":["Tab","Maj (Shift)","Ctrl","Suppr"],"explain":"La touche Maj (Shift) permet d'écrire une majuscule ou le symbole du haut d'une touche.","correct":1},{"q":"La grande touche en bas du clavier sert à :","options":["Insérer un espace entre les mots","Supprimer tout le texte","Éteindre l'ordinateur","Changer de langue"],"explain":"La barre d'espace insère un espace entre les mots.","correct":0},{"q":"Pour valider une saisie ou aller à la ligne suivante, on appuie sur :","options":["Échap","Entrée (Retour)","Tab","Verr Maj"],"explain":"La touche Entrée valide une saisie ou passe à la ligne suivante.","correct":1},{"q":"Pour effacer le caractère juste avant le curseur, on utilise :","options":["Retour arrière (Backspace)","Suppr (Delete)","Tab","Origine (Home)"],"explain":"La touche Retour arrière, souvent une flèche vers la gauche au-dessus d'Entrée, efface le caractère à gauche du curseur.","correct":0},{"q":"Pour effacer le caractère juste après le curseur, on utilise :","options":["Retour arrière","Suppr (Delete)","Fin (End)","Verr Num"],"explain":"La touche Suppr (Delete) efface le caractère situé après le curseur.","correct":1},{"q":"Le clavier français le plus courant est appelé :","options":["QWERTY","AZERTY","QWERTZ","DVORAK"],"explain":"En France, la disposition la plus répandue s'appelle AZERTY, du nom des premières lettres de la rangée du haut.","correct":1},{"q":"Pour déplacer le curseur dans un texte sans la souris, on utilise :","options":["Les touches fléchées","La touche Tab uniquement","La barre d'espace","F1"],"explain":"Les 4 touches fléchées permettent de déplacer le curseur dans le texte.","correct":0},{"q":"La touche Verr Maj (Caps Lock) sert à :","options":["Verrouiller l'ordinateur","Écrire en majuscules en continu","Couper le son","Fermer une fenêtre"],"explain":"Une fois activée, toutes les lettres tapées restent en majuscules jusqu'à ce qu'on la désactive.","correct":1},{"q":"Pour passer d'un champ à un autre dans un formulaire, on peut utiliser :","options":["La touche Tab","La touche Échap","F5","Verr Num"],"explain":"La touche Tab (tabulation) fait passer au champ suivant d'un formulaire.","correct":0},{"q":"Sur un clavier d'ordinateur portable, le pavé numérique est parfois remplacé par :","options":["Rien, il n'y a jamais de chiffres","Des touches partagées, activées avec Fn ou Verr Num","Le pavé tactile uniquement","La touche Windows"],"explain":"Sur les claviers compacts, certaines touches partagent une fonction chiffres, activable via Fn ou Verr Num.","correct":1}],"intermediaire":[{"q":"Le raccourci pour copier un élément sélectionné est :","options":["Ctrl+C","Ctrl+V","Ctrl+X","Ctrl+Z"],"explain":"Ctrl+C copie l'élément sélectionné dans le presse-papiers.","correct":0},{"q":"Le raccourci pour coller un élément copié est :","options":["Ctrl+C","Ctrl+V","Ctrl+P","Ctrl+A"],"explain":"Ctrl+V colle le contenu du presse-papiers à l'endroit du curseur.","correct":1},{"q":"Le raccourci pour annuler la dernière action est :","options":["Ctrl+Y","Ctrl+Z","Ctrl+A","Ctrl+S"],"explain":"Ctrl+Z annule la dernière action effectuée.","correct":1},{"q":"Pour sélectionner tout le contenu d'une page ou d'un document, on utilise :","options":["Ctrl+A","Ctrl+S","Ctrl+P","Ctrl+F"],"explain":"Ctrl+A (tout sélectionner) met en surbrillance l'ensemble du contenu.","correct":0},{"q":"Pour rechercher un mot dans une page web ou un document, on utilise :","options":["Ctrl+F","Ctrl+G","Ctrl+H","Ctrl+N"],"explain":"Ctrl+F ouvre une barre de recherche dans le document ou la page affichée.","correct":0},{"q":"Sur un clavier AZERTY, les lettres \"é\" et \"è\" ont :","options":["La même touche, avec Maj pour changer d'accent","Chacune leur propre touche dédiée","Besoin d'un raccourci Ctrl+E","Besoin du pavé numérique"],"explain":"é et è ont chacun leur propre touche sur un clavier AZERTY, contrairement à d'autres accents qui utilisent des touches mortes.","correct":1},{"q":"Pour écrire le symbole arobase \"@\" (utile pour une adresse e-mail), on appuie généralement sur :","options":["AltGr + touche 0","Ctrl + touche 0","Maj + touche 0","Tab + touche 0"],"explain":"Sur un clavier AZERTY, l'arobase s'obtient avec AltGr (à droite de la barre d'espace) + la touche 0.","correct":0},{"q":"Pour faire une capture de tout l'écran, on utilise la touche :","options":["Impr écran (Print Screen)","Verr Num","Pause","Inser"],"explain":"La touche Impr écran (Print Screen) copie une image de l'écran dans le presse-papiers.","correct":0},{"q":"Le raccourci pour ouvrir un nouvel onglet dans un navigateur est :","options":["Ctrl+T","Ctrl+O","Ctrl+N","Ctrl+W"],"explain":"Ctrl+T ouvre un nouvel onglet dans la plupart des navigateurs.","correct":0},{"q":"Le raccourci pour fermer l'onglet actif dans un navigateur est :","options":["Ctrl+W","Ctrl+Q","Ctrl+E","Ctrl+R"],"explain":"Ctrl+W ferme l'onglet actuellement ouvert.","correct":0}],"avance":[{"q":"Pour écrire le symbole euro \"€\", on utilise généralement :","options":["AltGr + E","Ctrl + E","Maj + E","Alt + E"],"explain":"Sur un clavier AZERTY, le symbole euro s'obtient avec AltGr + E.","correct":0},{"q":"La combinaison Ctrl+Alt+Suppr permet notamment d'ouvrir :","options":["Le Bloc-notes","Le Gestionnaire des tâches","La corbeille","Le panneau de configuration"],"explain":"Ctrl+Alt+Suppr donne accès à un écran permettant d'ouvrir le Gestionnaire des tâches, entre autres options.","correct":1},{"q":"Les \"touches mortes\" (comme ^ ou ¨) servent à :","options":["Bloquer le clavier","Ajouter un accent circonflexe ou un tréma sur la lettre suivante","Éteindre l'écran","Changer de langue de clavier"],"explain":"Une touche morte ne produit rien seule : elle se combine avec la lettre tapée juste après pour ajouter un accent (^, ¨...).","correct":1},{"q":"Le raccourci Windows+D permet de :","options":["Afficher le Bureau en réduisant toutes les fenêtres","Ouvrir le Bloc-notes","Verrouiller la session","Désinstaller un programme"],"explain":"Windows+D réduit toutes les fenêtres pour afficher le Bureau (et les rétablit si on appuie à nouveau).","correct":0},{"q":"Le raccourci Windows+L permet de :","options":["Lancer une impression","Verrouiller la session","Ouvrir la calculatrice","Fermer une fenêtre"],"explain":"Windows+L verrouille immédiatement la session en cours.","correct":1},{"q":"Pour renommer rapidement un fichier ou un dossier sélectionné, on utilise :","options":["F1","F2","F5","F11"],"explain":"La touche F2 permet de renommer directement l'élément sélectionné.","correct":1},{"q":"Le raccourci Alt+Tab sert à :","options":["Basculer entre les fenêtres ou applications ouvertes","Ouvrir le menu Démarrer","Rafraîchir la page","Éteindre l'ordinateur"],"explain":"Alt+Tab (maintenu) affiche les fenêtres ouvertes et permet de passer de l'une à l'autre.","correct":0},{"q":"Pour actualiser une page web, on peut utiliser la touche :","options":["F5","F2","F1","F10"],"explain":"F5 recharge la page actuellement affichée dans le navigateur.","correct":0},{"q":"Le raccourci Ctrl+Maj+Échap ouvre directement :","options":["Le Panneau de configuration","Le Gestionnaire des tâches","L'Explorateur de fichiers","Le Bloc-notes"],"explain":"Ctrl+Maj+Échap ouvre le Gestionnaire des tâches sans passer par l'écran intermédiaire de Ctrl+Alt+Suppr.","correct":1},{"q":"Sur les touches numériques de la rangée du haut (ex: la touche affichant \"1\" et \"&\"), pour obtenir le chiffre il faut :","options":["Maintenir Maj (Shift)","Maintenir Tab","Rien de spécial, cela dépend du logiciel","Appuyer deux fois de suite"],"explain":"Sur un clavier AZERTY, il faut maintenir Maj sur ces touches pour obtenir le chiffre, le symbole du bas étant accessible directement.","correct":0}]};
+  const FR_UI = {
+    back:"Retour aux ateliers", sub:"Ateliers Médiation Numérique — Cédric Waltener",
+    footerCopy:"Reproduction interdite sans autorisation.", footerBack:"Retour au site",
+    h1:"Test de connaissances",
+    levelDebTitle:"🌱 Débutant", levelDebDesc:"Questions simples pour commencer en douceur.",
+    levelIntTitle:"🌿 Intermédiaire", levelIntDesc:"Le niveau standard, pour vérifier ses acquis.",
+    levelAvaTitle:"🌳 Avancé", levelAvaDesc:"Questions plus précises, pour aller plus loin.",
+    seeScore:"Voir mon score", restart:"Recommencer", changeLevel:"Changer de niveau",
+    questionLabel:"Question", scoreLabel:"Score",
+    tierLow:"À revoir ! Relisez la fiche de l'atelier et retentez le test.",
+    tierMid:"Pas mal ! Encore quelques points à consolider.",
+    tierHigh:"Excellent ! Vous maîtrisez bien le sujet.",
+    visits:"visite(s) sur ce test",
+    recapLevelLabel:"Niveau atteint", recapImproveLabel:"Points à améliorer",
+    recapNoImprove:"Aucun — bravo !",
+    recapColQuestion:"Question", recapColYourAnswer:"Réponse donnée",
+    recapColCorrectAnswer:"Bonne réponse", recapColResult:"Résultat",
+    recapNoAnswer:"(pas de réponse)",
+    recapRestart:"Recommencer le quiz", recapHome:"Retour au site",
+    recapAdviceLabel:"Conseil",
+    recapAdviceLow:"Reprenez la fiche de l'atelier avant de retenter le quiz, en particulier les points ci-dessus. Il n'y a pas de mauvaise question, seulement des essais qui font progresser.",
+    recapAdviceMid:"Vous avez les bases ! Relisez les explications des questions ratées pour bien les fixer, puis retentez le quiz quand vous êtes prêt.",
+    recapAdviceHigh:"Niveau maîtrisé, bravo ! Vous pouvez passer au niveau supérieur ou explorer un autre atelier.",
+    recapCopyBtn:"📋 Copier le compte rendu", recapCopied:"✅ Copié !",
+    recapReportTitle:"Compte rendu", recapDetailLabel:"Détail des réponses"
+  };
+
+  const cache = { fr: { ui: FR_UI, levels: FR_LEVELS } };
+  const levelScreen = document.getElementById('levelScreen');
+  const quizScreen = document.getElementById('quizScreen');
+  const form = document.getElementById('quizForm');
+  const banner = document.getElementById('scoreBanner');
+  const recapWrap = document.getElementById('recapWrap');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const levelBtn = document.getElementById('levelBtn');
+  const langSelect = document.getElementById('langSelect');
+  const langLoading = document.getElementById('langLoading');
+  let currentLevel = null;
+  let currentLang = 'fr';
+  let visitCount = null;
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function launchConfetti() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const colors = ['#35604f', '#b6562f', '#2b5d8a', '#e0b04a', '#83c1a6'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const size = 6 + Math.random() * 6;
+      el.style.left = (Math.random() * 100) + 'vw';
+      el.style.width = size + 'px';
+      el.style.height = (size * 0.4) + 'px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+      el.style.animationDelay = (Math.random() * 0.3) + 's';
+      document.body.appendChild(el);
+      setTimeout(function () { el.remove(); }, 4200);
+    }
+  }
+
+  function levelLabel(level, UI) {
+    if (level === 'debutant') return UI.levelDebTitle;
+    if (level === 'intermediaire') return UI.levelIntTitle;
+    return UI.levelAvaTitle;
+  }
+
+  // Construit le compte rendu en texte brut (pour copie / envoi a distance).
+  function buildReportText(level, lang, answers, score, total, pct, adviceText) {
+    const UI = cache[lang].ui;
+    const wrong = answers.filter(function(a) { return !a.isCorrect; }).map(function(a) { return a.question; });
+    const workshopName = document.getElementById('eyebrowEl').textContent + ' — ' + document.getElementById('h1El').textContent;
+    let out = UI.recapReportTitle + ' — ' + workshopName + '\n';
+    out += UI.recapLevelLabel + ' : ' + levelLabel(level, UI) + '\n';
+    out += UI.scoreLabel + ' : ' + score + ' / ' + total + ' (' + pct + ' %)\n\n';
+    out += UI.recapDetailLabel + ' :\n';
+    answers.forEach(function(a, i) {
+      out += (i + 1) + '. [' + (a.isCorrect ? '✔' : '✖') + '] ' + a.question + '\n';
+      out += '   ' + UI.recapColYourAnswer + ' : ' + a.chosenText + '\n';
+      if (!a.isCorrect) out += '   ' + UI.recapColCorrectAnswer + ' : ' + a.correctText + '\n';
+    });
+    out += '\n' + UI.recapImproveLabel + ' :\n';
+    out += wrong.length ? wrong.map(function(q) { return '- ' + q; }).join('\n') : UI.recapNoImprove;
+    out += '\n\n' + UI.recapAdviceLabel + ' : ' + adviceText + '\n';
+    out += '\n— Ateliers Médiation Numérique, Cédric Waltener';
+    return out;
+  }
+
+  // Compte rendu visuel : tableau recapitulatif + synthese, affiches apres validation.
+  function renderRecap(level, lang, answers, score, total, pct) {
+    const UI = cache[lang].ui;
+    const rows = answers.map(function(a) {
+      const mark = a.isCorrect
+        ? '<span style="color:var(--good);font-weight:700;">✔</span>'
+        : '<span style="color:var(--bad);font-weight:700;">❌</span>';
+      return '<tr>' +
+        '<td>' + esc(a.question) + '</td>' +
+        '<td>' + esc(a.chosenText) + '</td>' +
+        '<td>' + esc(a.correctText) + '</td>' +
+        '<td style="text-align:center;">' + mark + '</td>' +
+        '</tr>';
+    }).join('');
+
+    const wrong = answers.filter(function(a) { return !a.isCorrect; }).map(function(a) { return a.question; });
+    const improveHtml = wrong.length
+      ? '<ul>' + wrong.map(function(q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul>'
+      : '<p>' + esc(UI.recapNoImprove) + '</p>';
+
+    const adviceText = pct >= 80 ? UI.recapAdviceHigh : (pct >= 50 ? UI.recapAdviceMid : UI.recapAdviceLow);
+
+    recapWrap.innerHTML =
+      '<div id="recapSynthesis">' +
+        '<p><strong>' + esc(UI.recapLevelLabel) + ' :</strong> ' + esc(levelLabel(level, UI)) + '</p>' +
+        '<p><strong>' + esc(UI.recapImproveLabel) + ' :</strong></p>' +
+        improveHtml +
+        '<p><strong>' + esc(UI.recapAdviceLabel) + ' :</strong> ' + esc(adviceText) + '</p>' +
+      '</div>' +
+      '<div id="recapTableWrap">' +
+        '<table id="recapTable">' +
+          '<thead><tr>' +
+            '<th>' + esc(UI.recapColQuestion) + '</th>' +
+            '<th>' + esc(UI.recapColYourAnswer) + '</th>' +
+            '<th>' + esc(UI.recapColCorrectAnswer) + '</th>' +
+            '<th>' + esc(UI.recapColResult) + '</th>' +
+          '</tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+      '<div class="actions">' +
+        '<button type="button" class="primary" id="recapRestartBtn">' + esc(UI.recapRestart) + '</button>' +
+        '<button type="button" class="secondary" id="recapCopyBtn">' + esc(UI.recapCopyBtn) + '</button>' +
+        '<button type="button" class="secondary" id="recapHomeBtn">' + esc(UI.recapHome) + '</button>' +
+      '</div>';
+    recapWrap.style.display = 'block';
+
+    document.getElementById('recapRestartBtn').addEventListener('click', function() {
+      renderQuiz(currentLevel, currentLang);
+    });
+    document.getElementById('recapHomeBtn').addEventListener('click', function() {
+      window.location.href = '../index.html';
+    });
+    document.getElementById('recapCopyBtn').addEventListener('click', function() {
+      const text = buildReportText(level, lang, answers, score, total, pct, adviceText);
+      const copyBtn = document.getElementById('recapCopyBtn');
+      const original = UI.recapCopyBtn;
+      function showCopied() {
+        copyBtn.textContent = UI.recapCopied;
+        setTimeout(function() { copyBtn.textContent = original; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showCopied).catch(function() { fallbackCopy(text, showCopied); });
+      } else {
+        fallbackCopy(text, showCopied);
+      }
+    });
+  }
+
+  function fallbackCopy(text, onDone) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    if (onDone) onDone();
+  }
+
+  function renderQuiz(level, lang) {
+    currentLevel = level;
+    const QUIZ = cache[lang].levels[level];
+    form.innerHTML = QUIZ.map(function(q, i) {
+      const opts = q.options.map(function(o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    recapWrap.style.display = 'none';
+    recapWrap.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    levelScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function applyStaticUI(lang) {
+    const UI = cache[lang].ui;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar' || lang === 'iw' || lang === 'ur' || lang === 'fa' || lang === 'ps' || lang === 'ckb' || lang === 'sd') ? 'rtl' : 'ltr';
+    document.getElementById('backText').textContent = UI.back;
+    document.getElementById('h1El').textContent = UI.h1;
+    document.getElementById('subEl').textContent = UI.sub;
+    document.getElementById('footerCopyEl').textContent = UI.footerCopy;
+    document.getElementById('footerLinkEl').textContent = UI.footerBack;
+    document.getElementById('levelDebTitle').textContent = UI.levelDebTitle;
+    document.getElementById('levelDebDesc').textContent = UI.levelDebDesc;
+    document.getElementById('levelIntTitle').textContent = UI.levelIntTitle;
+    document.getElementById('levelIntDesc').textContent = UI.levelIntDesc;
+    document.getElementById('levelAvaTitle').textContent = UI.levelAvaTitle;
+    document.getElementById('levelAvaDesc').textContent = UI.levelAvaDesc;
+    submitBtn.textContent = UI.seeScore;
+    resetBtn.textContent = UI.restart;
+    levelBtn.textContent = UI.changeLevel;
+    if (visitCount !== null) {
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + UI.visits;
+    }
+  }
+
+  function finishSetLang(lang) {
+    currentLang = lang;
+    applyStaticUI(lang);
+    if (currentLevel && quizScreen.style.display !== 'none') {
+      renderQuiz(currentLevel, lang);
+    }
+    try { localStorage.setItem('site_lang', lang); } catch (e) {}
+    langLoading.classList.remove('show');
+  }
+
+  function setLang(lang) {
+    if (cache[lang]) { finishSetLang(lang); return; }
+    langLoading.classList.add('show');
+    fetch('i18n/quiz-' + lang + '.json')
+      .then(function(r) { if (!r.ok) throw new Error('missing'); return r.json(); })
+      .then(function(data) {
+        const entry = data.quizzes[SLUG];
+        if (!entry) throw new Error('no slug');
+        cache[lang] = { ui: data.ui, levels: entry };
+        finishSetLang(lang);
+      })
+      .catch(function() {
+        // langue pas encore disponible : on reste sur la langue actuelle
+        langLoading.classList.remove('show');
+        langSelect.value = currentLang;
+      });
+  }
+
+  document.querySelectorAll('.level-btn').forEach(function(b) {
+    b.addEventListener('click', function() { renderQuiz(b.dataset.level, currentLang); });
+  });
+  langSelect.addEventListener('change', function() { setLang(langSelect.value); });
+
+  levelBtn.addEventListener('click', function() {
+    quizScreen.style.display = 'none';
+    levelScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const QUIZ = cache[currentLang].levels[currentLevel];
+    const UI = cache[currentLang].ui;
+    let score = 0;
+    const answers = [];
+    QUIZ.forEach(function(q, i) {
+      const chosen = form.querySelector('input[name="q' + i + '"]:checked');
+      const opts = document.querySelectorAll('#opts' + i + ' .opt');
+      opts.forEach(function(el, j) {
+        el.classList.remove('correct', 'incorrect');
+        if (j === q.correct) el.classList.add('correct');
+        else if (chosen && parseInt(chosen.value) === j) el.classList.add('incorrect');
+      });
+      document.getElementById('explain' + i).classList.add('show');
+      const isCorrect = !!(chosen && parseInt(chosen.value) === q.correct);
+      if (isCorrect) score++;
+      answers.push({
+        question: q.q,
+        chosenText: chosen ? q.options[parseInt(chosen.value)] : UI.recapNoAnswer,
+        correctText: q.options[q.correct],
+        isCorrect: isCorrect
+      });
+      form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
+    });
+    const pct = Math.round((score / QUIZ.length) * 100);
+    if (window.__onQuizSubmitted) { window.__onQuizSubmitted({ slug: SLUG, level: currentLevel, score: score, total: QUIZ.length, pct: pct }); }
+    let tier = 'tier-low', msg = UI.tierLow;
+    if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }
+    banner.className = 'show ' + tier;
+    banner.innerHTML = esc(UI.scoreLabel) + ' : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + esc(msg) + '</p>';
+    renderRecap(currentLevel, currentLang, answers, score, QUIZ.length, pct);
+    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (tier === 'tier-high') { launchConfetti(); }
+    submitBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+  });
+
+  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel, currentLang); });
+
+  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/clavier-quiz-v2')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      visitCount = d.value;
+      document.getElementById('visitsCounter').textContent = '👥 ' + visitCount + ' ' + cache[currentLang].ui.visits;
+    })
+    .catch(function() { document.getElementById('visitsCounter').style.display = 'none'; });
+
+  let __savedLang = 'fr';
+  try { __savedLang = localStorage.getItem('site_lang') || 'fr'; } catch (e) {}
+  langSelect.value = __savedLang;
+  if (langSelect.value !== __savedLang) { langSelect.value = 'fr'; __savedLang = 'fr'; }
+  setLang(__savedLang);
+
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
+    var savedTheme = null;
+    try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
+    if (savedTheme === 'dark' || savedTheme === 'light') root.setAttribute('data-theme', savedTheme);
+    icon(savedTheme);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      icon(next);
+    });
+  })();
+  (function () {
+    var backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { backBtn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    backBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+</script>
+
+<script type="module">
+  import { watchAuth, currentUser, saveQuizResult } from '../auth.js';
+
+  const acctLink = document.getElementById('acctLink');
+  watchAuth(function (user) {
+    if (user) { acctLink.title = 'Mon compte (' + user.email + ')'; acctLink.textContent = '🟢'; }
+    else { acctLink.title = 'Se connecter'; acctLink.textContent = '👤'; }
+  });
+
+  window.__onQuizSubmitted = function (result) {
+    const user = currentUser();
+    if (user) { saveQuizResult(user.uid, result).catch(function () {}); }
+  };
+</script>
+</body>
+</html>
