@@ -373,11 +373,14 @@
       if (isModerator(user)) {
         document.getElementById('modBadge').style.display = '';
         document.getElementById('modLink').style.display = '';
+        document.getElementById('progressCard').style.display = 'none';
+        document.getElementById('badgesCard').style.display = 'none';
       }
       Promise.all([getCloudFavorites(user.uid), getQuizHistory(user.uid)]).then(function (results) {
         const favorites = results[0], history = results[1];
         renderFavorites(favorites);
         renderHistory(history);
+        if (isModerator(user)) return;
         const stats = computeStats(history, favorites);
         renderProgress(stats);
         renderBadges(stats);
