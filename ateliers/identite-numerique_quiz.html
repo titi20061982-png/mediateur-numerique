@@ -354,6 +354,28 @@
   const langLoading = document.getElementById('langLoading');
   let currentLevel = null;
   let currentLang = 'fr';
+  let currentQuiz = null;
+
+  function shuffleArray(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function shuffleQuiz(questions) {
+    return shuffleArray(questions).map(function (q) {
+      const order = shuffleArray(q.options.map(function (_, idx) { return idx; }));
+      return {
+        q: q.q,
+        explain: q.explain,
+        options: order.map(function (idx) { return q.options[idx]; }),
+        correct: order.indexOf(q.correct)
+      };
+    });
+  }
   let visitCount = null;
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -486,7 +508,8 @@
 
   function renderQuiz(level, lang) {
     currentLevel = level;
-    const QUIZ = cache[lang].levels[level];
+    currentQuiz = shuffleQuiz(cache[lang].levels[level]);
+    const QUIZ = currentQuiz;
     form.innerHTML = QUIZ.map(function(q, i) {
       const opts = q.options.map(function(o, j) {
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
@@ -573,7 +596,7 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const QUIZ = cache[currentLang].levels[currentLevel];
+    const QUIZ = currentQuiz;
     const UI = cache[currentLang].ui;
     let score = 0;
     const answers = [];
