@@ -37,12 +37,17 @@
     <p>🚫 Cette page est réservée au modérateur du site. <a href="compte.html">Se connecter</a> avec le compte modérateur.</p>
   </div>
   <div id="dashboard" style="display:none;">
+    <nav class="mod-subnav">
+      <a href="#overview">📊 Vue d'ensemble</a>
+      <a href="#visitors">👥 Visiteurs</a>
+    </nav>
+
     <div class="card" id="memoCard">
-      <details>
-        <summary style="cursor:pointer;"><strong>🗒️ Mémo — Ce que vous pouvez piloter ici (visible par vous seul)</strong></summary>
-        <div style="margin-top:0.8rem;">
+      <details class="mod-memo">
+        <summary>🗒️ Mémo — Ce que vous pouvez piloter ici (visible par vous seul)</summary>
+        <div class="mod-memo-body">
           <p><strong>Sur cette page (tableau de bord)</strong></p>
-          <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
+          <ul>
             <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés.</li>
             <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés.</li>
             <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs.</li>
@@ -58,70 +63,90 @@
             <li><strong>🗑️ Supprimer le compte</strong> : efface son profil, ses favoris et son historique. La personne pourra toujours se reconnecter avec son e-mail/mot de passe, mais repartira de zéro (impossible de supprimer sa connexion elle-même depuis le site).</li>
           </ul>
           <p><strong>Une fois connecté avec ce compte modérateur, sur tout le site</strong></p>
-          <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
+          <ul>
             <li>Toutes les fiches PDF sont accessibles directement, sans avoir à réussir les quiz.</li>
             <li>Le formulaire <a href="inscription.html">d'inscription</a> est accessible sans score minimum requis.</li>
           </ul>
           <p><strong>Sur <a href="compte.html">Mon compte</a></strong></p>
-          <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
+          <ul>
             <li>Vous pouvez modifier à tout moment le nom d'utilisateur affiché sur le site.</li>
           </ul>
           <p><strong>Ce qui n'est pas pilotable depuis le site</strong></p>
-          <ul style="margin:0.3rem 0 0;padding-left:1.2rem;">
+          <ul style="margin-bottom:0;">
             <li>Pas d'édition des textes, ateliers ou quiz en ligne (le site n'a pas d'espace d'administration de contenu) — pour toute modification de contenu, il faut me le demander.</li>
           </ul>
         </div>
       </details>
     </div>
-    <div class="stats-total card" id="statsTotal">
-      <div><strong id="statTotalUsers">—</strong><span>Comptes</span></div>
-      <div><strong id="statTotalQuizzes">—</strong><span>Quiz passés</span></div>
-      <div><strong id="statTotalFavs">—</strong><span>Favoris posés</span></div>
-    </div>
-    <div class="card" id="leaderboardCard">
-      <h3>🏆 Classement des visiteurs</h3>
-      <div id="leaderboardList"><p class="acct-empty">Chargement…</p></div>
-    </div>
 
-    <div class="card" id="popularityCard">
-      <h3>📊 Popularité des ateliers</h3>
-      <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier, du plus au moins populaire.</p>
-      <div id="popularityList"><p class="acct-empty">Chargement…</p></div>
-    </div>
-
-    <div class="card" id="badgeDistCard">
-      <h3>🏅 Badges obtenus</h3>
-      <p class="acct-empty" style="margin-bottom:0.6rem;">Part des visiteurs ayant débloqué chaque badge.</p>
-      <div id="badgeDistList"><p class="acct-empty">Chargement…</p></div>
-    </div>
-
-    <div class="card" id="matrixCard">
-      <h3>🗺️ Grille de progression</h3>
-      <p class="acct-empty" style="margin-bottom:0.6rem;">🌳 maîtrisé (avancé ≥ 75 %) · ✅ validé (≥ 50 %) · point clair = non commencé.</p>
-      <div class="matrix-wrap"><table class="matrix-table" id="matrixTable"></table></div>
-    </div>
-
-    <div class="card" id="usersCard">
-      <h3>👥 Comptes visiteurs</h3>
-      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:end;margin-bottom:1rem;">
-        <div class="reg-field" style="flex:1;min-width:160px;margin:0;">
-          <label for="userSearch">Rechercher</label>
-          <input type="text" id="userSearch" placeholder="Nom ou e-mail…">
+    <section id="overview">
+      <div class="mod-kpis" id="statsTotal">
+        <div class="mod-kpi kpi-users">
+          <span class="mod-kpi-icon">👥</span>
+          <span class="mod-kpi-value" id="statTotalUsers">—</span>
+          <span class="mod-kpi-label">Comptes</span>
         </div>
-        <div class="reg-field" style="margin:0;">
-          <label for="userSort">Trier par</label>
-          <select id="userSort">
-            <option value="name">Nom (A → Z)</option>
-            <option value="quizzes">Nombre de quiz</option>
-            <option value="recent">Activité récente</option>
-            <option value="bestscore">Meilleur score</option>
-            <option value="mastered">Ateliers maîtrisés</option>
-          </select>
+        <div class="mod-kpi kpi-quizzes">
+          <span class="mod-kpi-icon">📝</span>
+          <span class="mod-kpi-value" id="statTotalQuizzes">—</span>
+          <span class="mod-kpi-label">Quiz passés</span>
         </div>
-        <button type="button" class="secondary" id="exportCsvBtn">📥 Exporter en CSV</button>
+        <div class="mod-kpi kpi-favs">
+          <span class="mod-kpi-icon">⭐</span>
+          <span class="mod-kpi-value" id="statTotalFavs">—</span>
+          <span class="mod-kpi-label">Favoris posés</span>
+        </div>
       </div>
-      <div id="usersList"><p class="acct-empty">Chargement…</p></div>
-    </div>
+
+      <div class="mod-grid-2">
+        <div class="card" id="leaderboardCard">
+          <h3>🏆 Classement des visiteurs</h3>
+          <div id="leaderboardList"><p class="acct-empty">Chargement…</p></div>
+        </div>
+
+        <div class="card" id="badgeDistCard">
+          <h3>🏅 Badges obtenus</h3>
+          <p class="acct-empty" style="margin-bottom:0.6rem;">Part des visiteurs ayant débloqué chaque badge.</p>
+          <div id="badgeDistList"><p class="acct-empty">Chargement…</p></div>
+        </div>
+      </div>
+
+      <div class="card" id="popularityCard">
+        <h3>📊 Popularité des ateliers</h3>
+        <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier, du plus au moins populaire.</p>
+        <div id="popularityList"><p class="acct-empty">Chargement…</p></div>
+      </div>
+
+      <div class="card" id="matrixCard">
+        <h3>🗺️ Grille de progression</h3>
+        <p class="acct-empty" style="margin-bottom:0.6rem;">🌳 maîtrisé (avancé ≥ 75 %) · ✅ validé (≥ 50 %) · point clair = non commencé.</p>
+        <div class="matrix-wrap"><table class="matrix-table" id="matrixTable"></table></div>
+      </div>
+    </section>
+
+    <section id="visitors">
+      <div class="card" id="usersCard">
+        <h3>👥 Comptes visiteurs</h3>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:end;margin-bottom:1rem;">
+          <div class="reg-field" style="flex:1;min-width:160px;margin:0;">
+            <label for="userSearch">Rechercher</label>
+            <input type="text" id="userSearch" placeholder="Nom ou e-mail…">
+          </div>
+          <div class="reg-field" style="margin:0;">
+            <label for="userSort">Trier par</label>
+            <select id="userSort">
+              <option value="name">Nom (A → Z)</option>
+              <option value="quizzes">Nombre de quiz</option>
+              <option value="recent">Activité récente</option>
+              <option value="bestscore">Meilleur score</option>
+              <option value="mastered">Ateliers maîtrisés</option>
+            </select>
+          </div>
+          <button type="button" class="secondary" id="exportCsvBtn">📥 Exporter en CSV</button>
+        </div>
+        <div id="usersList"><p class="acct-empty">Chargement…</p></div>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -271,6 +296,19 @@
     });
   }
 
+  const AVATAR_COLORS = ['var(--accent)', 'var(--accent-2)', 'var(--accent-3)'];
+  function avatarColor(seed) {
+    let h = 0;
+    for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+  function initialsFor(u) {
+    const base = (u.username || u.email.split('@')[0] || '?').trim();
+    const parts = base.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return base.slice(0, 2).toUpperCase();
+  }
+
   let allUsers = [];
 
   function bestPct(history) {
@@ -344,18 +382,27 @@
       const label = escapeHtml(u.username || u.email);
       const stats = u.stats;
       const masteredPct = Math.round((stats.masteredCount / QUIZZES.length) * 100);
-      return '<div class="card" style="margin-bottom:1rem;">' +
-        '<p><strong>' + label + '</strong> <span class="acct-empty">' + (u.username ? '(' + escapeHtml(u.email) + ') · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span></p>' +
-        '<div style="display:flex;align-items:center;gap:0.6rem;margin:0.4rem 0;">' +
-        '<div class="stats-barwrap" style="flex:1;max-width:220px;"><div class="stats-bar" style="width:' + masteredPct + '%"></div></div>' +
-        '<span class="acct-empty">📈 ' + stats.masteredCount + '/' + QUIZZES.length + ' maîtrisés</span>' +
+      const badgeCount = BADGES.filter(function (b) { return b.test(stats); }).length;
+      return '<div class="card mod-user-card">' +
+        '<div class="mod-user-head">' +
+        '<div class="mod-avatar" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
+        '<div class="mod-user-id"><strong>' + label + '</strong>' +
+        '<span class="acct-empty">' + (u.username ? escapeHtml(u.email) + ' · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span>' +
         '</div>' +
-        '<p class="acct-empty">🏅 ' + badgesSummary(stats) + '</p>' +
-        (favNames.length ? '<p class="acct-empty">⭐ ' + favNames.join(', ') + '</p>' : '') +
-        (shown ? '<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + shown + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
-        (rest ? '<ul class="hist-rest" style="display:none;margin:0 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + rest + '</ul>' +
+        '<div class="mod-user-chips">' +
+        '<span class="mod-chip chip-accent">📈 ' + stats.masteredCount + '/' + QUIZZES.length + '</span>' +
+        '<span class="mod-chip chip-accent">🏅 ' + badgeCount + '/' + BADGES.length + '</span>' +
+        '</div>' +
+        '</div>' +
+        '<div class="mod-progress-row">' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + masteredPct + '%"></div></div>' +
+        '</div>' +
+        '<p class="mod-badges-row">' + badgesSummary(stats) + '</p>' +
+        (favNames.length ? '<div class="mod-fav-chips">' + favNames.map(function (n) { return '<span class="mod-chip-fav">⭐ ' + n + '</span>'; }).join('') + '</div>' : '') +
+        (shown ? '<ul class="mod-history">' + shown + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
+        (rest ? '<ul class="mod-history hist-rest" style="display:none;">' + rest + '</ul>' +
           '<button type="button" class="link-toggle-history" data-uid="' + u.uid + '" style="background:none;border:none;color:var(--accent-2, #35604f);cursor:pointer;font-size:0.85rem;padding:0.3rem 0;">Voir tout l\'historique (' + u.history.length + ')</button>' : '') +
-        '<div class="actions" style="margin-top:0.6rem;">' +
+        '<div class="mod-actions">' +
         '<button type="button" class="secondary reset-quiz-btn" data-uid="' + u.uid + '" data-label="' + label + '">🔁 Réinitialiser le quiz</button>' +
         '<button type="button" class="secondary reset-pw-btn" data-email="' + escapeHtml(u.email) + '" data-label="' + label + '">🔑 Réinitialiser le mot de passe</button>' +
         '<button type="button" class="secondary delete-account-btn" data-uid="' + u.uid + '" data-label="' + label + '">🗑️ Supprimer le compte</button>' +

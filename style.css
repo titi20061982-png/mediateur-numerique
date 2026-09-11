@@ -542,6 +542,60 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .matrix-cell.status-mastered { background: var(--accent-soft); }
 .matrix-cell.status-passed { background: color-mix(in srgb, var(--good) 18%, transparent); }
 .matrix-cell.status-none { opacity: 0.35; }
+.matrix-table tbody tr:nth-child(even) td:not(:first-child) { background: var(--bg-soft); }
+.matrix-table tbody tr:hover td:not(:first-child) { background: var(--accent-soft); }
+
+/* ---------- 12quater. Refonte visuelle du tableau de bord moderateur ---------- */
+.mod-subnav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.9rem 0 1.4rem; }
+.mod-subnav a {
+  font-size: 0.82rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 999px;
+  background: var(--bg-soft); color: var(--text); text-decoration: none; border: 1px solid var(--border);
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.mod-subnav a:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+.mod-memo summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.55rem; font-weight: 600; font-size: 0.94rem; }
+.mod-memo summary::-webkit-details-marker { display: none; }
+.mod-memo summary::before { content: '▸'; color: var(--accent); font-size: 0.8rem; transition: transform .15s ease; display: inline-block; }
+.mod-memo[open] summary::before { transform: rotate(90deg); }
+.mod-memo .mod-memo-body { margin-top: 0.9rem; font-size: 0.88rem; }
+.mod-memo .mod-memo-body p { margin: 0.9rem 0 0.3rem; }
+.mod-memo .mod-memo-body p:first-child { margin-top: 0; }
+.mod-memo .mod-memo-body ul { margin: 0.3rem 0 0.8rem; padding-left: 1.2rem; line-height: 1.65; }
+
+.mod-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+.mod-kpi {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.3rem; position: relative; overflow: hidden;
+}
+.mod-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+.mod-kpi.kpi-quizzes::before { background: var(--accent-3); }
+.mod-kpi.kpi-favs::before { background: var(--accent-2); }
+.mod-kpi-icon { font-size: 1.25rem; }
+.mod-kpi-value { font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 700; color: var(--text); line-height: 1; }
+.mod-kpi-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.mod-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; align-items: start; margin-bottom: 1rem; }
+
+.mod-user-card { margin-bottom: 1rem; transition: box-shadow .18s ease; }
+.mod-user-card:hover { box-shadow: 0 4px 10px rgba(30,25,15,0.07), 0 18px 32px rgba(30,25,15,0.1); }
+.mod-user-head { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.mod-avatar {
+  flex: none; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; color: #fff; font-weight: 700; font-size: 0.9rem; font-family: "Fraunces", Georgia, serif;
+}
+.mod-user-id { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 0.1rem; }
+.mod-user-id strong { font-size: 0.98rem; }
+.mod-user-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.mod-chip { font-size: 0.74rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px; background: var(--bg-soft); color: var(--muted); white-space: nowrap; }
+.mod-chip.chip-accent { background: var(--accent-soft); color: var(--accent); }
+.mod-progress-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.75rem 0 0.5rem; }
+.mod-progress-row .stats-barwrap { flex: 1; max-width: 260px; height: 8px; }
+.mod-badges-row { margin: 0.1rem 0 0.6rem; font-size: 1.05rem; line-height: 1.4; }
+.mod-fav-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+.mod-chip-fav { background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 0.74rem; padding: 0.25rem 0.6rem; border-radius: 999px; }
+.mod-history { margin: 0.5rem 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+.mod-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--border); }
 
 /* ---------- 13. Pied de page ---------- */
 footer {
