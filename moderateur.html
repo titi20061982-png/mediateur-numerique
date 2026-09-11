@@ -44,10 +44,10 @@
           <p><strong>Sur cette page (tableau de bord)</strong></p>
           <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
             <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés.</li>
-            <li>Plus bas : la liste de chaque visiteur avec son nom/e-mail, ses favoris et ses résultats de quiz (les 5 derniers, avec un lien pour tout voir).</li>
+            <li>Plus bas : la liste de chaque visiteur avec son nom/e-mail, ses favoris, sa progression (📈 ateliers maîtrisés en niveau avancé), ses badges (🏅) et ses résultats de quiz (les 5 derniers, avec un lien pour tout voir).</li>
             <li>Votre propre compte n'apparaît jamais dans ces stats ni dans cette liste.</li>
             <li><strong>🔎 Rechercher</strong> : filtre la liste par nom ou e-mail en tapant.</li>
-            <li><strong>Trier par</strong> : nom, nombre de quiz, activité récente ou meilleur score.</li>
+            <li><strong>Trier par</strong> : nom, nombre de quiz, activité récente, meilleur score ou ateliers maîtrisés.</li>
             <li><strong>📥 Exporter en CSV</strong> : télécharge un fichier avec tous les visiteurs (nom, e-mail, quiz, favoris, meilleur score, dernière activité), à ouvrir dans Excel.</li>
             <li><strong>🔁 Réinitialiser le quiz</strong> : efface tout l'historique de quiz de ce visiteur (utile en cas de triche ou pour repartir de zéro).</li>
             <li><strong>🔑 Réinitialiser le mot de passe</strong> : envoie à ce visiteur un e-mail pour choisir un nouveau mot de passe.</li>
@@ -88,6 +88,7 @@
             <option value="quizzes">Nombre de quiz</option>
             <option value="recent">Activité récente</option>
             <option value="bestscore">Meilleur score</option>
+            <option value="mastered">Ateliers maîtrisés</option>
           </select>
         </div>
         <button type="button" class="secondary" id="exportCsvBtn">📥 Exporter en CSV</button>
@@ -131,6 +132,40 @@
   function quizByKey(key) { return quizBySlug(key.replace(/-quiz(-v2)?$/, '')); }
   const levelLabel = { debutant: '🌱 Déb.', intermediaire: '🌿 Int.', avance: '🌳 Avancé' };
 
+  const BADGES = [
+    { icon: '🎉', name: 'Premier pas', desc: 'Terminer un premier quiz.', test: function (s) { return s.totalQuizzesTaken >= 1; } },
+    { icon: '🌱', name: 'Explorateur', desc: 'Essayer 5 ateliers différents.', test: function (s) { return s.attemptedCount >= 5; } },
+    { icon: '💯', name: 'Sans faute', desc: 'Obtenir 100 % à un quiz.', test: function (s) { return s.perfectCount >= 1; } },
+    { icon: '🌳', name: 'Niveau avancé validé', desc: 'Réussir un quiz niveau avancé (≥ 75 %).', test: function (s) { return s.masteredCount >= 1; } },
+    { icon: '⭐', name: 'Collectionneur', desc: 'Ajouter 5 ateliers en favoris.', test: function (s) { return s.favoritesCount >= 5; } },
+    { icon: '🔁', name: 'Persévérant', desc: 'Passer 20 quiz au total.', test: function (s) { return s.totalQuizzesTaken >= 20; } },
+    { icon: '👑', name: 'Grand maître', desc: 'Maîtriser les ' + QUIZZES.length + ' ateliers en niveau avancé.', test: function (s) { return s.masteredCount >= QUIZZES.length; } }
+  ];
+
+  function computeStats(history, favorites) {
+    const bestBySlug = {};
+    history.forEach(function (r) {
+      if (!bestBySlug[r.slug]) bestBySlug[r.slug] = { any: 0, avance: 0 };
+      if (typeof r.pct === 'number' && r.pct > bestBySlug[r.slug].any) bestBySlug[r.slug].any = r.pct;
+      if (r.level === 'avance' && typeof r.pct === 'number' && r.pct > bestBySlug[r.slug].avance) bestBySlug[r.slug].avance = r.pct;
+    });
+    const masteredCount = Object.keys(bestBySlug).filter(function (s) { return bestBySlug[s].avance >= 75; }).length;
+    return {
+      bestBySlug: bestBySlug,
+      attemptedCount: Object.keys(bestBySlug).length,
+      masteredCount: masteredCount,
+      totalQuizzesTaken: history.length,
+      perfectCount: history.filter(function (r) { return r.pct === 100; }).length,
+      favoritesCount: favorites.length
+    };
+  }
+
+  function badgesSummary(stats) {
+    const earned = BADGES.filter(function (b) { return b.test(stats); });
+    if (!earned.length) return '<span class="acct-empty">Aucun badge</span>';
+    return earned.map(function (b) { return '<span title="' + escapeHtml(b.name) + '">' + b.icon + '</span>'; }).join(' ');
+  }
+
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -157,6 +192,7 @@
   function loadUsers() {
     document.getElementById('usersList').innerHTML = '<p class="acct-empty">Chargement…</p>';
     getAllUsersWithData().then(function (users) {
+      users.forEach(function (u) { u.stats = computeStats(u.history, u.favorites); });
       allUsers = users;
       applyFilters();
     }).catch(function () {
@@ -178,6 +214,7 @@
       if (sortBy === 'quizzes') return b.history.length - a.history.length;
       if (sortBy === 'recent') return mostRecent(b.history) - mostRecent(a.history);
       if (sortBy === 'bestscore') return bestPct(b.history) - bestPct(a.history);
+      if (sortBy === 'mastered') return b.stats.masteredCount - a.stats.masteredCount;
       return (a.username || a.email).localeCompare(b.username || b.email, 'fr', { sensitivity: 'base' });
     });
 
@@ -202,8 +239,15 @@
       const shown = u.history.slice(0, 5).map(histRow).join('');
       const rest = u.history.slice(5).map(histRow).join('');
       const label = escapeHtml(u.username || u.email);
+      const stats = u.stats;
+      const masteredPct = Math.round((stats.masteredCount / QUIZZES.length) * 100);
       return '<div class="card" style="margin-bottom:1rem;">' +
         '<p><strong>' + label + '</strong> <span class="acct-empty">' + (u.username ? '(' + escapeHtml(u.email) + ') · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span></p>' +
+        '<div style="display:flex;align-items:center;gap:0.6rem;margin:0.4rem 0;">' +
+        '<div class="stats-barwrap" style="flex:1;max-width:220px;"><div class="stats-bar" style="width:' + masteredPct + '%"></div></div>' +
+        '<span class="acct-empty">📈 ' + stats.masteredCount + '/' + QUIZZES.length + ' maîtrisés</span>' +
+        '</div>' +
+        '<p class="acct-empty">🏅 ' + badgesSummary(stats) + '</p>' +
         (favNames.length ? '<p class="acct-empty">⭐ ' + favNames.join(', ') + '</p>' : '') +
         (shown ? '<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + shown + '</ul>' : '<p class="acct-empty">Aucun quiz passé.</p>') +
         (rest ? '<ul class="hist-rest" style="display:none;margin:0 0 0;padding-left:1.2rem;font-size:0.85rem;color:var(--muted);">' + rest + '</ul>' +
