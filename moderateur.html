@@ -44,6 +44,10 @@
           <p><strong>Sur cette page (tableau de bord)</strong></p>
           <ul style="margin:0.3rem 0 0.8rem;padding-left:1.2rem;">
             <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés.</li>
+            <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés.</li>
+            <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs.</li>
+            <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
+            <li><strong>🗺️ Grille de progression</strong> : un tableau visiteurs × ateliers, chaque case indiquant le statut de l'atelier pour ce visiteur (survolez une case pour le détail).</li>
             <li>Plus bas : la liste de chaque visiteur avec son nom/e-mail, ses favoris, sa progression (📈 ateliers maîtrisés en niveau avancé), ses badges (🏅) et ses résultats de quiz (les 5 derniers, avec un lien pour tout voir).</li>
             <li>Votre propre compte n'apparaît jamais dans ces stats ni dans cette liste.</li>
             <li><strong>🔎 Rechercher</strong> : filtre la liste par nom ou e-mail en tapant.</li>
@@ -74,6 +78,29 @@
       <div><strong id="statTotalQuizzes">—</strong><span>Quiz passés</span></div>
       <div><strong id="statTotalFavs">—</strong><span>Favoris posés</span></div>
     </div>
+    <div class="card" id="leaderboardCard">
+      <h3>🏆 Classement des visiteurs</h3>
+      <div id="leaderboardList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
+    <div class="card" id="popularityCard">
+      <h3>📊 Popularité des ateliers</h3>
+      <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier, du plus au moins populaire.</p>
+      <div id="popularityList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
+    <div class="card" id="badgeDistCard">
+      <h3>🏅 Badges obtenus</h3>
+      <p class="acct-empty" style="margin-bottom:0.6rem;">Part des visiteurs ayant débloqué chaque badge.</p>
+      <div id="badgeDistList"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
+    <div class="card" id="matrixCard">
+      <h3>🗺️ Grille de progression</h3>
+      <p class="acct-empty" style="margin-bottom:0.6rem;">🌳 maîtrisé (avancé ≥ 75 %) · ✅ validé (≥ 50 %) · point clair = non commencé.</p>
+      <div class="matrix-wrap"><table class="matrix-table" id="matrixTable"></table></div>
+    </div>
+
     <div class="card" id="usersCard">
       <h3>👥 Comptes visiteurs</h3>
       <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:end;margin-bottom:1rem;">
@@ -166,6 +193,78 @@
     return earned.map(function (b) { return '<span title="' + escapeHtml(b.name) + '">' + b.icon + '</span>'; }).join(' ');
   }
 
+  function renderLeaderboard(users) {
+    const el = document.getElementById('leaderboardList');
+    if (!users.length) { el.innerHTML = '<p class="acct-empty">Aucun visiteur pour l\'instant.</p>'; return; }
+    const ranked = users.slice().sort(function (a, b) {
+      if (b.stats.masteredCount !== a.stats.masteredCount) return b.stats.masteredCount - a.stats.masteredCount;
+      return b.history.length - a.history.length;
+    }).slice(0, 10);
+    const medal = ['🥇', '🥈', '🥉'];
+    el.innerHTML = ranked.map(function (u, i) {
+      const label = escapeHtml(u.username || u.email);
+      const badgeCount = BADGES.filter(function (b) { return b.test(u.stats); }).length;
+      return '<div class="leaderboard-row' + (i === 0 ? ' rank-1' : '') + '">' +
+        '<div class="leaderboard-rank">' + (medal[i] || (i + 1)) + '</div>' +
+        '<div class="leaderboard-name">' + label + '</div>' +
+        '<div class="leaderboard-meta">📈 ' + u.stats.masteredCount + '/' + QUIZZES.length + ' · 🏅 ' + badgeCount + '/' + BADGES.length + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderPopularity(users) {
+    const el = document.getElementById('popularityList');
+    if (!users.length) { el.innerHTML = '<p class="acct-empty">Aucune donnée pour l\'instant.</p>'; return; }
+    const rows = QUIZZES.map(function (q) {
+      const attempted = users.filter(function (u) { return u.stats.bestBySlug[q.slug]; }).length;
+      return { q: q, attempted: attempted };
+    }).sort(function (a, b) { return b.attempted - a.attempted; });
+    const max = Math.max.apply(null, rows.map(function (r) { return r.attempted; })) || 1;
+    el.innerHTML = rows.map(function (r) {
+      const pct = Math.round((r.attempted / max) * 100);
+      return '<div class="stats-row"><div class="stats-icon">' + r.q.icon + '</div>' +
+        '<div class="stats-info"><a href="ateliers/' + r.q.slug + '_quiz.html">' + r.q.title + '</a>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div></div>' +
+        '<div class="stats-count">' + r.attempted + '</div></div>';
+    }).join('');
+  }
+
+  function renderBadgeDistribution(users) {
+    const el = document.getElementById('badgeDistList');
+    if (!users.length) { el.innerHTML = '<p class="acct-empty">Aucune donnée pour l\'instant.</p>'; return; }
+    el.innerHTML = BADGES.map(function (b) {
+      const count = users.filter(function (u) { return b.test(u.stats); }).length;
+      const pct = Math.round((count / users.length) * 100);
+      return '<div class="stats-row"><div class="stats-icon">' + b.icon + '</div>' +
+        '<div class="stats-info">' + escapeHtml(b.name) +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div></div>' +
+        '<div class="stats-count">' + count + '</div></div>';
+    }).join('');
+  }
+
+  function renderMatrix(users) {
+    const el = document.getElementById('matrixTable');
+    if (!users.length) { el.innerHTML = '<tbody><tr><td class="acct-empty">Aucune donnée pour l\'instant.</td></tr></tbody>'; return; }
+    const head = '<thead><tr><th>Visiteur</th>' + QUIZZES.map(function (q) {
+      return '<th title="' + escapeHtml(q.title) + '">' + q.icon + '</th>';
+    }).join('') + '</tr></thead>';
+    const body = '<tbody>' + users.map(function (u) {
+      const label = escapeHtml(u.username || u.email);
+      const cells = QUIZZES.map(function (q) {
+        const best = u.stats.bestBySlug[q.slug];
+        let cls = 'status-none', content = '·', title = 'Non commencé';
+        if (best) {
+          if (best.avance >= 75) { cls = 'status-mastered'; content = '🌳'; title = 'Maîtrisé (avancé ' + best.avance + ' %)'; }
+          else if (best.any >= 50) { cls = 'status-passed'; content = '✅'; title = 'Validé (' + best.any + ' %)'; }
+          else { cls = ''; content = '🌱'; title = 'En cours (' + best.any + ' %)'; }
+        }
+        return '<td><span class="matrix-cell ' + cls + '" title="' + escapeHtml(q.title) + ' — ' + title + '">' + content + '</span></td>';
+      }).join('');
+      return '<tr><td>' + label + '</td>' + cells + '</tr>';
+    }).join('') + '</tbody>';
+    el.innerHTML = head + body;
+  }
+
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -194,6 +293,10 @@
     getAllUsersWithData().then(function (users) {
       users.forEach(function (u) { u.stats = computeStats(u.history, u.favorites); });
       allUsers = users;
+      renderLeaderboard(allUsers);
+      renderPopularity(allUsers);
+      renderBadgeDistribution(allUsers);
+      renderMatrix(allUsers);
       applyFilters();
     }).catch(function () {
       document.getElementById('usersList').innerHTML = '<p class="acct-empty">Erreur de chargement des données.</p>';
