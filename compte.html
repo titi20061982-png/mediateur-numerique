@@ -81,10 +81,15 @@
 
   <div id="loggedInView" style="display:none;">
     <div class="card reveal">
-      <p class="acct-email">Connecté en tant que <strong id="userEmailLabel"></strong></p>
-      <p class="acct-empty" id="usernameSub" style="display:none;"></p>
-      <p class="acct-email" id="modBadge" style="display:none;">👑 Compte modérateur</p>
-      <div class="reg-field" style="margin-top:0.6rem;">
+      <div class="person-head">
+        <div class="avatar-circle" id="acctAvatar"></div>
+        <div class="person-id">
+          <p class="acct-email" style="margin:0;">Connecté en tant que <strong id="userEmailLabel"></strong></p>
+          <p class="acct-empty" id="usernameSub" style="display:none;"></p>
+          <p class="acct-email" id="modBadge" style="display:none;margin:0;">👑 Compte modérateur</p>
+        </div>
+      </div>
+      <div class="reg-field" style="margin-top:0.9rem;">
         <label for="usernameInput">Nom d'utilisateur</label>
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
           <input type="text" id="usernameInput" maxlength="30" autocomplete="nickname" placeholder="Votre nom d'utilisateur" style="flex:1;min-width:180px;">
@@ -98,21 +103,46 @@
       </div>
     </div>
 
-    <div class="card reveal" id="progressCard">
-      <h3>📈 Ma progression</h3>
-      <div class="progress-overall">
-        <div class="progress-label">
-          <span id="progressOverallLabel">Chargement…</span>
-          <span id="progressOverallPct"></span>
-        </div>
-        <div class="stats-barwrap"><div class="stats-bar" id="progressOverallBar" style="width:0%"></div></div>
+    <div class="kpi-row" id="acctKpis">
+      <div class="kpi-tile kpi-mastered">
+        <span class="kpi-icon">🌳</span>
+        <span class="kpi-value" id="kpiMastered">—</span>
+        <span class="kpi-label">Ateliers maîtrisés</span>
       </div>
-      <div id="progressList"><p class="acct-empty">Chargement…</p></div>
+      <div class="kpi-tile kpi-quizzes">
+        <span class="kpi-icon">📝</span>
+        <span class="kpi-value" id="kpiQuizzes">—</span>
+        <span class="kpi-label">Quiz passés</span>
+      </div>
+      <div class="kpi-tile kpi-badges">
+        <span class="kpi-icon">🏅</span>
+        <span class="kpi-value" id="kpiBadges">—</span>
+        <span class="kpi-label">Badges débloqués</span>
+      </div>
+      <div class="kpi-tile kpi-favs">
+        <span class="kpi-icon">⭐</span>
+        <span class="kpi-value" id="kpiFavs">—</span>
+        <span class="kpi-label">Favoris</span>
+      </div>
     </div>
 
-    <div class="card reveal" id="badgesCard">
-      <h3>🏅 Mes badges</h3>
-      <div class="badges-grid" id="badgesList"><p class="acct-empty">Chargement…</p></div>
+    <div class="grid-2">
+      <div class="card reveal" id="progressCard">
+        <h3>📈 Ma progression</h3>
+        <div class="progress-overall">
+          <div class="progress-label">
+            <span id="progressOverallLabel">Chargement…</span>
+            <span id="progressOverallPct"></span>
+          </div>
+          <div class="stats-barwrap"><div class="stats-bar" id="progressOverallBar" style="width:0%"></div></div>
+        </div>
+        <div id="progressList"><p class="acct-empty">Chargement…</p></div>
+      </div>
+
+      <div class="card reveal" id="badgesCard">
+        <h3>🏅 Mes badges</h3>
+        <div class="badges-grid" id="badgesList"><p class="acct-empty">Chargement…</p></div>
+      </div>
     </div>
 
     <div class="card reveal" id="favoritesCard">
@@ -354,6 +384,25 @@
       }).join('') + '</tbody></table></div>';
   }
 
+  const AVATAR_COLORS = ['var(--accent)', 'var(--accent-2)', 'var(--accent-3)'];
+  function avatarColor(seed) {
+    let h = 0;
+    for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+  function initialsFor(label) {
+    const parts = label.trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return label.slice(0, 2).toUpperCase();
+  }
+
+  function renderKpis(stats) {
+    document.getElementById('kpiMastered').textContent = stats.masteredCount;
+    document.getElementById('kpiQuizzes').textContent = stats.totalQuizzesTaken;
+    document.getElementById('kpiBadges').textContent = BADGES.filter(function (b) { return b.test(stats); }).length;
+    document.getElementById('kpiFavs').textContent = stats.favoritesCount;
+  }
+
   let currentUserRef = null;
 
   watchAuth(function (user) {
@@ -363,17 +412,22 @@
       loggedOutView.style.display = 'none';
       loggedInView.style.display = '';
       document.getElementById('userEmailLabel').textContent = user.email;
+      const avatar = document.getElementById('acctAvatar');
+      avatar.style.background = avatarColor(user.uid);
+      avatar.textContent = initialsFor(user.email.split('@')[0]);
       getUserProfile(user.uid).then(function (profile) {
         if (profile.username) {
           var sub = document.getElementById('usernameSub');
           sub.textContent = '👋 ' + profile.username;
           sub.style.display = '';
+          avatar.textContent = initialsFor(profile.username);
         }
         document.getElementById('usernameInput').value = profile.username || '';
       }).catch(function () {});
       if (isModerator(user)) {
         document.getElementById('modBadge').style.display = '';
         document.getElementById('modLink').style.display = '';
+        document.getElementById('acctKpis').style.display = 'none';
         document.getElementById('progressCard').style.display = 'none';
         document.getElementById('badgesCard').style.display = 'none';
       }
@@ -385,6 +439,7 @@
         const stats = computeStats(history, favorites);
         renderProgress(stats);
         renderBadges(stats);
+        renderKpis(stats);
       }).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
         document.getElementById('historyList').innerHTML = '<p class="acct-empty">Impossible de charger l\'historique pour le moment.</p>';

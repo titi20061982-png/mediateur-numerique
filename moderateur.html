@@ -82,30 +82,30 @@
     </div>
 
     <section id="overview">
-      <div class="mod-kpis" id="statsTotal">
-        <div class="mod-kpi kpi-users">
-          <span class="mod-kpi-icon">👥</span>
-          <span class="mod-kpi-value" id="statTotalUsers">—</span>
-          <span class="mod-kpi-label">Comptes</span>
+      <div class="kpi-row" id="statsTotal">
+        <div class="kpi-tile kpi-users">
+          <span class="kpi-icon">👥</span>
+          <span class="kpi-value" id="statTotalUsers">—</span>
+          <span class="kpi-label">Comptes</span>
         </div>
-        <div class="mod-kpi kpi-quizzes">
-          <span class="mod-kpi-icon">📝</span>
-          <span class="mod-kpi-value" id="statTotalQuizzes">—</span>
-          <span class="mod-kpi-label">Quiz passés</span>
+        <div class="kpi-tile kpi-quizzes">
+          <span class="kpi-icon">📝</span>
+          <span class="kpi-value" id="statTotalQuizzes">—</span>
+          <span class="kpi-label">Quiz passés</span>
         </div>
-        <div class="mod-kpi kpi-favs">
-          <span class="mod-kpi-icon">⭐</span>
-          <span class="mod-kpi-value" id="statTotalFavs">—</span>
-          <span class="mod-kpi-label">Favoris posés</span>
+        <div class="kpi-tile kpi-favs">
+          <span class="kpi-icon">⭐</span>
+          <span class="kpi-value" id="statTotalFavs">—</span>
+          <span class="kpi-label">Favoris posés</span>
         </div>
-        <div class="mod-kpi kpi-anon">
-          <span class="mod-kpi-icon">🕶️</span>
-          <span class="mod-kpi-value" id="statTotalAnon">—</span>
-          <span class="mod-kpi-label">Visiteurs anonymes</span>
+        <div class="kpi-tile kpi-anon">
+          <span class="kpi-icon">🕶️</span>
+          <span class="kpi-value" id="statTotalAnon">—</span>
+          <span class="kpi-label">Visiteurs anonymes</span>
         </div>
       </div>
 
-      <div class="mod-grid-2">
+      <div class="grid-2">
         <div class="card" id="leaderboardCard">
           <h3>🏆 Classement des visiteurs</h3>
           <div id="leaderboardList"><p class="acct-empty">Chargement…</p></div>
@@ -447,13 +447,13 @@
       const masteredPct = Math.round((stats.masteredCount / QUIZZES.length) * 100);
       const badgeCount = BADGES.filter(function (b) { return b.test(stats); }).length;
       return '<div class="card mod-user-card' + (u.isAnonymous ? ' mod-user-anon' : '') + '">' +
-        '<div class="mod-user-head">' +
-        '<div class="mod-avatar" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
-        '<div class="mod-user-id"><strong>' + label + '</strong>' +
+        '<div class="person-head">' +
+        '<div class="avatar-circle" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
+        '<div class="person-id"><strong>' + label + '</strong>' +
         '<span class="acct-empty">' + (!u.isAnonymous && u.username ? escapeHtml(u.email) + ' · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span>' +
         (locationLabel(u) ? '<span class="acct-empty">' + locationLabel(u) + '</span>' : '') +
         '</div>' +
-        '<div class="mod-user-chips">' +
+        '<div class="person-chips">' +
         '<span class="mod-chip chip-accent">📈 ' + stats.masteredCount + '/' + QUIZZES.length + '</span>' +
         '<span class="mod-chip chip-accent">🏅 ' + badgeCount + '/' + BADGES.length + '</span>' +
         '</div>' +
