@@ -35,12 +35,31 @@ export function watchAuth(cb) {
       const data = { isAnonymous: !!user.isAnonymous };
       if (user.email) data.email = user.email;
       setDoc(doc(db, "users", user.uid), data, { merge: true }).catch(function () {});
+      if (user.isAnonymous) { ensureLocationInfo(user.uid).catch(function () {}); }
     } else {
       signInAnonymously(auth).catch(function () {});
     }
     cb(user);
   });
 }
+
+export async function ensureLocationInfo(uid) {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (snap.exists() && snap.data().location) return;
+  const resp = await fetch('https://ipapi.co/json/');
+  if (!resp.ok) return;
+  const geo = await resp.json();
+  if (geo.error) return;
+  await setDoc(ref, {
+    location: {
+      city: geo.city || '',
+      region: geo.region || '',
+      country: geo.country_name || ''
+    }
+  }, { merge: true });
+}
+
 export function login(email, password) { return signInWithEmailAndPassword(auth, email, password); }
 export function register(email, password) { return createUserWithEmailAndPassword(auth, email, password); }
 export function logout() { return signOut(auth); }
@@ -118,6 +137,7 @@ export async function getAllUsersWithData() {
       email: data.email || "",
       username: data.username || "",
       isAnonymous: !!data.isAnonymous || !data.email,
+      location: data.location || null,
       quizStarts: data.quizStarts || {},
       favorites: data.favorites || [],
       history: history

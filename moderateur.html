@@ -48,7 +48,7 @@
         <div class="mod-memo-body">
           <p><strong>Sur cette page (tableau de bord)</strong></p>
           <ul>
-            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, et <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées).</li>
+            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, et <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées). Une <strong>📍 localisation approximative</strong> (ville/région, déduite de l'adresse IP) est affichée sous chaque visiteur anonyme quand elle est disponible — utile pour repérer vos propres tests.</li>
             <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés (comptes nommés uniquement).</li>
             <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs, anonymes inclus, avec le détail "terminé(s) sur démarré(s)" pour repérer les quiz commencés puis abandonnés.</li>
             <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
@@ -294,6 +294,12 @@
     }).join('');
   }
 
+  function locationLabel(u) {
+    if (!u.location) return '';
+    const parts = [u.location.city, u.location.region, u.location.country].filter(Boolean);
+    return parts.length ? '📍 ' + escapeHtml(parts.join(', ')) : '';
+  }
+
   function renderRecentActivity(users) {
     const el = document.getElementById('recentActivityList');
     const rows = [];
@@ -309,10 +315,11 @@
       const u = item.u, r = item.r;
       const q = quizBySlug(r.slug) || { title: r.slug, icon: '📄' };
       const label = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
+      const loc = locationLabel(u);
       const d = new Date(item.t);
       const dateStr = d.toLocaleDateString('fr-FR') + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
       return '<div class="stats-row"><div class="stats-icon">' + q.icon + '</div>' +
-        '<div class="stats-info"><strong>' + label + '</strong> · ' + q.title +
+        '<div class="stats-info"><strong>' + label + '</strong>' + (loc ? ' <span class="acct-empty">(' + loc + ')</span>' : '') + ' · ' + q.title +
         '<div class="acct-empty" style="margin-top:0.15rem;">' + (levelLabel[r.level] || r.level) + ' : ' + r.score + '/' + r.total + ' (' + r.pct + ' %) · ' + dateStr + '</div></div></div>';
     }).join('');
   }
@@ -444,6 +451,7 @@
         '<div class="mod-avatar" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
         '<div class="mod-user-id"><strong>' + label + '</strong>' +
         '<span class="acct-empty">' + (!u.isAnonymous && u.username ? escapeHtml(u.email) + ' · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span>' +
+        (locationLabel(u) ? '<span class="acct-empty">' + locationLabel(u) + '</span>' : '') +
         '</div>' +
         '<div class="mod-user-chips">' +
         '<span class="mod-chip chip-accent">📈 ' + stats.masteredCount + '/' + QUIZZES.length + '</span>' +
