@@ -571,6 +571,8 @@ html[dir="rtl"] #levelScreen .level-btn { text-align: right; }
 .qcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1.7rem; margin-bottom: 1.1rem; box-shadow: var(--shadow); }
 .qcard .qnum { color: var(--accent); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
 .qcard .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 1rem; }
+.qkeys { display: flex; align-items: center; gap: 0.4rem; margin: 0 0 1.1rem; }
+.qkeys .key-plus { color: var(--muted); font-weight: 700; font-size: 0.95rem; }
 .opt { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.65rem 0.8rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 0.55rem; cursor: pointer; transition: border-color .15s; }
 .opt:hover { border-color: var(--accent); }
 .opt input { margin-top: 0.2rem; accent-color: var(--accent); }
