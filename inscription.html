@@ -265,7 +265,7 @@
   atelierSelect.addEventListener('change', checkGate);
 
   watchAuth(function (user) {
-    if (!user) {
+    if (!user || user.isAnonymous) {
       authGateText.textContent = '🔒 Vous devez être connecté pour vous inscrire, et avoir réussi le test de connaissances (50 % minimum) de l\'atelier concerné.';
       authGateActions.style.display = '';
       authGateCard.style.display = '';

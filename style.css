@@ -571,6 +571,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .mod-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
 .mod-kpi.kpi-quizzes::before { background: var(--accent-3); }
 .mod-kpi.kpi-favs::before { background: var(--accent-2); }
+.mod-kpi.kpi-anon::before { background: var(--muted); }
 .mod-kpi-icon { font-size: 1.25rem; }
 .mod-kpi-value { font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 700; color: var(--text); line-height: 1; }
 .mod-kpi-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -579,6 +580,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .mod-grid-2 .card { display: flex; flex-direction: column; }
 
 .mod-user-card { margin-bottom: 1rem; transition: box-shadow .18s ease; }
+.mod-user-card.mod-user-anon { border-style: dashed; opacity: 0.88; }
 .mod-user-card:hover { box-shadow: 0 4px 10px rgba(30,25,15,0.07), 0 18px 32px rgba(30,25,15,0.1); }
 .mod-user-head { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
 .mod-avatar {

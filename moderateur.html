@@ -48,14 +48,15 @@
         <div class="mod-memo-body">
           <p><strong>Sur cette page (tableau de bord)</strong></p>
           <ul>
-            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés.</li>
-            <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés.</li>
-            <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs.</li>
+            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, et <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées).</li>
+            <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés (comptes nommés uniquement).</li>
+            <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs, anonymes inclus, avec le détail "terminé(s) sur démarré(s)" pour repérer les quiz commencés puis abandonnés.</li>
             <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
             <li><strong>🕒 Activité récente</strong> : les 8 derniers quiz passés, tous visiteurs confondus — pratique pour suivre un atelier en direct.</li>
             <li><strong>🗺️ Grille de progression</strong> : un tableau visiteurs × ateliers, chaque case indiquant le statut de l'atelier pour ce visiteur (survolez une case pour le détail).</li>
             <li>Plus bas : la liste de chaque visiteur avec son nom/e-mail, ses favoris, sa progression (📈 ateliers maîtrisés en niveau avancé), ses badges (🏅) et ses résultats de quiz (les 5 derniers, avec un lien pour tout voir).</li>
             <li>Votre propre compte n'apparaît jamais dans ces stats ni dans cette liste.</li>
+            <li>Les visiteurs anonymes sont masqués de cette liste par défaut (carte en pointillés quand affichés) — cochez <strong>"Inclure les visiteurs anonymes"</strong> pour les voir.</li>
             <li><strong>🔎 Rechercher</strong> : filtre la liste par nom ou e-mail en tapant.</li>
             <li><strong>Trier par</strong> : nom, nombre de quiz, activité récente, meilleur score ou ateliers maîtrisés.</li>
             <li><strong>📥 Exporter en CSV</strong> : télécharge un fichier avec tous les visiteurs (nom, e-mail, quiz, favoris, meilleur score, dernière activité), à ouvrir dans Excel.</li>
@@ -97,6 +98,11 @@
           <span class="mod-kpi-value" id="statTotalFavs">—</span>
           <span class="mod-kpi-label">Favoris posés</span>
         </div>
+        <div class="mod-kpi kpi-anon">
+          <span class="mod-kpi-icon">🕶️</span>
+          <span class="mod-kpi-value" id="statTotalAnon">—</span>
+          <span class="mod-kpi-label">Visiteurs anonymes</span>
+        </div>
       </div>
 
       <div class="mod-grid-2">
@@ -120,7 +126,7 @@
 
       <div class="card" id="popularityCard">
         <h3>📊 Popularité des ateliers</h3>
-        <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier, du plus au moins populaire.</p>
+        <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier (visiteurs anonymes inclus), du plus au moins populaire. Le détail "terminé(s) sur démarré(s)" apparaît dès qu'un visiteur a cliqué sur un niveau de quiz.</p>
         <div id="popularityList"><p class="acct-empty">Chargement…</p></div>
       </div>
 
@@ -151,6 +157,9 @@
           </div>
           <button type="button" class="secondary" id="exportCsvBtn">📥 Exporter en CSV</button>
         </div>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">
+          <input type="checkbox" id="includeAnonToggle"> Inclure les visiteurs anonymes (🕶️) dans cette liste
+        </label>
         <div id="usersList"><p class="acct-empty">Chargement…</p></div>
       </div>
     </section>
@@ -247,16 +256,27 @@
   function renderPopularity(users) {
     const el = document.getElementById('popularityList');
     if (!users.length) { el.innerHTML = '<p class="acct-empty">Aucune donnée pour l\'instant.</p>'; return; }
+    const levels = ['debutant', 'intermediaire', 'avance'];
     const rows = QUIZZES.map(function (q) {
       const attempted = users.filter(function (u) { return u.stats.bestBySlug[q.slug]; }).length;
-      return { q: q, attempted: attempted };
+      let starts = 0, completions = 0;
+      users.forEach(function (u) {
+        levels.forEach(function (lvl) {
+          const key = q.slug + '_' + lvl;
+          if (u.quizStarts && typeof u.quizStarts[key] === 'number') starts += u.quizStarts[key];
+        });
+        u.history.forEach(function (r) { if (r.slug === q.slug) completions++; });
+      });
+      return { q: q, attempted: attempted, starts: starts, completions: completions, abandoned: Math.max(0, starts - completions) };
     }).sort(function (a, b) { return b.attempted - a.attempted; });
     const max = Math.max.apply(null, rows.map(function (r) { return r.attempted; })) || 1;
     el.innerHTML = rows.map(function (r) {
       const pct = Math.round((r.attempted / max) * 100);
+      const funnel = r.starts > 0 ? '<div class="acct-empty" style="margin-top:0.15rem;">' + r.completions + ' terminé(s) sur ' + r.starts + ' démarré(s)' +
+        (r.abandoned > 0 ? ' · 🚪 ' + r.abandoned + ' abandon(s)' : '') + '</div>' : '';
       return '<div class="stats-row"><div class="stats-icon">' + r.q.icon + '</div>' +
         '<div class="stats-info"><a href="ateliers/' + r.q.slug + '_quiz.html">' + r.q.title + '</a>' +
-        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div></div>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div>' + funnel + '</div>' +
         '<div class="stats-count">' + r.attempted + '</div></div>';
     }).join('');
   }
@@ -288,7 +308,7 @@
     el.innerHTML = rows.slice(0, 8).map(function (item) {
       const u = item.u, r = item.r;
       const q = quizBySlug(r.slug) || { title: r.slug, icon: '📄' };
-      const label = escapeHtml(u.username || u.email);
+      const label = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
       const d = new Date(item.t);
       const dateStr = d.toLocaleDateString('fr-FR') + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
       return '<div class="stats-row"><div class="stats-icon">' + q.icon + '</div>' +
@@ -333,6 +353,7 @@
     return AVATAR_COLORS[h % AVATAR_COLORS.length];
   }
   function initialsFor(u) {
+    if (u.isAnonymous) return '🕶️';
     const base = (u.username || u.email.split('@')[0] || '?').trim();
     const parts = base.split(/\s+/).filter(Boolean);
     if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -361,11 +382,12 @@
     getAllUsersWithData().then(function (users) {
       users.forEach(function (u) { u.stats = computeStats(u.history, u.favorites); });
       allUsers = users;
-      renderLeaderboard(allUsers);
+      const namedUsers = allUsers.filter(function (u) { return !u.isAnonymous; });
+      renderLeaderboard(namedUsers);
       renderPopularity(allUsers);
-      renderBadgeDistribution(allUsers);
+      renderBadgeDistribution(namedUsers);
       renderRecentActivity(allUsers);
-      renderMatrix(allUsers);
+      renderMatrix(namedUsers);
       applyFilters();
     }).catch(function () {
       document.getElementById('usersList').innerHTML = '<p class="acct-empty">Erreur de chargement des données.</p>';
@@ -375,9 +397,12 @@
   function applyFilters() {
     const term = document.getElementById('userSearch').value.trim().toLowerCase();
     const sortBy = document.getElementById('userSort').value;
+    const includeAnon = document.getElementById('includeAnonToggle').checked;
 
     let list = allUsers.filter(function (u) {
+      if (!includeAnon && u.isAnonymous) return false;
       if (!term) return true;
+      if (u.isAnonymous) return 'visiteur anonyme'.indexOf(term) !== -1;
       return (u.username || '').toLowerCase().indexOf(term) !== -1 ||
         (u.email || '').toLowerCase().indexOf(term) !== -1;
     });
@@ -410,15 +435,15 @@
       }
       const shown = u.history.slice(0, 5).map(histRow).join('');
       const rest = u.history.slice(5).map(histRow).join('');
-      const label = escapeHtml(u.username || u.email);
+      const label = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
       const stats = u.stats;
       const masteredPct = Math.round((stats.masteredCount / QUIZZES.length) * 100);
       const badgeCount = BADGES.filter(function (b) { return b.test(stats); }).length;
-      return '<div class="card mod-user-card">' +
+      return '<div class="card mod-user-card' + (u.isAnonymous ? ' mod-user-anon' : '') + '">' +
         '<div class="mod-user-head">' +
         '<div class="mod-avatar" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
         '<div class="mod-user-id"><strong>' + label + '</strong>' +
-        '<span class="acct-empty">' + (u.username ? escapeHtml(u.email) + ' · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span>' +
+        '<span class="acct-empty">' + (!u.isAnonymous && u.username ? escapeHtml(u.email) + ' · ' : '') + u.history.length + ' quiz · ' + u.favorites.length + ' favoris</span>' +
         '</div>' +
         '<div class="mod-user-chips">' +
         '<span class="mod-chip chip-accent">📈 ' + stats.masteredCount + '/' + QUIZZES.length + '</span>' +
@@ -435,13 +460,14 @@
           '<button type="button" class="link-toggle-history" data-uid="' + u.uid + '" style="background:none;border:none;color:var(--accent-2, #35604f);cursor:pointer;font-size:0.85rem;padding:0.3rem 0;">Voir tout l\'historique (' + u.history.length + ')</button>' : '') +
         '<div class="mod-actions">' +
         '<button type="button" class="secondary reset-quiz-btn" data-uid="' + u.uid + '" data-label="' + label + '">🔁 Réinitialiser le quiz</button>' +
-        '<button type="button" class="secondary reset-pw-btn" data-email="' + escapeHtml(u.email) + '" data-label="' + label + '">🔑 Réinitialiser le mot de passe</button>' +
+        (u.isAnonymous ? '' : '<button type="button" class="secondary reset-pw-btn" data-email="' + escapeHtml(u.email) + '" data-label="' + label + '">🔑 Réinitialiser le mot de passe</button>') +
         '<button type="button" class="secondary delete-account-btn" data-uid="' + u.uid + '" data-label="' + label + '">🗑️ Supprimer le compte</button>' +
         '</div>' +
         '</div>';
     }).join('');
     document.getElementById('usersList').innerHTML = rows || '<p class="acct-empty">Aucun compte ne correspond.</p>';
-    document.getElementById('statTotalUsers').textContent = fullList.length;
+    document.getElementById('statTotalUsers').textContent = fullList.filter(function (u) { return !u.isAnonymous; }).length;
+    document.getElementById('statTotalAnon').textContent = fullList.filter(function (u) { return u.isAnonymous; }).length;
     document.getElementById('statTotalQuizzes').textContent = totalQuizzes;
     document.getElementById('statTotalFavs').textContent = totalFavs;
   }
@@ -457,7 +483,8 @@
     allUsers.forEach(function (u) {
       const latest = mostRecent(u.history);
       const dateStr = latest ? new Date(latest).toLocaleDateString('fr-FR') : '';
-      lines.push([u.username || '', u.email, u.history.length, u.favorites.length, bestPct(u.history), dateStr].map(csvEscape).join(';'));
+      const name = u.isAnonymous ? '(visiteur anonyme)' : (u.username || '');
+      lines.push([name, u.email, u.history.length, u.favorites.length, bestPct(u.history), dateStr].map(csvEscape).join(';'));
     });
     const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -472,6 +499,7 @@
 
   document.getElementById('userSearch').addEventListener('input', applyFilters);
   document.getElementById('userSort').addEventListener('change', applyFilters);
+  document.getElementById('includeAnonToggle').addEventListener('change', applyFilters);
   document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
 
   document.getElementById('usersList').addEventListener('click', function (e) {

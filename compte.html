@@ -357,8 +357,9 @@
   let currentUserRef = null;
 
   watchAuth(function (user) {
-    currentUserRef = user;
-    if (user) {
+    const isRealUser = user && !user.isAnonymous;
+    currentUserRef = isRealUser ? user : null;
+    if (isRealUser) {
       loggedOutView.style.display = 'none';
       loggedInView.style.display = '';
       document.getElementById('userEmailLabel').textContent = user.email;

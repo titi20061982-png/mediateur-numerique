@@ -3,12 +3,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import {
   getAuth, onAuthStateChanged, signInWithEmailAndPassword,
-  createUserWithEmailAndPassword, signOut, sendPasswordResetEmail
+  createUserWithEmailAndPassword, signOut, sendPasswordResetEmail,
+  signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, deleteDoc,
   arrayUnion, arrayRemove, collection, addDoc,
-  query, orderBy, getDocs
+  query, orderBy, getDocs, increment
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -31,7 +32,11 @@ export function isModerator(user) { return !!user && user.email === MODERATOR_EM
 export function watchAuth(cb) {
   return onAuthStateChanged(auth, function (user) {
     if (user) {
-      setDoc(doc(db, "users", user.uid), { email: user.email }, { merge: true }).catch(function () {});
+      const data = { isAnonymous: !!user.isAnonymous };
+      if (user.email) data.email = user.email;
+      setDoc(doc(db, "users", user.uid), data, { merge: true }).catch(function () {});
+    } else {
+      signInAnonymously(auth).catch(function () {});
     }
     cb(user);
   });
@@ -75,6 +80,11 @@ export async function saveQuizResult(uid, result) {
   });
 }
 
+export async function logQuizStart(uid, slug, level) {
+  const key = slug + '_' + level;
+  await setDoc(doc(db, "users", uid), { quizStarts: { [key]: increment(1) } }, { merge: true });
+}
+
 export async function getQuizHistory(uid) {
   const q = query(collection(db, "users", uid, "quizResults"), orderBy("date", "desc"));
   const snap = await getDocs(q);
@@ -105,8 +115,10 @@ export async function getAllUsersWithData() {
     } catch (e) {}
     results.push({
       uid: userDoc.id,
-      email: data.email || "(inconnu)",
+      email: data.email || "",
       username: data.username || "",
+      isAnonymous: !!data.isAnonymous || !data.email,
+      quizStarts: data.quizStarts || {},
       favorites: data.favorites || [],
       history: history
     });

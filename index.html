@@ -1040,13 +1040,19 @@
   }
 
   watchAuth(function (user) {
-    if (user) {
+    if (user && !user.isAnonymous) {
       acctLink.title = 'Mon compte (' + user.email + ')';
       acctIcon.textContent = '🟢';
       acctLabel.textContent = 'Mon compte';
       getUserProfile(user.uid).then(function (profile) {
         if (profile.username) { acctLabel.textContent = profile.username; }
       }).catch(function () {});
+    } else {
+      acctLink.title = 'Se connecter';
+      acctIcon.textContent = '👤';
+      acctLabel.textContent = 'Connexion';
+    }
+    if (user) {
       syncing = true;
       getCloudFavorites(user.uid).then(function (cloudFavs) {
         const local = window.__favApi.get();
@@ -1060,9 +1066,6 @@
         getQuizHistory(user.uid).then(refreshLocks).catch(function () { refreshLocks(null); });
       }
     } else {
-      acctLink.title = 'Se connecter';
-      acctIcon.textContent = '👤';
-      acctLabel.textContent = 'Connexion';
       refreshLocks(null);
     }
   });
