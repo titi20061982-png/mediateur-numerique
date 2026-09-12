@@ -409,6 +409,10 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .btn-neon:hover, .btn-neon:focus-visible {
   transform: translateY(-3px); box-shadow: 0 0 22px #00aaff;
 }
+.faq-item { padding: 0.9rem 0; border-bottom: 1px solid #003d55; }
+.faq-item:last-child { padding-bottom: 0; border-bottom: none; }
+.faq-item h3 { margin: 0 0 0.35rem; color: #fff; font-size: 1rem; }
+.faq-item p { margin: 0; color: #cccccc; font-size: 0.92rem; line-height: 1.5; }
 
 /* ---------- Separation visuelle Prestations ADRN dans les menus ---------- */
 .adrn-nav-link { margin-left: 0.9rem; }
