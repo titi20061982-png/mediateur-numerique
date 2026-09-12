@@ -62,7 +62,8 @@
         <div class="mod-memo-body">
           <p><strong>Sur cette page (tableau de bord)</strong></p>
           <ul>
-            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, et <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées). Une <strong>📍 localisation approximative</strong> (ville/région, déduite de l'adresse IP) est affichée sous chaque visiteur anonyme quand elle est disponible — utile pour repérer vos propres tests.</li>
+            <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées) et <strong>🧪 sessions de test</strong> (voir juste en dessous). Une <strong>📍 localisation approximative</strong> (ville/région, déduite de l'adresse IP) est affichée sous chaque visiteur anonyme quand elle est disponible.</li>
+            <li><strong>🧪 Sessions de test</strong> : quand du developpement est fait sur le site, les pages sont parfois chargées avec <code>?internal_test=1</code> dans l'adresse — ces visites sont marquées automatiquement, exclues de toutes les statistiques ci-dessus (classement, popularité, badges, activité, KPI) et n'incrémentent pas le compteur de visites public. Elles restent visibles uniquement dans la liste "Comptes visiteurs" (cochez "Inclure les visiteurs anonymes"), clairement étiquetées "🧪 Session de test (Claude)" avec une bordure orange en pointillés — pour ne jamais les confondre avec un vrai visiteur.</li>
             <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés (comptes nommés uniquement).</li>
             <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs, anonymes inclus, avec le détail "terminé(s) sur démarré(s)" pour repérer les quiz commencés puis abandonnés.</li>
             <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
@@ -116,6 +117,11 @@
           <span class="kpi-icon">🕶️</span>
           <span class="kpi-value" id="statTotalAnon">—</span>
           <span class="kpi-label">Visiteurs anonymes</span>
+        </div>
+        <div class="kpi-tile kpi-test">
+          <span class="kpi-icon">🧪</span>
+          <span class="kpi-value" id="statTotalTest">—</span>
+          <span class="kpi-label">Sessions de test</span>
         </div>
       </div>
 
@@ -383,6 +389,7 @@
   }
 
   let allUsers = [];
+  let realUsers = [];
 
   function bestPct(history) {
     let best = 0;
@@ -404,11 +411,12 @@
     getAllUsersWithData().then(function (users) {
       users.forEach(function (u) { u.stats = computeStats(u.history, u.favorites); });
       allUsers = users;
-      const namedUsers = allUsers.filter(function (u) { return !u.isAnonymous; });
+      realUsers = allUsers.filter(function (u) { return !u.isTestSession; });
+      const namedUsers = realUsers.filter(function (u) { return !u.isAnonymous; });
       renderLeaderboard(namedUsers);
-      renderPopularity(allUsers);
+      renderPopularity(realUsers);
       renderBadgeDistribution(namedUsers);
-      renderRecentActivity(allUsers);
+      renderRecentActivity(realUsers);
       renderMatrix(namedUsers);
       applyFilters();
     }).catch(function () {
@@ -424,6 +432,7 @@
     let list = allUsers.filter(function (u) {
       if (!includeAnon && u.isAnonymous) return false;
       if (!term) return true;
+      if (u.isTestSession) return 'session de test claude'.indexOf(term) !== -1;
       if (u.isAnonymous) return 'visiteur anonyme'.indexOf(term) !== -1;
       return (u.username || '').toLowerCase().indexOf(term) !== -1 ||
         (u.email || '').toLowerCase().indexOf(term) !== -1;
@@ -437,7 +446,7 @@
       return (a.username || a.email).localeCompare(b.username || b.email, 'fr', { sensitivity: 'base' });
     });
 
-    renderUsers(list, allUsers);
+    renderUsers(list, realUsers);
   }
 
   function renderUsers(list, fullList) {
@@ -457,11 +466,12 @@
       }
       const shown = u.history.slice(0, 5).map(histRow).join('');
       const rest = u.history.slice(5).map(histRow).join('');
-      const label = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
+      const label = u.isTestSession ? '🧪 Session de test (Claude)' : (u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email));
       const stats = u.stats;
       const masteredPct = Math.round((stats.masteredCount / QUIZZES.length) * 100);
       const badgeCount = BADGES.filter(function (b) { return b.test(stats); }).length;
-      return '<div class="card mod-user-card' + (u.isAnonymous ? ' mod-user-anon' : '') + '">' +
+      const cardExtraClass = u.isTestSession ? ' mod-user-testsession' : (u.isAnonymous ? ' mod-user-anon' : '');
+      return '<div class="card mod-user-card' + cardExtraClass + '">' +
         '<div class="person-head">' +
         '<div class="avatar-circle" style="background:' + avatarColor(u.uid) + '">' + initialsFor(u) + '</div>' +
         '<div class="person-id"><strong>' + label + '</strong>' +
@@ -493,6 +503,7 @@
     document.getElementById('statTotalAnon').textContent = fullList.filter(function (u) { return u.isAnonymous; }).length;
     document.getElementById('statTotalQuizzes').textContent = totalQuizzes;
     document.getElementById('statTotalFavs').textContent = totalFavs;
+    document.getElementById('statTotalTest').textContent = allUsers.filter(function (u) { return u.isTestSession; }).length;
   }
 
   function csvEscape(v) {

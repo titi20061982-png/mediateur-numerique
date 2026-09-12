@@ -29,15 +29,24 @@ const db = getFirestore(app);
 export const MODERATOR_EMAIL = "waltenercedric@proton.me";
 export function isModerator(user) { return !!user && user.email === MODERATOR_EMAIL; }
 
+// Marqueur de session de test : toute page chargee avec ?internal_test=1 dans
+// l'URL est taguee isTestSession=true sur son profil, et n'incremente pas les
+// compteurs de visites publics. Sert a distinguer les tests de developpement
+// des vrais visiteurs dans le tableau de bord moderateur (voir moderateur.html).
+export function isTestSession() {
+  try { return new URLSearchParams(window.location.search).get('internal_test') === '1'; } catch (e) { return false; }
+}
+
 export function watchAuth(cb) {
   return onAuthStateChanged(auth, function (user) {
     if (user) {
       const ref = doc(db, "users", user.uid);
       const data = { isAnonymous: !!user.isAnonymous };
       if (user.email) data.email = user.email;
+      if (isTestSession()) data.isTestSession = true;
       if (user.isAnonymous) {
         setDoc(ref, data, { merge: true }).catch(function () {});
-        ensureLocationInfo(user.uid).catch(function () {});
+        if (!data.isTestSession) { ensureLocationInfo(user.uid).catch(function () {}); }
         cb(user);
       } else {
         getDoc(ref).then(function (snap) {
@@ -160,6 +169,7 @@ export async function getAllUsersWithData() {
       email: data.email || "",
       username: data.username || "",
       isAnonymous: !!data.isAnonymous || !data.email,
+      isTestSession: !!data.isTestSession,
       location: data.location || null,
       quizStarts: data.quizStarts || {},
       favorites: data.favorites || [],

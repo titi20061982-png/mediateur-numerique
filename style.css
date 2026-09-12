@@ -631,6 +631,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .kpi-tile.kpi-quizzes::before { background: var(--accent-3); }
 .kpi-tile.kpi-favs::before { background: var(--accent-2); }
 .kpi-tile.kpi-anon::before { background: var(--muted); }
+.kpi-tile.kpi-test::before { background: var(--accent-2); }
 .kpi-tile.kpi-mastered::before { background: var(--accent); }
 .kpi-tile.kpi-badges::before { background: var(--accent-2); }
 .kpi-icon { font-size: 1.25rem; }
@@ -642,6 +643,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 
 .mod-user-card { margin-bottom: 1rem; transition: box-shadow .18s ease; }
 .mod-user-card.mod-user-anon { border-style: dashed; opacity: 0.88; }
+.mod-user-card.mod-user-testsession { border-style: dashed; border-color: var(--accent-2); opacity: 0.75; }
 .mod-user-card:hover { box-shadow: 0 4px 10px rgba(30,25,15,0.07), 0 18px 32px rgba(30,25,15,0.1); }
 .person-head { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
 .avatar-circle {

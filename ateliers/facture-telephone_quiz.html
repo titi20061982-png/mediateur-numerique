@@ -673,7 +673,7 @@
     window.speechSynthesis.speak(utter);
   });
 
-  fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/facture-telephone-quiz-v2')
+  fetch('https://abacus.jasoncameron.dev/' + (new URLSearchParams(location.search).get('internal_test') === '1' ? 'get' : 'hit') + '/mediateur-numerique-2026/facture-telephone-quiz-v2')
     .then(function(r) { return r.json(); })
     .then(function(d) {
       visitCount = d.value;
