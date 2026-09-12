@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="printReport"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="icon-btn icon-btn-floating" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
 <button type="button" class="icon-btn icon-btn-floating icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:3.9rem;">A</button>
@@ -157,6 +158,7 @@
             </select>
           </div>
           <button type="button" class="secondary" id="exportCsvBtn">📥 Exporter en CSV</button>
+          <button type="button" class="secondary" id="exportPdfBtn">📄 Exporter en PDF</button>
         </div>
         <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">
           <input type="checkbox" id="includeAnonToggle"> Inclure les visiteurs anonymes (🕶️) dans cette liste
@@ -506,10 +508,35 @@
     URL.revokeObjectURL(url);
   }
 
+  function exportPdf() {
+    const now = new Date().toLocaleString('fr-FR');
+    const rows = allUsers.map(function (u) {
+      const name = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
+      const latest = mostRecent(u.history);
+      const dateStr = latest ? new Date(latest).toLocaleDateString('fr-FR') : '—';
+      const badgeCount = BADGES.filter(function (b) { return b.test(u.stats); }).length;
+      return '<tr><td>' + name + '</td><td>' + u.history.length + '</td><td>' + u.favorites.length +
+        '</td><td>' + bestPct(u.history) + ' %</td><td>' + u.stats.masteredCount + ' / ' + QUIZZES.length +
+        '</td><td>' + badgeCount + ' / ' + BADGES.length + '</td><td>' + dateStr + '</td></tr>';
+    }).join('');
+    document.getElementById('printReport').innerHTML =
+      '<h1>Visiteurs — Ateliers Médiation Numérique</h1>' +
+      '<p class="meta">Exporté le ' + now + ' · ' + allUsers.length + ' comptes au total</p>' +
+      '<table><thead><tr><th>Visiteur</th><th>Quiz passés</th><th>Favoris</th><th>Meilleur score</th>' +
+      '<th>Ateliers maîtrisés</th><th>Badges</th><th>Dernière activité</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>';
+    document.body.classList.add('printing-report');
+    window.print();
+  }
+  window.addEventListener('afterprint', function () {
+    document.body.classList.remove('printing-report');
+  });
+
   document.getElementById('userSearch').addEventListener('input', applyFilters);
   document.getElementById('userSort').addEventListener('change', applyFilters);
   document.getElementById('includeAnonToggle').addEventListener('change', applyFilters);
   document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+  document.getElementById('exportPdfBtn').addEventListener('click', exportPdf);
 
   document.getElementById('usersList').addEventListener('click', function (e) {
     const resetBtn = e.target.closest('.reset-quiz-btn');
