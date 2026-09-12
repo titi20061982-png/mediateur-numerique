@@ -1,0 +1,56 @@
+/* =====================================================================
+   kids-style.css -- univers visuel dedie a l'espace enfants/ados
+   A charger APRES style.css (voir enfants.html et ateliers/enfants-*.html).
+   Redefinit les jetons de couleur en !important pour toujours l'emporter
+   sur le theme sombre/clair du reste du site, quel que soit data-theme.
+   ===================================================================== */
+
+:root {
+  --bg: #fff8ec !important;
+  --bg-soft: #ffefd1 !important;
+  --card: #ffffff !important;
+  --text: #33261a !important;
+  --muted: #8a7458 !important;
+  --border: #ffdca3 !important;
+  --accent: #2ec4b6 !important;
+  --accent-2: #ff6f59 !important;
+  --accent-3: #4ea8de !important;
+  --accent-soft: #e6faf7 !important;
+  --good: #2ec4b6 !important;
+  --bad: #ff6f59 !important;
+  --shadow: 0 4px 14px rgba(255, 140, 60, 0.18) !important;
+}
+
+body, .opt span, .qtext, .explain, p { font-family: "Baloo 2", "Quicksand", "Inter", sans-serif; }
+h1, h2, h3, .qnum, .eyebrow { font-family: "Baloo 2", "Quicksand", "Inter", sans-serif; }
+
+.card, .qcard { border-radius: 22px; }
+.opt { border-radius: 16px; border-width: 2px; }
+.primary, .secondary, .kids-card { border-radius: 999px; }
+h1 { font-weight: 700; }
+
+/* Fond avec petites formes rondes pour l'ambiance ludique */
+body {
+  background-image:
+    radial-gradient(60px 60px at 8% 12%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+    radial-gradient(90px 90px at 92% 18%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 70%),
+    radial-gradient(70px 70px at 85% 85%, color-mix(in srgb, var(--accent-3) 16%, transparent), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* ---------- Grille des tranches d'age (enfants.html) ---------- */
+.kids-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin: 1.5rem 0; }
+.kids-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.6rem;
+  padding: 1.8rem 1.4rem; text-decoration: none; color: var(--text);
+  background: var(--card); border: 3px solid var(--border); box-shadow: var(--shadow);
+  transition: transform .2s ease, border-color .2s ease;
+}
+.kids-card:nth-child(1) { border-color: var(--accent); }
+.kids-card:nth-child(2) { border-color: var(--accent-2); }
+.kids-card:nth-child(3) { border-color: var(--accent-3); }
+.kids-card:nth-child(4) { border-color: #b98af0; }
+.kids-card-icon { font-size: 2.6rem; }
+.kids-card h3 { margin: 0; font-size: 1.2rem; }
+.kids-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.kids-card:hover, .kids-card:focus-visible { transform: translateY(-6px) scale(1.02); }

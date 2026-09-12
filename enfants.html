@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace enfants — Ateliers Médiation Numérique</title>
+<meta name="description" content="Espace numérique dédié aux enfants et aux ados : quiz adaptés par tranche d'âge, de 6 à 17 ans, sur la sécurité en ligne.">
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="kids-style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">← Retour au site</a>
+    <div class="eyebrow">🧒🧑 Espace enfants &amp; ados</div>
+    <h1>Le numérique, à hauteur d'enfant</h1>
+    <p class="sub">Choisis ta tranche d'âge pour faire un quiz rigolo et apprendre plein de choses utiles sur Internet !</p>
+  </div>
+</header>
+
+<main class="narrow">
+  <div class="card reveal">
+    <p>👋 Bienvenue dans l'espace dédié aux enfants et aux ados ! Chaque quiz est adapté à un âge, avec des questions simples et des explications bienveillantes.</p>
+    <p>Pas besoin de compte, rien n'est enregistré — c'est juste pour apprendre en s'amusant. 🎉</p>
+  </div>
+
+  <div class="kids-grid">
+    <a class="kids-card reveal" href="ateliers/enfants-6-8_quiz.html">
+      <div class="kids-card-icon">🧸</div>
+      <h3>6-8 ans</h3>
+      <p>Les toutes premières règles, en douceur.</p>
+    </a>
+    <a class="kids-card reveal" href="ateliers/enfants-9-11_quiz.html">
+      <div class="kids-card-icon">🎮</div>
+      <h3>9-11 ans</h3>
+      <p>Vie privée, mots de passe, harcèlement.</p>
+    </a>
+    <a class="kids-card reveal" href="ateliers/enfants-12-14_quiz.html">
+      <div class="kids-card-icon">📱</div>
+      <h3>12-14 ans</h3>
+      <p>Réseaux sociaux, arnaques, rencontres en ligne.</p>
+    </a>
+    <a class="kids-card reveal" href="ateliers/enfants-15-17_quiz.html">
+      <div class="kids-card-icon">💻</div>
+      <h3>15-17 ans</h3>
+      <p>Réputation numérique, sécurité, esprit critique.</p>
+    </a>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="index.html">Retour au site</a>
+</footer>
+<script>
+  (function () {
+    var targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      targets.forEach(function (s) { s.classList.add('in-view'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+    targets.forEach(function (s) { obs.observe(s); });
+  })();
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+</script>
+</body>
+</html>

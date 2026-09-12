@@ -6,13 +6,13 @@
 <title>Numérique pour les 15-17 ans — Ateliers Médiation Numérique</title>
 <meta name="description" content="Quiz numérique adapté aux 15-17 ans : sécurité des comptes, arnaques, réputation numérique, désinformation, harcèlement en ligne.">
 <link rel="icon" type="image/png" href="../logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../kids-style.css">
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
-<button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
-<button type="button" class="theme-toggle icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:3.9rem;">A</button>
+<button type="button" class="theme-toggle icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte">A</button>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 <header>
   <div class="wrap">
@@ -165,23 +165,6 @@
   resetBtn.addEventListener('click', renderQuiz);
 </script>
 <script>
-  (function () {
-    var root = document.documentElement;
-    var btn = document.getElementById('themeToggle');
-    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
-    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
-    var saved = null;
-    try { saved = localStorage.getItem('theme'); } catch (e) {}
-    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
-    icon(saved);
-    btn.addEventListener('click', function () {
-      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
-      var next = cur === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      icon(next);
-    });
-  })();
   (function () {
     var btn = document.getElementById('backToTop');
     window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
