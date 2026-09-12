@@ -745,16 +745,9 @@
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script>
-  // Affiche le nombre de visites de chaque quiz (sans incrementer le compteur)
-  document.querySelectorAll('.quiz-count').forEach(function (el) {
-    var key = el.dataset.key;
-    fetch('https://abacus.jasoncameron.dev/get/mediateur-numerique-2026/' + key)
-      .then(function (r) { return r.json(); })
-      .then(function (d) { el.textContent = '👥 ' + (typeof d.value === 'number' ? d.value : 0); })
-      .catch(function () { el.remove(); });
-  });
-
-  // Section statistiques : classement complet des quiz par visites
+  // Affiche le nombre de visites de chaque quiz (sans incrementer le compteur) et
+  // alimente le classement des statistiques a partir des memes valeurs recuperees
+  // une seule fois par quiz (evite deux appels concurrents pouvant diverger).
   (function () {
     var quizItems = Array.from(document.querySelectorAll('.quiz-count')).map(function (el) {
       var card = el.closest('.card');
@@ -763,6 +756,7 @@
         ? card.parentElement.previousElementSibling.querySelector('.icon').textContent
         : '📄';
       return {
+        el: el,
         key: el.dataset.key,
         href: link.getAttribute('href'),
         title: card.querySelector('h3').textContent,
@@ -776,6 +770,7 @@
         .then(function (d) { return { q: q, count: (typeof d.value === 'number' ? d.value : 0) }; })
         .catch(function () { return { q: q, count: 0 }; });
     })).then(function (results) {
+      results.forEach(function (r) { r.q.el.textContent = '👥 ' + r.count; });
       results.sort(function (a, b) { return b.count - a.count; });
       var max = Math.max.apply(null, results.map(function (r) { return r.count; })) || 1;
       var total = results.reduce(function (sum, r) { return sum + r.count; }, 0);
