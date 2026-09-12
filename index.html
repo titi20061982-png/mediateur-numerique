@@ -320,6 +320,13 @@
     <p>Pour naviguer : utilisez les catégories ou la recherche 🔎 ci-dessus, marquez vos thématiques préférées avec l'étoile ⭐ pour les retrouver facilement, ou laissez le hasard 🎲 vous en proposer une si vous ne savez pas par où commencer. Connectez-vous (👤) pour sauvegarder vos résultats, suivre votre progression sur les 18 ateliers (📈) et débloquer des badges (🏅) au fil de vos quiz — tout est visible sur "Mon compte". Bonne découverte !</p>
   </section>
 
+  <section class="card reveal" id="dailyQuizCard">
+    <div class="eyebrow">📅 Quiz du jour</div>
+    <h2 id="dailyQuizTitle">Chargement…</h2>
+    <p>Un atelier différent mis en avant chaque jour, pour découvrir peu à peu tout le catalogue.</p>
+    <a class="acct-badge" id="dailyQuizLink" href="#">Faire ce quiz →</a>
+  </section>
+
   <section class="category" id="premiers-pas">
     <div class="category-head">
       <span class="icon">🖥️</span>
@@ -1076,6 +1083,39 @@
     const user = currentUser();
     if (user) { setCloudFavorites(user.uid, window.__favApi.get()).catch(function () {}); }
   });
+</script>
+
+<script>
+  (function () {
+    var QUIZZES = [
+      { slug: "battle-os", title: "Battle OS (Windows / Linux / macOS)", icon: "💻" },
+      { slug: "smartphone", title: "Smartphone et tablette", icon: "🖥️" },
+      { slug: "base-adrn", title: "Base ADRN (montage / diagnostic PC)", icon: "🖥️" },
+      { slug: "clavier", title: "Maîtrise du clavier", icon: "⌨️" },
+      { slug: "phishing", title: "Phishing (hameçonnage)", icon: "🔒" },
+      { slug: "cyberharcelement", title: "Cyberharcèlement", icon: "🔒" },
+      { slug: "identite-numerique", title: "Identité numérique et e-réputation", icon: "🔒" },
+      { slug: "vie-privee", title: "Protéger sa vie privée en ligne", icon: "🔒" },
+      { slug: "enfant-internet", title: "Accompagner un enfant sur Internet", icon: "🔒" },
+      { slug: "caf", title: "Mon compte CAF", icon: "🏛️" },
+      { slug: "france-titres", title: "France Titres (CNI, passeport, permis, carte grise)", icon: "🏛️" },
+      { slug: "impots", title: "Mes impôts en ligne", icon: "🏛️" },
+      { slug: "ameli", title: "Mon espace santé Ameli", icon: "🏛️" },
+      { slug: "retraite", title: "Ma retraite en ligne", icon: "🏛️" },
+      { slug: "cv-lettre", title: "CV et lettre de motivation", icon: "💼" },
+      { slug: "formation", title: "Trouver une formation en ligne", icon: "💼" },
+      { slug: "ia", title: "Intelligence artificielle : panorama", icon: "🌐" },
+      { slug: "facture-telephone", title: "Comprendre sa facture téléphonique", icon: "🌐" }
+    ];
+    var dayIndex = Math.floor(Date.now() / 86400000) % QUIZZES.length;
+    var q = QUIZZES[dayIndex];
+    var titleEl = document.getElementById('dailyQuizTitle');
+    var linkEl = document.getElementById('dailyQuizLink');
+    if (titleEl && linkEl && q) {
+      titleEl.textContent = q.icon + ' ' + q.title;
+      linkEl.href = 'ateliers/' + q.slug + '_quiz.html';
+    }
+  })();
 </script>
 
 </body>
