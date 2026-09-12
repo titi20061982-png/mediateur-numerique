@@ -19,14 +19,15 @@
     <a class="back" href="../index.html">← Retour aux ateliers</a>
     <div class="eyebrow">🧒 Numérique pour les enfants — 6-8 ans</div>
     <h1>Le numérique, en s'amusant !</h1>
-    <p class="sub">6 petites questions faciles, avec un adulte à côté si besoin.</p>
+    <p class="sub">👨‍👩‍👧 Pour les parents : à faire ensemble, pas seul devant l'écran.</p>
   </div>
 </header>
 
 <main class="narrow">
   <div class="card" id="introCard">
-    <p>👋 Coucou ! On va jouer à un petit quiz sur les écrans.</p>
-    <p>Il n'y a pas de mauvaise réponse. Si tu te trompes, ce n'est pas grave !</p>
+    <p>👨‍👩‍👧 <strong>À faire ensemble</strong> : à cet âge, l'enfant ne sait pas forcément encore bien lire ou cliquer seul.</p>
+    <p>Lisez les questions à voix haute (ou utilisez le bouton 🔊), et laissez l'enfant vous dire sa réponse à l'oral — c'est vous qui cliquez.</p>
+    <p>👋 Il n'y a pas de mauvaise réponse. Si l'enfant se trompe, ce n'est pas grave !</p>
     <div class="actions">
       <button type="button" class="primary" id="startBtn">🚀 Commencer</button>
     </div>
@@ -103,7 +104,9 @@
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
       return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p>' +
+        '<button type="button" class="speak-btn" data-qi="' + i + '" title="Écouter la question" aria-label="Écouter la question">🔊 Écouter</button>' +
+        '<div id="opts' + i + '">' + opts + '</div>' +
         '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
@@ -130,6 +133,20 @@
         opt.style.boxShadow = '';
       }
     });
+  });
+
+  form.addEventListener('click', function (e) {
+    const btn = e.target.closest('.speak-btn');
+    if (!btn || !window.speechSynthesis) return;
+    const qi = parseInt(btn.dataset.qi, 10);
+    const q = QUIZ[qi];
+    if (!q) return;
+    const letters = 'ABC';
+    const text = q.q + '. ' + q.options.map(function (o, idx) { return letters[idx] + '. ' + o; }).join('. ');
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'fr-FR';
+    window.speechSynthesis.speak(utter);
   });
 
   form.addEventListener('submit', function (e) {

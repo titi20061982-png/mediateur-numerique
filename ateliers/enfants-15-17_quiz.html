@@ -121,7 +121,9 @@
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
       return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p>' +
+        '<button type="button" class="speak-btn" data-qi="' + i + '" title="Écouter la question" aria-label="Écouter la question">🔊 Écouter</button>' +
+        '<div id="opts' + i + '">' + opts + '</div>' +
         '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
@@ -148,6 +150,20 @@
         opt.style.boxShadow = '';
       }
     });
+  });
+
+  form.addEventListener('click', function (e) {
+    const btn = e.target.closest('.speak-btn');
+    if (!btn || !window.speechSynthesis) return;
+    const qi = parseInt(btn.dataset.qi, 10);
+    const q = QUIZ[qi];
+    if (!q) return;
+    const letters = 'ABCD';
+    const text = q.q + '. ' + q.options.map(function (o, idx) { return letters[idx] + '. ' + o; }).join('. ');
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'fr-FR';
+    window.speechSynthesis.speak(utter);
   });
 
   form.addEventListener('submit', function (e) {
