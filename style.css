@@ -288,6 +288,10 @@ main.narrow { max-width: 900px; padding: 2.4rem 1.5rem 3rem; }
 .hero .eyebrow { margin-bottom: 1rem; }
 .hero h1 { margin: 0 0 0.9rem; font-weight: 600; font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.01em; }
 .hero p { color: var(--muted); margin: 0 auto; max-width: 620px; font-size: 1.02rem; }
+.hero-tagline {
+  color: var(--accent) !important; font-family: "Fraunces", Georgia, serif; font-weight: 600;
+  font-size: 1.15rem !important; margin: 0 0 0.6rem !important; text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
+}
 
 .stats { display: flex; justify-content: center; gap: 1rem; margin: 2.1rem 0 1.6rem; flex-wrap: wrap; }
 .stats div { text-align: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0.9rem 1.6rem; box-shadow: var(--shadow); transition: transform .15s ease, border-color .15s ease; }
@@ -353,10 +357,39 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   .inscription-badge { position: static; display: flex; width: fit-content; margin: 0 auto 1.2rem; font-size: 1.05rem; padding: 0.85rem 1.4rem; }
 }
 
-.hero-art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; color: var(--accent); opacity: 0.5; }
+.hero-art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; color: var(--accent); opacity: 0.5; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 40%, transparent)); }
 .hero-art .warm { color: var(--accent-2); }
 .hero-art .blue { color: var(--accent-3); }
 @media (max-width: 760px) { .hero-art .hide-mobile { display: none; } }
+
+/* ---------- Cartes de categories (accueil) ---------- */
+.cat-overview { margin: 0 0 2.2rem; }
+.cat-overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; }
+.cat-tile {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
+  padding: 1.3rem 1.2rem; border-radius: 16px; text-decoration: none; color: var(--text);
+  background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.cat-tile-icon { font-size: 1.7rem; filter: drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent)); }
+.cat-tile h3 { margin: 0; font-size: 0.98rem; }
+.cat-tile p { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.cat-tile:hover, .cat-tile:focus-visible {
+  transform: translateY(-4px); border-color: var(--accent);
+  box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+
+/* ---------- Comment ca marche (accueil) ---------- */
+.how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.3rem; margin-top: 1rem; text-align: center; }
+.how-step { padding: 0.4rem; }
+.how-num {
+  display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem;
+  border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-family: "Fraunces", Georgia, serif;
+  font-weight: 700; box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 45%, transparent); margin-bottom: 0.5rem;
+}
+.how-icon { display: block; font-size: 1.6rem; margin-bottom: 0.4rem; }
+.how-step h3 { margin: 0.2rem 0 0.4rem; font-size: 0.96rem; }
+.how-step p { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
 
 .page-watermark { display: flex; justify-content: center; padding: 1rem 0 0.5rem; }
 .page-watermark img {
@@ -611,6 +644,9 @@ footer {
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 .footlinks { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.88rem; font-weight: 500; }
+.footer-brand { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1rem; }
+.footer-logo { width: 2rem; height: 2rem; border-radius: 8px; filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 40%, transparent)); }
+.footer-slogan { font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--text); font-size: 1rem; }
 
 /* ---------- 14. Media queries ---------- */
 @media (max-width: 640px) {
