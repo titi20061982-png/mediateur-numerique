@@ -222,6 +222,10 @@ main.narrow { max-width: 900px; padding: 2.4rem 1.5rem 3rem; }
 
 .about-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
 .about-grid .card .icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+/* Ambiance technique ADRN : icones a lueur bleue plutot que verte, pour distinguer
+   visuellement les prestations materiel des prestations mediation numerique. */
+.adrn-card .icon { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-3) 55%, transparent)); }
+.adrn-card:hover { border-color: var(--accent-3); box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent-3) 30%, transparent); }
 .about-more-link { text-align: center; margin: 1.3rem 0 0; }
 .about-more-link a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
 .about-more-link a:hover { text-decoration: underline; }
@@ -378,6 +382,18 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   transform: translateY(-4px); border-color: var(--accent);
   box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent) 38%, transparent);
 }
+
+/* ---------- Encart Prestations ADRN (accueil) ---------- */
+.adrn-callout {
+  display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+  margin: 0 0 2.2rem; padding: 1.2rem 1.4rem; border-radius: 16px;
+  background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.adrn-callout-icon { font-size: 2rem; flex: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent-3) 55%, transparent)); }
+.adrn-callout-text { flex: 1; min-width: 220px; }
+.adrn-callout-text h2 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+.adrn-callout-text p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.adrn-callout-btn { background: var(--accent-3); flex: none; }
 
 /* ---------- Comment ca marche (accueil) ---------- */
 .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.3rem; margin-top: 1rem; text-align: center; }
