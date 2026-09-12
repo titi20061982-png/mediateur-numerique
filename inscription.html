@@ -136,6 +136,14 @@
 
 <script>
   (function () {
+    var devis = new URLSearchParams(location.search).get('devis');
+    if (!devis) return;
+    var field = document.getElementById('regMessage');
+    if (field) field.value = 'Devis ADRN souhaité — ' + devis;
+  })();
+</script>
+<script>
+  (function () {
     var root = document.documentElement;
     var btn = document.getElementById('themeToggle');
     function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }

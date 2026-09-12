@@ -226,11 +226,16 @@ main.narrow { max-width: 900px; padding: 2.4rem 1.5rem 3rem; }
    visuellement les prestations materiel des prestations mediation numerique. */
 .adrn-card .icon { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-3) 55%, transparent)); }
 .adrn-card:hover { border-color: var(--accent-3); box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent-3) 30%, transparent); }
-.card-price {
-  display: inline-block; margin-top: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 999px;
+.card-price-check {
+  display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  margin-top: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 999px; width: fit-content;
   background: color-mix(in srgb, var(--accent-3) 14%, transparent); color: var(--accent-3);
-  font-weight: 600; font-size: 0.85rem;
+  font-weight: 600; font-size: 0.85rem; transition: background .15s ease;
 }
+.card-price-check + .card-price-check { margin-top: 0.5rem; }
+.card-price-check input { accent-color: var(--accent-3); width: 1rem; height: 1rem; margin: 0; cursor: pointer; }
+.card-price-check:hover { background: color-mix(in srgb, var(--accent-3) 24%, transparent); }
+#devisTotal { transition: border-color .2s ease, background .2s ease; }
 .about-more-link { text-align: center; margin: 1.3rem 0 0; }
 .about-more-link a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
 .about-more-link a:hover { text-decoration: underline; }

@@ -46,37 +46,40 @@
       <span class="icon">🔍</span>
       <h3>Diagnostic matériel</h3>
       <p>Identifier une panne matérielle ou logicielle : tests des composants (disque, mémoire, alimentation, écran), lecture des codes d'erreur, avis clair sur la faisabilité et le coût d'une réparation avant tout engagement.</p>
-      <span class="card-price">💶 25€</span>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" data-label="Diagnostic matériel" data-price="25"><span>💶 25€</span></label>
     </div>
     <div class="card reveal adrn-card">
       <span class="icon">🔧</span>
       <h3>Réparation PC / portable</h3>
       <p>Remplacement des pièces défectueuses (ventilateur, clavier, batterie) sur ordinateurs de bureau et portables, dans la mesure du possible et du raisonnable au regard du coût.</p>
-      <span class="card-price">💶 35€ main d'œuvre (pièce en plus si besoin)</span>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" data-label="Réparation PC / portable (main d'œuvre)" data-price="35"><span>💶 35€ main d'œuvre (pièce en plus si besoin)</span></label>
     </div>
     <div class="card reveal adrn-card">
       <span class="icon">💽</span>
       <h3>Installation Windows / Linux</h3>
       <p>Installation propre d'un système d'exploitation adapté à l'usage et à l'âge de la machine, pilotes à jour, et présentation des bases pour s'y retrouver — y compris une première découverte de Linux pour redonner vie à un vieux PC.</p>
-      <span class="card-price">💶 60€ Windows · 40€ Linux</span>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" name="install-os" data-label="Installation Windows" data-price="60"><span>💶 60€ Windows</span></label>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" name="install-os" data-label="Installation Linux" data-price="40"><span>💶 40€ Linux</span></label>
     </div>
     <div class="card reveal adrn-card">
       <span class="icon">⚡</span>
       <h3>Remplacement SSD / RAM</h3>
       <p>Migration d'un disque dur classique vers un SSD (gain de rapidité très net au démarrage), ajout de mémoire vive, avec transfert des données et des logiciels déjà installés.</p>
-      <span class="card-price">💶 25€ SSD · 30€ RAM — main d'œuvre (pièce en plus si besoin)</span>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" data-label="Remplacement SSD (main d'œuvre)" data-price="25"><span>💶 25€ SSD</span></label>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" data-label="Ajout de RAM (main d'œuvre)" data-price="30"><span>💶 30€ RAM</span></label>
     </div>
     <div class="card reveal adrn-card">
       <span class="icon">🧹</span>
       <h3>Nettoyage des ventilateurs</h3>
       <p>Dépoussiérage et nettoyage des ventilateurs — pour éviter la surchauffe, réduire le bruit et prolonger la durée de vie de l'appareil.</p>
-      <span class="card-price">💶 25€</span>
+      <label class="card-price-check"><input type="checkbox" class="devis-check" data-label="Nettoyage des ventilateurs" data-price="25"><span>💶 25€</span></label>
     </div>
   </div>
 
-  <div class="devis-note reveal">
-    <span class="price">💶 Diagnostic dès 25€</span>
-    <p>Les prix indiqués correspondent à la main-d'œuvre ; le coût d'une pièce à remplacer (si vous ne la fournissez pas) s'ajoute selon le besoin. <a href="inscription.html">📞 Contactez-moi via la fiche d'inscription</a> pour décrire votre besoin et convenir d'une intervention.</p>
+  <div class="devis-note reveal" id="devisTotal">
+    <span class="price" id="devisTotalAmount">💶 Cochez les prestations qui vous intéressent</span>
+    <p id="devisTotalList">Le total s'affiche ici au fur et à mesure de vos choix (hors coût des pièces à remplacer, si non fournies).</p>
+    <p><a href="inscription.html" id="devisContactLink">📞 Contactez-moi via la fiche d'inscription</a> pour décrire votre besoin et convenir d'une intervention.</p>
   </div>
 
   <p class="about-more-link reveal">Vous cherchez plutôt de l'aide pour vos démarches en ligne ou prendre en main votre smartphone ? Voir les <a href="prestations.html">💼 Prestations Médiation →</a></p>
@@ -135,6 +138,32 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
     targets.forEach(function (s) { obs.observe(s); });
+  })();
+</script>
+<script>
+  (function () {
+    var checks = Array.from(document.querySelectorAll('.devis-check'));
+    var amountEl = document.getElementById('devisTotalAmount');
+    var listEl = document.getElementById('devisTotalList');
+    var contactLink = document.getElementById('devisContactLink');
+    var baseHref = contactLink.getAttribute('href');
+
+    function update() {
+      var selected = checks.filter(function (c) { return c.checked; });
+      if (!selected.length) {
+        amountEl.textContent = '💶 Cochez les prestations qui vous intéressent';
+        listEl.textContent = "Le total s'affiche ici au fur et à mesure de vos choix (hors coût des pièces à remplacer, si non fournies).";
+        contactLink.setAttribute('href', baseHref);
+        return;
+      }
+      var total = selected.reduce(function (sum, c) { return sum + parseInt(c.dataset.price, 10); }, 0);
+      var labels = selected.map(function (c) { return c.dataset.label; });
+      amountEl.textContent = '💶 Total estimé : ' + total + '€';
+      listEl.textContent = 'Prestations choisies : ' + labels.join(', ') + ' (hors coût des pièces à remplacer, si non fournies).';
+      contactLink.setAttribute('href', baseHref + (baseHref.indexOf('?') === -1 ? '?' : '&') + 'devis=' + encodeURIComponent(labels.join(', ') + ' — total estime ' + total + 'e'));
+    }
+
+    checks.forEach(function (c) { c.addEventListener('change', update); });
   })();
 </script>
 <script>
