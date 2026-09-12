@@ -105,6 +105,20 @@
       </div>
     </div>
 
+    <div class="card reveal" id="treeCard">
+      <h3>🌳 Mon arbre de progression</h3>
+      <svg id="growthTree" viewBox="0 0 200 160" role="img" aria-label="Un arbre qui grandit avec la progression sur les ateliers" style="width:100%;max-width:220px;display:block;margin:0 auto;">
+        <ellipse cx="100" cy="148" rx="55" ry="8" fill="var(--bg-soft)"></ellipse>
+        <path d="M94,150 C92,120 91,95 96,72 C101,95 100,120 106,150 Z" fill="#7a5230"></path>
+        <path class="tree-stage-1" d="M98,80 C88,66 74,58 62,50" stroke="#7a5230" stroke-width="4" fill="none" stroke-linecap="round" style="display:none;"></path>
+        <path class="tree-stage-1" d="M102,80 C112,66 126,58 138,50" stroke="#7a5230" stroke-width="4" fill="none" stroke-linecap="round" style="display:none;"></path>
+        <path class="tree-stage-2" d="M62,50 C54,42 46,38 38,34" stroke="#7a5230" stroke-width="3" fill="none" stroke-linecap="round" style="display:none;"></path>
+        <path class="tree-stage-2" d="M138,50 C146,42 154,38 162,34" stroke="#7a5230" stroke-width="3" fill="none" stroke-linecap="round" style="display:none;"></path>
+        <g id="treeFoliage"></g>
+      </svg>
+      <p class="acct-empty" id="treeCaption" style="text-align:center;margin-top:0.4rem;">Chargement…</p>
+    </div>
+
     <div class="kpi-row" id="acctKpis">
       <div class="kpi-tile kpi-mastered">
         <span class="kpi-icon">🌳</span>
@@ -411,6 +425,37 @@
     return label.slice(0, 2).toUpperCase();
   }
 
+  function renderTree(masteredCount, total) {
+    const svg = document.getElementById('growthTree');
+    let level = 0;
+    if (masteredCount >= total) level = 5;
+    else if (masteredCount >= 14) level = 4;
+    else if (masteredCount >= 10) level = 3;
+    else if (masteredCount >= 5) level = 2;
+    else if (masteredCount >= 1) level = 1;
+
+    svg.querySelectorAll('.tree-stage-1').forEach(function (el) { el.style.display = level >= 1 ? '' : 'none'; });
+    svg.querySelectorAll('.tree-stage-2').forEach(function (el) { el.style.display = level >= 2 ? '' : 'none'; });
+
+    const counts = [1, 6, 12, 18, 24, 30];
+    const count = counts[level];
+    const golden = 137.508 * Math.PI / 180;
+    const maxR = 55;
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      const r = maxR * Math.sqrt(i / count);
+      const angle = i * golden;
+      const cx = 100 + r * Math.cos(angle);
+      const cy = 60 + r * Math.sin(angle) * 0.85;
+      const radius = 7 + (i % 3);
+      const isSpark = level === 5 && i % 7 === 0;
+      html += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + radius +
+        '" fill="' + (isSpark ? 'var(--accent-2)' : 'var(--accent)') + '" opacity="' + (isSpark ? '0.95' : '0.85') + '"></circle>';
+    }
+    document.getElementById('treeFoliage').innerHTML = html;
+    document.getElementById('treeCaption').textContent = masteredCount + ' / ' + total + ' ateliers maîtrisés';
+  }
+
   function renderKpis(stats) {
     document.getElementById('kpiMastered').textContent = stats.masteredCount;
     document.getElementById('kpiQuizzes').textContent = stats.totalQuizzesTaken;
@@ -502,6 +547,7 @@
         document.getElementById('progressCard').style.display = 'none';
         document.getElementById('badgesCard').style.display = 'none';
         document.getElementById('resumeCard').style.display = 'none';
+        document.getElementById('treeCard').style.display = 'none';
       }
       Promise.all([getCloudFavorites(user.uid), getQuizHistory(user.uid)]).then(function (results) {
         const favorites = results[0], history = results[1];
@@ -514,6 +560,7 @@
         renderKpis(stats);
         renderEncouragement(stats);
         renderResume(stats, history);
+        renderTree(stats.masteredCount, QUIZZES.length);
       }).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
         document.getElementById('historyList').innerHTML = '<p class="acct-empty">Impossible de charger l\'historique pour le moment.</p>';
