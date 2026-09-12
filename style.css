@@ -383,6 +383,15 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent) 38%, transparent);
 }
 
+/* ---------- Separation visuelle Prestations ADRN dans les menus ---------- */
+.adrn-nav-link { margin-left: 0.9rem; }
+.toplinks a.adrn-nav-link:hover, .toplinks a.adrn-nav-link:focus-visible,
+.meta-links a.adrn-nav-link:hover, .meta-links a.adrn-nav-link:focus-visible,
+.catnav a.adrn-nav-link:hover, .catnav a.adrn-nav-link:focus-visible {
+  border-color: var(--accent-3); color: var(--accent-3);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-3) 45%, transparent);
+}
+
 /* ---------- Encart Prestations ADRN (accueil) ---------- */
 .adrn-callout {
   display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
