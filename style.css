@@ -226,6 +226,7 @@ main.narrow { max-width: 900px; padding: 2.4rem 1.5rem 3rem; }
    visuellement les prestations materiel des prestations mediation numerique. */
 .adrn-card .icon { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-3) 55%, transparent)); }
 .adrn-card:hover { border-color: var(--accent-3); box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent-3) 30%, transparent); }
+.adrn-subheading { margin: 2rem 0 1rem; font-size: 1.3rem; text-align: center; }
 .card-price-check {
   display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
   margin-top: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 999px; width: fit-content;
