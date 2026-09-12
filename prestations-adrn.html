@@ -40,7 +40,13 @@
   </div>
 </header>
 
-<main class="narrow">
+<main class="narrow prices-locked" id="adrnMain">
+  <div class="devis-note reveal" id="pricesLockNotice">
+    <span class="price">🔒 Tarifs réservés aux membres inscrits</span>
+    <p>Connectez-vous ou créez un compte gratuit pour voir le prix de chaque prestation et utiliser le calculateur de devis.</p>
+    <p><a href="compte.html">👤 Se connecter / Créer un compte</a></p>
+  </div>
+
   <div class="about-grid adrn-grid">
     <div class="card reveal adrn-card">
       <span class="icon">🔍</span>
@@ -214,6 +220,13 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
     targets.forEach(function (s) { obs.observe(s); });
   })();
+</script>
+<script type="module">
+  import { watchAuth } from './auth.js';
+  watchAuth(function (user) {
+    var locked = !user || user.isAnonymous;
+    document.getElementById('adrnMain').classList.toggle('prices-locked', locked);
+  });
 </script>
 <script>
   (function () {
