@@ -282,6 +282,13 @@
   </div>
 </header>
 <main class="narrow">
+  <div class="card" id="anonGateCard" style="display:none;">
+    <p>🔒 Vous avez déjà passé un quiz en tant que visiteur. Connectez-vous ou créez un compte gratuit pour continuer à passer des quiz.</p>
+    <div class="actions">
+      <a class="acct-badge" href="../compte.html" style="position:static;">👤 Se connecter / Créer un compte</a>
+    </div>
+  </div>
+
   <div id="levelScreen">
     <button type="button" class="level-btn" data-level="debutant">
       <strong id="levelDebTitle">🌱 Débutant</strong>
@@ -582,6 +589,7 @@
 
   document.querySelectorAll('.level-btn').forEach(function(b) {
     b.addEventListener('click', function() {
+      if (window.__quizLocked) { if (window.__showQuizGate) window.__showQuizGate(); return; }
       if (window.__onQuizStarted) { window.__onQuizStarted(SLUG, b.dataset.level); }
       renderQuiz(b.dataset.level, currentLang);
     });
@@ -633,7 +641,10 @@
     resetBtn.style.display = 'inline-block';
   });
 
-  resetBtn.addEventListener('click', function() { renderQuiz(currentLevel, currentLang); });
+  resetBtn.addEventListener('click', function() {
+    if (window.__quizLocked) { if (window.__showQuizGate) window.__showQuizGate(); return; }
+    renderQuiz(currentLevel, currentLang);
+  });
 
   fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/facture-telephone-quiz-v2')
     .then(function(r) { return r.json(); })
@@ -683,12 +694,33 @@
 </script>
 
 <script type="module">
-  import { watchAuth, currentUser, saveQuizResult, logQuizStart } from '../auth.js';
+  import { watchAuth, currentUser, saveQuizResult, logQuizStart, getQuizHistory } from '../auth.js';
 
   const acctLink = document.getElementById('acctLink');
+  const anonGateCard = document.getElementById('anonGateCard');
+  const levelScreenEl = document.getElementById('levelScreen');
+  const quizScreenEl = document.getElementById('quizScreen');
+
+  window.__showQuizGate = function () {
+    anonGateCard.style.display = '';
+    levelScreenEl.style.display = 'none';
+    quizScreenEl.style.display = 'none';
+    anonGateCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   watchAuth(function (user) {
-    if (user && !user.isAnonymous) { acctLink.title = 'Mon compte (' + user.email + ')'; acctLink.textContent = '🟢'; }
-    else { acctLink.title = 'Se connecter'; acctLink.textContent = '👤'; }
+    if (user && !user.isAnonymous) {
+      acctLink.title = 'Mon compte (' + user.email + ')'; acctLink.textContent = '🟢';
+      window.__quizLocked = false;
+    } else {
+      acctLink.title = 'Se connecter'; acctLink.textContent = '👤';
+      if (user && user.isAnonymous) {
+        getQuizHistory(user.uid).then(function (history) {
+          window.__quizLocked = history.length > 0;
+          if (window.__quizLocked) { window.__showQuizGate(); }
+        }).catch(function () {});
+      }
+    }
   });
 
   window.__onQuizStarted = function (slug, level) {
@@ -698,7 +730,10 @@
 
   window.__onQuizSubmitted = function (result) {
     const user = currentUser();
-    if (user) { saveQuizResult(user.uid, result).catch(function () {}); }
+    if (user) {
+      saveQuizResult(user.uid, result).catch(function () {});
+      if (user.isAnonymous) { window.__quizLocked = true; }
+    }
   };
 </script>
 </body>
