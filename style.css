@@ -395,8 +395,8 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 }
 .neon-block h2 { margin: 0 0 0.4rem; color: #fff; }
 .neon-block > p { margin: 0 0 1.2rem; color: #cccccc; }
-.parcours-list, .senior-list { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
-.parcours-list li, .senior-list li {
+.parcours-list { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.parcours-list li {
   background: rgba(255,255,255,0.04); border: 1px solid #003d55; border-radius: 10px;
   padding: 0.65rem 0.9rem; color: #e5e5e5; font-size: 0.95rem;
 }
