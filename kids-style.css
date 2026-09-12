@@ -55,5 +55,5 @@ body {
 .kids-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
 .kids-card:hover, .kids-card:focus-visible { transform: translateY(-6px) scale(1.02); }
 
-/* ---------- Illustration au-dessus de chaque question (quiz enfants) ---------- */
-.qimg { display: block; max-width: 200px; width: 60%; margin: 0 auto 1rem; }
+/* ---------- Pictogramme au-dessus de chaque question (quiz 6-8 ans) ---------- */
+.qicon { font-size: 5rem; line-height: 1; text-align: center; margin: 0 0 0.6rem; }
