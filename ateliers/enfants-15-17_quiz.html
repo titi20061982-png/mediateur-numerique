@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numérique pour les 15-17 ans — Ateliers Médiation Numérique</title>
+<meta name="description" content="Quiz numérique adapté aux 15-17 ans : sécurité des comptes, arnaques, réputation numérique, désinformation, harcèlement en ligne.">
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
+<button type="button" class="theme-toggle icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:3.9rem;">A</button>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">← Retour aux ateliers</a>
+    <div class="eyebrow">🧑 Numérique pour les 15-17 ans</div>
+    <h1>Sécurité, réputation et esprit critique en ligne</h1>
+    <p class="sub">9 questions pour aborder des sujets plus poussés, à l'approche de la majorité.</p>
+  </div>
+</header>
+
+<main class="narrow">
+  <div class="card" id="introCard">
+    <p>👋 Ce quiz aborde des sujets plus concrets : sécurité des comptes, arnaques, réputation numérique, désinformation et harcèlement.</p>
+    <p>Pas de mauvaise note : si tu te trompes, une explication s'affiche juste après chaque question.</p>
+    <div class="actions">
+      <button type="button" class="primary" id="startBtn">🚀 Commencer le quiz</button>
+    </div>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
+    <div class="actions">
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon résultat</button>
+      <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+    </div>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+</footer>
+<script>
+  const QUIZ = [
+    {
+      q: "Un ami ou une connaissance te demande d'envoyer une photo intime. Tu dois savoir que...",
+      options: ["C'est totalement sans risque entre amis", "Cette photo peut être partagée sans ton accord, et la diffuser peut être illégal, même entre mineurs", "C'est obligatoire si on te le demande", "Ça n'a aucune conséquence légale"],
+      correct: 1,
+      explain: "Partager ou recevoir des images intimes de mineurs peut avoir des conséquences légales graves, et une photo envoyée peut être diffusée sans contrôle — mieux vaut ne jamais céder à ce genre de demande, et en parler à un adulte si ça arrive."
+    },
+    {
+      q: "La double authentification (2FA) sur un compte sert à...",
+      options: ["Rendre la connexion plus longue pour rien", "Ajouter une sécurité supplémentaire en cas de mot de passe volé", "Remplacer le mot de passe", "Ralentir volontairement l'appareil"],
+      correct: 1,
+      explain: "La 2FA (code envoyé par SMS ou application) protège le compte même si le mot de passe est découvert par quelqu'un d'autre."
+    },
+    {
+      q: "Une offre d'emploi ou de gain d'argent rapide en ligne qui semble trop belle pour être vraie est probablement...",
+      options: ["Toujours fiable", "Souvent une arnaque, à vérifier avant tout engagement", "Réservée aux adultes uniquement", "Un cadeau du gouvernement"],
+      correct: 1,
+      explain: "Les offres \"trop belles\" (gagner beaucoup d'argent facilement, cadeau surprise) sont très souvent des arnaques."
+    },
+    {
+      q: "Ce que tu publies sur les réseaux sociaux aujourd'hui...",
+      options: ["Ne sera jamais vu par un futur employeur ou une école", "Peut être retrouvé plus tard par des recruteurs, écoles ou autres, même après suppression", "Disparaît automatiquement à 18 ans", "N'a aucune importance pour l'avenir"],
+      correct: 1,
+      explain: "Ta réputation numérique (ce qu'on peut trouver sur toi en ligne) peut influencer des décisions futures (études, emploi) — mieux vaut y réfléchir avant de publier."
+    },
+    {
+      q: "Face à une information choquante ou qui semble fausse, partagée massivement en ligne, il est important de...",
+      options: ["La partager immédiatement pour prévenir tout le monde", "Vérifier la source avant de la croire ou de la partager", "Toujours croire ce qui a beaucoup de vues", "L'ignorer complètement sans vérifier"],
+      correct: 1,
+      explain: "Vérifier la source d'une information (médias reconnus, sites de vérification des faits) évite de propager de fausses informations."
+    },
+    {
+      q: "Un(e) inconnu(e) rencontré(e) en ligne insiste pour que tu gardes votre relation secrète vis-à-vis de tes parents. C'est...",
+      options: ["Normal, ça arrive souvent", "Un signal d'alerte à prendre au sérieux", "Un signe de confiance", "Sans importance"],
+      correct: 1,
+      explain: "Vouloir isoler quelqu'un de son entourage (famille, amis) est une technique utilisée par des personnes malveillantes — c'est un vrai signal d'alerte."
+    },
+    {
+      q: "Si tu es victime ou témoin de harcèlement en ligne, une ressource française à connaître est...",
+      options: ["Le numéro 3018 (harcèlement, cyberharcèlement)", "Il n'existe aucune aide disponible", "Seulement la police, rien d'autre", "Un numéro payant"],
+      correct: 0,
+      explain: "Le 3018 est le numéro national gratuit et confidentiel contre le harcèlement, y compris en ligne, en France."
+    },
+    {
+      q: "Un \"deepfake\" est...",
+      options: ["Une vraie vidéo garantie authentique", "Une image ou vidéo truquée par intelligence artificielle, pouvant sembler très réaliste", "Un type de virus informatique uniquement", "Un jeu vidéo"],
+      correct: 1,
+      explain: "Les deepfakes peuvent faire dire ou faire des choses fictives à une personne de façon très réaliste — il faut rester prudent face à des contenus surprenants avant de les croire ou de les partager."
+    },
+    {
+      q: "Avant d'accepter les autorisations demandées par une application (accès aux photos, à la localisation, au micro...), il faut...",
+      options: ["Toujours accepter sans réfléchir", "Vérifier que la demande est cohérente avec l'usage réel de l'application", "Refuser toutes les autorisations systématiquement, même essentielles", "Ignorer complètement ce point"],
+      correct: 1,
+      explain: "Une application de calculatrice, par exemple, qui demande l'accès au micro ou à la caméra n'a pas de raison légitime de le faire."
+    }
+  ];
+
+  const introCard = document.getElementById('introCard');
+  const quizScreen = document.getElementById('quizScreen');
+  const form = document.getElementById('quizForm');
+  const banner = document.getElementById('scoreBanner');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderQuiz() {
+    form.innerHTML = QUIZ.map(function (q, i) {
+      const opts = q.options.map(function (o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    introCard.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('startBtn').addEventListener('click', renderQuiz);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let score = 0;
+    QUIZ.forEach(function (q, i) {
+      const chosen = form.querySelector('input[name="q' + i + '"]:checked');
+      const opts = document.querySelectorAll('#opts' + i + ' .opt');
+      opts.forEach(function (el, j) {
+        el.classList.remove('correct', 'incorrect');
+        if (j === q.correct) el.classList.add('correct');
+        else if (chosen && parseInt(chosen.value, 10) === j) el.classList.add('incorrect');
+      });
+      const isCorrect = !!(chosen && parseInt(chosen.value, 10) === q.correct);
+      if (isCorrect) score++;
+      document.getElementById('explain' + i).classList.add('show');
+      form.querySelectorAll('input[name="q' + i + '"]').forEach(function (inp) { inp.disabled = true; });
+    });
+    const pct = Math.round((score / QUIZ.length) * 100);
+    let tier = 'tier-low', msg = "Continue à te renseigner, relis bien les explications ci-dessus.";
+    if (pct >= 80) { tier = 'tier-high'; msg = "Bravo, tu as un très bon esprit critique et de bons réflexes de sécurité !"; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = "Bien joué, tu es sur la bonne voie ! Regarde les explications pour progresser encore."; }
+    banner.className = 'show ' + tier;
+    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    submitBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+  });
+
+  resetBtn.addEventListener('click', renderQuiz);
+</script>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+    icon(saved);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      icon(next);
+    });
+  })();
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+</script>
+<script>
+  (function () {
+    var btn = document.getElementById('textSizeToggle');
+    if (!btn) return;
+    var SIZES = [1, 1.15, 1.3];
+    var LABELS = ['A', 'A+', 'A++'];
+    var root = document.documentElement;
+    var idx = 0;
+    try {
+      var saved = parseFloat(localStorage.getItem('fontScale'));
+      var found = SIZES.indexOf(saved);
+      if (found !== -1) idx = found;
+    } catch (e) {}
+    function apply(i) {
+      idx = i;
+      root.style.setProperty('--font-scale', SIZES[idx]);
+      btn.textContent = LABELS[idx];
+      try { localStorage.setItem('fontScale', SIZES[idx]); } catch (e) {}
+    }
+    apply(idx);
+    btn.addEventListener('click', function () {
+      apply((idx + 1) % SIZES.length);
+    });
+  })();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('../sw.js').catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>

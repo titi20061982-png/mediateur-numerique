@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numérique pour les 6-8 ans — Ateliers Médiation Numérique</title>
+<meta name="description" content="Quiz numérique tout simple adapté aux enfants de 6 à 8 ans : demander la permission, ne pas parler aux inconnus en ligne, garder les secrets.">
+<link rel="icon" type="image/png" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
+<button type="button" class="theme-toggle icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:3.9rem;">A</button>
+<button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">← Retour aux ateliers</a>
+    <div class="eyebrow">🧒 Numérique pour les enfants — 6-8 ans</div>
+    <h1>Le numérique, en s'amusant !</h1>
+    <p class="sub">6 petites questions faciles, à faire avec un adulte à côté.</p>
+  </div>
+</header>
+
+<main class="narrow">
+  <div class="card" id="introCard">
+    <p>👋 Coucou ! On va répondre ensemble à quelques petites questions sur les écrans, les jeux et Internet.</p>
+    <p>Il n'y a pas de mauvaise réponse : si tu te trompes, on t'explique juste après !</p>
+    <div class="actions">
+      <button type="button" class="primary" id="startBtn">🚀 Commencer</button>
+    </div>
+  </div>
+
+  <div id="quizScreen" style="display:none;">
+    <div id="scoreBanner"></div>
+    <form id="quizForm"></form>
+    <div class="actions">
+      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon résultat</button>
+      <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
+    </div>
+  </div>
+</main>
+<footer>
+  © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
+</footer>
+<script>
+  const QUIZ = [
+    {
+      q: "Un jeu affiche une pub avec un super cadeau si tu cliques dessus. Que fais-tu ?",
+      options: ["Je clique vite pour avoir le cadeau", "Je demande à un adulte avant de cliquer", "Je clique et je ferme après"],
+      correct: 1,
+      explain: "Avant de cliquer sur quelque chose qu'on ne connaît pas, il vaut mieux demander à un adulte."
+    },
+    {
+      q: "C'est un adulte qui décide...",
+      options: ["Combien de temps on peut jouer aux écrans", "Rien, on fait ce qu'on veut", "Que les écrans, c'est toute la journée"],
+      correct: 0,
+      explain: "Ce sont les parents qui décident du temps qu'on peut passer sur les écrans, pour rester en bonne santé."
+    },
+    {
+      q: "Quelqu'un que tu ne connais pas t'écrit sur un jeu et veut devenir ton ami. Que fais-tu ?",
+      options: ["Je lui dis tout de suite mon prénom et mon école", "J'en parle à un adulte avant de répondre", "Je lui envoie une photo de moi"],
+      correct: 1,
+      explain: "On parle toujours à un adulte avant de discuter avec quelqu'un qu'on ne connaît pas sur Internet."
+    },
+    {
+      q: "Une image sur l'écran te fait peur ou te dérange. Que fais-tu ?",
+      options: ["Je continue à regarder", "Je vais chercher un adulte tout de suite", "Je la montre à mes amis"],
+      correct: 1,
+      explain: "Si une image te fait peur ou te dérange, va toujours voir un adulte de confiance."
+    },
+    {
+      q: "Pour utiliser une tablette ou un ordinateur à la maison, il faut...",
+      options: ["Le faire en cachette", "Demander la permission à un adulte", "Le faire toute la nuit"],
+      correct: 1,
+      explain: "On demande toujours la permission avant d'utiliser un écran, et on respecte le temps donné par les parents."
+    },
+    {
+      q: "Un mot de passe, c'est un peu comme un secret. On doit...",
+      options: ["Le dire à tout le monde", "Le garder pour soi (sauf pour ses parents)", "L'écrire sur Internet"],
+      correct: 1,
+      explain: "Un mot de passe est secret — on ne le donne à personne, sauf à ses parents s'ils en ont besoin pour t'aider."
+    }
+  ];
+
+  const introCard = document.getElementById('introCard');
+  const quizScreen = document.getElementById('quizScreen');
+  const form = document.getElementById('quizForm');
+  const banner = document.getElementById('scoreBanner');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderQuiz() {
+    form.innerHTML = QUIZ.map(function (q, i) {
+      const opts = q.options.map(function (o, j) {
+        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
+      }).join('');
+      return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
+    }).join('');
+    banner.className = '';
+    banner.innerHTML = '';
+    submitBtn.style.display = 'inline-block';
+    resetBtn.style.display = 'none';
+    introCard.style.display = 'none';
+    quizScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('startBtn').addEventListener('click', renderQuiz);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let score = 0;
+    QUIZ.forEach(function (q, i) {
+      const chosen = form.querySelector('input[name="q' + i + '"]:checked');
+      const opts = document.querySelectorAll('#opts' + i + ' .opt');
+      opts.forEach(function (el, j) {
+        el.classList.remove('correct', 'incorrect');
+        if (j === q.correct) el.classList.add('correct');
+        else if (chosen && parseInt(chosen.value, 10) === j) el.classList.add('incorrect');
+      });
+      const isCorrect = !!(chosen && parseInt(chosen.value, 10) === q.correct);
+      if (isCorrect) score++;
+      document.getElementById('explain' + i).classList.add('show');
+      form.querySelectorAll('input[name="q' + i + '"]').forEach(function (inp) { inp.disabled = true; });
+    });
+    const pct = Math.round((score / QUIZ.length) * 100);
+    let tier = 'tier-low', msg = "C'est pas grave, regarde bien les explications pour la prochaine fois !";
+    if (pct >= 80) { tier = 'tier-high'; msg = "Bravo, tu connais déjà très bien les règles importantes !"; }
+    else if (pct >= 50) { tier = 'tier-mid'; msg = "Bien joué ! Regarde les explications pour en savoir encore plus."; }
+    banner.className = 'show ' + tier;
+    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    submitBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+  });
+
+  resetBtn.addEventListener('click', renderQuiz);
+</script>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function sysDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function icon(t) { btn.textContent = (t || (sysDark() ? 'dark' : 'light')) === 'dark' ? '☀️' : '🌙'; }
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+    icon(saved);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (sysDark() ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      icon(next);
+    });
+  })();
+  (function () {
+    var btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () { btn.classList.toggle('show', window.scrollY > 400); }, { passive: true });
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var bar = document.getElementById('scrollProgress');
+    function upd() {
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      bar.style.width = (height > 0 ? (s / height) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    upd();
+  })();
+</script>
+<script>
+  (function () {
+    var btn = document.getElementById('textSizeToggle');
+    if (!btn) return;
+    var SIZES = [1, 1.15, 1.3];
+    var LABELS = ['A', 'A+', 'A++'];
+    var root = document.documentElement;
+    var idx = 0;
+    try {
+      var saved = parseFloat(localStorage.getItem('fontScale'));
+      var found = SIZES.indexOf(saved);
+      if (found !== -1) idx = found;
+    } catch (e) {}
+    function apply(i) {
+      idx = i;
+      root.style.setProperty('--font-scale', SIZES[idx]);
+      btn.textContent = LABELS[idx];
+      try { localStorage.setItem('fontScale', SIZES[idx]); } catch (e) {}
+    }
+    apply(idx);
+    btn.addEventListener('click', function () {
+      apply((idx + 1) % SIZES.length);
+    });
+  })();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('../sw.js').catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>
