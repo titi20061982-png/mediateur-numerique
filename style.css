@@ -190,7 +190,7 @@ header h1 { margin: 0.3rem 0 0.4rem; font-size: clamp(1.7rem, 4.5vw, 2.4rem); }
 
 /* ---------- 6. Zone principale ---------- */
 main {
-  max-width: 1080px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 3.5rem 1.5rem 2rem;
 }
@@ -259,7 +259,7 @@ main.narrow { max-width: 900px; padding: 2.4rem 1.5rem 3rem; }
 }
 .meta-links a:hover { border-color: var(--accent); transform: translateY(-1px); }
 
-.catnav { max-width: 1080px; margin: 0 auto; padding: 0; display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 2; }
+.catnav { max-width: 1280px; margin: 0 auto; padding: 0; display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 2; }
 .catnav a { font-size: 0.8rem; text-decoration: none; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.4rem 0.85rem; border-radius: 999px; box-shadow: var(--shadow); }
 .catnav a:hover { color: var(--accent); }
 .catnav a.active { color: #fff; background: var(--accent); border-color: var(--accent); }
