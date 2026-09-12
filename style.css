@@ -795,9 +795,10 @@ html[dir="rtl"] #levelScreen .level-btn { text-align: right; }
 .qcard .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 1rem; }
 .qkeys { display: flex; align-items: center; gap: 0.4rem; margin: 0 0 1.1rem; }
 .qkeys .key-plus { color: var(--muted); font-weight: 700; font-size: 0.95rem; }
-.opt { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.65rem 0.8rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 0.55rem; cursor: pointer; transition: border-color .15s; }
+.opt { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.65rem 0.8rem; border-radius: 10px; border: 2px solid var(--border); margin-bottom: 0.55rem; cursor: pointer; transition: border-color .15s, background .15s; }
 .opt:hover { border-color: var(--accent); }
-.opt input { margin-top: 0.2rem; accent-color: var(--accent); }
+.opt.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--card)); }
+.opt input { margin-top: 0.2rem; accent-color: var(--accent); width: 1.1rem; height: 1.1rem; }
 .opt span { font-size: 0.95rem; }
 .opt.correct { border-color: var(--good); background: color-mix(in srgb, var(--good) 12%, var(--card)); }
 .opt.incorrect { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--card)); }

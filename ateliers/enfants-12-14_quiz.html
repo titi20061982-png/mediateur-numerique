@@ -129,6 +129,21 @@
 
   document.getElementById('startBtn').addEventListener('click', renderQuiz);
 
+  form.addEventListener('change', function (e) {
+    if (e.target.type !== 'radio') return;
+    form.querySelectorAll('input[name="' + e.target.name + '"]').forEach(function (inp) {
+      const opt = inp.closest('.opt');
+      opt.classList.toggle('selected', inp.checked);
+      if (inp.checked) {
+        opt.style.borderColor = 'var(--accent)';
+        opt.style.boxShadow = 'inset 0 0 0 1px var(--accent)';
+      } else {
+        opt.style.borderColor = '';
+        opt.style.boxShadow = '';
+      }
+    });
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     let score = 0;
