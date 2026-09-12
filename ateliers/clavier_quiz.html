@@ -11,6 +11,7 @@
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="theme-toggle" id="themeToggle" title="Changer de theme" aria-label="Changer de theme">🌙</button>
+<button type="button" class="theme-toggle icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:6.7rem;">A</button>
 <a class="theme-toggle acct-toggle" id="acctLink" href="../compte.html" title="Se connecter" aria-label="Mon compte">👤</a>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 <header>
@@ -751,6 +752,31 @@
       if (user.isAnonymous) { window.__quizLocked = true; }
     }
   };
+</script>
+<script>
+  (function () {
+    var btn = document.getElementById('textSizeToggle');
+    if (!btn) return;
+    var SIZES = [1, 1.15, 1.3];
+    var LABELS = ['A', 'A+', 'A++'];
+    var root = document.documentElement;
+    var idx = 0;
+    try {
+      var saved = parseFloat(localStorage.getItem('fontScale'));
+      var found = SIZES.indexOf(saved);
+      if (found !== -1) idx = found;
+    } catch (e) {}
+    function apply(i) {
+      idx = i;
+      root.style.setProperty('--font-scale', SIZES[idx]);
+      btn.textContent = LABELS[idx];
+      try { localStorage.setItem('fontScale', SIZES[idx]); } catch (e) {}
+    }
+    apply(idx);
+    btn.addEventListener('click', function () {
+      apply((idx + 1) % SIZES.length);
+    });
+  })();
 </script>
 </body>
 </html>

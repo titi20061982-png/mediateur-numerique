@@ -14,6 +14,7 @@
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="icon-btn icon-btn-floating" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
+<button type="button" class="icon-btn icon-btn-floating icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte" style="right:3.9rem;">A</button>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 
 <header>
@@ -599,6 +600,31 @@
     }
     window.addEventListener('scroll', upd, { passive: true });
     upd();
+  })();
+</script>
+<script>
+  (function () {
+    var btn = document.getElementById('textSizeToggle');
+    if (!btn) return;
+    var SIZES = [1, 1.15, 1.3];
+    var LABELS = ['A', 'A+', 'A++'];
+    var root = document.documentElement;
+    var idx = 0;
+    try {
+      var saved = parseFloat(localStorage.getItem('fontScale'));
+      var found = SIZES.indexOf(saved);
+      if (found !== -1) idx = found;
+    } catch (e) {}
+    function apply(i) {
+      idx = i;
+      root.style.setProperty('--font-scale', SIZES[idx]);
+      btn.textContent = LABELS[idx];
+      try { localStorage.setItem('fontScale', SIZES[idx]); } catch (e) {}
+    }
+    apply(idx);
+    btn.addEventListener('click', function () {
+      apply((idx + 1) % SIZES.length);
+    });
   })();
 </script>
 </body>

@@ -637,6 +637,7 @@ footer a:hover { text-decoration: underline; }
 }
 .theme-toggle:hover { transform: scale(1.08) rotate(12deg); border-color: var(--accent); }
 .theme-toggle.acct-toggle { right: 3.9rem; text-decoration: none; color: var(--text); }
+.icon-btn-text { font-family: "Inter", sans-serif; font-weight: 800; font-size: 0.68rem; letter-spacing: -0.02em; }
 
 .visits { display: inline-block; font-size: 0.8rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.7rem; }
 .lang-select-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }

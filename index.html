@@ -299,6 +299,7 @@
     <button type="button" class="icon-btn" id="randomBtn" title="Atelier au hasard" aria-label="Atelier au hasard">🎲</button>
     <button type="button" class="icon-btn" id="favToggleBtn" title="Voir mes favoris" aria-label="Voir mes favoris">⭐</button>
     <button type="button" class="icon-btn" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
+    <button type="button" class="icon-btn icon-btn-text" id="textSizeToggle" title="Changer la taille du texte" aria-label="Changer la taille du texte">A</button>
   </div>
   <nav class="catnav" id="catnav">
     <a href="#premiers-pas">🖥️ Premiers pas</a>
@@ -1128,5 +1129,30 @@
   })();
 </script>
 
+<script>
+  (function () {
+    var btn = document.getElementById('textSizeToggle');
+    if (!btn) return;
+    var SIZES = [1, 1.15, 1.3];
+    var LABELS = ['A', 'A+', 'A++'];
+    var root = document.documentElement;
+    var idx = 0;
+    try {
+      var saved = parseFloat(localStorage.getItem('fontScale'));
+      var found = SIZES.indexOf(saved);
+      if (found !== -1) idx = found;
+    } catch (e) {}
+    function apply(i) {
+      idx = i;
+      root.style.setProperty('--font-scale', SIZES[idx]);
+      btn.textContent = LABELS[idx];
+      try { localStorage.setItem('fontScale', SIZES[idx]); } catch (e) {}
+    }
+    apply(idx);
+    btn.addEventListener('click', function () {
+      apply((idx + 1) % SIZES.length);
+    });
+  })();
+</script>
 </body>
 </html>
