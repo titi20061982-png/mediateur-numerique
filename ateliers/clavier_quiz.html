@@ -424,6 +424,7 @@
       out += (i + 1) + '. [' + (a.isCorrect ? '✔' : '✖') + '] ' + a.question + '\n';
       out += '   ' + UI.recapColYourAnswer + ' : ' + a.chosenText + '\n';
       if (!a.isCorrect) out += '   ' + UI.recapColCorrectAnswer + ' : ' + a.correctText + '\n';
+      if (a.explain) out += '   💡 ' + a.explain + '\n';
     });
     out += '\n' + UI.recapImproveLabel + ' :\n';
     out += wrong.length ? wrong.map(function(q) { return '- ' + q; }).join('\n') : UI.recapNoImprove;
@@ -440,7 +441,7 @@
         ? '<span style="color:var(--good);font-weight:700;">✔</span>'
         : '<span style="color:var(--bad);font-weight:700;">❌</span>';
       return '<tr>' +
-        '<td>' + esc(a.question) + '</td>' +
+        '<td>' + esc(a.question) + (a.explain ? '<div class="recap-why">💡 ' + esc(a.explain) + '</div>' : '') + '</td>' +
         '<td>' + esc(a.chosenText) + '</td>' +
         '<td>' + esc(a.correctText) + '</td>' +
         '<td style="text-align:center;">' + mark + '</td>' +
@@ -637,7 +638,8 @@
         question: q.q,
         chosenText: chosen ? q.options[parseInt(chosen.value)] : UI.recapNoAnswer,
         correctText: q.options[q.correct],
-        isCorrect: isCorrect
+        isCorrect: isCorrect,
+        explain: q.explain
       });
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
