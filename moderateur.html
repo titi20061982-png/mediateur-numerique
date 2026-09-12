@@ -25,9 +25,20 @@
     <h1>Tableau de bord</h1>
     <p class="sub">Vue d'ensemble des comptes visiteurs : favoris et résultats de quiz.</p>
     <nav class="toplinks">
-      <a href="index.html">🏠 Accueil</a>
+      <a href="a-propos.html">🌳 À propos</a>
+      <a href="index.html">📚 Ateliers &amp; Quiz</a>
+      <a href="prestations.html">💼 Prestations Médiation</a>
+      <a href="prestations-adrn.html">🛠️ Prestations ADRN</a>
+      <a href="stats.html">📊 Statistiques</a>
+      <a href="inscription.html">📝 Inscription</a>
+      <a href="#translate-box">🌐 Traduire</a>
       <a href="compte.html">👤 Mon compte</a>
+      <a href="moderateur.html" class="current">👑 Tableau de bord</a>
     </nav>
+    <div class="translate-box" id="translate-box">
+      <span class="translate-label">🌐 Traduire cette page</span>
+      <div id="google_translate_element"></div>
+    </div>
   </div>
 </header>
 
@@ -661,5 +672,14 @@
     });
   }
 </script>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'fr', autoDisplay: false },
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

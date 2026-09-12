@@ -31,8 +31,12 @@
       <a href="prestations-adrn.html">🛠️ Prestations ADRN</a>
       <a href="stats.html">📊 Statistiques</a>
       <a href="inscription.html" class="current">📝 Inscription</a>
-      <a href="index.html#translate-box">🌐 Traduire</a>
+      <a href="#translate-box">🌐 Traduire</a>
     </nav>
+    <div class="translate-box" id="translate-box">
+      <span class="translate-label">🌐 Traduire cette page</span>
+      <div id="google_translate_element"></div>
+    </div>
   </div>
 </header>
 
@@ -332,5 +336,14 @@
     });
   }
 </script>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'fr', autoDisplay: false },
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
