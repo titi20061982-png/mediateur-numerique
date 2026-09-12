@@ -54,3 +54,6 @@ body {
 .kids-card h3 { margin: 0; font-size: 1.2rem; }
 .kids-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
 .kids-card:hover, .kids-card:focus-visible { transform: translateY(-6px) scale(1.02); }
+
+/* ---------- Illustration au-dessus de chaque question (quiz enfants) ---------- */
+.qimg { display: block; max-width: 200px; width: 60%; margin: 0 auto 1rem; }

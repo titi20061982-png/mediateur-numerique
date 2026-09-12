@@ -49,36 +49,42 @@
   const QUIZ = [
     {
       q: "🎁 Un jeu dit : \"Clique ici pour gagner un cadeau !\" Tu fais quoi ?",
+      img: "img/kids/gift.svg",
       options: ["Je clique vite", "Je demande à un adulte", "Je ferme le jeu"],
       correct: 1,
       explain: "On demande toujours à un adulte avant de cliquer."
     },
     {
       q: "⏰ Qui décide du temps de jeu sur la tablette ?",
+      img: "img/kids/clock.svg",
       options: ["Moi tout seul", "Un adulte", "Personne"],
       correct: 1,
       explain: "C'est un adulte qui dit combien de temps on peut jouer."
     },
     {
       q: "👋 Un inconnu t'écrit : \"Salut, on devient amis ?\" Tu fais quoi ?",
+      img: "img/kids/chat.svg",
       options: ["Je dis oui et mon prénom", "Je vais voir un adulte", "J'envoie une photo de moi"],
       correct: 1,
       explain: "Avec un inconnu, on va toujours voir un adulte avant de répondre."
     },
     {
       q: "😨 Une image te fait peur sur l'écran. Tu fais quoi ?",
+      img: "img/kids/warning.svg",
       options: ["Je continue à regarder", "Je vais voir un adulte", "Je la montre à un copain"],
       correct: 1,
       explain: "Si une image te fait peur, va toujours voir un adulte."
     },
     {
       q: "📱 Pour utiliser la tablette, tu dois...",
+      img: "img/kids/ask.svg",
       options: ["Le faire en cachette", "Demander la permission", "Le faire toute la nuit"],
       correct: 1,
       explain: "On demande toujours la permission avant d'utiliser un écran."
     },
     {
       q: "🔑 Ton mot de passe, tu le dis à qui ?",
+      img: "img/kids/password.svg",
       options: ["À tout le monde", "À personne (sauf tes parents)", "Tu l'écris sur Internet"],
       correct: 1,
       explain: "Un mot de passe, on ne le dit à personne, sauf à ses parents."
@@ -104,6 +110,7 @@
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
       return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
+        (q.img ? '<img class="qimg" src="' + q.img + '" alt="" aria-hidden="true">' : '') +
         '<p class="qtext">' + esc(q.q) + '</p>' +
         '<button type="button" class="speak-btn" data-qi="' + i + '" title="Écouter la question" aria-label="Écouter la question">🔊 Écouter</button>' +
         '<div id="opts' + i + '">' + opts + '</div>' +
