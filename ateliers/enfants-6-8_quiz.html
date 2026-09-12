@@ -19,14 +19,14 @@
     <a class="back" href="../index.html">← Retour aux ateliers</a>
     <div class="eyebrow">🧒 Numérique pour les enfants — 6-8 ans</div>
     <h1>Le numérique, en s'amusant !</h1>
-    <p class="sub">6 petites questions faciles, à faire avec un adulte à côté.</p>
+    <p class="sub">6 petites questions faciles, avec un adulte à côté si besoin.</p>
   </div>
 </header>
 
 <main class="narrow">
   <div class="card" id="introCard">
-    <p>👋 Coucou ! On va répondre ensemble à quelques petites questions sur les écrans, les jeux et Internet.</p>
-    <p>Il n'y a pas de mauvaise réponse : si tu te trompes, on t'explique juste après !</p>
+    <p>👋 Coucou ! On va jouer à un petit quiz sur les écrans.</p>
+    <p>Il n'y a pas de mauvaise réponse. Si tu te trompes, ce n'est pas grave !</p>
     <div class="actions">
       <button type="button" class="primary" id="startBtn">🚀 Commencer</button>
     </div>
@@ -47,40 +47,40 @@
 <script>
   const QUIZ = [
     {
-      q: "Un jeu affiche une pub avec un super cadeau si tu cliques dessus. Que fais-tu ?",
-      options: ["Je clique vite pour avoir le cadeau", "Je demande à un adulte avant de cliquer", "Je clique et je ferme après"],
+      q: "🎁 Un jeu dit : \"Clique ici pour gagner un cadeau !\" Tu fais quoi ?",
+      options: ["Je clique vite", "Je demande à un adulte", "Je ferme le jeu"],
       correct: 1,
-      explain: "Avant de cliquer sur quelque chose qu'on ne connaît pas, il vaut mieux demander à un adulte."
+      explain: "On demande toujours à un adulte avant de cliquer."
     },
     {
-      q: "C'est un adulte qui décide...",
-      options: ["Combien de temps on peut jouer aux écrans", "Rien, on fait ce qu'on veut", "Que les écrans, c'est toute la journée"],
-      correct: 0,
-      explain: "Ce sont les parents qui décident du temps qu'on peut passer sur les écrans, pour rester en bonne santé."
+      q: "⏰ Qui décide du temps de jeu sur la tablette ?",
+      options: ["Moi tout seul", "Un adulte", "Personne"],
+      correct: 1,
+      explain: "C'est un adulte qui dit combien de temps on peut jouer."
     },
     {
-      q: "Quelqu'un que tu ne connais pas t'écrit sur un jeu et veut devenir ton ami. Que fais-tu ?",
-      options: ["Je lui dis tout de suite mon prénom et mon école", "J'en parle à un adulte avant de répondre", "Je lui envoie une photo de moi"],
+      q: "👋 Un inconnu t'écrit : \"Salut, on devient amis ?\" Tu fais quoi ?",
+      options: ["Je dis oui et mon prénom", "Je vais voir un adulte", "J'envoie une photo de moi"],
       correct: 1,
-      explain: "On parle toujours à un adulte avant de discuter avec quelqu'un qu'on ne connaît pas sur Internet."
+      explain: "Avec un inconnu, on va toujours voir un adulte avant de répondre."
     },
     {
-      q: "Une image sur l'écran te fait peur ou te dérange. Que fais-tu ?",
-      options: ["Je continue à regarder", "Je vais chercher un adulte tout de suite", "Je la montre à mes amis"],
+      q: "😨 Une image te fait peur sur l'écran. Tu fais quoi ?",
+      options: ["Je continue à regarder", "Je vais voir un adulte", "Je la montre à un copain"],
       correct: 1,
-      explain: "Si une image te fait peur ou te dérange, va toujours voir un adulte de confiance."
+      explain: "Si une image te fait peur, va toujours voir un adulte."
     },
     {
-      q: "Pour utiliser une tablette ou un ordinateur à la maison, il faut...",
-      options: ["Le faire en cachette", "Demander la permission à un adulte", "Le faire toute la nuit"],
+      q: "📱 Pour utiliser la tablette, tu dois...",
+      options: ["Le faire en cachette", "Demander la permission", "Le faire toute la nuit"],
       correct: 1,
-      explain: "On demande toujours la permission avant d'utiliser un écran, et on respecte le temps donné par les parents."
+      explain: "On demande toujours la permission avant d'utiliser un écran."
     },
     {
-      q: "Un mot de passe, c'est un peu comme un secret. On doit...",
-      options: ["Le dire à tout le monde", "Le garder pour soi (sauf pour ses parents)", "L'écrire sur Internet"],
+      q: "🔑 Ton mot de passe, tu le dis à qui ?",
+      options: ["À tout le monde", "À personne (sauf tes parents)", "Tu l'écris sur Internet"],
       correct: 1,
-      explain: "Un mot de passe est secret — on ne le donne à personne, sauf à ses parents s'ils en ont besoin pour t'aider."
+      explain: "Un mot de passe, on ne le dit à personne, sauf à ses parents."
     }
   ];
 
