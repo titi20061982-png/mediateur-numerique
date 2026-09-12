@@ -89,6 +89,7 @@
           <p class="acct-email" id="modBadge" style="display:none;margin:0;">👑 Compte modérateur</p>
         </div>
       </div>
+      <p class="acct-encouragement" id="acctEncouragement" style="display:none;"></p>
       <div class="reg-field" style="margin-top:0.9rem;">
         <label for="usernameInput">Nom d'utilisateur</label>
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
@@ -124,6 +125,11 @@
         <span class="kpi-value" id="kpiFavs">—</span>
         <span class="kpi-label">Favoris</span>
       </div>
+    </div>
+
+    <div class="card reveal" id="resumeCard" style="display:none;">
+      <h3>↩️ Reprendre où j'en étais</h3>
+      <div id="resumeList"></div>
     </div>
 
     <div class="grid-2">
@@ -195,6 +201,14 @@
     const slug = key.replace(/-quiz(-v2)?$/, '');
     return quizBySlug(slug);
   }
+
+  const CATEGORIES = [
+    { name: 'Premiers pas', slugs: ['smartphone', 'battle-os', 'base-adrn', 'clavier'] },
+    { name: 'Sécurité, vie privée & bien-être en ligne', slugs: ['phishing', 'cyberharcelement', 'identite-numerique', 'vie-privee', 'enfant-internet'] },
+    { name: 'Démarches administratives', slugs: ['caf', 'france-titres', 'impots', 'ameli', 'retraite'] },
+    { name: 'Insertion professionnelle', slugs: ['cv-lettre', 'formation'] },
+    { name: 'Culture numérique', slugs: ['ia', 'facture-telephone'] }
+  ];
 
   const loggedOutView = document.getElementById('loggedOutView');
   const loggedInView = document.getElementById('loggedInView');
@@ -403,6 +417,57 @@
     document.getElementById('kpiFavs').textContent = stats.favoritesCount;
   }
 
+  function renderEncouragement(stats) {
+    const el = document.getElementById('acctEncouragement');
+    const total = QUIZZES.length;
+    let msg = '';
+    if (stats.masteredCount >= total) {
+      msg = '🏆 Bravo, vous avez maîtrisé tous les ateliers du site !';
+    } else {
+      const almostDone = CATEGORIES.find(function (cat) {
+        const masteredInCat = cat.slugs.filter(function (s) {
+          const b = stats.bestBySlug[s];
+          return b && b.avance >= 75;
+        }).length;
+        return masteredInCat > 0 && (cat.slugs.length - masteredInCat) === 1;
+      });
+      if (almostDone) {
+        msg = '💪 Plus qu\'un atelier pour finir la catégorie « ' + almostDone.name + ' » !';
+      } else if (stats.totalQuizzesTaken === 0) {
+        msg = '👋 Prêt(e) à commencer ? Choisissez un atelier ci-dessous pour faire votre premier quiz.';
+      } else if (stats.masteredCount > 0) {
+        msg = '✨ Vous avez déjà maîtrisé ' + stats.masteredCount + ' atelier' + (stats.masteredCount > 1 ? 's' : '') + ' sur ' + total + ', continuez comme ça !';
+      }
+    }
+    if (msg) { el.textContent = msg; el.style.display = ''; }
+    else { el.style.display = 'none'; }
+  }
+
+  function renderResume(stats, history) {
+    const card = document.getElementById('resumeCard');
+    const el = document.getElementById('resumeList');
+    const lastAttempt = {};
+    history.forEach(function (r) {
+      const t = new Date(r.date).getTime();
+      if (!isNaN(t) && (!lastAttempt[r.slug] || t > lastAttempt[r.slug])) lastAttempt[r.slug] = t;
+    });
+    const inProgress = QUIZZES.filter(function (q) {
+      const b = stats.bestBySlug[q.slug];
+      return b && b.avance < 75;
+    }).sort(function (a, b) {
+      return (lastAttempt[b.slug] || 0) - (lastAttempt[a.slug] || 0);
+    }).slice(0, 4);
+
+    if (!inProgress.length) { card.style.display = 'none'; return; }
+    card.style.display = '';
+    el.innerHTML = inProgress.map(function (q) {
+      return '<div class="stats-row"><div class="stats-icon">' + q.icon + '</div>' +
+        '<div class="stats-info"><a href="ateliers/' + q.slug + '_quiz.html">' + q.title + '</a></div>' +
+        '<a class="acct-badge" href="ateliers/' + q.slug + '_quiz.html" style="position:static;font-size:0.75rem;padding:0.4rem 0.8rem;">Continuer →</a>' +
+        '</div>';
+    }).join('');
+  }
+
   let currentUserRef = null;
 
   watchAuth(function (user) {
@@ -430,6 +495,7 @@
         document.getElementById('acctKpis').style.display = 'none';
         document.getElementById('progressCard').style.display = 'none';
         document.getElementById('badgesCard').style.display = 'none';
+        document.getElementById('resumeCard').style.display = 'none';
       }
       Promise.all([getCloudFavorites(user.uid), getQuizHistory(user.uid)]).then(function (results) {
         const favorites = results[0], history = results[1];
@@ -440,6 +506,8 @@
         renderProgress(stats);
         renderBadges(stats);
         renderKpis(stats);
+        renderEncouragement(stats);
+        renderResume(stats, history);
       }).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
         document.getElementById('historyList').innerHTML = '<p class="acct-empty">Impossible de charger l\'historique pour le moment.</p>';

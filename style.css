@@ -521,6 +521,7 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .badge-tile .badge-name { font-weight: 600; font-size: 0.87rem; color: var(--text); }
 .badge-tile.earned .badge-name { color: var(--accent); }
 .badge-tile .badge-desc { font-size: 0.76rem; color: var(--muted); margin-top: 0.1rem; line-height: 1.4; }
+.acct-encouragement { margin: 0.9rem 0 0; padding: 0.7rem 1rem; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-size: 0.88rem; font-weight: 600; }
 
 /* ---------- 12ter. Vue d'ensemble moderateur (leaderboard, popularite, matrice) ---------- */
 .leaderboard-row { display: flex; align-items: center; gap: 0.8rem; padding: 0.55rem 0; border-bottom: 1px solid var(--border); }
