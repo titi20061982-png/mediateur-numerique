@@ -368,19 +368,37 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 
 /* ---------- Cartes de categories (accueil) ---------- */
 .cat-overview { margin: 0 0 2.2rem; }
-.cat-overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; }
+.cat-overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.1rem; }
 .cat-tile {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
-  padding: 1.3rem 1.2rem; border-radius: 16px; text-decoration: none; color: var(--text);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
+  padding: 1.5rem 1.3rem; border-radius: 18px; text-decoration: none; color: var(--text);
   background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
-.cat-tile-icon { font-size: 1.7rem; filter: drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent)); }
-.cat-tile h3 { margin: 0; font-size: 0.98rem; }
-.cat-tile p { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.cat-tile::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
+  background: radial-gradient(120% 100% at 20% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 65%);
+  transition: opacity .25s ease;
+}
+.cat-tile-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.6rem;
+  background: color-mix(in srgb, var(--accent) 16%, var(--card));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent) inset;
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent));
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.cat-tile h3 { margin: 0; font-size: 1.02rem; position: relative; }
+.cat-tile p { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.5; position: relative; }
 .cat-tile:hover, .cat-tile:focus-visible {
-  transform: translateY(-4px); border-color: var(--accent);
-  box-shadow: 0 4px 10px rgba(30,25,15,0.08), 0 0 26px color-mix(in srgb, var(--accent) 38%, transparent);
+  transform: translateY(-6px); border-color: var(--accent);
+  box-shadow: 0 8px 18px rgba(30,25,15,0.1), 0 0 30px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+.cat-tile:hover::before, .cat-tile:focus-visible::before { opacity: 1; }
+.cat-tile:hover .cat-tile-icon, .cat-tile:focus-visible .cat-tile-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent) inset, 0 0 16px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 /* ---------- Separation visuelle Prestations ADRN dans les menus ---------- */
