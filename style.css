@@ -634,6 +634,8 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .leaderboard-row.rank-1 .leaderboard-rank { font-size: 1.2rem; }
 .leaderboard-name { flex: 1; min-width: 0; font-weight: 600; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .leaderboard-meta { flex: none; font-size: 0.78rem; color: var(--muted); text-align: right; }
+.inscrits-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.4rem 0.8rem; }
+.inscrits-list li { padding: 0.4rem 0.7rem; border-radius: 8px; background: var(--bg-soft); font-size: 0.86rem; font-weight: 600; }
 
 .matrix-wrap { overflow-x: auto; }
 .matrix-table { border-collapse: collapse; font-size: 0.8rem; }

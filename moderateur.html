@@ -64,6 +64,7 @@
           <ul>
             <li>En haut : nombre total de comptes visiteurs, quiz passés, favoris posés, <strong>🕶️ visiteurs anonymes</strong> (personnes ayant utilisé le site sans créer de compte — suivies discrètement pour la visibilité, jamais nommées) et <strong>🧪 sessions de test</strong> (voir juste en dessous). Une <strong>📍 localisation approximative</strong> (ville/région, déduite de l'adresse IP) est affichée sous chaque visiteur anonyme quand elle est disponible.</li>
             <li><strong>🧪 Sessions de test</strong> : quand du developpement est fait sur le site, les pages sont parfois chargées avec <code>?internal_test=1</code> dans l'adresse — ces visites sont marquées automatiquement, exclues de toutes les statistiques ci-dessus (classement, popularité, badges, activité, KPI) et n'incrémentent pas le compteur de visites public. Elles restent visibles uniquement dans la liste "Comptes visiteurs" (cochez "Inclure les visiteurs anonymes"), clairement étiquetées "🧪 Session de test (Claude)" avec une bordure orange en pointillés — pour ne jamais les confondre avec un vrai visiteur. Le bouton <strong>"🧹 Supprimer les sessions de test"</strong> efface d'un coup tous ces comptes de test sans jamais toucher à un vrai visiteur.</li>
+            <li><strong>👥 Inscrits</strong> : liste complète (pas seulement le top 10) de tous les comptes créés sur le site avec leur nom, par ordre alphabétique — visible ici uniquement, jamais sur les pages publiques.</li>
             <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés (comptes nommés uniquement).</li>
             <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs, anonymes inclus, avec le détail "terminé(s) sur démarré(s)" pour repérer les quiz commencés puis abandonnés.</li>
             <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
@@ -123,6 +124,12 @@
           <span class="kpi-value" id="statTotalTest">—</span>
           <span class="kpi-label">Sessions de test</span>
         </div>
+      </div>
+
+      <div class="card" id="inscritsCard">
+        <h3>👥 Inscrits (<span id="inscritsCount">—</span>)</h3>
+        <p class="acct-empty" style="margin-bottom:0.6rem;">Comptes créés sur le site (email/mot de passe), par ordre alphabétique.</p>
+        <div id="inscritsList"><p class="acct-empty">Chargement…</p></div>
       </div>
 
       <div class="grid-2">
@@ -254,6 +261,18 @@
     const earned = BADGES.filter(function (b) { return b.test(stats); });
     if (!earned.length) return '<span class="acct-empty">Aucun badge</span>';
     return earned.map(function (b) { return '<span title="' + escapeHtml(b.name) + '">' + b.icon + '</span>'; }).join(' ');
+  }
+
+  function renderInscrits(users) {
+    document.getElementById('inscritsCount').textContent = users.length;
+    const el = document.getElementById('inscritsList');
+    if (!users.length) { el.innerHTML = '<p class="acct-empty">Aucun compte inscrit pour l\'instant.</p>'; return; }
+    const sorted = users.slice().sort(function (a, b) {
+      return (a.username || a.email).localeCompare(b.username || b.email, 'fr', { sensitivity: 'base' });
+    });
+    el.innerHTML = '<ul class="inscrits-list">' + sorted.map(function (u) {
+      return '<li>' + escapeHtml(u.username || u.email) + '</li>';
+    }).join('') + '</ul>';
   }
 
   function renderLeaderboard(users) {
@@ -414,6 +433,7 @@
       allUsers = users;
       realUsers = allUsers.filter(function (u) { return !u.isTestSession; });
       const namedUsers = realUsers.filter(function (u) { return !u.isAnonymous; });
+      renderInscrits(namedUsers);
       renderLeaderboard(namedUsers);
       renderPopularity(realUsers);
       renderBadgeDistribution(namedUsers);
