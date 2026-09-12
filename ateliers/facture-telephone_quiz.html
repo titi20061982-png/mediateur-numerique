@@ -524,7 +524,7 @@
         return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
       }).join('');
       return '<div class="qcard"><div class="qnum">' + esc(cache[lang].ui.questionLabel) + ' ' + (i+1) + ' / ' + QUIZ.length + '</div>' +
-        '<p class="qtext">' + esc(q.q) + '</p><div id="opts' + i + '">' + opts + '</div>' +
+        '<p class="qtext">' + esc(q.q) + '</p><button type="button" class="speak-btn" data-qi="' + i + '" title="Ecouter la question" aria-label="Ecouter la question">🔊</button><div id="opts' + i + '">' + opts + '</div>' +
         '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
     }).join('');
     banner.className = '';
@@ -647,6 +647,20 @@
   resetBtn.addEventListener('click', function() {
     if (window.__quizLocked) { if (window.__showQuizGate) window.__showQuizGate(); return; }
     renderQuiz(currentLevel, currentLang);
+  });
+
+  form.addEventListener('click', function(e) {
+    var btn = e.target.closest('.speak-btn');
+    if (!btn || !window.speechSynthesis) return;
+    var qi = parseInt(btn.dataset.qi, 10);
+    var q = currentQuiz[qi];
+    if (!q) return;
+    var letters = 'ABCDEFGH';
+    var text = q.q + '. ' + q.options.map(function(o, idx) { return letters[idx] + '. ' + o; }).join('. ');
+    window.speechSynthesis.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = currentLang;
+    window.speechSynthesis.speak(utter);
   });
 
   fetch('https://abacus.jasoncameron.dev/hit/mediateur-numerique-2026/facture-telephone-quiz-v2')
