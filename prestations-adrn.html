@@ -255,6 +255,16 @@
   })();
 </script>
 <script>
+  // Freins contre la copie/impression de la page (dissuasion, pas une securite absolue).
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('keydown', function (e) {
+    var k = e.key ? e.key.toLowerCase() : '';
+    if ((e.ctrlKey || e.metaKey) && k === 's') {
+      e.preventDefault();
+    }
+  });
+</script>
+<script>
   (function () {
     var btn = document.getElementById('textSizeToggle');
     if (!btn) return;
