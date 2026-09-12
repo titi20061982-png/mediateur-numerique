@@ -450,6 +450,18 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .adrn-callout-text p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 .adrn-callout-btn { background: var(--accent-3); flex: none; }
 
+/* ---------- Encart Numerique pour les enfants (accueil) ---------- */
+.kids-callout {
+  display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+  margin: 0 0 2.2rem; padding: 1.2rem 1.4rem; border-radius: 16px;
+  background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.kids-callout-icon { font-size: 2rem; flex: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 55%, transparent)); }
+.kids-callout-text { flex: 1; min-width: 220px; }
+.kids-callout-text h2 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+.kids-callout-text p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.kids-callout-btn { background: var(--accent); flex: none; }
+
 /* ---------- Comment ca marche (accueil) ---------- */
 .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.3rem; margin-top: 1rem; text-align: center; }
 .how-step { padding: 0.4rem; }
