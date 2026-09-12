@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Numérique pour les 6-8 ans — Ateliers Médiation Numérique</title>
-<meta name="description" content="Quiz numérique tout simple adapté aux enfants de 6 à 8 ans : demander la permission, ne pas parler aux inconnus en ligne, garder les secrets.">
+<meta name="description" content="Petites histoires à lire avec un enfant de 6 à 8 ans : demander la permission, ne pas parler aux inconnus en ligne, garder les secrets.">
 <link rel="icon" type="image/png" href="../logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
@@ -17,86 +17,36 @@
 <header>
   <div class="wrap">
     <a class="back" href="../index.html">← Retour aux ateliers</a>
-    <div class="eyebrow">🧒 Numérique pour les enfants — 6-8 ans</div>
+    <div class="eyebrow">👶 Numérique pour les enfants — 6-8 ans</div>
     <h1>Le numérique, en s'amusant !</h1>
-    <p class="sub">👨‍👩‍👧 Pour les parents : à faire ensemble, pas seul devant l'écran.</p>
+    <p class="sub">👨‍👩‍👧 Pour les parents : à lire à voix haute avec l'enfant. Pas de clic, pas de lecture seul(e) nécessaire.</p>
   </div>
 </header>
 
 <main class="narrow">
-  <div class="card" id="introCard">
-    <p>👨‍👩‍👧 <strong>À faire ensemble</strong> : à cet âge, l'enfant ne sait pas forcément encore bien lire ou cliquer seul.</p>
-    <p>Lisez les questions à voix haute (ou utilisez le bouton 🔊), et laissez l'enfant vous dire sa réponse à l'oral — c'est vous qui cliquez.</p>
-    <p>👋 Il n'y a pas de mauvaise réponse. Si l'enfant se trompe, ce n'est pas grave !</p>
-    <div class="actions">
-      <button type="button" class="primary" id="startBtn">🚀 Commencer</button>
-    </div>
+  <div class="card">
+    <p>👋 <strong>Comment faire :</strong> lisez chaque petite histoire à l'enfant (ou appuyez sur 🔊), regardez ensemble le dessin, et discutez de la règle. Pas de bouton à cliquer, pas de score — juste une discussion.</p>
   </div>
 
-  <div id="quizScreen" style="display:none;">
-    <div id="scoreBanner"></div>
-    <form id="quizForm"></form>
-    <div class="actions">
-      <button type="submit" form="quizForm" class="primary" id="submitBtn">Voir mon résultat</button>
-      <button type="button" class="secondary" id="resetBtn" style="display:none;">Recommencer</button>
-    </div>
+  <div id="storyList"></div>
+
+  <div class="card" style="text-align:center;">
+    <p>🎉 Bravo, vous avez fait le tour des 6 règles ensemble !</p>
+    <a class="cta-btn" href="../enfants.html">← Retour à l'espace enfants</a>
   </div>
 </main>
 <footer>
   © 2026 titi_23 — Reproduction interdite sans autorisation. <a href="../index.html">Retour au site</a>
 </footer>
 <script>
-  const QUIZ = [
-    {
-      icon: "🎁",
-      q: "Tu vois un cadeau. Tu cliques ?",
-      options: ["Oui", "Je demande à un adulte"],
-      correct: 1,
-      explain: "On demande toujours à un adulte."
-    },
-    {
-      icon: "⏰",
-      q: "Qui dit combien de temps tu joues ?",
-      options: ["Moi", "Un adulte"],
-      correct: 1,
-      explain: "C'est un adulte qui décide."
-    },
-    {
-      icon: "👋",
-      q: "Un inconnu te parle. Tu réponds seul(e) ?",
-      options: ["Oui", "Je vais voir un adulte"],
-      correct: 1,
-      explain: "On va toujours voir un adulte."
-    },
-    {
-      icon: "😨",
-      q: "Une image te fait peur. Tu fais quoi ?",
-      options: ["Je regarde", "Je vais voir un adulte"],
-      correct: 1,
-      explain: "On va toujours voir un adulte."
-    },
-    {
-      icon: "📱",
-      q: "Tu veux jouer sur la tablette. Tu demandes ?",
-      options: ["Non", "Oui"],
-      correct: 1,
-      explain: "On demande toujours avant."
-    },
-    {
-      icon: "🔑",
-      q: "Ton mot de passe, tu le dis ?",
-      options: ["Oui", "Non"],
-      correct: 1,
-      explain: "Un mot de passe reste secret."
-    }
+  const STORIES = [
+    { icon: "🎁", text: "Un jeu dit : tu gagnes un cadeau si tu cliques.", rule: "On demande toujours à un adulte avant de cliquer." },
+    { icon: "⏰", text: "C'est l'heure de jouer sur la tablette.", rule: "C'est un adulte qui décide combien de temps." },
+    { icon: "👋", text: "Quelqu'un que tu ne connais pas te parle.", rule: "On va toujours voir un adulte." },
+    { icon: "😨", text: "Une image te fait peur sur l'écran.", rule: "On va toujours voir un adulte." },
+    { icon: "📱", text: "Tu veux utiliser la tablette.", rule: "On demande toujours la permission avant." },
+    { icon: "🔑", text: "Quelqu'un te demande ton mot de passe.", rule: "Le mot de passe reste secret." }
   ];
-
-  const introCard = document.getElementById('introCard');
-  const quizScreen = document.getElementById('quizScreen');
-  const form = document.getElementById('quizForm');
-  const banner = document.getElementById('scoreBanner');
-  const submitBtn = document.getElementById('submitBtn');
-  const resetBtn = document.getElementById('resetBtn');
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -104,86 +54,26 @@
     });
   }
 
-  function renderQuiz() {
-    form.innerHTML = QUIZ.map(function (q, i) {
-      const opts = q.options.map(function (o, j) {
-        return '<label class="opt"><input type="radio" name="q' + i + '" value="' + j + '" required><span>' + esc(o) + '</span></label>';
-      }).join('');
-      return '<div class="qcard"><div class="qnum">Question ' + (i + 1) + ' / ' + QUIZ.length + '</div>' +
-        (q.icon ? '<div class="qicon" aria-hidden="true">' + q.icon + '</div>' : '') +
-        '<p class="qtext">' + esc(q.q) + '</p>' +
-        '<button type="button" class="speak-btn" data-qi="' + i + '" title="Écouter la question" aria-label="Écouter la question">🔊 Écouter</button>' +
-        '<div id="opts' + i + '">' + opts + '</div>' +
-        '<div class="explain" id="explain' + i + '">💡 ' + esc(q.explain) + '</div></div>';
-    }).join('');
-    banner.className = '';
-    banner.innerHTML = '';
-    submitBtn.style.display = 'inline-block';
-    resetBtn.style.display = 'none';
-    introCard.style.display = 'none';
-    quizScreen.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  const storyList = document.getElementById('storyList');
+  storyList.innerHTML = STORIES.map(function (s, i) {
+    return '<div class="qcard">' +
+      '<div class="qicon" aria-hidden="true">' + s.icon + '</div>' +
+      '<p class="qtext">' + esc(s.text) + '</p>' +
+      '<button type="button" class="speak-btn" data-i="' + i + '" title="Écouter" aria-label="Écouter">🔊 Écouter</button>' +
+      '<div class="explain show">👉 ' + esc(s.rule) + '</div>' +
+      '</div>';
+  }).join('');
 
-  document.getElementById('startBtn').addEventListener('click', renderQuiz);
-
-  form.addEventListener('change', function (e) {
-    if (e.target.type !== 'radio') return;
-    form.querySelectorAll('input[name="' + e.target.name + '"]').forEach(function (inp) {
-      const opt = inp.closest('.opt');
-      opt.classList.toggle('selected', inp.checked);
-      if (inp.checked) {
-        opt.style.borderColor = 'var(--accent)';
-        opt.style.boxShadow = 'inset 0 0 0 1px var(--accent)';
-      } else {
-        opt.style.borderColor = '';
-        opt.style.boxShadow = '';
-      }
-    });
-  });
-
-  form.addEventListener('click', function (e) {
+  storyList.addEventListener('click', function (e) {
     const btn = e.target.closest('.speak-btn');
     if (!btn || !window.speechSynthesis) return;
-    const qi = parseInt(btn.dataset.qi, 10);
-    const q = QUIZ[qi];
-    if (!q) return;
-    const letters = 'ABC';
-    const text = q.q + '. ' + q.options.map(function (o, idx) { return letters[idx] + '. ' + o; }).join('. ');
+    const s = STORIES[parseInt(btn.dataset.i, 10)];
+    if (!s) return;
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
+    const utter = new SpeechSynthesisUtterance(s.text + '. ' + s.rule);
     utter.lang = 'fr-FR';
     window.speechSynthesis.speak(utter);
   });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    let score = 0;
-    QUIZ.forEach(function (q, i) {
-      const chosen = form.querySelector('input[name="q' + i + '"]:checked');
-      const opts = document.querySelectorAll('#opts' + i + ' .opt');
-      opts.forEach(function (el, j) {
-        el.classList.remove('correct', 'incorrect');
-        if (j === q.correct) el.classList.add('correct');
-        else if (chosen && parseInt(chosen.value, 10) === j) el.classList.add('incorrect');
-      });
-      const isCorrect = !!(chosen && parseInt(chosen.value, 10) === q.correct);
-      if (isCorrect) score++;
-      document.getElementById('explain' + i).classList.add('show');
-      form.querySelectorAll('input[name="q' + i + '"]').forEach(function (inp) { inp.disabled = true; });
-    });
-    const pct = Math.round((score / QUIZ.length) * 100);
-    let tier = 'tier-low', msg = "C'est pas grave, regarde bien les explications pour la prochaine fois !";
-    if (pct >= 80) { tier = 'tier-high'; msg = "Bravo, tu connais déjà très bien les règles importantes !"; }
-    else if (pct >= 50) { tier = 'tier-mid'; msg = "Bien joué ! Regarde les explications pour en savoir encore plus."; }
-    banner.className = 'show ' + tier;
-    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
-    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    submitBtn.style.display = 'none';
-    resetBtn.style.display = 'inline-block';
-  });
-
-  resetBtn.addEventListener('click', renderQuiz);
 </script>
 <script>
   (function () {
