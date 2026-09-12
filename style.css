@@ -387,6 +387,29 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   box-shadow: 0 0 15px #00aaff;
 }
 
+/* ---------- Bloc "Parcours debutant" (accueil) : meme style neon fixe ---------- */
+.neon-block {
+  margin: 0 0 2.2rem; padding: 1.8rem 1.6rem; border-radius: 16px;
+  background: #0d0d0d; border: 1px solid #003d55; color: #fff;
+  box-shadow: 0 0 10px rgba(0, 170, 255, 0.1);
+}
+.neon-block h2 { margin: 0 0 0.4rem; color: #fff; }
+.neon-block > p { margin: 0 0 1.2rem; color: #cccccc; }
+.parcours-list { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.parcours-list li {
+  background: rgba(255,255,255,0.04); border: 1px solid #003d55; border-radius: 10px;
+  padding: 0.65rem 0.9rem; color: #e5e5e5; font-size: 0.95rem;
+}
+.btn-neon {
+  display: inline-block; padding: 0.75rem 1.6rem; border-radius: 999px;
+  background: #00aaff; color: #0d0d0d; font-weight: 700; text-decoration: none;
+  box-shadow: 0 0 14px rgba(0, 170, 255, 0.55);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-neon:hover, .btn-neon:focus-visible {
+  transform: translateY(-3px); box-shadow: 0 0 22px #00aaff;
+}
+
 /* ---------- Separation visuelle Prestations ADRN dans les menus ---------- */
 .adrn-nav-link { margin-left: 0.9rem; }
 .toplinks a.adrn-nav-link:hover, .toplinks a.adrn-nav-link:focus-visible,
