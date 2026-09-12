@@ -86,6 +86,7 @@
         <div class="person-id">
           <p class="acct-email" style="margin:0;">Connecté en tant que <strong id="userEmailLabel"></strong></p>
           <p class="acct-empty" id="usernameSub" style="display:none;"></p>
+          <p class="acct-empty" id="streakBadge" style="display:none;"></p>
           <p class="acct-email" id="modBadge" style="display:none;margin:0;">👑 Compte modérateur</p>
         </div>
       </div>
@@ -488,6 +489,11 @@
           avatar.textContent = initialsFor(profile.username);
         }
         document.getElementById('usernameInput').value = profile.username || '';
+        if (profile.streak >= 2) {
+          var streakEl = document.getElementById('streakBadge');
+          streakEl.textContent = '🔥 ' + profile.streak + ' jours de suite';
+          streakEl.style.display = '';
+        }
       }).catch(function () {});
       if (isModerator(user)) {
         document.getElementById('modBadge').style.display = '';

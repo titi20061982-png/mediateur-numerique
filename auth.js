@@ -32,14 +32,37 @@ export function isModerator(user) { return !!user && user.email === MODERATOR_EM
 export function watchAuth(cb) {
   return onAuthStateChanged(auth, function (user) {
     if (user) {
+      const ref = doc(db, "users", user.uid);
       const data = { isAnonymous: !!user.isAnonymous };
       if (user.email) data.email = user.email;
-      setDoc(doc(db, "users", user.uid), data, { merge: true }).catch(function () {});
-      if (user.isAnonymous) { ensureLocationInfo(user.uid).catch(function () {}); }
+      if (user.isAnonymous) {
+        setDoc(ref, data, { merge: true }).catch(function () {});
+        ensureLocationInfo(user.uid).catch(function () {});
+        cb(user);
+      } else {
+        getDoc(ref).then(function (snap) {
+          const prev = snap.exists() ? snap.data() : {};
+          const today = new Date().toISOString().slice(0, 10);
+          if (prev.lastActiveDay !== today) {
+            let streak = 1;
+            if (prev.lastActiveDay) {
+              const diffDays = Math.round((new Date(today) - new Date(prev.lastActiveDay)) / 86400000);
+              if (diffDays === 1) streak = (prev.streak || 0) + 1;
+            }
+            data.lastActiveDay = today;
+            data.streak = streak;
+          }
+          return setDoc(ref, data, { merge: true });
+        }).catch(function () {
+          return setDoc(ref, data, { merge: true }).catch(function () {});
+        }).then(function () {
+          cb(user);
+        });
+      }
     } else {
       signInAnonymously(auth).catch(function () {});
+      cb(user);
     }
-    cb(user);
   });
 }
 
