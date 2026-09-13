@@ -182,6 +182,11 @@
       <div id="favoritesList"><p class="acct-empty">Chargement…</p></div>
     </div>
 
+    <div class="card reveal" id="scoreChartCard">
+      <h3>📈 Évolution de mes scores</h3>
+      <div id="scoreChartWrap"><p class="acct-empty">Chargement…</p></div>
+    </div>
+
     <div class="card reveal" id="historyCard">
       <h3>📊 Historique de mes quiz</h3>
       <div id="historyList"><p class="acct-empty">Chargement…</p></div>
@@ -406,6 +411,39 @@
     }).join('');
   }
 
+  function renderScoreChart(history) {
+    const wrap = document.getElementById('scoreChartWrap');
+    const sorted = history.slice().sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
+    if (sorted.length < 2) {
+      wrap.innerHTML = '<p class="acct-empty">Passez au moins 2 quiz pour voir apparaître votre courbe de progression.</p>';
+      return;
+    }
+    const W = 600, H = 200, padL = 34, padR = 12, padT = 14, padB = 14;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const n = sorted.length;
+    function xPos(i) { return padL + (n === 1 ? innerW / 2 : (innerW * i / (n - 1))); }
+    function yPos(pct) { return padT + innerH - (innerH * pct / 100); }
+    const points = sorted.map(function (r, i) { return xPos(i) + ',' + yPos(r.pct); }).join(' ');
+    const dots = sorted.map(function (r, i) {
+      const q = quizBySlug(r.slug) || { title: r.slug };
+      const d = new Date(r.date);
+      const dateStr = isNaN(d) ? '' : d.toLocaleDateString('fr-FR');
+      const color = r.pct >= 75 ? 'var(--good)' : (r.pct >= 50 ? 'var(--accent-2)' : 'var(--bad)');
+      return '<circle cx="' + xPos(i) + '" cy="' + yPos(r.pct) + '" r="4" fill="' + color + '"><title>' +
+        q.title + ' — ' + r.pct + ' % (' + dateStr + ')</title></circle>';
+    }).join('');
+    const grid = [0, 25, 50, 75, 100].map(function (v) {
+      return '<line x1="' + padL + '" y1="' + yPos(v) + '" x2="' + (W - padR) + '" y2="' + yPos(v) + '" stroke="var(--border)" stroke-width="1"></line>' +
+        '<text x="' + (padL - 6) + '" y="' + (yPos(v) + 3) + '" font-size="9" fill="var(--muted)" text-anchor="end">' + v + '%</text>';
+    }).join('');
+    wrap.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block;" role="img" aria-label="Courbe de progression des scores de quiz dans le temps">' +
+      grid +
+      '<polyline points="' + points + '" fill="none" stroke="var(--accent)" stroke-width="2"></polyline>' +
+      dots +
+      '</svg>' +
+      '<p class="acct-empty" style="margin-top:0.4rem;">Chaque point est un quiz passé, du plus ancien (à gauche) au plus récent (à droite). Survolez un point pour le détail.</p>';
+  }
+
   function renderHistory(results) {
     const el = document.getElementById('historyList');
     if (!results.length) {
@@ -564,6 +602,7 @@
         const favorites = results[0], history = results[1];
         renderFavorites(favorites);
         renderHistory(history);
+        renderScoreChart(history);
         if (isModerator(user)) return;
         const stats = computeStats(history, favorites);
         renderProgress(stats);
@@ -575,6 +614,7 @@
       }).catch(function () {
         document.getElementById('favoritesList').innerHTML = '<p class="acct-empty">Impossible de charger les favoris pour le moment.</p>';
         document.getElementById('historyList').innerHTML = '<p class="acct-empty">Impossible de charger l\'historique pour le moment.</p>';
+        document.getElementById('scoreChartWrap').innerHTML = '<p class="acct-empty">Impossible de charger la courbe pour le moment.</p>';
         document.getElementById('progressList').innerHTML = '<p class="acct-empty">Impossible de charger la progression pour le moment.</p>';
         document.getElementById('badgesList').innerHTML = '<p class="acct-empty">Impossible de charger les badges pour le moment.</p>';
       });
