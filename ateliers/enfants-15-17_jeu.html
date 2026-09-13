@@ -24,6 +24,10 @@
 </header>
 
 <main class="narrow">
+  <div class="mascot">
+    <span class="mascot-avatar" aria-hidden="true">🦉</span>
+    <div class="mascot-bubble"><strong>Plume</strong> : Salut, c'est Plume ! On joue à trier les situations ensemble ?</div>
+  </div>
   <div class="card" id="introCard">
     <p>👋 Pour chaque carte, choisis "✅ Sûr" ou "⚠️ Attention". Pas de mauvaise réponse, on t'explique à chaque fois !</p>
     <div class="actions">
@@ -123,9 +127,9 @@
   function renderEnd() {
     const pct = Math.round((score / CARDS.length) * 100);
     gameArea.innerHTML = '<div class="qcard" style="text-align:center;">' +
+      '<div class="mascot" style="text-align:left;"><span class="mascot-avatar" aria-hidden="true">🦉</span><div class="mascot-bubble"><strong>Plume</strong> : ' + (pct >= 80 ? 'Bravo, tu as les bons réflexes !' : 'Bien joué, continue comme ça !') + '</div></div>' +
       '<div class="qicon" aria-hidden="true">🎉</div>' +
       '<p class="qtext">Score : ' + score + ' / ' + CARDS.length + ' (' + pct + ' %)</p>' +
-      '<p>' + (pct >= 80 ? 'Bravo, tu as les bons réflexes !' : 'Bien joué, continue comme ça !') + '</p>' +
       '<div class="actions" style="justify-content:center;">' +
       '<button type="button" class="secondary" id="replayBtn">🔁 Rejouer</button>' +
       '<a class="cta-btn" href="../enfants.html">← Espace enfants</a>' +

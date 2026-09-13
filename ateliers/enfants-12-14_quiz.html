@@ -24,6 +24,10 @@
 </header>
 
 <main class="narrow">
+  <div class="mascot">
+    <span class="mascot-avatar" aria-hidden="true">🦉</span>
+    <div class="mascot-bubble"><strong>Plume</strong> : Salut, c'est Plume ! On regarde ensemble des situations que tu peux vraiment croiser en ligne ?</div>
+  </div>
   <div class="card" id="introCard">
     <p>👋 Ce quiz te propose des situations concrètes que tu peux croiser sur les réseaux sociaux, dans des jeux ou des messageries.</p>
     <p>Pas de mauvaise note : si tu te trompes, une explication s'affiche juste après chaque question.</p>
@@ -181,7 +185,7 @@
     if (pct >= 80) { tier = 'tier-high'; msg = "Bravo, tu as les bons réflexes pour naviguer en sécurité !"; }
     else if (pct >= 50) { tier = 'tier-mid'; msg = "Bien joué, tu es sur la bonne voie ! Regarde les explications pour progresser encore."; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.innerHTML = '<div class="mascot" style="margin-bottom:0.6rem;"><span class="mascot-avatar" aria-hidden="true">🦉</span><div class="mascot-bubble"><strong>Plume</strong> : ' + esc(msg) + '</div></div>Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';

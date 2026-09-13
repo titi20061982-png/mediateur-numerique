@@ -77,3 +77,20 @@ body {
 .game-choice:disabled:hover { transform: none; }
 .game-choice.chosen-correct { border-color: #2ec4b6; background: color-mix(in srgb, #2ec4b6 16%, var(--card)); }
 .game-choice.chosen-wrong { border-color: #ff6f59; background: color-mix(in srgb, #ff6f59 16%, var(--card)); }
+
+/* ---------- Mascotte Plume la chouette (toutes les pages enfants) ---------- */
+.mascot { display: flex; align-items: flex-start; gap: 0.7rem; margin: 0 0 1.2rem; }
+.mascot-avatar { font-size: 2.8rem; flex: none; line-height: 1; }
+.mascot-bubble {
+  position: relative; background: var(--card); border: 2px solid var(--border); border-radius: 16px;
+  padding: 0.7rem 1rem; font-size: 0.92rem; box-shadow: var(--shadow);
+}
+.mascot-bubble strong { color: var(--accent-2); }
+.mascot-bubble::before {
+  content: ""; position: absolute; left: -9px; top: 16px;
+  border-width: 8px 10px 8px 0; border-style: solid; border-color: transparent var(--border) transparent transparent;
+}
+.mascot-bubble::after {
+  content: ""; position: absolute; left: -7px; top: 17px;
+  border-width: 7px 9px 7px 0; border-style: solid; border-color: transparent var(--card) transparent transparent;
+}

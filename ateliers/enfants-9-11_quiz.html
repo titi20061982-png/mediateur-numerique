@@ -24,6 +24,10 @@
 </header>
 
 <main class="narrow">
+  <div class="mascot">
+    <span class="mascot-avatar" aria-hidden="true">🦉</span>
+    <div class="mascot-bubble"><strong>Plume</strong> : Salut, c'est Plume ! Prêt(e) à répondre à mes questions ?</div>
+  </div>
   <div class="card" id="introCard">
     <p>👋 Bonjour ! Ce petit quiz t'aide à apprendre des choses importantes pour bien utiliser Internet, les jeux et les messages en toute sécurité.</p>
     <p>Il n'y a pas de mauvaise note : si tu te trompes, on t'explique la bonne réponse juste après !</p>
@@ -187,7 +191,7 @@
     if (pct >= 80) { tier = 'tier-high'; msg = "Bravo, tu connais déjà très bien les bons réflexes sur Internet !"; }
     else if (pct >= 50) { tier = 'tier-mid'; msg = "Bien joué, tu es sur la bonne voie ! Regarde les explications pour progresser encore."; }
     banner.className = 'show ' + tier;
-    banner.innerHTML = 'Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)<p>' + msg + '</p>';
+    banner.innerHTML = '<div class="mascot" style="margin-bottom:0.6rem;"><span class="mascot-avatar" aria-hidden="true">🦉</span><div class="mascot-bubble"><strong>Plume</strong> : ' + esc(msg) + '</div></div>Score : ' + score + ' / ' + QUIZ.length + ' (' + pct + ' %)';
     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     submitBtn.style.display = 'none';
     resetBtn.style.display = 'inline-block';
