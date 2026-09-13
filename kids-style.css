@@ -54,6 +54,26 @@ body {
 .kids-card h3 { margin: 0; font-size: 1.2rem; }
 .kids-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
 .kids-card:hover, .kids-card:focus-visible { transform: translateY(-6px) scale(1.02); }
+.kids-card-links { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.3rem; }
+.kids-card-links a {
+  padding: 0.45rem 0.9rem; border-radius: 999px; background: var(--accent); color: #fff;
+  text-decoration: none; font-weight: 700; font-size: 0.82rem; transition: transform .15s ease;
+}
+.kids-card-links a.jeu { background: #ff6f59; }
+.kids-card-links a:hover, .kids-card-links a:focus-visible { transform: translateY(-2px); }
 
 /* ---------- Pictogramme au-dessus de chaque question (quiz 6-8 ans) ---------- */
 .qicon { font-size: 5rem; line-height: 1; text-align: center; margin: 0 0 0.6rem; }
+
+/* ---------- Mini-jeu "Sur ou Attention" (tous ages) ---------- */
+.game-choices { display: flex; gap: 0.8rem; margin: 1rem 0; }
+.game-choice {
+  flex: 1; padding: 1rem 0.6rem; border-radius: 14px; border: 2px solid var(--border);
+  background: var(--card); font-family: inherit; font-weight: 700; font-size: 1.05rem;
+  cursor: pointer; transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.game-choice:hover:not(:disabled) { transform: translateY(-2px); }
+.game-choice:disabled { cursor: default; }
+.game-choice:disabled:hover { transform: none; }
+.game-choice.chosen-correct { border-color: #2ec4b6; background: color-mix(in srgb, #2ec4b6 16%, var(--card)); }
+.game-choice.chosen-wrong { border-color: #ff6f59; background: color-mix(in srgb, #ff6f59 16%, var(--card)); }
