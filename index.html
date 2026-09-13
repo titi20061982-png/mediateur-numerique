@@ -300,6 +300,7 @@
       <input type="search" id="siteSearch" placeholder="🔎 Rechercher un atelier… (touche /)" aria-label="Rechercher">
       <span class="search-count" id="searchCount"></span>
     </div>
+    <button type="button" class="icon-btn" id="assistantBtn" title="Un assistant m'aide à choisir" aria-label="Un assistant m'aide à choisir">🧭</button>
     <button type="button" class="icon-btn" id="randomBtn" title="Atelier au hasard" aria-label="Atelier au hasard">🎲</button>
     <button type="button" class="icon-btn" id="favToggleBtn" title="Voir mes favoris" aria-label="Voir mes favoris">⭐</button>
     <button type="button" class="icon-btn" id="themeToggle" title="Changer de thème" aria-label="Changer de thème">🌙</button>
@@ -316,6 +317,13 @@
     <a href="prestations-adrn.html" class="adrn-nav-link">🛠️ Prestations ADRN</a>
     <a href="enfants.html">👶 Enfants</a>
   </nav>
+</div>
+
+<div class="assistant-overlay" id="assistantOverlay" style="display:none;" role="dialog" aria-modal="true" aria-label="Assistant de choix d'atelier">
+  <div class="assistant-modal">
+    <button type="button" class="assistant-close" id="assistantClose" aria-label="Fermer">✕</button>
+    <div id="assistantContent"></div>
+  </div>
 </div>
 
 <main>
@@ -1329,6 +1337,77 @@
       titleEl.textContent = q.icon + ' ' + q.title;
       linkEl.href = 'ateliers/' + q.slug + '_quiz.html';
     }
+
+    // Assistant interactif : aide a choisir un atelier en 2 etapes
+    // (categorie puis atelier precis), sans dupliquer la liste QUIZZES.
+    var ASSISTANT_CATEGORIES = [
+      { id: 'premiers-pas', icon: '🖥️', label: 'Premiers pas', desc: 'Smartphone, ordinateur, tablette' },
+      { id: 'securite', icon: '🔒', label: 'Sécurité & vie privée', desc: 'Arnaques, harcèlement, vie privée' },
+      { id: 'demarches', icon: '🏛️', label: 'Démarches administratives', desc: 'CAF, impôts, retraite, santé, papiers' },
+      { id: 'pro', icon: '💼', label: 'Insertion professionnelle', desc: 'CV, lettre de motivation, formation' },
+      { id: 'culture', icon: '🌐', label: 'Culture numérique', desc: 'Intelligence artificielle, téléphonie' }
+    ];
+    var ICON_TO_CAT = { '💻': 'premiers-pas', '🖥️': 'premiers-pas', '⌨️': 'premiers-pas', '🔒': 'securite', '🏛️': 'demarches', '💼': 'pro', '🌐': 'culture' };
+
+    var assistantBtn = document.getElementById('assistantBtn');
+    var assistantOverlay = document.getElementById('assistantOverlay');
+    var assistantContent = document.getElementById('assistantContent');
+    var assistantClose = document.getElementById('assistantClose');
+
+    function escA(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function renderAssistantStep1() {
+      assistantContent.innerHTML = '<h3>🧭 Quel atelier vous conviendrait ?</h3>' +
+        '<p>Qu\'est-ce qui vous intéresse le plus ?</p>' +
+        '<div class="assistant-options">' + ASSISTANT_CATEGORIES.map(function (c) {
+          return '<button type="button" class="assistant-opt" data-cat="' + c.id + '">' +
+            '<span class="assistant-opt-icon">' + c.icon + '</span>' +
+            '<span><strong>' + escA(c.label) + '</strong><br><small>' + escA(c.desc) + '</small></span></button>';
+        }).join('') + '</div>';
+    }
+
+    function renderAssistantStep2(catId) {
+      var cat = ASSISTANT_CATEGORIES.find(function (c) { return c.id === catId; });
+      var items = QUIZZES.filter(function (item) { return ICON_TO_CAT[item.icon] === catId; });
+      assistantContent.innerHTML = '<button type="button" class="assistant-back" id="assistantBack">← Retour</button>' +
+        '<h3>' + cat.icon + ' ' + escA(cat.label) + '</h3>' +
+        '<p>Vous voulez plutôt...</p>' +
+        '<div class="assistant-options">' + items.map(function (item) {
+          return '<a class="assistant-opt" href="ateliers/' + item.slug + '_quiz.html">' +
+            '<span class="assistant-opt-icon">' + item.icon + '</span>' +
+            '<span><strong>' + escA(item.title) + '</strong></span></a>';
+        }).join('') + '</div>';
+      document.getElementById('assistantBack').addEventListener('click', renderAssistantStep1);
+    }
+
+    function openAssistant() {
+      assistantOverlay.style.display = 'flex';
+      renderAssistantStep1();
+    }
+    function closeAssistant() {
+      assistantOverlay.style.display = 'none';
+    }
+
+    if (assistantBtn) { assistantBtn.addEventListener('click', openAssistant); }
+    if (assistantClose) { assistantClose.addEventListener('click', closeAssistant); }
+    if (assistantOverlay) {
+      assistantOverlay.addEventListener('click', function (e) {
+        if (e.target === assistantOverlay) closeAssistant();
+      });
+    }
+    if (assistantContent) {
+      assistantContent.addEventListener('click', function (e) {
+        var catBtn = e.target.closest('.assistant-opt[data-cat]');
+        if (catBtn) { renderAssistantStep2(catBtn.dataset.cat); }
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && assistantOverlay && assistantOverlay.style.display === 'flex') closeAssistant();
+    });
   })();
 </script>
 
