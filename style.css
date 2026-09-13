@@ -126,7 +126,7 @@ body.no-select {
   transition: width .1s linear;
 }
 .icon-btn {
-  flex: 0 0 auto; width: 2.6rem; height: 2.6rem; border-radius: 999px;
+  flex: 0 0 auto; width: 2.75rem; height: 2.75rem; border-radius: 999px;
   border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow);
   cursor: pointer; font-size: 1.05rem; display: flex; align-items: center; justify-content: center;
   transition: transform .15s ease, border-color .15s ease, background .15s ease;
@@ -377,7 +377,7 @@ main.prices-locked #devisTotal { display: none; }
    selecteur de langue, plutot qu'en badge flottant. */
 header .qr-box { position: static; margin: 0.9rem 0 0; }
 @media (max-width: 760px) {
-  .qr-box { position: static; margin: 1.1rem auto 0; }
+  .qr-box { display: none; }
 }
 
 .hero-corner-right {
