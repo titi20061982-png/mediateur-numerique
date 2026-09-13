@@ -7,10 +7,72 @@
     <priority>1.0</priority>
   </url>
 
-  <url>
-    <loc>https://titi20061982-png.github.io/mediateur-numerique/index.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/a-propos.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/prestations.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/prestations-adrn.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/inscription.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/stats.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/compte.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/enfants.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/smartphone_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/smartphone_fiche-exercice.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/smartphone_fiche-memo.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/battle-os_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/battle-os_exercices.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/battle-os_fiche-emporter.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/base-adrn_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/base-adrn_module.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/clavier_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/clavier_fiche-exercice.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/clavier_fiche-memo.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/phishing_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/phishing_presentation-simple.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/phishing_boite-outils.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/phishing_fiche-exercice.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/phishing_fiche-emporter.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/cyberharcelement_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/cyberharcelement_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/identite-numerique_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/identite-numerique_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/vie-privee_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/vie-privee_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfant-internet_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfant-internet_boite-outils.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfant-internet_fiche-exercice.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfant-internet_fiche-emporter.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/caf_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/caf_presentation.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/france-titres_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/france-titres_memo.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/impots_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/impots_presentation.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/ameli_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/ameli_presentation.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/retraite_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/retraite_presentation.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/cv-lettre_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/cv-lettre_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/formation_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/formation_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/ia_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/ia_fiche.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/facture-telephone_quiz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/facture-telephone_fiche-exercice.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/facture-telephone_fiche-emporter.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-6-8_quiz.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-6-8_jeu.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-9-11_quiz.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-9-11_jeu.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-12-14_quiz.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-12-14_jeu.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-15-17_quiz.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://titi20061982-png.github.io/mediateur-numerique/ateliers/enfants-15-17_jeu.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 
 </urlset>
