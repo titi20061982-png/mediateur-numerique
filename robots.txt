@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://titi20061982-png.github.io/mediateur-numerique/sitemap.xml
