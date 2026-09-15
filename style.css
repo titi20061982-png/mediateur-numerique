@@ -289,12 +289,19 @@ main.prices-locked #devisTotal { display: none; }
 
 /* ---------- 8. Boutons et liens en pilule ---------- */
 .cta-btn {
-  display: inline-block; margin: 1.5rem 0 0; font-family: "Inter", sans-serif;
+  position: relative; overflow: hidden; display: inline-block; margin: 1.5rem 0 0; font-family: "Inter", sans-serif;
   font-weight: 600; font-size: 0.98rem; color: #fff; text-decoration: none;
   background: var(--accent); padding: 0.85rem 1.8rem; border-radius: 999px;
   box-shadow: var(--shadow); transition: transform .18s ease, filter .18s ease;
 }
-.cta-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.cta-btn:hover { transform: translateY(-2px) scale(1.03); filter: brightness(1.08); }
+.cta-btn::after, .btn-neon::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 48%, transparent 66%);
+  transform: translateX(-120%); transition: transform .7s ease;
+}
+.cta-btn:hover::after, .btn-neon:hover::after { transform: translateX(120%); }
+@media (prefers-reduced-motion: reduce) { .cta-btn::after, .btn-neon::after { transition: none; transform: translateX(120%); opacity: 0; } }
 
 .meta-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 .meta-links a {
@@ -411,6 +418,12 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .hero-art .warm { color: var(--accent-2); }
 .hero-art .blue { color: var(--accent-3); }
 @media (max-width: 760px) { .hero-art .hide-mobile { display: none; } }
+.hero-float { animation: heroFloat 6s ease-in-out infinite; animation-delay: var(--float-delay, 0s); animation-duration: var(--float-duration, 6s); }
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@media (prefers-reduced-motion: reduce) { .hero-float { animation: none; } }
 
 /* ---------- Cartes de categories (accueil) ---------- */
 /* Style neon bleu fixe demande explicitement par l'utilisateur pour cette
@@ -419,18 +432,43 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .cat-overview { margin: 0 0 2.2rem; }
 .cat-overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 .cat-tile {
+  position: relative; overflow: hidden; isolation: isolate;
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.4rem;
   padding: 20px; border-radius: 12px; text-decoration: none;
   background: #0d0d0d; border: 1px solid #003d55; color: #fff;
   box-shadow: 0 0 10px rgba(0, 170, 255, 0.1);
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
-.cat-tile-icon { font-size: 40px; margin-bottom: 10px; }
+.cat-tile-icon { display: inline-block; font-size: 40px; margin-bottom: 10px; transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
 .cat-tile h3 { margin: 10px 0 5px; font-size: 1.2rem; color: #fff; }
 .cat-tile p { margin: 0; font-size: 0.9rem; color: #cccccc; line-height: 1.5; }
 .cat-tile:hover, .cat-tile:focus-visible {
   transform: translateY(-5px); border-color: #00aaff;
   box-shadow: 0 0 15px #00aaff;
+}
+.cat-tile:hover .cat-tile-icon, .cat-tile:focus-visible .cat-tile-icon {
+  transform: scale(1.22) rotate(-6deg);
+}
+.cat-tile-glow {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(0,170,255,0.35), transparent 60%);
+  opacity: 0; transition: opacity .25s ease;
+}
+.cat-tile:hover .cat-tile-glow { opacity: 1; }
+@keyframes catTileBounceIn {
+  0% { transform: scale(0.4) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.cat-overview.in-view .cat-tile-icon { animation: catTileBounceIn .6s cubic-bezier(.34,1.56,.64,1) backwards; }
+.cat-overview.in-view .cat-tile:nth-child(1) .cat-tile-icon { animation-delay: .05s; }
+.cat-overview.in-view .cat-tile:nth-child(2) .cat-tile-icon { animation-delay: .15s; }
+.cat-overview.in-view .cat-tile:nth-child(3) .cat-tile-icon { animation-delay: .25s; }
+.cat-overview.in-view .cat-tile:nth-child(4) .cat-tile-icon { animation-delay: .35s; }
+.cat-overview.in-view .cat-tile:nth-child(5) .cat-tile-icon { animation-delay: .45s; }
+@media (prefers-reduced-motion: reduce) {
+  .cat-overview.in-view .cat-tile-icon { animation: none; }
+  .cat-tile-icon, .cat-tile:hover .cat-tile-icon { transition: none; transform: none; }
 }
 
 /* ---------- Bloc "Parcours debutant" (accueil) : meme style neon fixe ---------- */
@@ -447,13 +485,13 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   padding: 0.65rem 0.9rem; color: #e5e5e5; font-size: 0.95rem;
 }
 .btn-neon {
-  display: inline-block; padding: 0.75rem 1.6rem; border-radius: 999px;
+  position: relative; overflow: hidden; display: inline-block; padding: 0.75rem 1.6rem; border-radius: 999px;
   background: #00aaff; color: #0d0d0d; font-weight: 700; text-decoration: none;
   box-shadow: 0 0 14px rgba(0, 170, 255, 0.55);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .btn-neon:hover, .btn-neon:focus-visible {
-  transform: translateY(-3px); box-shadow: 0 0 22px #00aaff;
+  transform: translateY(-3px) scale(1.03); box-shadow: 0 0 22px #00aaff;
 }
 .faq-item { padding: 0.9rem 0; border-bottom: 1px solid #003d55; }
 .faq-item:last-child { padding-bottom: 0; border-bottom: none; }
@@ -591,7 +629,13 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 /* ---------- 11. Grille des ateliers (accueil) ---------- */
 section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .category-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 1.4rem; padding-bottom: 0.9rem; border-bottom: 2px solid var(--border); }
-.category-head .icon { font-size: 1.4rem; }
+.category-head .icon { display: inline-block; font-size: 1.4rem; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+.category-head:hover .icon { transform: scale(1.25) rotate(-8deg); }
+.category-head.in-view .icon { animation: catTileBounceIn .55s cubic-bezier(.34,1.56,.64,1) .1s backwards; }
+@media (prefers-reduced-motion: reduce) {
+  .category-head.in-view .icon { animation: none; }
+  .category-head .icon, .category-head:hover .icon { transition: none; transform: none; }
+}
 .category-head h2 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 .category-head p { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.88rem; }
 
