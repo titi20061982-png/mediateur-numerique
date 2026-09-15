@@ -180,8 +180,8 @@ body.no-select {
 .back-to-top:hover { filter: brightness(1.1); }
 
 /* ---------- 4. Apparition au defilement ---------- */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
-.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 0; transform: translateY(26px) scale(.96); transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1); }
+.reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
@@ -303,6 +303,18 @@ main.prices-locked #devisTotal { display: none; }
 .cta-btn:hover::after, .btn-neon:hover::after { transform: translateX(120%); }
 @media (prefers-reduced-motion: reduce) { .cta-btn::after, .btn-neon::after { transition: none; transform: translateX(120%); opacity: 0; } }
 
+/* Boutons magnetiques (suivent legerement le curseur) + effet ripple au clic */
+.magnetic-btn { transition: transform .18s cubic-bezier(.22,1,.36,1), filter .18s ease, box-shadow .18s ease; }
+.btn-ripple {
+  position: absolute; border-radius: 50%; background: rgba(255,255,255,0.55);
+  transform: scale(0); opacity: 0.6; pointer-events: none; animation: btnRippleAnim .6s ease-out forwards;
+}
+@keyframes btnRippleAnim { to { transform: scale(1); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-btn { transition: filter .18s ease; }
+  .btn-ripple { display: none; }
+}
+
 .meta-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 .meta-links a {
   color: var(--text); text-decoration: none; font-size: 0.85rem; font-weight: 500;
@@ -341,9 +353,43 @@ main.prices-locked #devisTotal { display: none; }
           mask-image: radial-gradient(ellipse 70% 100% at 50% 0%, #000 40%, transparent 90%);
   opacity: 0.5;
 }
-.hero-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; }
+.hero-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
 .hero .eyebrow { margin-bottom: 1rem; }
-.hero h1 { margin: 0 0 0.9rem; font-weight: 600; font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.01em; }
+.hero h1 { margin: 0 0 0.9rem; font-weight: 600; font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.01em; color: var(--text); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .hero h1 {
+    background: linear-gradient(100deg, var(--text) 22%, var(--accent) 42%, var(--accent-2) 56%, var(--text) 78%);
+    background-size: 260% 100%;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+    animation: titleShimmer 8s ease-in-out infinite;
+  }
+}
+@keyframes titleShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .hero h1 { animation: none !important; background-position: 0 0; } }
+
+/* Champ de feuilles qui derivent dans le hero (clin d'oeil a Yggdrasil) */
+.leaf-field { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.leaf-field .leaf {
+  position: absolute; top: -10%; left: var(--leaf-x, 10%); font-size: var(--leaf-size, 1.3rem);
+  opacity: 0; color: var(--accent);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 35%, transparent));
+  animation: leafDrift var(--leaf-duration, 13s) ease-in infinite;
+  animation-delay: var(--leaf-delay, 0s);
+}
+.leaf-field .leaf.warm { color: var(--accent-2); }
+.leaf-field .leaf.blue { color: var(--accent-3); }
+@keyframes leafDrift {
+  0% { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+  8% { opacity: 0.6; }
+  50% { transform: translate(var(--leaf-drift, 26px), 190%) rotate(170deg); }
+  92% { opacity: 0.55; }
+  100% { transform: translate(calc(var(--leaf-drift, 26px) * -1), 420%) rotate(320deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .leaf-field { display: none; } }
+@media (max-width: 760px) { .leaf-field .leaf:nth-child(n+5) { display: none; } }
 .hero p { color: var(--muted); margin: 0 auto; max-width: 620px; font-size: 1.02rem; }
 .hero-tagline {
   color: var(--accent) !important; font-family: "Fraunces", Georgia, serif; font-weight: 600;
@@ -393,7 +439,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 }
 .hero-corner-right .qr-box { position: static; }
 .inscription-badge {
-  position: absolute; top: 1.3rem; left: 1.3rem; z-index: 5;
+  position: absolute; top: 1.3rem; left: 1.3rem; z-index: 5; overflow: hidden;
   display: inline-flex; align-items: center; gap: 0.55rem;
   font-family: "Inter", sans-serif; font-weight: 700; font-size: 1.15rem;
   color: #fff; text-decoration: none; background: var(--accent);
@@ -402,6 +448,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 }
 .inscription-badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
 .acct-badge {
+  position: relative; overflow: hidden;
   display: inline-flex; align-items: center; gap: 0.4rem;
   font-family: "Inter", sans-serif; font-weight: 700; font-size: 0.85rem;
   color: #fff; text-decoration: none; background: var(--accent);
@@ -632,9 +679,17 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 .category-head .icon { display: inline-block; font-size: 1.4rem; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
 .category-head:hover .icon { transform: scale(1.25) rotate(-8deg); }
 .category-head.in-view .icon { animation: catTileBounceIn .55s cubic-bezier(.34,1.56,.64,1) .1s backwards; }
+.category-head h2 { position: relative; display: inline-block; }
+.category-head h2::after {
+  content: ""; position: absolute; left: 0; bottom: -6px; height: 3px; width: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0); transform-origin: left; transition: transform .7s cubic-bezier(.22,1,.36,1) .15s;
+}
+.category-head.in-view h2::after { transform: scaleX(1); }
 @media (prefers-reduced-motion: reduce) {
   .category-head.in-view .icon { animation: none; }
   .category-head .icon, .category-head:hover .icon { transition: none; transform: none; }
+  .category-head h2::after { transition: none; transform: scaleX(1); }
 }
 .category-head h2 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 .category-head p { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.88rem; }

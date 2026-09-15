@@ -263,6 +263,15 @@
       </g>
     </g>
   </svg>
+  <div class="leaf-field" aria-hidden="true">
+    <span class="leaf" style="--leaf-x:6%; --leaf-size:1.1rem; --leaf-duration:12s; --leaf-delay:0s; --leaf-drift:22px;">🍃</span>
+    <span class="leaf warm" style="--leaf-x:18%; --leaf-size:1.4rem; --leaf-duration:15s; --leaf-delay:2.2s; --leaf-drift:-30px;">🍃</span>
+    <span class="leaf blue" style="--leaf-x:32%; --leaf-size:0.95rem; --leaf-duration:11s; --leaf-delay:5s; --leaf-drift:18px;">🍃</span>
+    <span class="leaf" style="--leaf-x:58%; --leaf-size:1.2rem; --leaf-duration:14s; --leaf-delay:1s; --leaf-drift:-24px;">🍃</span>
+    <span class="leaf warm" style="--leaf-x:74%; --leaf-size:1.05rem; --leaf-duration:13s; --leaf-delay:3.6s; --leaf-drift:28px;">🍃</span>
+    <span class="leaf" style="--leaf-x:88%; --leaf-size:1.3rem; --leaf-duration:16s; --leaf-delay:6.4s; --leaf-drift:-20px;">🍃</span>
+    <span class="leaf blue" style="--leaf-x:46%; --leaf-size:0.9rem; --leaf-duration:10.5s; --leaf-delay:8s; --leaf-drift:16px;">🍃</span>
+  </div>
   <div class="hero-inner">
     <span class="eyebrow" id="heroGreeting">Bonjour</span>
     <h1>Ateliers Médiation Numérique</h1>
@@ -1226,6 +1235,37 @@
     }
     document.querySelectorAll('.card').forEach(function (card) { addTilt(card, 'card-tilt-glow', '-3px', 6); });
     document.querySelectorAll('.cat-tile').forEach(function (tile) { addTilt(tile, 'cat-tile-glow', '-5px', 8); });
+  })();
+
+  // Boutons magnetiques (suivent legerement le curseur) + effet ripple au clic
+  (function () {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canHover = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
+    document.querySelectorAll('.cta-btn, .btn-neon, .acct-badge, .inscription-badge').forEach(function (btn) {
+      btn.classList.add('magnetic-btn');
+      if (!reduced && canHover) {
+        btn.addEventListener('mousemove', function (e) {
+          var r = btn.getBoundingClientRect();
+          var x = (e.clientX - r.left - r.width / 2) * 0.25;
+          var y = (e.clientY - r.top - r.height / 2) * 0.25;
+          btn.style.transform = 'translate(' + x + 'px,' + (y - 2) + 'px) scale(1.04)';
+        });
+        btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+      }
+      if (!reduced) {
+        btn.addEventListener('click', function (e) {
+          var r = btn.getBoundingClientRect();
+          var size = Math.max(r.width, r.height) * 1.6;
+          var ripple = document.createElement('span');
+          ripple.className = 'btn-ripple';
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - r.left - size / 2) + 'px';
+          ripple.style.top = (e.clientY - r.top - size / 2) + 'px';
+          btn.appendChild(ripple);
+          ripple.addEventListener('animationend', function () { ripple.remove(); });
+        });
+      }
+    });
   })();
 
   // Navigation active selon la section visible
