@@ -379,7 +379,6 @@
     const pct = total ? Math.round((stats.masteredCount / total) * 100) : 0;
     document.getElementById('progressOverallLabel').textContent = stats.masteredCount + ' / ' + total + ' ateliers maîtrisés (niveau avancé ≥ 75 %)';
     document.getElementById('progressOverallPct').textContent = pct + ' %';
-    document.getElementById('progressOverallBar').style.width = pct + '%';
 
     document.getElementById('progressList').innerHTML = QUIZZES.map(function (q) {
       const best = stats.bestBySlug[q.slug];
@@ -391,15 +390,25 @@
       else { statusText = '🌱 En cours'; }
       return '<div class="stats-row"><div class="stats-icon">' + q.icon + '</div>' +
         '<div class="stats-info"><a href="ateliers/' + q.slug + '_quiz.html">' + q.title + '</a>' +
-        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + anyPct + '%"></div></div></div>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:0%" data-pct="' + anyPct + '"></div></div></div>' +
         '<div class="progress-status ' + statusClass + '">' + statusText + '</div></div>';
     }).join('');
+
+    // Les barres partent de 0 et se remplissent jusqu'a leur largeur finale
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.getElementById('progressOverallBar').style.width = pct + '%';
+        document.querySelectorAll('#progressList .stats-bar[data-pct]').forEach(function (bar) {
+          bar.style.width = bar.getAttribute('data-pct') + '%';
+        });
+      });
+    });
   }
 
   function renderBadges(stats) {
-    document.getElementById('badgesList').innerHTML = BADGES.map(function (b) {
+    document.getElementById('badgesList').innerHTML = BADGES.map(function (b, i) {
       const earned = b.test(stats);
-      return '<div class="badge-tile' + (earned ? ' earned' : '') + '">' +
+      return '<div class="badge-tile badge-pop' + (earned ? ' earned' : '') + '" style="--badge-delay:' + (i * 0.06) + 's">' +
         '<div class="badge-icon">' + b.icon + '</div>' +
         '<div class="badge-info"><div class="badge-name">' + b.name + '</div>' +
         '<div class="badge-desc">' + b.desc + '</div></div></div>';
@@ -438,7 +447,8 @@
       const d = new Date(r.date);
       const dateStr = isNaN(d) ? '' : d.toLocaleDateString('fr-FR');
       const color = r.pct >= 75 ? 'var(--good)' : (r.pct >= 50 ? 'var(--accent-2)' : 'var(--bad)');
-      return '<circle cx="' + xPos(i) + '" cy="' + yPos(r.pct) + '" r="4" fill="' + color + '"><title>' +
+      const delay = (0.9 + i * 0.05).toFixed(2);
+      return '<circle class="score-dot" style="--dot-delay:' + delay + 's" cx="' + xPos(i) + '" cy="' + yPos(r.pct) + '" r="4" fill="' + color + '"><title>' +
         q.title + ' — ' + r.pct + ' % (' + dateStr + ')</title></circle>';
     }).join('');
     const grid = [0, 25, 50, 75, 100].map(function (v) {
@@ -447,10 +457,14 @@
     }).join('');
     wrap.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block;" role="img" aria-label="Courbe de progression des scores de quiz dans le temps">' +
       grid +
-      '<polyline points="' + points + '" fill="none" stroke="var(--accent)" stroke-width="2"></polyline>' +
+      '<polyline class="score-line" points="' + points + '" fill="none" stroke="var(--accent)" stroke-width="2"></polyline>' +
       dots +
       '</svg>' +
       '<p class="acct-empty" style="margin-top:0.4rem;">Chaque point est un quiz passé, du plus ancien (à gauche) au plus récent (à droite). Survolez un point pour le détail.</p>';
+    var lineEl = wrap.querySelector('.score-line');
+    if (lineEl && lineEl.getTotalLength) {
+      lineEl.style.setProperty('--line-len', lineEl.getTotalLength());
+    }
   }
 
   function renderHistory(results) {
@@ -492,8 +506,14 @@
     else if (masteredCount >= 5) level = 2;
     else if (masteredCount >= 1) level = 1;
 
-    svg.querySelectorAll('.tree-stage-1').forEach(function (el) { el.style.display = level >= 1 ? '' : 'none'; });
-    svg.querySelectorAll('.tree-stage-2').forEach(function (el) { el.style.display = level >= 2 ? '' : 'none'; });
+    svg.querySelectorAll('.tree-stage-1').forEach(function (el) {
+      el.style.display = level >= 1 ? '' : 'none';
+      el.classList.toggle('grown', level >= 1);
+    });
+    svg.querySelectorAll('.tree-stage-2').forEach(function (el) {
+      el.style.display = level >= 2 ? '' : 'none';
+      el.classList.toggle('grown', level >= 2);
+    });
 
     const counts = [1, 6, 12, 18, 24, 30];
     const count = counts[level];
@@ -507,18 +527,40 @@
       const cy = 60 + r * Math.sin(angle) * 0.85;
       const radius = 7 + (i % 3);
       const isSpark = level === 5 && i % 7 === 0;
+      const delay = (i * 0.035).toFixed(2);
       html += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + radius +
-        '" fill="' + (isSpark ? 'var(--accent-2)' : 'var(--accent)') + '" opacity="' + (isSpark ? '0.95' : '0.85') + '"></circle>';
+        '" style="animation-delay:' + delay + 's" fill="' + (isSpark ? 'var(--accent-2)' : 'var(--accent)') + '" opacity="' + (isSpark ? '0.95' : '0.85') + '"></circle>';
     }
     document.getElementById('treeFoliage').innerHTML = html;
     document.getElementById('treeCaption').textContent = masteredCount + ' / ' + total + ' ateliers maîtrisés';
   }
 
+  function animateKpi(el, target) {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !target) { el.textContent = target; return; }
+    var start = 0, duration = 700, startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
   function renderKpis(stats) {
-    document.getElementById('kpiMastered').textContent = stats.masteredCount;
-    document.getElementById('kpiQuizzes').textContent = stats.totalQuizzesTaken;
-    document.getElementById('kpiBadges').textContent = BADGES.filter(function (b) { return b.test(stats); }).length;
-    document.getElementById('kpiFavs').textContent = stats.favoritesCount;
+    animateKpi(document.getElementById('kpiMastered'), stats.masteredCount);
+    animateKpi(document.getElementById('kpiQuizzes'), stats.totalQuizzesTaken);
+    animateKpi(document.getElementById('kpiBadges'), BADGES.filter(function (b) { return b.test(stats); }).length);
+    animateKpi(document.getElementById('kpiFavs'), stats.favoritesCount);
+    document.querySelectorAll('#acctKpis .kpi-tile').forEach(function (tile, i) {
+      tile.classList.remove('kpi-pop');
+      tile.style.animationDelay = (i * 0.08) + 's';
+      void tile.offsetWidth;
+      tile.classList.add('kpi-pop');
+    });
   }
 
   function renderEncouragement(stats) {
@@ -594,7 +636,7 @@
         document.getElementById('usernameInput').value = profile.username || '';
         if (profile.streak >= 2) {
           var streakEl = document.getElementById('streakBadge');
-          streakEl.textContent = '🔥 ' + profile.streak + ' jours de suite';
+          streakEl.innerHTML = '<span class="flame-flicker">🔥</span> ' + profile.streak + ' jours de suite';
           streakEl.style.display = '';
         }
       }).catch(function () {});
