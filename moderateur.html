@@ -361,15 +361,24 @@
 
   function renderFailedAlerts(users) {
     const el = document.getElementById('alertsList');
-    const rows = [];
+    // Pour chaque visiteur et chaque atelier+niveau, ne garder que sa
+    // tentative la plus recente : s'il a rate puis reussi en repassant
+    // le quiz, l'alerte se "resout" et disparait (au lieu de rester
+    // affichee pour toujours, meme apres correction).
+    const latestByUserQuiz = {};
     users.forEach(function (u) {
       u.history.forEach(function (r) {
-        if (r.wrongQuestions && r.wrongQuestions.length) {
-          const t = new Date(r.date).getTime();
-          if (!isNaN(t)) rows.push({ u: u, r: r, t: t });
+        const t = new Date(r.date).getTime();
+        if (isNaN(t)) return;
+        const key = u.uid + '|' + r.slug + '|' + r.level;
+        if (!latestByUserQuiz[key] || t > latestByUserQuiz[key].t) {
+          latestByUserQuiz[key] = { u: u, r: r, t: t };
         }
       });
     });
+    const rows = Object.keys(latestByUserQuiz)
+      .map(function (k) { return latestByUserQuiz[k]; })
+      .filter(function (item) { return item.r.wrongQuestions && item.r.wrongQuestions.length; });
     if (!rows.length) { el.innerHTML = '<p class="acct-empty">Aucune question échouée enregistrée pour l\'instant.</p>'; return; }
     rows.sort(function (a, b) { return b.t - a.t; });
     const now = Date.now();
