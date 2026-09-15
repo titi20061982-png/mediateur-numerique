@@ -605,12 +605,56 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .site-mesh .warm-star { color: var(--accent-2); }
 .site-mesh .blue-star { color: var(--accent-3); }
 .site-mesh .bg-stars { color: var(--border); }
-.site-mesh .zodiac circle { filter: drop-shadow(0 0 2.5px currentColor); }
-.site-mesh .zodiac path { opacity: 0.35; }
-.site-mesh .sparkle { filter: drop-shadow(0 0 4px currentColor); }
-.site-mesh .twinkle { animation: twinkle 5s ease-in-out infinite; filter: drop-shadow(0 0 2px currentColor); transform-origin: center; }
-@keyframes twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.85; } }
-@media (prefers-reduced-motion: reduce) { .site-mesh circle { animation: none; } }
+
+/* Constellations : chaque figure (etoiles + traits) brille et s'estompe
+   tour a tour, comme un ciel qui scintille par vagues plutot que d'un
+   bloc. filter/animation s'appliquent directement sur le <use> (les
+   selecteurs comme ".zodiac circle" ne peuvent pas cibler le contenu
+   clone d'un <use>, d'ou cette approche). */
+.site-mesh .zodiac use {
+  transform-box: fill-box; transform-origin: center;
+  filter: drop-shadow(0 0 1.5px currentColor);
+  animation: constellationShine 10s ease-in-out infinite;
+  animation-delay: var(--shine-delay, 0s);
+}
+@keyframes constellationShine {
+  0%, 78%, 100% { filter: drop-shadow(0 0 1.5px currentColor); opacity: 0.68; }
+  90% { filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 13px currentColor); opacity: 1; }
+}
+.site-mesh .sparkle {
+  filter: drop-shadow(0 0 4px currentColor);
+  transform-box: fill-box; transform-origin: center;
+  animation: sparkleShine 4.5s ease-in-out infinite;
+  animation-delay: var(--shine-delay, 0s);
+}
+@keyframes sparkleShine {
+  0%, 100% { opacity: 0.55; transform: scale(0.85); filter: drop-shadow(0 0 3px currentColor); }
+  50% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 7px currentColor) drop-shadow(0 0 14px currentColor); }
+}
+
+/* Petites etoiles du fond : apparaissent, brillent, puis s'effacent */
+.site-mesh .twinkle {
+  transform-box: fill-box; transform-origin: center;
+  animation: twinkle 6s ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.08; transform: scale(0.7); filter: drop-shadow(0 0 0 transparent); }
+  50% { opacity: 1; transform: scale(1.5); filter: drop-shadow(0 0 3px currentColor) drop-shadow(0 0 6px currentColor); }
+}
+/* Quelques etoiles plus marquees, qui surgissent et brillent plus fort */
+.site-mesh .twinkle-bloom {
+  animation-name: twinkleBloom; animation-duration: 9s; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
+}
+@keyframes twinkleBloom {
+  0%, 82%, 100% { opacity: 0; transform: scale(0.4); filter: drop-shadow(0 0 0 transparent); }
+  92% { opacity: 1; transform: scale(2); filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 10px currentColor); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-mesh .zodiac use, .site-mesh .sparkle, .site-mesh .twinkle, .site-mesh .twinkle-bloom {
+    animation: none; filter: drop-shadow(0 0 2px currentColor); opacity: 0.6; transform: none;
+  }
+}
 
 /* ---------- 10. Barre collante de recherche + navigation (accueil) ---------- */
 .sticky-toolbar {

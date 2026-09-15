@@ -41,7 +41,7 @@
       <path d="M-25,-25 L-18,-5 L-6,8 L6,10 L18,-3 L28,-22"/>
       <circle cx="-25" cy="-25" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="-18" cy="-5" r="1.8" fill="currentColor" stroke="none"/>
-      <use href="#sparkle" class="sparkle" transform="translate(-18,-5) scale(0.95)"/>
+      <use href="#sparkle" class="sparkle" transform="translate(-18,-5) scale(0.95)" style="--shine-delay:0.5s"/>
       <circle cx="-6" cy="8" r="1.8" fill="currentColor" stroke="none"/>
       <circle cx="6" cy="10" r="1.8" fill="currentColor" stroke="none"/>
       <circle cx="18" cy="-3" r="1.8" fill="currentColor" stroke="none"/>
@@ -83,7 +83,7 @@
       <circle cx="-20" cy="12" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="-8" cy="14" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="0" cy="8" r="2" fill="currentColor" stroke="none"/>
-      <use href="#sparkle" class="sparkle" transform="translate(0,8) scale(1.1)"/>
+      <use href="#sparkle" class="sparkle" transform="translate(0,8) scale(1.1)" style="--shine-delay:2s"/>
       <circle cx="18" cy="-2" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="30" cy="4" r="1.8" fill="currentColor" stroke="none"/>
     </g>
@@ -91,7 +91,7 @@
       <path d="M0,-20 L0,-5 M0,-5 L-15,10 M0,-5 L15,8 M0,-5 L3,22"/>
       <circle cx="0" cy="-20" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="0" cy="-5" r="1.8" fill="currentColor" stroke="none"/>
-      <use href="#sparkle" class="sparkle" transform="translate(0,-5) scale(1)"/>
+      <use href="#sparkle" class="sparkle" transform="translate(0,-5) scale(1)" style="--shine-delay:3.5s"/>
       <circle cx="-15" cy="10" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="15" cy="8" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="3" cy="22" r="1.6" fill="currentColor" stroke="none"/>
@@ -111,7 +111,7 @@
       <circle cx="-20" cy="-14" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="-10" cy="-14" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="0" cy="-10" r="1.7" fill="currentColor" stroke="none"/>
-      <use href="#sparkle" class="sparkle" transform="translate(0,-10) scale(0.95)"/>
+      <use href="#sparkle" class="sparkle" transform="translate(0,-10) scale(0.95)" style="--shine-delay:1s"/>
       <circle cx="8" cy="-4" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="14" cy="4" r="1.6" fill="currentColor" stroke="none"/>
       <circle cx="16" cy="14" r="1.7" fill="currentColor" stroke="none"/>
@@ -171,32 +171,32 @@
 
   <!-- ciel etoile: petites etoiles eparpillees, scintillantes -->
   <g class="bg-stars" fill="currentColor">
-    <circle class="twinkle" cx="70" cy="320" r="1.6" style="animation-delay:0s"/><circle class="twinkle" cx="320" cy="70" r="1.3" style="animation-delay:1.1s"/><circle class="twinkle" cx="590" cy="380" r="1.8" style="animation-delay:2.3s"/>
+    <circle class="twinkle" cx="70" cy="320" r="1.6" style="animation-delay:0s"/><circle class="twinkle" cx="320" cy="70" r="1.3" style="animation-delay:1.1s"/><circle class="twinkle twinkle-bloom" cx="590" cy="380" r="1.8" style="animation-delay:0s"/>
     <circle class="twinkle" cx="750" cy="220" r="1.3" style="animation-delay:0.6s"/><circle class="twinkle" cx="1000" cy="320" r="1.6" style="animation-delay:3.1s"/><circle class="twinkle" cx="1280" cy="80" r="1.3" style="animation-delay:1.8s"/>
-    <circle class="twinkle" cx="1560" cy="290" r="1.8" style="animation-delay:2.6s"/><circle class="twinkle" cx="1850" cy="160" r="1.3" style="animation-delay:0.3s"/><circle class="twinkle" cx="1950" cy="400" r="1.6" style="animation-delay:4s"/>
-    <circle class="twinkle" cx="130" cy="720" r="1.3" style="animation-delay:1.4s"/><circle class="twinkle" cx="420" cy="800" r="1.8" style="animation-delay:2.9s"/><circle class="twinkle" cx="730" cy="720" r="1.3" style="animation-delay:0.9s"/>
-    <circle class="twinkle" cx="1090" cy="830" r="1.6" style="animation-delay:3.5s"/><circle class="twinkle" cx="1440" cy="760" r="1.3" style="animation-delay:1.6s"/><circle class="twinkle" cx="1760" cy="800" r="1.8" style="animation-delay:2.1s"/>
+    <circle class="twinkle twinkle-bloom" cx="1560" cy="290" r="1.8" style="animation-delay:1.2s"/><circle class="twinkle" cx="1850" cy="160" r="1.3" style="animation-delay:0.3s"/><circle class="twinkle twinkle-bloom" cx="1950" cy="400" r="1.6" style="animation-delay:2.4s"/>
+    <circle class="twinkle" cx="130" cy="720" r="1.3" style="animation-delay:1.4s"/><circle class="twinkle twinkle-bloom" cx="420" cy="800" r="1.8" style="animation-delay:3.6s"/><circle class="twinkle" cx="730" cy="720" r="1.3" style="animation-delay:0.9s"/>
+    <circle class="twinkle" cx="1090" cy="830" r="1.6" style="animation-delay:3.5s"/><circle class="twinkle" cx="1440" cy="760" r="1.3" style="animation-delay:1.6s"/><circle class="twinkle twinkle-bloom" cx="1760" cy="800" r="1.8" style="animation-delay:4.8s"/>
     <circle class="twinkle" cx="260" cy="1100" r="1.3" style="animation-delay:0.4s"/><circle class="twinkle" cx="630" cy="1170" r="1.6" style="animation-delay:3.8s"/><circle class="twinkle" cx="1130" cy="1130" r="1.3" style="animation-delay:1.2s"/>
-    <circle class="twinkle" cx="1630" cy="1150" r="1.8" style="animation-delay:2.4s"/><circle class="twinkle" cx="50" cy="540" r="1.3" style="animation-delay:0.8s"/><circle class="twinkle" cx="1950" cy="980" r="1.6" style="animation-delay:3.3s"/>
+    <circle class="twinkle twinkle-bloom" cx="1630" cy="1150" r="1.8" style="animation-delay:6s"/><circle class="twinkle" cx="50" cy="540" r="1.3" style="animation-delay:0.8s"/><circle class="twinkle twinkle-bloom" cx="1950" cy="980" r="1.6" style="animation-delay:7.2s"/>
     <circle class="twinkle" cx="900" cy="500" r="1.4" style="animation-delay:1.9s"/><circle class="twinkle" cx="1350" cy="430" r="1.5" style="animation-delay:0.2s"/><circle class="twinkle" cx="440" cy="550" r="1.3" style="animation-delay:2.7s"/>
-    <circle class="twinkle" cx="1840" cy="580" r="1.5" style="animation-delay:1.5s"/><circle class="twinkle" cx="820" cy="950" r="1.4" style="animation-delay:3.6s"/><circle class="twinkle" cx="1280" cy="990" r="1.6" style="animation-delay:0.7s"/>
+    <circle class="twinkle" cx="1840" cy="580" r="1.5" style="animation-delay:1.5s"/><circle class="twinkle" cx="820" cy="950" r="1.4" style="animation-delay:3.6s"/><circle class="twinkle twinkle-bloom" cx="1280" cy="990" r="1.6" style="animation-delay:8.4s"/>
     <circle class="twinkle" cx="1600" cy="1000" r="1.3" style="animation-delay:2s"/><circle class="twinkle" cx="200" cy="420" r="1.4" style="animation-delay:0.5s"/><circle class="twinkle" cx="1720" cy="480" r="1.3" style="animation-delay:3.2s"/>
   </g>
 
   <!-- constellations du zodiaque, dispersees en grille 4x3 -->
   <g class="zodiac" opacity="0.9">
-    <use href="#z-aries" class="warm-star" transform="translate(220,220) scale(3)"/>
-    <use href="#z-taurus" class="bg-stars" transform="translate(720,260) scale(2.9)"/>
-    <use href="#z-gemini" class="blue-star" transform="translate(1220,200) scale(2.6)"/>
-    <use href="#z-cancer" class="bg-stars" transform="translate(1720,230) scale(3)"/>
-    <use href="#z-leo" class="accent-star" transform="translate(220,650) scale(2.9)"/>
-    <use href="#z-virgo" class="bg-stars" transform="translate(720,680) scale(2.6)"/>
-    <use href="#z-libra" class="blue-star" transform="translate(1220,650) scale(3)"/>
-    <use href="#z-scorpio" class="warm-star" transform="translate(1720,680) scale(2.8) rotate(8)"/>
-    <use href="#z-sagittarius" class="accent-star" transform="translate(220,1100) scale(2.9)"/>
-    <use href="#z-capricorn" class="bg-stars" transform="translate(720,1130) scale(2.6)"/>
-    <use href="#z-aquarius" class="blue-star" transform="translate(1220,1080) scale(2.8) rotate(-4)"/>
-    <use href="#z-pisces" class="warm-star" transform="translate(1720,1110) scale(2.6)"/>
+    <use href="#z-aries" class="warm-star" transform="translate(220,220) scale(3)" style="--shine-delay:0s"/>
+    <use href="#z-taurus" class="bg-stars" transform="translate(720,260) scale(2.9)" style="--shine-delay:0.8s"/>
+    <use href="#z-gemini" class="blue-star" transform="translate(1220,200) scale(2.6)" style="--shine-delay:1.7s"/>
+    <use href="#z-cancer" class="bg-stars" transform="translate(1720,230) scale(3)" style="--shine-delay:2.5s"/>
+    <use href="#z-leo" class="accent-star" transform="translate(220,650) scale(2.9)" style="--shine-delay:3.3s"/>
+    <use href="#z-virgo" class="bg-stars" transform="translate(720,680) scale(2.6)" style="--shine-delay:4.2s"/>
+    <use href="#z-libra" class="blue-star" transform="translate(1220,650) scale(3)" style="--shine-delay:5s"/>
+    <use href="#z-scorpio" class="warm-star" transform="translate(1720,680) scale(2.8) rotate(8)" style="--shine-delay:5.8s"/>
+    <use href="#z-sagittarius" class="accent-star" transform="translate(220,1100) scale(2.9)" style="--shine-delay:6.7s"/>
+    <use href="#z-capricorn" class="bg-stars" transform="translate(720,1130) scale(2.6)" style="--shine-delay:7.5s"/>
+    <use href="#z-aquarius" class="blue-star" transform="translate(1220,1080) scale(2.8) rotate(-4)" style="--shine-delay:8.3s"/>
+    <use href="#z-pisces" class="warm-star" transform="translate(1720,1110) scale(2.6)" style="--shine-delay:9.2s"/>
   </g>
 </svg>
 
