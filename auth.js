@@ -45,7 +45,12 @@ export function watchAuth(cb) {
       if (user.email) data.email = user.email;
       if (isTestSession()) data.isTestSession = true;
       if (user.isAnonymous) {
-        setDoc(ref, data, { merge: true }).catch(function () {});
+        getDoc(ref).then(function (snap) {
+          if (!snap.exists() || !snap.data().firstSeen) { data.firstSeen = new Date().toISOString(); }
+          return setDoc(ref, data, { merge: true });
+        }).catch(function () {
+          return setDoc(ref, data, { merge: true }).catch(function () {});
+        });
         if (!data.isTestSession) { ensureLocationInfo(user.uid).catch(function () {}); }
         cb(user);
       } else {
@@ -170,6 +175,7 @@ export async function getAllUsersWithData() {
       username: data.username || "",
       isAnonymous: !!data.isAnonymous || !data.email,
       isTestSession: !!data.isTestSession,
+      firstSeen: data.firstSeen || null,
       location: data.location || null,
       quizStarts: data.quizStarts || {},
       favorites: data.favorites || [],
