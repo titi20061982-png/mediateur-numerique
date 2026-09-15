@@ -294,6 +294,11 @@
       <use href="#z-pisces" class="warm-star" transform="translate(1140,180) scale(1) rotate(6)" style="--shine-delay:3.2s"/>
     </g>
   </svg>
+  <div class="shooting-stars" aria-hidden="true">
+    <span class="shooting-star" style="top:8%; left:-10%; --shoot-dx:420px; --shoot-dy:140px; --shoot-angle:18deg; animation-duration:9s; animation-delay:2s;"></span>
+    <span class="shooting-star" style="top:55%; left:60%; --shoot-dx:380px; --shoot-dy:-120px; --shoot-angle:-16deg; animation-duration:13s; animation-delay:6s;"></span>
+    <span class="shooting-star" style="top:20%; left:30%; --shoot-dx:360px; --shoot-dy:150px; --shoot-angle:22deg; animation-duration:17s; animation-delay:10s;"></span>
+  </div>
   <div class="leaf-field" aria-hidden="true">
     <span class="leaf" style="--leaf-x:6%; --leaf-size:1.1rem; --leaf-duration:12s; --leaf-delay:0s; --leaf-drift:22px;">🍃</span>
     <span class="leaf warm" style="--leaf-x:18%; --leaf-size:1.4rem; --leaf-duration:15s; --leaf-delay:2.2s; --leaf-drift:-30px;">🍃</span>
@@ -342,6 +347,7 @@
 </div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
+<span class="scroll-progress-leaf" id="scrollProgressLeaf" aria-hidden="true">🌿</span>
 <button type="button" class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
 
 <div class="sticky-toolbar">
@@ -1089,7 +1095,29 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
       updateIcon(next);
+      btn.classList.remove('theme-spin');
+      void btn.offsetWidth;
+      btn.classList.add('theme-spin');
     });
+  })();
+
+  // Parallaxe legere sur le decor du hero (cercles + icones) au defilement
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var art = document.querySelector('.hero-art');
+    var hero = document.querySelector('.hero');
+    if (!art || !hero) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var rect = hero.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      art.style.transform = 'translateY(' + (-rect.top * 0.08) + 'px)';
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
   })();
 
   // Retour en haut
@@ -1164,6 +1192,24 @@
     targets.forEach(function (el) { obs.observe(el); });
   })();
 
+  // Petite explosion de particules quand on ajoute un favori
+  function burstFav(star) {
+    var count = 6;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      p.className = 'fav-burst';
+      p.textContent = i % 2 === 0 ? '★' : '✨';
+      var angle = (Math.PI * 2 * i) / count + (Math.random() * 0.5 - 0.25);
+      var dist = 22 + Math.random() * 14;
+      p.style.left = star.offsetLeft + star.offsetWidth / 2 + 'px';
+      p.style.top = star.offsetTop + star.offsetHeight / 2 + 'px';
+      p.style.setProperty('--dx', (Math.cos(angle) * dist) + 'px');
+      p.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
+      star.parentElement.appendChild(p);
+      (function (el) { el.addEventListener('animationend', function () { el.remove(); }); })(p);
+    }
+  }
+
   // Recherche instantanee, favoris et atelier au hasard
   (function () {
     var input = document.getElementById('siteSearch');
@@ -1206,11 +1252,15 @@
         star.addEventListener('click', function (e) {
           e.stopPropagation();
           var idx = favorites.indexOf(key);
-          if (idx === -1) { favorites.push(key); }
+          var adding = idx === -1;
+          if (adding) { favorites.push(key); }
           else { favorites.splice(idx, 1); }
           saveFavorites();
           star.textContent = isFav(key) ? '★' : '☆';
           star.classList.toggle('is-fav', isFav(key));
+          if (adding && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+            burstFav(star);
+          }
           if (favMode) applyFavFilter();
         });
         card.appendChild(star);
@@ -1362,15 +1412,17 @@
     el.textContent = greeting;
   })();
 
-  // Barre de progression de lecture
+  // Barre de progression de lecture, en forme de branche qui pousse
   (function () {
     var bar = document.getElementById('scrollProgress');
+    var leaf = document.getElementById('scrollProgressLeaf');
     function update() {
       var h = document.documentElement;
       var scrolled = h.scrollTop || document.body.scrollTop;
       var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
       var pct = height > 0 ? (scrolled / height) * 100 : 0;
       bar.style.width = pct + '%';
+      if (leaf) leaf.style.left = pct + '%';
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
@@ -1478,7 +1530,13 @@
       const slug = li.dataset.lockSlug;
       const minPct = parseInt(li.dataset.lockPct, 10) || 100;
       const pct = history ? bestPct(history, slug, 'avance') : 0;
-      li.classList.toggle('is-locked', pct < minPct);
+      const wasLocked = li.classList.contains('is-locked');
+      const nowLocked = pct < minPct;
+      li.classList.toggle('is-locked', nowLocked);
+      if (wasLocked && !nowLocked) {
+        li.classList.add('just-unlocked');
+        setTimeout(function () { li.classList.remove('just-unlocked'); }, 800);
+      }
     });
   }
 
