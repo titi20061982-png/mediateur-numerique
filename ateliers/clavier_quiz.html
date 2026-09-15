@@ -666,7 +666,8 @@
       form.querySelectorAll('input[name="q' + i + '"]').forEach(function(inp) { inp.disabled = true; });
     });
     const pct = Math.round((score / QUIZ.length) * 100);
-    if (window.__onQuizSubmitted) { window.__onQuizSubmitted({ slug: SLUG, level: currentLevel, score: score, total: QUIZ.length, pct: pct }); }
+    const wrongQuestions = answers.filter(function (a) { return !a.isCorrect; }).map(function (a) { return a.question; });
+    if (window.__onQuizSubmitted) { window.__onQuizSubmitted({ slug: SLUG, level: currentLevel, score: score, total: QUIZ.length, pct: pct, wrongQuestions: wrongQuestions }); }
     let tier = 'tier-low', msg = UI.tierLow;
     if (pct >= 80) { tier = 'tier-high'; msg = UI.tierHigh; }
     else if (pct >= 50) { tier = 'tier-mid'; msg = UI.tierMid; }

@@ -57,7 +57,7 @@
       <a href="#visitors">👥 Visiteurs</a>
     </nav>
 
-    <div class="card" id="memoCard">
+    <div class="card reveal" id="memoCard">
       <details class="mod-memo">
         <summary>🗒️ Mémo — Ce que vous pouvez piloter ici (visible par vous seul)</summary>
         <div class="mod-memo-body">
@@ -68,6 +68,7 @@
             <li><strong>👥 Inscrits</strong> : liste complète (pas seulement le top 10) de tous les comptes créés sur le site avec leur nom, par ordre alphabétique — visible ici uniquement, jamais sur les pages publiques.</li>
             <li><strong>🏆 Classement</strong> : top 10 des visiteurs par ateliers maîtrisés (comptes nommés uniquement).</li>
             <li><strong>📊 Popularité des ateliers</strong> : quel atelier attire le plus (ou le moins) de visiteurs, anonymes inclus, avec le détail "terminé(s) sur démarré(s)" pour repérer les quiz commencés puis abandonnés.</li>
+            <li><strong>🚨 Alertes — questions échouées</strong> : liste des derniers visiteurs ayant répondu faux à une ou plusieurs questions de quiz, avec leur pseudo et le texte des questions ratées — pour repérer qui pourrait avoir besoin d'un coup de main. Seuls les quiz passés après la mise en place de cette fonctionnalité apparaissent ici (les anciens résultats n'ont pas ce détail).</li>
             <li><strong>🏅 Badges obtenus</strong> : part des visiteurs ayant débloqué chaque badge.</li>
             <li><strong>🕒 Activité récente</strong> : les 8 derniers quiz passés, tous visiteurs confondus — pratique pour suivre un atelier en direct.</li>
             <li><strong>🗺️ Grille de progression</strong> : un tableau visiteurs × ateliers, chaque case indiquant le statut de l'atelier pour ce visiteur (survolez une case pour le détail).</li>
@@ -127,38 +128,44 @@
         </div>
       </div>
 
-      <div class="card" id="inscritsCard">
+      <div class="card reveal" id="alertsCard">
+        <h3>🚨 Alertes — questions échouées</h3>
+        <p class="acct-empty" style="margin-bottom:0.6rem;">Derniers visiteurs ayant échoué une ou plusieurs questions, avec leur pseudo — pour repérer qui pourrait avoir besoin d'un coup de main.</p>
+        <div id="alertsList"><p class="acct-empty">Chargement…</p></div>
+      </div>
+
+      <div class="card reveal" id="inscritsCard">
         <h3>👥 Inscrits (<span id="inscritsCount">—</span>)</h3>
         <p class="acct-empty" style="margin-bottom:0.6rem;">Comptes créés sur le site (email/mot de passe), par ordre alphabétique.</p>
         <div id="inscritsList"><p class="acct-empty">Chargement…</p></div>
       </div>
 
       <div class="grid-2">
-        <div class="card" id="leaderboardCard">
+        <div class="card reveal" id="leaderboardCard">
           <h3>🏆 Classement des visiteurs</h3>
           <div id="leaderboardList"><p class="acct-empty">Chargement…</p></div>
         </div>
 
-        <div class="card" id="badgeDistCard">
+        <div class="card reveal" id="badgeDistCard">
           <h3>🏅 Badges obtenus</h3>
           <p class="acct-empty" style="margin-bottom:0.6rem;">Part des visiteurs ayant débloqué chaque badge.</p>
           <div id="badgeDistList"><p class="acct-empty">Chargement…</p></div>
         </div>
 
-        <div class="card" id="recentActivityCard">
+        <div class="card reveal" id="recentActivityCard">
           <h3>🕒 Activité récente</h3>
           <p class="acct-empty" style="margin-bottom:0.6rem;">Les derniers quiz passés, tous visiteurs confondus.</p>
           <div id="recentActivityList"><p class="acct-empty">Chargement…</p></div>
         </div>
       </div>
 
-      <div class="card" id="popularityCard">
+      <div class="card reveal" id="popularityCard">
         <h3>📊 Popularité des ateliers</h3>
         <p class="acct-empty" style="margin-bottom:0.6rem;">Nombre de visiteurs distincts ayant tenté chaque atelier (visiteurs anonymes inclus), du plus au moins populaire. Le détail "terminé(s) sur démarré(s)" apparaît dès qu'un visiteur a cliqué sur un niveau de quiz.</p>
         <div id="popularityList"><p class="acct-empty">Chargement…</p></div>
       </div>
 
-      <div class="card" id="matrixCard">
+      <div class="card reveal" id="matrixCard">
         <h3>🗺️ Grille de progression</h3>
         <p class="acct-empty" style="margin-bottom:0.6rem;">🌳 maîtrisé (avancé ≥ 75 %) · ✅ validé (≥ 50 %) · point clair = non commencé.</p>
         <div class="matrix-wrap"><table class="matrix-table" id="matrixTable"></table></div>
@@ -166,7 +173,7 @@
     </section>
 
     <section id="visitors">
-      <div class="card" id="usersCard">
+      <div class="card reveal" id="usersCard">
         <h3>👥 Comptes visiteurs</h3>
         <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:end;margin-bottom:1rem;">
           <div class="reg-field" style="flex:1;min-width:160px;margin:0;">
@@ -318,9 +325,14 @@
         (r.abandoned > 0 ? ' · 🚪 ' + r.abandoned + ' abandon(s)' : '') + '</div>' : '';
       return '<div class="stats-row"><div class="stats-icon">' + r.q.icon + '</div>' +
         '<div class="stats-info"><a href="ateliers/' + r.q.slug + '_quiz.html">' + r.q.title + '</a>' +
-        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div>' + funnel + '</div>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:0%" data-pct="' + pct + '"></div></div>' + funnel + '</div>' +
         '<div class="stats-count">' + r.attempted + '</div></div>';
     }).join('');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        el.querySelectorAll('.stats-bar[data-pct]').forEach(function (bar) { bar.style.width = bar.getAttribute('data-pct') + '%'; });
+      });
+    });
   }
 
   function renderBadgeDistribution(users) {
@@ -331,15 +343,50 @@
       const pct = Math.round((count / users.length) * 100);
       return '<div class="stats-row"><div class="stats-icon">' + b.icon + '</div>' +
         '<div class="stats-info">' + escapeHtml(b.name) +
-        '<div class="stats-barwrap"><div class="stats-bar" style="width:' + pct + '%"></div></div></div>' +
+        '<div class="stats-barwrap"><div class="stats-bar" style="width:0%" data-pct="' + pct + '"></div></div></div>' +
         '<div class="stats-count">' + count + '</div></div>';
     }).join('');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        el.querySelectorAll('.stats-bar[data-pct]').forEach(function (bar) { bar.style.width = bar.getAttribute('data-pct') + '%'; });
+      });
+    });
   }
 
   function locationLabel(u) {
     if (!u.location) return '';
     const parts = [u.location.city, u.location.region, u.location.country].filter(Boolean);
     return parts.length ? '📍 ' + escapeHtml(parts.join(', ')) : '';
+  }
+
+  function renderFailedAlerts(users) {
+    const el = document.getElementById('alertsList');
+    const rows = [];
+    users.forEach(function (u) {
+      u.history.forEach(function (r) {
+        if (r.wrongQuestions && r.wrongQuestions.length) {
+          const t = new Date(r.date).getTime();
+          if (!isNaN(t)) rows.push({ u: u, r: r, t: t });
+        }
+      });
+    });
+    if (!rows.length) { el.innerHTML = '<p class="acct-empty">Aucune question échouée enregistrée pour l\'instant.</p>'; return; }
+    rows.sort(function (a, b) { return b.t - a.t; });
+    const now = Date.now();
+    el.innerHTML = rows.slice(0, 12).map(function (item, i) {
+      const u = item.u, r = item.r;
+      const q = quizBySlug(r.slug) || { title: r.slug, icon: '📄' };
+      const label = u.isAnonymous ? '🕶️ Visiteur anonyme' : escapeHtml(u.username || u.email);
+      const d = new Date(item.t);
+      const dateStr = d.toLocaleDateString('fr-FR') + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      const isFresh = (now - item.t) < 24 * 3600 * 1000;
+      const qList = r.wrongQuestions.map(function (w) { return '<li>' + escapeHtml(w) + '</li>'; }).join('');
+      return '<div class="alert-tile' + (isFresh ? ' alert-fresh' : '') + '" style="--alert-delay:' + (i * 0.06) + 's">' +
+        '<div class="alert-head"><span class="alert-icon">' + q.icon + '</span>' +
+        '<div class="alert-meta"><strong>' + label + '</strong> · ' + q.title + ' (' + (levelLabel[r.level] || r.level) + ')' +
+        '<div class="acct-empty" style="margin-top:0.1rem;">' + dateStr + (isFresh ? ' · <span class="alert-fresh-tag">nouveau</span>' : '') + '</div></div></div>' +
+        '<ul class="alert-questions">' + qList + '</ul></div>';
+    }).join('');
   }
 
   function renderRecentActivity(users) {
@@ -411,6 +458,22 @@
 
   let allUsers = [];
   let realUsers = [];
+  let kpiAnimated = false;
+
+  function animateKpi(el, target) {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !target) { el.textContent = target; return; }
+    var start = 0, duration = 700, startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
 
   function bestPct(history) {
     let best = 0;
@@ -438,6 +501,7 @@
       renderLeaderboard(namedUsers);
       renderPopularity(realUsers);
       renderBadgeDistribution(namedUsers);
+      renderFailedAlerts(realUsers);
       renderRecentActivity(realUsers);
       renderMatrix(namedUsers);
       applyFilters();
@@ -521,11 +585,24 @@
         '</div>';
     }).join('');
     document.getElementById('usersList').innerHTML = rows || '<p class="acct-empty">Aucun compte ne correspond.</p>';
-    document.getElementById('statTotalUsers').textContent = fullList.filter(function (u) { return !u.isAnonymous; }).length;
-    document.getElementById('statTotalAnon').textContent = fullList.filter(function (u) { return u.isAnonymous; }).length;
-    document.getElementById('statTotalQuizzes').textContent = totalQuizzes;
-    document.getElementById('statTotalFavs').textContent = totalFavs;
-    document.getElementById('statTotalTest').textContent = allUsers.filter(function (u) { return u.isTestSession; }).length;
+    const kpiVals = {
+      statTotalUsers: fullList.filter(function (u) { return !u.isAnonymous; }).length,
+      statTotalAnon: fullList.filter(function (u) { return u.isAnonymous; }).length,
+      statTotalQuizzes: totalQuizzes,
+      statTotalFavs: totalFavs,
+      statTotalTest: allUsers.filter(function (u) { return u.isTestSession; }).length
+    };
+    Object.keys(kpiVals).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (kpiAnimated) { el.textContent = kpiVals[id]; } else { animateKpi(el, kpiVals[id]); }
+    });
+    if (!kpiAnimated) {
+      kpiAnimated = true;
+      document.querySelectorAll('#statsTotal .kpi-tile').forEach(function (tile, i) {
+        tile.style.animationDelay = (i * 0.08) + 's';
+        tile.classList.add('kpi-pop');
+      });
+    }
   }
 
   function csvEscape(v) {
@@ -668,6 +745,9 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
       icon(next);
+      btn.classList.remove('theme-spin');
+      void btn.offsetWidth;
+      btn.classList.add('theme-spin');
     });
   })();
   (function () {
@@ -683,6 +763,20 @@
     }
     window.addEventListener('scroll', upd, { passive: true });
     upd();
+  })();
+  // Apparition des cartes au defilement
+  (function () {
+    var targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      targets.forEach(function (el) { el.classList.add('in-view'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function (el) { obs.observe(el); });
   })();
 </script>
 <script>

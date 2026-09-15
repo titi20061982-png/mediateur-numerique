@@ -59,6 +59,16 @@ template du script charge désormais `../style.css` lui aussi, exactement
 comme les 17 pages déjà en ligne (vérifié : une régénération de test ne
 produit aucune différence de contenu).
 
+**Important** : à la soumission du quiz, le template calcule désormais
+`wrongQuestions` (la liste des questions ratées) et l'ajoute à l'objet passé
+à `window.__onQuizSubmitted` / `saveQuizResult`, juste avant l'appel existant
+— c'est ce qui alimente les alertes "questions échouées" du tableau de bord
+modérateur (`moderateur.html`). Si le script `build_quiz4.ps1` est modifié ou
+qu'une page est régénérée sans cette ligne, les alertes ne se rempliront
+plus pour cet atelier. Les 4 quiz de l'espace enfants (6-8, 9-11, 12-14,
+15-17 ans) n'ont pas ce suivi : ils ne sauvegardent aucune donnée, par
+design ("sans compte, sans donnée enregistrée").
+
 ## Modifier "À propos" et "Prestations"
 
 - Le contenu détaillé est dans `a-propos.html`, sous forme de cartes
