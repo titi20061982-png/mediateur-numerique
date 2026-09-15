@@ -894,8 +894,37 @@ section.category { margin-bottom: 3.6rem; scroll-margin-top: 1.5rem; }
 }
 @keyframes treeSwaySmall { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
 .tree-sway { display: inline-block; transform-origin: bottom center; animation: treeSwaySmall 3.6s ease-in-out infinite; }
+
+/* Meme principe applique aux 3 autres icones de la grille "A propos",
+   chacune avec un mouvement qui lui va (salut, visee, bricolage). */
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(16deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(16deg); }
+  40% { transform: rotate(-4deg); }
+  50%, 100% { transform: rotate(0deg); }
+}
+.wave-hand { display: inline-block; transform-origin: bottom right; animation: waveHand 3.2s ease-in-out infinite; }
+
+@keyframes targetPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.16); }
+}
+.target-pulse { display: inline-block; animation: targetPulse 2.4s ease-in-out infinite; }
+
+@keyframes toolsWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-12deg); }
+  30% { transform: rotate(10deg); }
+  45% { transform: rotate(-8deg); }
+  60%, 100% { transform: rotate(0deg); }
+}
+.tools-wiggle { display: inline-block; transform-origin: bottom center; animation: toolsWiggle 3.4s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  #apropos .category-head .icon, #apropos .category-head.in-view .icon, .tree-sway { animation: none; }
+  #apropos .category-head .icon, #apropos .category-head.in-view .icon,
+  .tree-sway, .wave-hand, .target-pulse, .tools-wiggle { animation: none; }
 }
 .category-head h2 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 .category-head p { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.88rem; }
