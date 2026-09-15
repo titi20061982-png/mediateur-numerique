@@ -290,11 +290,11 @@ main.prices-locked #devisTotal { display: none; }
 /* ---------- 8. Boutons et liens en pilule ---------- */
 .cta-btn {
   position: relative; overflow: hidden; display: inline-block; margin: 1.5rem 0 0; font-family: "Inter", sans-serif;
-  font-weight: 600; font-size: 0.98rem; color: #fff; text-decoration: none;
-  background: var(--accent); padding: 0.85rem 1.8rem; border-radius: 999px;
-  box-shadow: var(--shadow); transition: transform .18s ease, filter .18s ease;
+  font-weight: 700; font-size: 0.98rem; color: #0d0d0d; text-decoration: none;
+  background: #00aaff; padding: 0.85rem 1.8rem; border-radius: 999px;
+  box-shadow: 0 0 14px rgba(0, 170, 255, 0.55); transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
 }
-.cta-btn:hover { transform: translateY(-2px) scale(1.03); filter: brightness(1.08); }
+.cta-btn:hover { transform: translateY(-2px) scale(1.03); filter: brightness(1.08); box-shadow: 0 0 22px #00aaff; }
 .cta-btn::after, .btn-neon::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 48%, transparent 66%);
