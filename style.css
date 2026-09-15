@@ -606,6 +606,43 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .blue-star { color: var(--accent-3); }
 .bg-stars { color: var(--border); }
 
+/* Semis d'etoiles qui se repete sur toute la hauteur de la fenetre :
+   comme .site-mesh est en position fixed, ce motif est present a
+   n'importe quelle position de defilement, partout ou une section
+   laisse un espace transparent (marges entre cartes, entre blocs...).
+   Deux calques a des tailles/vitesses differentes pour un effet de
+   profondeur, bien visible et pas timide. */
+.site-mesh::before, .site-mesh::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+}
+.site-mesh::before {
+  background-image:
+    radial-gradient(1.7px 1.7px at 12% 20%, var(--text), transparent 100%),
+    radial-gradient(1.4px 1.4px at 55% 60%, var(--text), transparent 100%),
+    radial-gradient(1.9px 1.9px at 82% 30%, var(--text), transparent 100%),
+    radial-gradient(1.4px 1.4px at 30% 85%, var(--text), transparent 100%);
+  background-repeat: repeat;
+  background-size: 70px 64px;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 1.5px var(--text));
+  animation: tileTwinkleA 4s ease-in-out infinite;
+}
+.site-mesh::after {
+  background-image:
+    radial-gradient(2.4px 2.4px at 20% 45%, var(--accent), transparent 100%),
+    radial-gradient(2px 2px at 65% 75%, var(--accent-3), transparent 100%),
+    radial-gradient(2.4px 2.4px at 85% 20%, var(--accent-2), transparent 100%),
+    radial-gradient(2px 2px at 40% 12%, var(--text), transparent 100%);
+  background-repeat: repeat;
+  background-size: 130px 120px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 4px var(--accent));
+  animation: tileTwinkleB 6s ease-in-out infinite;
+}
+@keyframes tileTwinkleA { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+@keyframes tileTwinkleB { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .site-mesh::before, .site-mesh::after { animation: none; opacity: 0.55; } }
+
 /* Constellations (site-mesh en fond de page + mini-ciel dans le hero) :
    chaque figure (etoiles + traits) brille et s'estompe tour a tour,
    comme un ciel qui scintille par vagues plutot que d'un bloc.
@@ -667,6 +704,14 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 .hero-stars .blue-star { color: var(--accent-3); }
 .hero-stars .bg-stars { color: var(--text); }
 .hero-stars .zodiac { opacity: 0.75; }
+
+/* Liseres etoiles entre les sections : contrairement au site-mesh de
+   fond (masque par les fonds opaques des cartes), ces etoiles sont
+   dans le flux normal de la page, donc garanties visibles partout ou
+   on les pose, tout au long du defilement. */
+.star-divider { width: 100%; height: 30px; margin: 0 0 1.6rem; pointer-events: none; opacity: 0.95; }
+.star-divider svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.star-divider .bg-stars { color: var(--text); }
 
 /* ---------- 10. Barre collante de recherche + navigation (accueil) ---------- */
 .sticky-toolbar {
