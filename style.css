@@ -601,17 +601,19 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 @media (max-width: 640px) { .page-watermark img { width: min(60vw, 220px); } }
 
 .site-mesh { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; color: var(--border); pointer-events: none; }
-.site-mesh .accent-star { color: var(--accent); }
-.site-mesh .warm-star { color: var(--accent-2); }
-.site-mesh .blue-star { color: var(--accent-3); }
-.site-mesh .bg-stars { color: var(--border); }
+.accent-star { color: var(--accent); }
+.warm-star { color: var(--accent-2); }
+.blue-star { color: var(--accent-3); }
+.bg-stars { color: var(--border); }
 
-/* Constellations : chaque figure (etoiles + traits) brille et s'estompe
-   tour a tour, comme un ciel qui scintille par vagues plutot que d'un
-   bloc. filter/animation s'appliquent directement sur le <use> (les
-   selecteurs comme ".zodiac circle" ne peuvent pas cibler le contenu
-   clone d'un <use>, d'ou cette approche). */
-.site-mesh .zodiac use {
+/* Constellations (site-mesh en fond de page + mini-ciel dans le hero) :
+   chaque figure (etoiles + traits) brille et s'estompe tour a tour,
+   comme un ciel qui scintille par vagues plutot que d'un bloc.
+   filter/animation s'appliquent directement sur le <use> (un
+   selecteur comme ".zodiac circle" ne peut pas cibler le contenu
+   clone d'un <use>, d'ou cette approche). Regles non prefixees par
+   ".site-mesh" pour pouvoir aussi s'appliquer aux etoiles du hero. */
+.zodiac use {
   transform-box: fill-box; transform-origin: center;
   filter: drop-shadow(0 0 1.5px currentColor);
   animation: constellationShine 10s ease-in-out infinite;
@@ -621,7 +623,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   0%, 78%, 100% { filter: drop-shadow(0 0 1.5px currentColor); opacity: 0.68; }
   90% { filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 13px currentColor); opacity: 1; }
 }
-.site-mesh .sparkle {
+.sparkle {
   filter: drop-shadow(0 0 4px currentColor);
   transform-box: fill-box; transform-origin: center;
   animation: sparkleShine 4.5s ease-in-out infinite;
@@ -633,7 +635,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
 }
 
 /* Petites etoiles du fond : apparaissent, brillent, puis s'effacent */
-.site-mesh .twinkle {
+.twinkle {
   transform-box: fill-box; transform-origin: center;
   animation: twinkle 6s ease-in-out infinite;
   animation-delay: var(--twinkle-delay, 0s);
@@ -643,7 +645,7 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   50% { opacity: 1; transform: scale(1.5); filter: drop-shadow(0 0 3px currentColor) drop-shadow(0 0 6px currentColor); }
 }
 /* Quelques etoiles plus marquees, qui surgissent et brillent plus fort */
-.site-mesh .twinkle-bloom {
+.twinkle-bloom {
   animation-name: twinkleBloom; animation-duration: 9s; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
 }
 @keyframes twinkleBloom {
@@ -651,10 +653,20 @@ header .qr-box { position: static; margin: 0.9rem 0 0; }
   92% { opacity: 1; transform: scale(2); filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 10px currentColor); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-mesh .zodiac use, .site-mesh .sparkle, .site-mesh .twinkle, .site-mesh .twinkle-bloom {
+  .zodiac use, .sparkle, .twinkle, .twinkle-bloom {
     animation: none; filter: drop-shadow(0 0 2px currentColor); opacity: 0.6; transform: none;
   }
 }
+
+/* Mini-ciel etoile dans le hero (zone toujours visible, contrairement
+   au site-mesh de fond de page qui est masque par les fonds opaques
+   des sections). */
+.hero-stars { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.hero-stars .accent-star { color: var(--accent); }
+.hero-stars .warm-star { color: var(--accent-2); }
+.hero-stars .blue-star { color: var(--accent-3); }
+.hero-stars .bg-stars { color: var(--text); }
+.hero-stars .zodiac { opacity: 0.75; }
 
 /* ---------- 10. Barre collante de recherche + navigation (accueil) ---------- */
 .sticky-toolbar {
